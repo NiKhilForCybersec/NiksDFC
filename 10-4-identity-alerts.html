@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Identity Alert Deep Dive - Investigation procedures for identity and Entra ID security alerts.">
     <title>Identity Alerts - Microsoft Defender for Cloud</title>
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="../css/main.css">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
 </head>
 <body>
     <div class="app-container">
         <aside class="sidebar">
             <div class="sidebar-header">
-                <a href="index.html" class="sidebar-logo">
+                <a href="../index.html" class="sidebar-logo">
                     <div class="logo-icon">MDC</div>
                     <span class="logo-text">Defender for Cloud</span>
                 </a>
@@ -22,10 +22,203 @@
                     </svg>
                 </button>
             </div>
-            <nav class="sidebar-nav">
+                        <nav class="sidebar-nav">
+                <!-- Section 1: Foundations -->
+                <div class="nav-section">
+                    <div class="nav-section-title">Foundations</div>
+                    <div class="nav-group expanded" data-group="foundations">
+                        <div class="nav-group-header">
+                            <span class="nav-group-title">Getting Started</span>
+                            <svg class="nav-group-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="nav-group-items">
+                            <a href="1-1-overview.html" class="nav-subitem">Overview & Value</a>
+                            <a href="1-2-architecture.html" class="nav-subitem">Architecture</a>
+                            <a href="1-3-permissions.html" class="nav-subitem">Permissions & RBAC</a>
+                            <a href="1-4-enablement.html" class="nav-subitem">Enablement</a>
+                            <a href="1-5-cost-optimization.html" class="nav-subitem">Cost Optimization</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 2: CSPM -->
+                <div class="nav-section">
+                    <div class="nav-section-title">CSPM</div>
+                    <div class="nav-group" data-group="cspm">
+                        <div class="nav-group-header">
+                            <span class="nav-group-title">Security Posture</span>
+                            <svg class="nav-group-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="nav-group-items">
+                            <a href="2-1-secure-score.html" class="nav-subitem">Secure Score</a>
+                            <a href="2-2-recommendations.html" class="nav-subitem">Recommendations</a>
+                            <a href="2-3-attack-path.html" class="nav-subitem">Attack Path Analysis</a>
+                            <a href="2-4-regulatory-compliance.html" class="nav-subitem">Regulatory Compliance</a>
+                            <a href="2-5-governance.html" class="nav-subitem">Governance Rules</a>
+                            <a href="2-6-cloud-security-explorer.html" class="nav-subitem">Cloud Security Explorer</a>
+                            <a href="2-7-dspm.html" class="nav-subitem">Data Security Posture</a>
+                            <a href="2-8-attack-path-advanced.html" class="nav-subitem">Attack Path Advanced</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 3: CWPP -->
+                <div class="nav-section">
+                    <div class="nav-section-title">CWPP</div>
+                    <div class="nav-group" data-group="cwpp">
+                        <div class="nav-group-header">
+                            <span class="nav-group-title">Workload Protection</span>
+                            <svg class="nav-group-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="nav-group-items">
+                            <a href="3-1-servers-overview.html" class="nav-subitem">Defender for Servers</a>
+                            <a href="3-2-mde-integration.html" class="nav-subitem">MDE Integration</a>
+                            <a href="3-3-vulnerability-mgmt.html" class="nav-subitem">Vulnerability Management</a>
+                            <a href="3-4-containers.html" class="nav-subitem">Defender for Containers</a>
+                            <a href="3-7-storage.html" class="nav-subitem">Defender for Storage</a>
+                            <a href="3-8-sql.html" class="nav-subitem">Defender for SQL</a>
+                            <a href="3-9-app-service.html" class="nav-subitem">Defender for App Service</a>
+                            <a href="3-10-key-vault.html" class="nav-subitem">Defender for Key Vault</a>
+                            <a href="3-11-arm.html" class="nav-subitem">Defender for ARM</a>
+                            <a href="3-12-dns.html" class="nav-subitem">Defender for DNS</a>
+                            <a href="3-13-cosmos-db.html" class="nav-subitem">Defender for Cosmos DB</a>
+                            <a href="3-14-agentless-scanning.html" class="nav-subitem">Agentless Scanning</a>
+                            <a href="3-15-apis.html" class="nav-subitem">Defender for APIs</a>
+                            <a href="3-15-jit-access.html" class="nav-subitem">JIT VM Access</a>
+                            <a href="3-16-open-source-db.html" class="nav-subitem">Open Source Databases</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 4: Multi-Cloud -->
+                <div class="nav-section">
+                    <div class="nav-section-title">Multi-Cloud</div>
+                    <div class="nav-group" data-group="multicloud">
+                        <div class="nav-group-header">
+                            <span class="nav-group-title">Cloud Connectors</span>
+                            <svg class="nav-group-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="nav-group-items">
+                            <a href="4-1-multicloud-overview.html" class="nav-subitem">Multi-Cloud Overview</a>
+                            <a href="4-2-aws-connector.html" class="nav-subitem">AWS Connector</a>
+                            <a href="4-4-gcp-connector.html" class="nav-subitem">GCP Connector</a>
+                            <a href="4-5-arc-integration.html" class="nav-subitem">Azure Arc</a>
+                            <a href="4-5-hybrid-security.html" class="nav-subitem">Hybrid Security</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 5: Sentinel -->
+                <div class="nav-section">
+                    <div class="nav-section-title">Sentinel</div>
+                    <div class="nav-group" data-group="sentinel">
+                        <div class="nav-group-header">
+                            <span class="nav-group-title">Sentinel Integration</span>
+                            <svg class="nav-group-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="nav-group-items">
+                            <a href="5-1-integration-arch.html" class="nav-subitem">Integration Architecture</a>
+                            <a href="5-2-data-connectors.html" class="nav-subitem">Data Connectors</a>
+                            <a href="5-3-workbooks.html" class="nav-subitem">Workbooks</a>
+                            <a href="5-4-analytics-rules.html" class="nav-subitem">Analytics Rules</a>
+                            <a href="5-5-hunting.html" class="nav-subitem">Hunting Queries</a>
+                            <a href="5-6-playbooks.html" class="nav-subitem">Playbooks</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 6: Splunk -->
+                <div class="nav-section">
+                    <div class="nav-section-title">Splunk</div>
+                    <div class="nav-group" data-group="splunk">
+                        <div class="nav-group-header">
+                            <span class="nav-group-title">Splunk Integration</span>
+                            <svg class="nav-group-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="nav-group-items">
+                            <a href="6-1-splunk-integration.html" class="nav-subitem">Integration Overview</a>
+                            <a href="6-2-splunk-dashboards.html" class="nav-subitem">Dashboards</a>
+                            <a href="6-3-splunk-addon.html" class="nav-subitem">Add-on Configuration</a>
+                            <a href="6-4-splunk-alerts.html" class="nav-subitem">Alerts</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 7: Other SIEMs -->
+                <div class="nav-section">
+                    <div class="nav-section-title">Other SIEMs</div>
+                    <div class="nav-group" data-group="siems">
+                        <div class="nav-group-header">
+                            <span class="nav-group-title">SIEM Integrations</span>
+                            <svg class="nav-group-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="nav-group-items">
+                            <a href="7-1-siem-overview.html" class="nav-subitem">SIEM Overview</a>
+                            <a href="7-2-qradar.html" class="nav-subitem">IBM QRadar</a>
+                            <a href="7-3-arcsight.html" class="nav-subitem">ArcSight</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 8: SOC Operations -->
+                <div class="nav-section">
+                    <div class="nav-section-title">SOC Operations</div>
+                    <div class="nav-group" data-group="soc">
+                        <div class="nav-group-header">
+                            <span class="nav-group-title">SOC Playbooks</span>
+                            <svg class="nav-group-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="nav-group-items">
+                            <a href="8-1-soc-overview.html" class="nav-subitem">SOC Overview</a>
+                            <a href="8-2-alert-triage.html" class="nav-subitem">Alert Triage</a>
+                            <a href="8-3-vm-playbook.html" class="nav-subitem">VM Playbook</a>
+                            <a href="8-4-identity-playbook.html" class="nav-subitem">Identity Playbook</a>
+                            <a href="8-5-container-playbook.html" class="nav-subitem">Container Playbook</a>
+                            <a href="8-6-storage-playbook.html" class="nav-subitem">Storage Playbook</a>
+                            <a href="8-7-network-playbook.html" class="nav-subitem">Network Playbook</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 9: DevSecOps -->
+                <div class="nav-section">
+                    <div class="nav-section-title">DevSecOps</div>
+                    <div class="nav-group" data-group="devsecops">
+                        <div class="nav-group-header">
+                            <span class="nav-group-title">Automation</span>
+                            <svg class="nav-group-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="nav-group-items">
+                            <a href="9-1-devsecops.html" class="nav-subitem">DevSecOps Overview</a>
+                            <a href="9-2-github-actions.html" class="nav-subitem">GitHub Actions</a>
+                            <a href="9-3-azure-devops.html" class="nav-subitem">Azure DevOps</a>
+                            <a href="9-4-iac-scanning.html" class="nav-subitem">IaC Scanning</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 10: Threat Detection -->
                 <div class="nav-section">
                     <div class="nav-section-title">Threat Detection</div>
-                    <div class="nav-group expanded" data-group="threats">
+                    <div class="nav-group" data-group="threats">
                         <div class="nav-group-header">
                             <span class="nav-group-title">Alert Deep Dives</span>
                             <svg class="nav-group-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -36,11 +229,52 @@
                             <a href="10-1-alert-reference.html" class="nav-subitem">Alert Reference</a>
                             <a href="10-2-vm-alerts.html" class="nav-subitem">VM Alerts</a>
                             <a href="10-3-container-alerts.html" class="nav-subitem">Container Alerts</a>
-                            <a href="10-4-identity-alerts.html" class="nav-subitem active">Identity Alerts</a>
+                            <a href="10-4-identity-alerts.html" class="nav-subitem">Identity Alerts</a>
+                            <a href="10-5-storage-alerts.html" class="nav-subitem">Storage Alerts</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 11: Alternatives -->
+                <div class="nav-section">
+                    <div class="nav-section-title">Alternatives</div>
+                    <div class="nav-group" data-group="alternatives">
+                        <div class="nav-group-header">
+                            <span class="nav-group-title">Comparisons</span>
+                            <svg class="nav-group-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="nav-group-items">
+                            <a href="11-1-alternatives.html" class="nav-subitem">Market Overview</a>
+                            <a href="11-2-wiz-comparison.html" class="nav-subitem">MDC vs Wiz</a>
+                            <a href="11-3-prisma-comparison.html" class="nav-subitem">MDC vs Prisma Cloud</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 12: Reference -->
+                <div class="nav-section">
+                    <div class="nav-section-title">Reference</div>
+                    <div class="nav-group" data-group="reference">
+                        <div class="nav-group-header">
+                            <span class="nav-group-title">Reference Docs</span>
+                            <svg class="nav-group-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="nav-group-items">
+                            <a href="12-1-kql-library.html" class="nav-subitem">KQL Query Library</a>
+                            <a href="12-2-powershell.html" class="nav-subitem">PowerShell Scripts</a>
+                            <a href="12-3-azure-cli.html" class="nav-subitem">Azure CLI Reference</a>
+                            <a href="12-4-api-reference.html" class="nav-subitem">REST API Reference</a>
+                            <a href="12-5-compliance-mapping.html" class="nav-subitem">Compliance Mapping</a>
+                            <a href="12-6-troubleshooting.html" class="nav-subitem">Troubleshooting</a>
                         </div>
                     </div>
                 </div>
             </nav>
+
         </aside>
 
         <main class="main-content">
@@ -64,7 +298,7 @@
             <div class="content-wrapper">
                 <article class="page-content">
                     <nav class="breadcrumbs">
-                        <a href="index.html" class="breadcrumb-item">Home</a>
+                        <a href="../index.html" class="breadcrumb-item">Home</a>
                         <span class="breadcrumb-separator">/</span>
                         <a href="10-1-alert-reference.html" class="breadcrumb-item">Threat Detection</a>
                         <span class="breadcrumb-separator">/</span>
@@ -156,7 +390,7 @@
                         <pre><code class="language-kql">// Get sign-in history for affected user
 SigninLogs
 | where TimeGenerated > ago(7d)
-| where UserPrincipalName == "user@company.com"
+| where UserPrincipalName == "<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="add8dec8dfedcec2c0ddccc3d483cec2c0">[email&#160;protected]</a>"
 | project TimeGenerated, Location, IPAddress, 
           AppDisplayName, ClientAppUsed,
           DeviceDetail, Status
@@ -165,7 +399,7 @@ SigninLogs
 // Calculate travel speed between sign-ins
 SigninLogs
 | where TimeGenerated > ago(24h)
-| where UserPrincipalName == "user@company.com"
+| where UserPrincipalName == "<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="3e4b4d5b4c7e5d51534e5f5047105d5153">[email&#160;protected]</a>"
 | where ResultType == 0  // Successful sign-ins
 | extend Latitude = toreal(LocationDetails.geoCoordinates.latitude)
 | extend Longitude = toreal(LocationDetails.geoCoordinates.longitude)
@@ -186,7 +420,7 @@ SigninLogs
                         </div>
                         <pre><code class="language-kql">// Check if IP is known VPN/proxy
 SigninLogs
-| where UserPrincipalName == "user@company.com"
+| where UserPrincipalName == "<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f782849285b794989a8796998ed994989a">[email&#160;protected]</a>"
 | where TimeGenerated > ago(24h)
 | extend IsAnonymousProxy = RiskDetail has "anonymizedIPAddress"
 | extend IsTorExit = RiskDetail has "maliciousIPAddress"
@@ -202,7 +436,7 @@ SigninLogs
 Connect-MgGraph -Scopes "User.ReadWrite.All"
 
 # Revoke all refresh tokens
-Revoke-MgUserSignInSession -UserId "user@company.com"
+Revoke-MgUserSignInSession -UserId "<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="542127312614373b3924353a2d7a373b39">[email&#160;protected]</a>"
 
 # Force password reset
 $params = @{
@@ -210,10 +444,10 @@ $params = @{
         forceChangePasswordNextSignIn = $true
     }
 }
-Update-MgUser -UserId "user@company.com" -BodyParameter $params
+Update-MgUser -UserId "<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="8ffafceafdcfece0e2ffeee1f6a1ece0e2">[email&#160;protected]</a>" -BodyParameter $params
 
 # Block sign-in temporarily
-Update-MgUser -UserId "user@company.com" -AccountEnabled:$false</code></pre>
+Update-MgUser -UserId "<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f386809681b3909c9e83929d8add909c9e">[email&#160;protected]</a>" -AccountEnabled:$false</code></pre>
                     </section>
 
                     <!-- Password Spray -->
@@ -300,7 +534,7 @@ $params = @{
 New-MgIdentityConditionalAccessPolicy -BodyParameter $params
 
 # Reset passwords for compromised users
-$compromisedUsers = @("user1@company.com", "user2@company.com")
+$compromisedUsers = @("<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="99eceafceba8d9faf6f4e9f8f7e0b7faf6f4">[email&#160;protected]</a>", "<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="33464056410173505c5e43525d4a1d505c5e">[email&#160;protected]</a>")
 foreach ($user in $compromisedUsers) {
     Revoke-MgUserSignInSession -UserId $user
     Update-MgUser -UserId $user -BodyParameter @{
@@ -351,7 +585,7 @@ AuditLogs
                             <button class="code-copy-btn">Copy</button>
                         </div>
                         <pre><code class="language-kql">// What did the new admin do after role assignment?
-let NewAdmin = "suspicioususer@company.com";
+let NewAdmin = "<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="62111711120b010b0d17111711071022010d0f12030c1b4c010d0f">[email&#160;protected]</a>";
 let RoleAssignmentTime = datetime(2024-01-15T10:30:00Z);
 AuditLogs
 | where TimeGenerated between (RoleAssignmentTime .. (RoleAssignmentTime + 24h))
@@ -365,7 +599,7 @@ AuditLogs
                             <button class="code-copy-btn">Copy</button>
                         </div>
                         <pre><code class="language-powershell"># Remove suspicious role assignment
-$userId = (Get-MgUser -Filter "userPrincipalName eq 'suspicioususer@company.com'").Id
+$userId = (Get-MgUser -Filter "userPrincipalName eq '<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c2b1b7b1b2aba1abadb7b1b7b1a7b082a1adafb2a3acbbeca1adaf">[email&#160;protected]</a>'").Id
 $roleId = (Get-MgDirectoryRole -Filter "displayName eq 'Global Administrator'").Id
 
 # Get the assignment
@@ -544,29 +778,4 @@ Remove-MgServicePrincipal -ServicePrincipalId $sp.Id</code></pre>
                     </nav>
                 </article>
 
-                <aside class="toc-sidebar">
-                    <div class="toc-title">On This Page</div>
-                    <ul class="toc-list">
-                        <li class="toc-item"><a href="#categories" class="toc-link">Categories</a></li>
-                        <li class="toc-item"><a href="#impossible-travel" class="toc-link">Impossible Travel</a></li>
-                        <li class="toc-item"><a href="#password-spray" class="toc-link">Password Spray</a></li>
-                        <li class="toc-item"><a href="#role-assignment" class="toc-link">Role Assignment</a></li>
-                        <li class="toc-item"><a href="#oauth" class="toc-link">OAuth App</a></li>
-                        <li class="toc-item"><a href="#checklist" class="toc-link">Checklist</a></li>
-                    </ul>
-                </aside>
-            </div>
-        </main>
-        <div class="mobile-overlay"></div>
-    </div>
-
-    <div class="search-modal">
-        <div class="search-modal-content">
-            <input type="text" class="search-modal-input" placeholder="Search documentation..." autofocus>
-            <div class="search-results"></div>
-        </div>
-    </div>
-
-    <script src="main.js"></script>
-</body>
-</html>
+                <aside class="toc-side
