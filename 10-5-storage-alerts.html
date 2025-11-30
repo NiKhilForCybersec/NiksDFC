@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Storage Alert Deep Dive - Investigation procedures for Azure Storage security alerts and data threats.">
+    <title>Storage Alerts - Microsoft Defender for Cloud</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="../index.html" class="sidebar-logo">
+                    <div class="logo-icon">MDC</div>
+                    <span class="logo-text">Defender for Cloud</span>
+                </a>
+                <button class="sidebar-toggle" aria-label="Toggle sidebar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Threat Detection</div>
+                    <div class="nav-group expanded" data-group="threats">
+                        <div class="nav-group-header">
+                            <span class="nav-group-title">Alert Deep Dives</span>
+                            <svg class="nav-group-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="nav-group-items">
+                            <a href="10-1-alert-reference.html" class="nav-subitem">Alert Reference</a>
+                            <a href="10-2-vm-alerts.html" class="nav-subitem">VM Alerts</a>
+                            <a href="10-3-container-alerts.html" class="nav-subitem">Container Alerts</a>
+                            <a href="10-4-identity-alerts.html" class="nav-subitem">Identity Alerts</a>
+                            <a href="10-5-storage-alerts.html" class="nav-subitem active">Storage Alerts</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" aria-label="Open menu">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10zm0 5.25a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75a.75.75 0 01-.75-.75z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div class="search-box">
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                        </svg>
+                        <input type="text" class="search-input" placeholder="Search documentation..." readonly>
+                        <span class="search-shortcut">⌘K</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <article class="page-content">
+                    <nav class="breadcrumbs">
+                        <a href="../index.html" class="breadcrumb-item">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <a href="10-1-alert-reference.html" class="breadcrumb-item">Threat Detection</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span class="breadcrumb-item current">Storage Alerts</span>
+                    </nav>
+
+                    <header class="page-header">
+                        <h1>Storage Alert Deep Dive</h1>
+                        <div class="page-meta">
+                            <span class="badge badge-l2">L2 Technical</span>
+                            <span class="badge badge-l3">L3 Advanced</span>
+                            <span class="page-meta-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clip-rule="evenodd" />
+                                </svg>
+                                12 min read
+                            </span>
+                        </div>
+                    </header>
+
+                    <section>
+                        <p>
+                            Detailed investigation procedures for Azure Storage security alerts from 
+                            Microsoft Defender for Storage. Learn to investigate data exfiltration, 
+                            malware uploads, and unauthorized access patterns.
+                        </p>
+                    </section>
+
+                    <!-- Alert Categories -->
+                    <section>
+                        <h2 id="categories">Storage Alert Categories</h2>
+
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Category</th>
+                                        <th>MITRE Tactic</th>
+                                        <th>Example Alerts</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Data Exfiltration</strong></td>
+                                        <td>Exfiltration</td>
+                                        <td>Unusual data transfer, Anonymous access</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Malware</strong></td>
+                                        <td>Execution</td>
+                                        <td>Malware uploaded, Phishing content</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Suspicious Access</strong></td>
+                                        <td>Initial Access</td>
+                                        <td>Tor exit node, Unusual location</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Configuration</strong></td>
+                                        <td>Defense Evasion</td>
+                                        <td>Public access enabled, Logging disabled</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Malware Detection -->
+                    <section>
+                        <h2 id="malware">Malware Uploaded to Storage</h2>
+
+                        <div class="callout callout-error">
+                            <div class="callout-title">Alert: Malware Uploaded to Storage Account</div>
+                            <div class="callout-content">
+                                <p><strong>Severity:</strong> High | <strong>MITRE:</strong> T1204 (User Execution)</p>
+                            </div>
+                        </div>
+
+                        <h3>Investigation KQL</h3>
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Get details of malware upload
+StorageBlobLogs
+| where TimeGenerated > ago(24h)
+| where AccountName == "affectedstorageaccount"
+| where OperationName == "PutBlob" or OperationName == "PutBlockList"
+| where StatusCode == 201  // Successfully created
+| project TimeGenerated, CallerIpAddress, Uri, 
+          UserAgentHeader, AuthenticationType,
+          ObjectKey, RequestBodySize
+| order by TimeGenerated desc
+
+// Find the specific malware file
+StorageBlobLogs
+| where TimeGenerated > ago(24h)
+| where Uri contains "malicious-file-name"
+| project TimeGenerated, CallerIpAddress, OperationName, 
+          Uri, AuthenticationType</code></pre>
+
+                        <h3>Check Who Uploaded</h3>
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Identify uploader identity
+StorageBlobLogs
+| where TimeGenerated > ago(24h)
+| where OperationName == "PutBlob"
+| where ObjectKey contains "suspicious-file"
+| extend Identity = iff(AuthenticationType == "SAS", "SAS Token", 
+                   iff(AuthenticationType == "OAuth", RequesterUpn, 
+                   CallerIpAddress))
+| project TimeGenerated, Identity, AuthenticationType, 
+          CallerIpAddress, Uri, UserAgentHeader</code></pre>
+
+                        <h3>Response Actions</h3>
+                        <div class="code-header">
+                            <span class="code-lang">Azure CLI</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-bash"># Delete the malicious blob
+az storage blob delete \
+    --account-name "affectedstorageaccount" \
+    --container-name "infected-container" \
+    --name "malicious-file.exe" \
+    --auth-mode login
+
+# Quarantine the container (set to private)
+az storage container set-permission \
+    --account-name "affectedstorageaccount" \
+    --name "infected-container" \
+    --public-access off
+
+# Regenerate storage keys if SAS was compromised
+az storage account keys renew \
+    --account-name "affectedstorageaccount" \
+    --resource-group "rg-name" \
+    --key key1</code></pre>
+
+                        <h3>Auto-Quarantine Function</h3>
+                        <div class="code-header">
+                            <span class="code-lang">PowerShell (Azure Function)</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-powershell"># Azure Function to auto-quarantine malware
+param($eventGridEvent, $TriggerMetadata)
+
+$alertData = $eventGridEvent.data
+$blobUri = $alertData.properties.compromisedEntity
+
+# Parse blob details
+$uri = [System.Uri]$blobUri
+$accountName = $uri.Host.Split('.')[0]
+$pathParts = $uri.AbsolutePath.TrimStart('/').Split('/', 2)
+$containerName = $pathParts[0]
+$blobName = $pathParts[1]
+
+# Move to quarantine container
+$ctx = New-AzStorageContext -StorageAccountName $accountName -UseConnectedAccount
+$quarantineContainer = "quarantine"
+
+# Copy to quarantine
+Start-AzStorageBlobCopy -SrcContainer $containerName -SrcBlob $blobName `
+    -DestContainer $quarantineContainer -DestBlob "$containerName/$blobName" `
+    -Context $ctx
+
+# Delete original
+Remove-AzStorageBlob -Container $containerName -Blob $blobName -Context $ctx
+
+Write-Host "Quarantined: $blobUri"</code></pre>
+                    </section>
+
+                    <!-- Data Exfiltration -->
+                    <section>
+                        <h2 id="exfiltration">Unusual Data Exfiltration</h2>
+
+                        <div class="callout callout-warning">
+                            <div class="callout-title">Alert: Unusual Amount of Data Extracted</div>
+                            <div class="callout-content">
+                                <p><strong>Severity:</strong> Medium | <strong>MITRE:</strong> T1567 (Exfiltration Over Web Service)</p>
+                            </div>
+                        </div>
+
+                        <h3>Investigation KQL</h3>
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Analyze data transfer patterns
+StorageBlobLogs
+| where TimeGenerated > ago(7d)
+| where OperationName == "GetBlob"
+| summarize 
+    TotalBytes = sum(ResponseBodySize),
+    BlobCount = count(),
+    UniqueBlobs = dcount(ObjectKey)
+    by CallerIpAddress, bin(TimeGenerated, 1h)
+| extend TotalGB = round(TotalBytes / 1073741824.0, 2)
+| where TotalGB > 1  // More than 1GB per hour
+| order by TotalGB desc
+
+// Compare to baseline
+let Baseline = StorageBlobLogs
+| where TimeGenerated between (ago(30d) .. ago(1d))
+| where OperationName == "GetBlob"
+| summarize AvgDailyBytes = avg(ResponseBodySize) * count() / 30
+    by CallerIpAddress;
+StorageBlobLogs
+| where TimeGenerated > ago(1d)
+| where OperationName == "GetBlob"
+| summarize TodayBytes = sum(ResponseBodySize) by CallerIpAddress
+| join kind=leftouter Baseline on CallerIpAddress
+| extend Multiplier = TodayBytes / AvgDailyBytes
+| where Multiplier > 5  // 5x normal
+| project CallerIpAddress, TodayBytes, AvgDailyBytes, Multiplier</code></pre>
+
+                        <h3>Identify Accessed Data</h3>
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// What data was accessed by suspicious IP?
+let SuspiciousIP = "203.0.113.50";
+StorageBlobLogs
+| where TimeGenerated > ago(24h)
+| where CallerIpAddress == SuspiciousIP
+| where OperationName == "GetBlob"
+| summarize 
+    AccessCount = count(),
+    TotalBytes = sum(ResponseBodySize),
+    FirstAccess = min(TimeGenerated),
+    LastAccess = max(TimeGenerated)
+    by ObjectKey, Uri
+| extend TotalMB = round(TotalBytes / 1048576.0, 2)
+| order by TotalBytes desc
+| take 50</code></pre>
+
+                        <h3>Response Actions</h3>
+                        <div class="code-header">
+                            <span class="code-lang">Azure CLI</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-bash"># Block suspicious IP via network rules
+az storage account network-rule add \
+    --account-name "storageaccount" \
+    --resource-group "rg-name" \
+    --ip-address "203.0.113.50" \
+    --action Deny
+
+# Restrict to VNet only
+az storage account update \
+    --name "storageaccount" \
+    --resource-group "rg-name" \
+    --default-action Deny
+
+# Revoke all SAS tokens by rotating keys
+az storage account keys renew \
+    --account-name "storageaccount" \
+    --resource-group "rg-name" \
+    --key key1
+
+az storage account keys renew \
+    --account-name "storageaccount" \
+    --resource-group "rg-name" \
+    --key key2</code></pre>
+                    </section>
+
+                    <!-- Anonymous Access -->
+                    <section>
+                        <h2 id="anonymous">Anonymous Access Detected</h2>
+
+                        <div class="callout callout-warning">
+                            <div class="callout-title">Alert: Access from Anonymous IP</div>
+                            <div class="callout-content">
+                                <p><strong>Severity:</strong> Medium | <strong>MITRE:</strong> T1190 (Exploit Public-Facing Application)</p>
+                            </div>
+                        </div>
+
+                        <h3>Investigation KQL</h3>
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Find all anonymous access
+StorageBlobLogs
+| where TimeGenerated > ago(7d)
+| where AuthenticationType == "Anonymous"
+| summarize 
+    AccessCount = count(),
+    TotalBytes = sum(ResponseBodySize),
+    UniqueIPs = dcount(CallerIpAddress),
+    Containers = make_set(split(ObjectKey, '/')[0])
+    by AccountName
+| extend TotalMB = round(TotalBytes / 1048576.0, 2)
+| order by AccessCount desc
+
+// Details of anonymous access
+StorageBlobLogs
+| where TimeGenerated > ago(24h)
+| where AuthenticationType == "Anonymous"
+| project TimeGenerated, CallerIpAddress, OperationName,
+          Uri, ResponseBodySize, UserAgentHeader
+| order by TimeGenerated desc</code></pre>
+
+                        <h3>Check Container Permissions</h3>
+                        <div class="code-header">
+                            <span class="code-lang">Azure CLI</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-bash"># List all containers with public access
+az storage container list \
+    --account-name "storageaccount" \
+    --auth-mode login \
+    --query "[?properties.publicAccess != null].{Name:name, PublicAccess:properties.publicAccess}" \
+    -o table
+
+# Check specific container
+az storage container show-permission \
+    --account-name "storageaccount" \
+    --name "containername" \
+    --auth-mode login</code></pre>
+
+                        <h3>Response Actions</h3>
+                        <div class="code-header">
+                            <span class="code-lang">Azure CLI</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-bash"># Disable public access on container
+az storage container set-permission \
+    --account-name "storageaccount" \
+    --name "containername" \
+    --public-access off \
+    --auth-mode login
+
+# Disable public access at account level
+az storage account update \
+    --name "storageaccount" \
+    --resource-group "rg-name" \
+    --allow-blob-public-access false
+
+# Enable secure transfer
+az storage account update \
+    --name "storageaccount" \
+    --resource-group "rg-name" \
+    --https-only true</code></pre>
+                    </section>
+
+                    <!-- Sensitive Data -->
+                    <section>
+                        <h2 id="sensitive">Sensitive Data Exposure</h2>
+
+                        <h3>Check for Sensitive Data</h3>
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Find access to potentially sensitive files
+StorageBlobLogs
+| where TimeGenerated > ago(7d)
+| where ObjectKey matches regex @"(?i)(password|secret|key|credential|ssn|credit)"
+| summarize AccessCount = count(), 
+            UniqueIPs = dcount(CallerIpAddress)
+    by ObjectKey, AccountName
+| order by AccessCount desc
+
+// Check files with sensitive extensions
+StorageBlobLogs
+| where TimeGenerated > ago(7d)
+| where ObjectKey matches regex @"(?i)\.(pem|pfx|key|p12|csv|xlsx|sql|bak)$"
+| where AuthenticationType == "Anonymous"
+| project TimeGenerated, AccountName, ObjectKey, 
+          CallerIpAddress, OperationName</code></pre>
+                    </section>
+
+                    <!-- Investigation Checklist -->
+                    <section>
+                        <h2 id="checklist">Investigation Checklist</h2>
+
+                        <div class="checklist">
+                            <div class="checklist-title">Storage Alert Investigation</div>
+                            <ul>
+                                <li>
+                                    <input type="checkbox" id="st1">
+                                    <label for="st1">Identify affected storage account and container</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="st2">
+                                    <label for="st2">Review StorageBlobLogs for access patterns</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="st3">
+                                    <label for="st3">Check authentication type (SAS, OAuth, Anonymous)</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="st4">
+                                    <label for="st4">Identify source IP and geographic location</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="st5">
+                                    <label for="st5">Calculate data volume transferred</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="st6">
+                                    <label for="st6">Check for sensitive data in accessed files</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="st7">
+                                    <label for="st7">Review container public access settings</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="st8">
+                                    <label for="st8">Rotate keys/SAS if compromise suspected</label>
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- Key Takeaways -->
+                    <div class="key-takeaways">
+                        <div class="key-takeaways-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 2a.75.75 0 01.75.75v.258a33.186 33.186 0 016.668.83.75.75 0 01-.336 1.461z" clip-rule="evenodd" />
+                            </svg>
+                            Key Takeaways
+                        </div>
+                        <ul>
+                            <li>Enable Defender for Storage for malware scanning</li>
+                            <li>Use StorageBlobLogs for detailed access analysis</li>
+                            <li>Check authentication type to identify access method</li>
+                            <li>Compare data transfer to baseline for anomalies</li>
+                            <li>Quarantine malware immediately, don't just delete</li>
+                            <li>Disable public access at account level</li>
+                            <li>Rotate keys to invalidate all SAS tokens</li>
+                            <li>Monitor sensitive data access patterns</li>
+                        </ul>
+                    </div>
+
+                    <div class="related-pages">
+                        <div class="related-title">Related Pages</div>
+                        <div class="related-list">
+                            <a href="10-1-alert-reference.html" class="related-link">Alert Reference</a>
+                            <a href="3-5-storage.html" class="related-link">Defender for Storage</a>
+                            <a href="8-6-storage-playbook.html" class="related-link">Storage Playbook</a>
+                            <a href="5-5-hunting.html" class="related-link">Hunting Queries</a>
+                        </div>
+                    </div>
+
+                    <nav class="page-nav">
+                        <a href="10-4-identity-alerts.html" class="page-nav-link prev">
+                            <span class="page-nav-label">← Previous</span>
+                            <span class="page-nav-title">Identity Alerts</span>
+                        </a>
+                        <a href="11-1-alternatives.html" class="page-nav-link next">
+                            <span class="page-nav-label">Next →</span>
+                            <span class="page-nav-title">Alternatives</span>
+                        </a>
+                    </nav>
+                </article>
+
+                <aside class="toc-sidebar">
+                    <div class="toc-title">On This Page</div>
+                    <ul class="toc-list">
+                        <li class="toc-item"><a href="#categories" class="toc-link">Categories</a></li>
+                        <li class="toc-item"><a href="#malware" class="toc-link">Malware</a></li>
+                        <li class="toc-item"><a href="#exfiltration" class="toc-link">Exfiltration</a></li>
+                        <li class="toc-item"><a href="#anonymous" class="toc-link">Anonymous Access</a></li>
+                        <li class="toc-item"><a href="#sensitive" class="toc-link">Sensitive Data</a></li>
+                        <li class="toc-item"><a href="#checklist" class="toc-link">Checklist</a></li>
+                    </ul>
+                </aside>
+            </div>
+        </main>
+        <div class="mobile-overlay"></div>
+    </div>
+
+    <div class="search-modal">
+        <div class="search-modal-content">
+            <input type="text" class="search-modal-input" placeholder="Search documentation..." autofocus>
+            <div class="search-results"></div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

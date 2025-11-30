@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="VM Alert Deep Dive - Detailed investigation guide for virtual machine security alerts in MDC.">
+    <title>VM Alert Deep Dive - Microsoft Defender for Cloud</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="../index.html" class="sidebar-logo">
+                    <div class="logo-icon">MDC</div>
+                    <span class="logo-text">Defender for Cloud</span>
+                </a>
+                <button class="sidebar-toggle" aria-label="Toggle sidebar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Threat Detection</div>
+                    <div class="nav-group expanded" data-group="alerts">
+                        <div class="nav-group-header">
+                            <span class="nav-group-title">Alert Details</span>
+                            <svg class="nav-group-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="nav-group-items">
+                            <a href="10-1-alert-reference.html" class="nav-subitem">Alert Reference</a>
+                            <a href="10-2-vm-alerts.html" class="nav-subitem active">VM Alerts</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" aria-label="Open menu">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10zm0 5.25a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75a.75.75 0 01-.75-.75z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div class="search-box">
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                        </svg>
+                        <input type="text" class="search-input" placeholder="Search documentation..." readonly>
+                        <span class="search-shortcut">⌘K</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <article class="page-content">
+                    <nav class="breadcrumbs">
+                        <a href="../index.html" class="breadcrumb-item">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <a href="10-1-alert-reference.html" class="breadcrumb-item">Threat Detection</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span class="breadcrumb-item current">VM Alerts</span>
+                    </nav>
+
+                    <header class="page-header">
+                        <h1>VM Alert Deep Dive</h1>
+                        <div class="page-meta">
+                            <span class="badge badge-l2">L2 Technical</span>
+                            <span class="badge badge-l3">L3 Advanced</span>
+                            <span class="page-meta-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clip-rule="evenodd" />
+                                </svg>
+                                15 min read
+                            </span>
+                        </div>
+                    </header>
+
+                    <section>
+                        <p>
+                            This guide provides detailed investigation procedures for the most common and 
+                            critical VM security alerts from Defender for Servers. Each alert includes 
+                            MITRE ATT&CK mapping, investigation queries, and response actions.
+                        </p>
+                    </section>
+
+                    <!-- Alert Categories -->
+                    <section>
+                        <h2 id="categories">VM Alert Categories</h2>
+
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Category</th>
+                                        <th>MITRE Tactic</th>
+                                        <th>Common Alerts</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Malware</strong></td>
+                                        <td>Execution</td>
+                                        <td>Malware detected, Fileless attack</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Credential Access</strong></td>
+                                        <td>Credential Access</td>
+                                        <td>Mimikatz, LSASS access, SAM dump</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Lateral Movement</strong></td>
+                                        <td>Lateral Movement</td>
+                                        <td>PsExec, WMI, RDP brute force</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Persistence</strong></td>
+                                        <td>Persistence</td>
+                                        <td>Scheduled tasks, Registry run keys</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Defense Evasion</strong></td>
+                                        <td>Defense Evasion</td>
+                                        <td>Antivirus disabled, Log cleared</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Crypto Mining</strong></td>
+                                        <td>Impact</td>
+                                        <td>Mining software, CPU anomaly</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Suspicious PowerShell -->
+                    <section>
+                        <h2 id="powershell">Suspicious PowerShell Activity</h2>
+
+                        <div class="callout callout-error">
+                            <div class="callout-title">Alert: VM_SuspiciousPowerShell</div>
+                            <div class="callout-content">
+                                <p><strong>Severity:</strong> High | <strong>MITRE:</strong> T1059.001 (PowerShell)</p>
+                                <p>Suspicious PowerShell command line detected on the virtual machine.</p>
+                            </div>
+                        </div>
+
+                        <h3>Investigation Steps</h3>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL (MDE Advanced Hunting)</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Find the suspicious PowerShell process
+DeviceProcessEvents
+| where DeviceName == "AFFECTED-VM-NAME"
+| where FileName =~ "powershell.exe" or FileName =~ "pwsh.exe"
+| where Timestamp > ago(24h)
+| project Timestamp, ProcessCommandLine, AccountName, 
+          InitiatingProcessFileName, InitiatingProcessCommandLine
+| order by Timestamp desc</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL (MDE Advanced Hunting)</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Decode base64 encoded commands
+DeviceProcessEvents
+| where DeviceName == "AFFECTED-VM-NAME"
+| where ProcessCommandLine has_any ("-enc", "-encoded", "FromBase64")
+| extend DecodedCommand = base64_decode_tostring(
+    extract(@"-[eE]nc[odedCommand]*\s+([A-Za-z0-9+/=]+)", 1, ProcessCommandLine))
+| project Timestamp, ProcessCommandLine, DecodedCommand, AccountName</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL (MDE Advanced Hunting)</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Check for network connections from PowerShell
+DeviceNetworkEvents
+| where DeviceName == "AFFECTED-VM-NAME"
+| where InitiatingProcessFileName =~ "powershell.exe"
+| where Timestamp > ago(24h)
+| project Timestamp, RemoteIP, RemotePort, RemoteUrl, 
+          InitiatingProcessCommandLine
+| order by Timestamp desc</code></pre>
+
+                        <h3>Response Actions</h3>
+                        <div class="checklist">
+                            <ul>
+                                <li>
+                                    <input type="checkbox" id="ps1">
+                                    <label for="ps1">Decode and analyze the command line</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="ps2">
+                                    <label for="ps2">Check for downloaded payloads</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="ps3">
+                                    <label for="ps3">Identify the user account involved</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="ps4">
+                                    <label for="ps4">Check for persistence mechanisms</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="ps5">
+                                    <label for="ps5">Isolate VM if confirmed malicious</label>
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- Credential Dumping -->
+                    <section>
+                        <h2 id="credential">Credential Dumping Detected</h2>
+
+                        <div class="callout callout-error">
+                            <div class="callout-title">Alert: VM_CredentialDumping</div>
+                            <div class="callout-content">
+                                <p><strong>Severity:</strong> Critical | <strong>MITRE:</strong> T1003 (OS Credential Dumping)</p>
+                                <p>Tools or techniques associated with credential dumping were detected.</p>
+                            </div>
+                        </div>
+
+                        <h3>Investigation Steps</h3>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL (MDE Advanced Hunting)</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Detect Mimikatz and similar tools
+DeviceProcessEvents
+| where DeviceName == "AFFECTED-VM-NAME"
+| where Timestamp > ago(24h)
+| where FileName in~ ("mimikatz.exe", "procdump.exe", "dumpert.exe")
+    or ProcessCommandLine has_any ("sekurlsa", "lsadump", "dcsync", 
+        "minidump", "comsvcs.dll", "MiniDump")
+| project Timestamp, FileName, ProcessCommandLine, AccountName,
+          InitiatingProcessFileName</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL (MDE Advanced Hunting)</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// LSASS access attempts
+DeviceProcessEvents
+| where DeviceName == "AFFECTED-VM-NAME"
+| where FileName =~ "lsass.exe" or ProcessCommandLine has "lsass"
+| where Timestamp > ago(24h)
+| project Timestamp, FileName, ProcessCommandLine, AccountName
+
+// Also check file events
+DeviceFileEvents
+| where DeviceName == "AFFECTED-VM-NAME"
+| where FileName endswith ".dmp" or FolderPath has "lsass"
+| where Timestamp > ago(24h)</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL (MDE Advanced Hunting)</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Check for SAM/SYSTEM/SECURITY hive access
+DeviceRegistryEvents
+| where DeviceName == "AFFECTED-VM-NAME"
+| where RegistryKey has_any ("SAM", "SECURITY", "SYSTEM")
+| where ActionType in ("RegistryValueSet", "RegistryKeyCreated")
+| where Timestamp > ago(24h)
+| project Timestamp, RegistryKey, RegistryValueName, ActionType</code></pre>
+
+                        <h3>Immediate Response</h3>
+                        <div class="code-header">
+                            <span class="code-lang">PowerShell (MDE API)</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-powershell"># Isolate the compromised machine immediately
+$deviceId = "DEVICE-ID-HERE"
+$isolateBody = @{
+    Comment = "Credential dumping detected - isolating for investigation"
+    IsolationType = "Full"
+} | ConvertTo-Json
+
+Invoke-MgGraphRequest -Method POST `
+    -Uri "https://api.securitycenter.microsoft.com/api/machines/$deviceId/isolate" `
+    -Body $isolateBody
+
+# Force password reset for affected accounts
+# This should be done in Entra ID</code></pre>
+
+                        <div class="callout callout-warning">
+                            <div class="callout-title">Critical Action Required</div>
+                            <div class="callout-content">
+                                <p>If credential dumping is confirmed:</p>
+                                <ol>
+                                    <li>Isolate VM immediately</li>
+                                    <li>Reset passwords for all accounts that logged into the VM</li>
+                                    <li>Revoke all active sessions</li>
+                                    <li>Check for lateral movement to other systems</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Crypto Mining -->
+                    <section>
+                        <h2 id="cryptomining">Crypto Mining Detected</h2>
+
+                        <div class="callout callout-error">
+                            <div class="callout-title">Alert: VM_CryptoCoinMiner</div>
+                            <div class="callout-content">
+                                <p><strong>Severity:</strong> High | <strong>MITRE:</strong> T1496 (Resource Hijacking)</p>
+                                <p>Cryptocurrency mining software or behavior detected on the VM.</p>
+                            </div>
+                        </div>
+
+                        <h3>Investigation Steps</h3>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL (MDE Advanced Hunting)</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Detect known mining processes
+DeviceProcessEvents
+| where DeviceName == "AFFECTED-VM-NAME"
+| where Timestamp > ago(7d)
+| where FileName in~ ("xmrig.exe", "minergate.exe", "cpuminer.exe", 
+        "ethminer.exe", "cgminer.exe", "bfgminer.exe", "minerd.exe")
+    or ProcessCommandLine has_any ("stratum+tcp", "stratum+ssl", 
+        "pool.", "mining", "cryptonight", "randomx")
+| project Timestamp, FileName, ProcessCommandLine, AccountName</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL (MDE Advanced Hunting)</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Check for mining pool connections
+DeviceNetworkEvents
+| where DeviceName == "AFFECTED-VM-NAME"
+| where Timestamp > ago(7d)
+| where RemotePort in (3333, 4444, 5555, 7777, 8888, 9999, 14444)
+    or RemoteUrl has_any ("pool.", "mining.", "xmr.", "nicehash")
+| summarize ConnectionCount = count(), 
+            Destinations = make_set(RemoteIP) by RemotePort
+| order by ConnectionCount desc</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL (MDE Advanced Hunting)</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// High CPU processes (potential mining)
+DeviceProcessEvents
+| where DeviceName == "AFFECTED-VM-NAME"
+| where Timestamp > ago(24h)
+| summarize ProcessCount = count() by FileName, ProcessCommandLine
+| where ProcessCount > 100  // Long-running process indicator
+| order by ProcessCount desc</code></pre>
+
+                        <h3>Response Actions</h3>
+                        <div class="code-header">
+                            <span class="code-lang">Bash</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-bash"># Linux: Find and kill mining processes
+ps aux | grep -E "(xmrig|miner|cryptonight)" | grep -v grep
+pkill -f xmrig
+pkill -f miner
+
+# Check crontabs for persistence
+crontab -l
+cat /etc/crontab
+ls -la /etc/cron.d/
+
+# Check for mining config files
+find / -name "*.json" -exec grep -l "pool" {} \; 2>/dev/null</code></pre>
+                    </section>
+
+                    <!-- Ransomware -->
+                    <section>
+                        <h2 id="ransomware">Ransomware Indicators</h2>
+
+                        <div class="callout callout-error">
+                            <div class="callout-title">Alert: VM_RansomwareIndication</div>
+                            <div class="callout-content">
+                                <p><strong>Severity:</strong> Critical | <strong>MITRE:</strong> T1486 (Data Encrypted for Impact)</p>
+                                <p>Behavior consistent with ransomware activity detected.</p>
+                            </div>
+                        </div>
+
+                        <h3>Investigation Steps</h3>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL (MDE Advanced Hunting)</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Mass file modifications (encryption indicator)
+DeviceFileEvents
+| where DeviceName == "AFFECTED-VM-NAME"
+| where Timestamp > ago(1h)
+| where ActionType in ("FileModified", "FileRenamed")
+| summarize FileCount = count(), 
+            Extensions = make_set(tostring(split(FileName, ".")[-1]))
+            by bin(Timestamp, 1m)
+| where FileCount > 100  // High volume modification
+| order by Timestamp desc</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL (MDE Advanced Hunting)</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Detect ransom note creation
+DeviceFileEvents
+| where DeviceName == "AFFECTED-VM-NAME"
+| where Timestamp > ago(24h)
+| where FileName has_any ("readme", "decrypt", "restore", "recover", 
+        "ransom", "locked", "encrypted", "how_to")
+    and FileName endswith_any (".txt", ".html", ".hta")
+| project Timestamp, FileName, FolderPath, ActionType</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL (MDE Advanced Hunting)</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Shadow copy deletion (common ransomware behavior)
+DeviceProcessEvents
+| where DeviceName == "AFFECTED-VM-NAME"
+| where Timestamp > ago(24h)
+| where ProcessCommandLine has_any ("vssadmin", "wmic shadowcopy", 
+        "bcdedit", "wbadmin delete")
+| project Timestamp, ProcessCommandLine, AccountName, 
+          InitiatingProcessFileName</code></pre>
+
+                        <h3>Immediate Response</h3>
+                        <div class="callout callout-error">
+                            <div class="callout-title">CRITICAL - Ransomware Response</div>
+                            <div class="callout-content">
+                                <ol>
+                                    <li><strong>ISOLATE IMMEDIATELY</strong> - Network disconnect</li>
+                                    <li>Do NOT shut down - preserve memory for forensics</li>
+                                    <li>Identify patient zero and infection vector</li>
+                                    <li>Check for lateral movement to other VMs</li>
+                                    <li>Engage incident response team</li>
+                                    <li>Preserve backups - verify they're not encrypted</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Brute Force -->
+                    <section>
+                        <h2 id="bruteforce">Brute Force Attack</h2>
+
+                        <div class="callout callout-warning">
+                            <div class="callout-title">Alert: VM_BruteForce</div>
+                            <div class="callout-content">
+                                <p><strong>Severity:</strong> Medium | <strong>MITRE:</strong> T1110 (Brute Force)</p>
+                                <p>Multiple failed login attempts detected from external IPs.</p>
+                            </div>
+                        </div>
+
+                        <h3>Investigation Steps</h3>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL (Log Analytics)</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Failed login attempts by source IP
+SecurityEvent
+| where Computer == "AFFECTED-VM-NAME"
+| where EventID in (4625, 4771)  // Failed logon events
+| where TimeGenerated > ago(24h)
+| summarize FailedAttempts = count(), 
+            TargetAccounts = make_set(TargetUserName)
+            by IpAddress
+| where FailedAttempts > 10
+| order by FailedAttempts desc</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL (Log Analytics)</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Check if brute force succeeded
+SecurityEvent
+| where Computer == "AFFECTED-VM-NAME"
+| where EventID == 4624  // Successful logon
+| where TimeGenerated > ago(24h)
+| where LogonType in (3, 10)  // Network, RemoteInteractive
+| project TimeGenerated, TargetUserName, IpAddress, LogonType
+| order by TimeGenerated desc</code></pre>
+
+                        <h3>Response Actions</h3>
+                        <div class="code-header">
+                            <span class="code-lang">Azure CLI</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-bash"># Block attacking IP via NSG
+az network nsg rule create \
+    --resource-group "rg" \
+    --nsg-name "vm-nsg" \
+    --name "Block-BruteForce-IP" \
+    --priority 100 \
+    --direction Inbound \
+    --access Deny \
+    --source-address-prefixes "ATTACKER-IP" \
+    --destination-port-ranges "*"
+
+# Enable JIT access to restrict RDP/SSH
+az security jit-policy create \
+    --resource-group "rg" \
+    --location "eastus" \
+    --name "jit-policy" \
+    --virtual-machines '[{"id":"/subscriptions/.../vm","ports":[{"number":3389,"duration":"PT3H"}]}]'</code></pre>
+                    </section>
+
+                    <!-- Investigation Checklist -->
+                    <section>
+                        <h2 id="checklist">Universal Investigation Checklist</h2>
+
+                        <div class="checklist">
+                            <div class="checklist-title">VM Alert Investigation Steps</div>
+                            <ul>
+                                <li>
+                                    <input type="checkbox" id="inv1">
+                                    <label for="inv1">Identify the affected VM and timestamp</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="inv2">
+                                    <label for="inv2">Review the process tree and parent processes</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="inv3">
+                                    <label for="inv3">Check user account involved (legitimate or compromised?)</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="inv4">
+                                    <label for="inv4">Analyze network connections (C2, lateral movement)</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="inv5">
+                                    <label for="inv5">Check for persistence mechanisms</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="inv6">
+                                    <label for="inv6">Review file system changes</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="inv7">
+                                    <label for="inv7">Check for similar activity on other VMs</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="inv8">
+                                    <label for="inv8">Document findings and update alert status</label>
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- Key Takeaways -->
+                    <div class="key-takeaways">
+                        <div class="key-takeaways-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 2a.75.75 0 01.75.75v.258a33.186 33.186 0 016.668.83.75.75 0 01-.336 1.461z" clip-rule="evenodd" />
+                            </svg>
+                            Key Takeaways
+                        </div>
+                        <ul>
+                            <li>Use MDE Advanced Hunting for detailed VM investigation</li>
+                            <li>Credential dumping alerts require immediate isolation</li>
+                            <li>Decode base64 PowerShell commands for analysis</li>
+                            <li>Check for lateral movement after any confirmed compromise</li>
+                            <li>Ransomware: isolate but don't shut down</li>
+                            <li>Brute force: enable JIT access to prevent future attacks</li>
+                            <li>Document all investigation steps for compliance</li>
+                            <li>Use the universal checklist for consistent investigations</li>
+                        </ul>
+                    </div>
+
+                    <div class="related-pages">
+                        <div class="related-title">Related Pages</div>
+                        <div class="related-list">
+                            <a href="8-3-vm-playbook.html" class="related-link">VM Threat Playbook</a>
+                            <a href="3-2-mde-integration.html" class="related-link">MDE Integration</a>
+                            <a href="10-1-alert-reference.html" class="related-link">Alert Reference</a>
+                            <a href="8-2-alert-triage.html" class="related-link">Alert Triage</a>
+                        </div>
+                    </div>
+
+                    <nav class="page-nav">
+                        <a href="10-1-alert-reference.html" class="page-nav-link prev">
+                            <span class="page-nav-label">← Previous</span>
+                            <span class="page-nav-title">Alert Reference</span>
+                        </a>
+                        <a href="11-1-alternatives.html" class="page-nav-link next">
+                            <span class="page-nav-label">Next →</span>
+                            <span class="page-nav-title">Alternatives</span>
+                        </a>
+                    </nav>
+                </article>
+
+                <aside class="toc-sidebar">
+                    <div class="toc-title">On This Page</div>
+                    <ul class="toc-list">
+                        <li class="toc-item"><a href="#categories" class="toc-link">Categories</a></li>
+                        <li class="toc-item"><a href="#powershell" class="toc-link">Suspicious PowerShell</a></li>
+                        <li class="toc-item"><a href="#credential" class="toc-link">Credential Dumping</a></li>
+                        <li class="toc-item"><a href="#cryptomining" class="toc-link">Crypto Mining</a></li>
+                        <li class="toc-item"><a href="#ransomware" class="toc-link">Ransomware</a></li>
+                        <li class="toc-item"><a href="#bruteforce" class="toc-link">Brute Force</a></li>
+                        <li class="toc-item"><a href="#checklist" class="toc-link">Checklist</a></li>
+                    </ul>
+                </aside>
+            </div>
+        </main>
+        <div class="mobile-overlay"></div>
+    </div>
+
+    <div class="search-modal">
+        <div class="search-modal-content">
+            <input type="text" class="search-modal-input" placeholder="Search documentation..." autofocus>
+            <div class="search-results"></div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

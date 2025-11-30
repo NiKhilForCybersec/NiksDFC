@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Microsoft Sentinel Automation Playbooks for Defender for Cloud - Logic Apps for automated response and enrichment.">
+    <title>Automation Playbooks - Microsoft Defender for Cloud</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="../index.html" class="sidebar-logo">
+                    <div class="logo-icon">MDC</div>
+                    <span class="logo-text">Defender for Cloud</span>
+                </a>
+                <button class="sidebar-toggle" aria-label="Toggle sidebar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Sentinel</div>
+                    <div class="nav-group expanded" data-group="sentinel">
+                        <div class="nav-group-header">
+                            <span class="nav-group-title">Sentinel Integration</span>
+                            <svg class="nav-group-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="nav-group-items">
+                            <a href="5-1-integration-arch.html" class="nav-subitem">Integration Architecture</a>
+                            <a href="5-2-connector-setup.html" class="nav-subitem">Connector Setup</a>
+                            <a href="5-9-analytics-rules.html" class="nav-subitem">Analytics Rules</a>
+                            <a href="5-10-hunting.html" class="nav-subitem">Hunting Queries</a>
+                            <a href="5-11-incidents.html" class="nav-subitem">Incident Investigation</a>
+                            <a href="5-12-playbooks.html" class="nav-subitem active">Automation Playbooks</a>
+                            <a href="5-13-soar.html" class="nav-subitem">SOAR Use Cases</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" aria-label="Open menu">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10zm0 5.25a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75a.75.75 0 01-.75-.75z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div class="search-box">
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                        </svg>
+                        <input type="text" class="search-input" placeholder="Search documentation..." readonly>
+                        <span class="search-shortcut">⌘K</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <article class="page-content">
+                    <nav class="breadcrumbs">
+                        <a href="../index.html" class="breadcrumb-item">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <a href="5-1-integration-arch.html" class="breadcrumb-item">Sentinel</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span class="breadcrumb-item current">Playbooks</span>
+                    </nav>
+
+                    <header class="page-header">
+                        <h1>Automation Playbooks</h1>
+                        <div class="page-meta">
+                            <span class="badge badge-l2">L2 Technical</span>
+                            <span class="badge badge-l3">L3 Advanced</span>
+                            <span class="page-meta-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clip-rule="evenodd" />
+                                </svg>
+                                30 min read
+                            </span>
+                        </div>
+                    </header>
+
+                    <section>
+                        <p>
+                            Microsoft Sentinel playbooks (Logic Apps) enable automated response to Defender for Cloud alerts. 
+                            This guide provides production-ready playbook templates for common MDC automation scenarios.
+                        </p>
+
+                        <div class="callout callout-info">
+                            <svg class="callout-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0z" clip-rule="evenodd" />
+                            </svg>
+                            <div class="callout-title">Playbooks vs Automation Rules</div>
+                            <div class="callout-content">
+                                <p><strong>Automation Rules:</strong> Lightweight, built-in Sentinel actions (assign, tag, change severity)<br>
+                                <strong>Playbooks:</strong> Logic Apps with full orchestration capabilities (APIs, external systems, complex logic)</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Playbook Categories -->
+                    <section>
+                        <h2 id="categories">Playbook Categories</h2>
+
+                        <div class="ascii-diagram">
+<span class="highlight-cyan">╔══════════════════════════════════════════════════════════════════════════════════════════════╗</span>
+<span class="highlight-cyan">║</span>                        <span class="highlight-blue">PLAYBOOK AUTOMATION CATEGORIES</span>                                     <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">╠══════════════════════════════════════════════════════════════════════════════════════════════╣</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">┌──────────────────┐</span>  <span class="highlight-blue">┌──────────────────┐</span>  <span class="highlight-purple">┌──────────────────┐</span>  <span class="highlight-orange">┌──────────────────┐</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│   ENRICHMENT     │</span>  <span class="highlight-blue">│  NOTIFICATION    │</span>  <span class="highlight-purple">│   CONTAINMENT    │</span>  <span class="highlight-orange">│   REMEDIATION    │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│  ──────────────  │</span>  <span class="highlight-blue">│  ──────────────  │</span>  <span class="highlight-purple">│  ──────────────  │</span>  <span class="highlight-orange">│  ──────────────  │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│ • Threat Intel   │</span>  <span class="highlight-blue">│ • Teams/Slack   │</span>  <span class="highlight-purple">│ • Isolate VM     │</span>  <span class="highlight-orange">│ • Apply patches  │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│ • Geo IP lookup  │</span>  <span class="highlight-blue">│ • Email alerts  │</span>  <span class="highlight-purple">│ • Block IP       │</span>  <span class="highlight-orange">│ • Fix config     │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│ • User context   │</span>  <span class="highlight-blue">│ • ServiceNow    │</span>  <span class="highlight-purple">│ • Disable user   │</span>  <span class="highlight-orange">│ • Rotate creds   │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│ • Asset details  │</span>  <span class="highlight-blue">│ • PagerDuty     │</span>  <span class="highlight-purple">│ • Quarantine     │</span>  <span class="highlight-orange">│ • Enable feature │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">└──────────────────┘</span>  <span class="highlight-blue">└──────────────────┘</span>  <span class="highlight-purple">└──────────────────┘</span>  <span class="highlight-orange">└──────────────────┘</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">───────────────────────────────────────────────────────────────────────────────────────</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">  RISK LEVEL:    Low Risk          Medium Risk         High Risk          High Risk   </span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">  APPROVAL:      Auto              Auto/Manual         Manual              Manual      </span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">───────────────────────────────────────────────────────────────────────────────────────</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">╚══════════════════════════════════════════════════════════════════════════════════════════════╝</span>
+                        </div>
+                    </section>
+
+                    <!-- Playbook 1: Teams Notification -->
+                    <section>
+                        <h2 id="playbook-teams">Playbook 1: Teams Notification</h2>
+
+                        <p>Send rich notifications to Microsoft Teams for high-severity MDC alerts.</p>
+
+                        <div class="code-header">
+                            <span class="code-lang">JSON (ARM Template)</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-json">{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "PlaybookName": {
+      "type": "string",
+      "defaultValue": "MDC-Alert-Teams-Notification"
+    },
+    "TeamsWebhookUrl": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Microsoft Teams Incoming Webhook URL"
+      }
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Logic/workflows",
+      "apiVersion": "2019-05-01",
+      "name": "[parameters('PlaybookName')]",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "Purpose": "MDC Alert Notification",
+        "AutomationType": "Sentinel Playbook"
+      },
+      "properties": {
+        "definition": {
+          "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+          "contentVersion": "1.0.0.0",
+          "triggers": {
+            "Microsoft_Sentinel_alert": {
+              "type": "ApiConnectionWebhook",
+              "inputs": {
+                "body": {
+                  "callback_url": "@{listCallbackUrl()}"
+                },
+                "host": {
+                  "connection": {
+                    "name": "@parameters('$connections')['azuresentinel']['connectionId']"
+                  }
+                },
+                "path": "/subscribe"
+              }
+            }
+          },
+          "actions": {
+            "Parse_Alert": {
+              "type": "ParseJson",
+              "inputs": {
+                "content": "@triggerBody()",
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "SystemAlertId": {"type": "string"},
+                    "AlertDisplayName": {"type": "string"},
+                    "AlertSeverity": {"type": "string"},
+                    "Description": {"type": "string"},
+                    "CompromisedEntity": {"type": "string"},
+                    "Tactics": {"type": "string"}
+                  }
+                }
+              }
+            },
+            "Set_Severity_Color": {
+              "type": "Switch",
+              "expression": "@body('Parse_Alert')?['AlertSeverity']",
+              "cases": {
+                "High": {
+                  "case": "High",
+                  "actions": {
+                    "Set_Color_Red": {
+                      "type": "SetVariable",
+                      "inputs": {
+                        "name": "ThemeColor",
+                        "value": "FF0000"
+                      }
+                    }
+                  }
+                },
+                "Medium": {
+                  "case": "Medium",
+                  "actions": {
+                    "Set_Color_Orange": {
+                      "type": "SetVariable",
+                      "inputs": {
+                        "name": "ThemeColor",
+                        "value": "FFA500"
+                      }
+                    }
+                  }
+                }
+              },
+              "default": {
+                "actions": {
+                  "Set_Color_Blue": {
+                    "type": "SetVariable",
+                    "inputs": {
+                      "name": "ThemeColor",
+                      "value": "0078D4"
+                    }
+                  }
+                }
+              },
+              "runAfter": {
+                "Parse_Alert": ["Succeeded"]
+              }
+            },
+            "Post_to_Teams": {
+              "type": "Http",
+              "inputs": {
+                "method": "POST",
+                "uri": "[parameters('TeamsWebhookUrl')]",
+                "headers": {
+                  "Content-Type": "application/json"
+                },
+                "body": {
+                  "@type": "MessageCard",
+                  "@context": "http://schema.org/extensions",
+                  "themeColor": "@variables('ThemeColor')",
+                  "summary": "MDC Alert: @{body('Parse_Alert')?['AlertDisplayName']}",
+                  "sections": [
+                    {
+                      "activityTitle": "🛡️ Defender for Cloud Alert",
+                      "activitySubtitle": "@{body('Parse_Alert')?['AlertDisplayName']}",
+                      "facts": [
+                        {"name": "Severity", "value": "@{body('Parse_Alert')?['AlertSeverity']}"},
+                        {"name": "Resource", "value": "@{body('Parse_Alert')?['CompromisedEntity']}"},
+                        {"name": "Tactics", "value": "@{body('Parse_Alert')?['Tactics']}"},
+                        {"name": "Alert ID", "value": "@{body('Parse_Alert')?['SystemAlertId']}"}
+                      ],
+                      "text": "@{body('Parse_Alert')?['Description']}"
+                    }
+                  ],
+                  "potentialAction": [
+                    {
+                      "@type": "OpenUri",
+                      "name": "View in Sentinel",
+                      "targets": [
+                        {
+                          "os": "default",
+                          "uri": "https://portal.azure.com/#blade/Microsoft_Azure_Security_Insights/AlertBlade/alertId/@{body('Parse_Alert')?['SystemAlertId']}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              "runAfter": {
+                "Set_Severity_Color": ["Succeeded"]
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}</code></pre>
+                    </section>
+
+                    <!-- Playbook 2: Isolate VM -->
+                    <section>
+                        <h2 id="playbook-isolate">Playbook 2: Isolate Compromised VM</h2>
+
+                        <p>Automatically isolate a VM when malware or active threat is detected.</p>
+
+                        <div class="callout callout-warning">
+                            <svg class="callout-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495z" clip-rule="evenodd" />
+                            </svg>
+                            <div class="callout-title">High-Impact Action</div>
+                            <div class="callout-content">
+                                <p>VM isolation is a destructive action. Consider adding an approval step or limiting 
+                                to specific alert types in production.</p>
+                            </div>
+                        </div>
+
+                        <div class="code-header">
+                            <span class="code-lang">PowerShell (Logic App Action)</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-powershell"># Isolate-VM-Action.ps1
+# This script is called by Logic App to isolate a VM
+
+param(
+    [Parameter(Mandatory=$true)]
+    [string]$ResourceId,
+    
+    [Parameter(Mandatory=$true)]
+    [string]$AlertId,
+    
+    [string]$Reason = "Automated isolation due to security alert"
+)
+
+# Parse Resource ID
+$parts = $ResourceId -split '/'
+$subscriptionId = $parts[2]
+$resourceGroup = $parts[4]
+$vmName = $parts[-1]
+
+# Connect using Managed Identity
+Connect-AzAccount -Identity
+
+# Set context
+Set-AzContext -SubscriptionId $subscriptionId
+
+# Get current NSG
+$vm = Get-AzVM -ResourceGroupName $resourceGroup -Name $vmName
+$nic = Get-AzNetworkInterface -ResourceId $vm.NetworkProfile.NetworkInterfaces[0].Id
+
+# Create isolation NSG
+$isolationNsgName = "NSG-Isolation-$vmName"
+$isolationNsg = New-AzNetworkSecurityGroup `
+    -ResourceGroupName $resourceGroup `
+    -Location $vm.Location `
+    -Name $isolationNsgName `
+    -Tag @{
+        Purpose = "Security Isolation"
+        AlertId = $AlertId
+        IsolatedAt = (Get-Date -Format "yyyy-MM-dd HH:mm:ss")
+    }
+
+# Add deny-all inbound rule
+Add-AzNetworkSecurityRuleConfig `
+    -NetworkSecurityGroup $isolationNsg `
+    -Name "DenyAllInbound" `
+    -Priority 100 `
+    -Direction Inbound `
+    -Access Deny `
+    -Protocol * `
+    -SourceAddressPrefix * `
+    -SourcePortRange * `
+    -DestinationAddressPrefix * `
+    -DestinationPortRange * | Set-AzNetworkSecurityGroup
+
+# Add deny-all outbound (except Azure management)
+Add-AzNetworkSecurityRuleConfig `
+    -NetworkSecurityGroup $isolationNsg `
+    -Name "DenyAllOutbound" `
+    -Priority 100 `
+    -Direction Outbound `
+    -Access Deny `
+    -Protocol * `
+    -SourceAddressPrefix * `
+    -SourcePortRange * `
+    -DestinationAddressPrefix * `
+    -DestinationPortRange * | Set-AzNetworkSecurityGroup
+
+# Store original NSG for recovery
+$originalNsgId = $nic.NetworkSecurityGroup.Id
+$nic | Add-Member -NotePropertyName "OriginalNSG" -NotePropertyValue $originalNsgId -Force
+
+# Apply isolation NSG
+$nic.NetworkSecurityGroup = $isolationNsg
+$nic | Set-AzNetworkInterface
+
+Write-Output @{
+    Status = "Isolated"
+    VMName = $vmName
+    IsolationNSG = $isolationNsgName
+    OriginalNSG = $originalNsgId
+    Timestamp = Get-Date -Format "o"
+}</code></pre>
+
+                        <h3 id="isolate-logic">Logic App Flow</h3>
+
+                        <div class="ascii-diagram">
+<span class="highlight-blue">┌─────────────────────────────────────────────────────────────────────────────────────┐</span>
+<span class="highlight-blue">│</span>                       <span class="highlight-cyan">VM ISOLATION PLAYBOOK FLOW</span>                                   <span class="highlight-blue">│</span>
+<span class="highlight-blue">├─────────────────────────────────────────────────────────────────────────────────────┤</span>
+<span class="highlight-blue">│</span>                                                                                     <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>   <span class="highlight-green">┌───────────────┐</span>                                                               <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>   <span class="highlight-green">│ Sentinel      │</span>                                                               <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>   <span class="highlight-green">│ Alert Trigger │</span>                                                               <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>   <span class="highlight-green">└───────┬───────┘</span>                                                               <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>           │                                                                         <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>           ▼                                                                         <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>   <span class="highlight-orange">┌───────────────┐</span>      NO                                                       <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>   <span class="highlight-orange">│ Is Malware or │</span>──────────────────────────┐                                    <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>   <span class="highlight-orange">│ Active Threat?│</span>                          │                                    <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>   <span class="highlight-orange">└───────┬───────┘</span>                          │                                    <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>           │ YES                              │                                    <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>           ▼                                  │                                    <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>   <span class="highlight-purple">┌───────────────┐</span>                          │                                    <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>   <span class="highlight-purple">│ Extract VM    │</span>                          │                                    <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>   <span class="highlight-purple">│ Resource ID   │</span>                          │                                    <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>   <span class="highlight-purple">└───────┬───────┘</span>                          │                                    <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>           │                                  │                                    <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>           ▼                                  │                                    <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>   <span class="highlight-red">┌───────────────┐</span>                          │                                    <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>   <span class="highlight-red">│ Apply Isolate │</span>                          │                                    <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>   <span class="highlight-red">│ NSG to VM     │</span>                          │                                    <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>   <span class="highlight-red">└───────┬───────┘</span>                          │                                    <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>           │                                  │                                    <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>           ▼                                  ▼                                    <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>   <span class="highlight-blue">┌───────────────┐</span>                  <span class="highlight-green">┌───────────────┐</span>                          <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>   <span class="highlight-blue">│ Notify SOC    │</span>                  <span class="highlight-green">│ Log & Close   │</span>                          <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>   <span class="highlight-blue">│ (Teams/Email) │</span>                  <span class="highlight-green">│               │</span>                          <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>   <span class="highlight-blue">└───────┬───────┘</span>                  <span class="highlight-green">└───────────────┘</span>                          <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>           │                                                                         <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>           ▼                                                                         <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>   <span class="highlight-cyan">┌───────────────┐</span>                                                               <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>   <span class="highlight-cyan">│ Update        │</span>                                                               <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>   <span class="highlight-cyan">│ Sentinel      │</span>                                                               <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>   <span class="highlight-cyan">│ Incident      │</span>                                                               <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>   <span class="highlight-cyan">└───────────────┘</span>                                                               <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>                                                                                     <span class="highlight-blue">│</span>
+<span class="highlight-blue">└─────────────────────────────────────────────────────────────────────────────────────┘</span>
+                        </div>
+                    </section>
+
+                    <!-- Playbook 3: ServiceNow -->
+                    <section>
+                        <h2 id="playbook-snow">Playbook 3: Create ServiceNow Ticket</h2>
+
+                        <p>Automatically create ServiceNow incidents for MDC security alerts.</p>
+
+                        <div class="code-header">
+                            <span class="code-lang">JSON (Logic App HTTP Action)</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-json">{
+  "type": "Http",
+  "inputs": {
+    "method": "POST",
+    "uri": "https://your-instance.service-now.com/api/now/table/incident",
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Basic @{base64(concat(parameters('ServiceNowUser'), ':', parameters('ServiceNowPassword')))}"
+    },
+    "body": {
+      "short_description": "[MDC Alert] @{triggerBody()?['AlertDisplayName']}",
+      "description": "Alert Details:\n\nSeverity: @{triggerBody()?['AlertSeverity']}\nResource: @{triggerBody()?['CompromisedEntity']}\nTactics: @{triggerBody()?['Tactics']}\n\nDescription:\n@{triggerBody()?['Description']}\n\nSentinel Alert ID: @{triggerBody()?['SystemAlertId']}",
+      "urgency": "@{if(equals(triggerBody()?['AlertSeverity'], 'High'), '1', if(equals(triggerBody()?['AlertSeverity'], 'Medium'), '2', '3'))}",
+      "impact": "@{if(equals(triggerBody()?['AlertSeverity'], 'High'), '1', if(equals(triggerBody()?['AlertSeverity'], 'Medium'), '2', '3'))}",
+      "category": "Security",
+      "subcategory": "Cloud Security",
+      "assignment_group": "Security Operations",
+      "caller_id": "azure.sentinel",
+      "u_source": "Microsoft Defender for Cloud",
+      "u_alert_id": "@{triggerBody()?['SystemAlertId']}"
+    }
+  }
+}</code></pre>
+                    </section>
+
+                    <!-- Playbook 4: Enrichment -->
+                    <section>
+                        <h2 id="playbook-enrich">Playbook 4: Alert Enrichment</h2>
+
+                        <p>Enrich alerts with threat intelligence and asset context.</p>
+
+                        <div class="code-header">
+                            <span class="code-lang">JSON (Logic App Snippet)</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-json">{
+  "actions": {
+    "Get_IP_From_Alert": {
+      "type": "Compose",
+      "inputs": "@first(body('Parse_Alert')?['Entities'])?['Address']"
+    },
+    "VirusTotal_IP_Lookup": {
+      "type": "Http",
+      "inputs": {
+        "method": "GET",
+        "uri": "https://www.virustotal.com/api/v3/ip_addresses/@{outputs('Get_IP_From_Alert')}",
+        "headers": {
+          "x-apikey": "@parameters('VirusTotalApiKey')"
+        }
+      },
+      "runAfter": {
+        "Get_IP_From_Alert": ["Succeeded"]
+      }
+    },
+    "AbuseIPDB_Lookup": {
+      "type": "Http",
+      "inputs": {
+        "method": "GET",
+        "uri": "https://api.abuseipdb.com/api/v2/check",
+        "headers": {
+          "Key": "@parameters('AbuseIPDBKey')",
+          "Accept": "application/json"
+        },
+        "queries": {
+          "ipAddress": "@outputs('Get_IP_From_Alert')",
+          "maxAgeInDays": "90"
+        }
+      },
+      "runAfter": {
+        "Get_IP_From_Alert": ["Succeeded"]
+      }
+    },
+    "GeoIP_Lookup": {
+      "type": "Http",
+      "inputs": {
+        "method": "GET",
+        "uri": "http://ip-api.com/json/@{outputs('Get_IP_From_Alert')}"
+      },
+      "runAfter": {
+        "Get_IP_From_Alert": ["Succeeded"]
+      }
+    },
+    "Add_Comment_To_Incident": {
+      "type": "ApiConnection",
+      "inputs": {
+        "host": {
+          "connection": {
+            "name": "@parameters('$connections')['azuresentinel']['connectionId']"
+          }
+        },
+        "method": "post",
+        "path": "/Incidents/Comment",
+        "body": {
+          "incidentArmId": "@triggerBody()?['IncidentArmId']",
+          "message": "**Automated Enrichment Results**\n\n**IP:** @{outputs('Get_IP_From_Alert')}\n\n**GeoIP:**\n- Country: @{body('GeoIP_Lookup')?['country']}\n- City: @{body('GeoIP_Lookup')?['city']}\n- ISP: @{body('GeoIP_Lookup')?['isp']}\n\n**VirusTotal:**\n- Malicious: @{body('VirusTotal_IP_Lookup')?['data']?['attributes']?['last_analysis_stats']?['malicious']}\n- Suspicious: @{body('VirusTotal_IP_Lookup')?['data']?['attributes']?['last_analysis_stats']?['suspicious']}\n\n**AbuseIPDB:**\n- Confidence Score: @{body('AbuseIPDB_Lookup')?['data']?['abuseConfidenceScore']}%\n- Total Reports: @{body('AbuseIPDB_Lookup')?['data']?['totalReports']}"
+        }
+      },
+      "runAfter": {
+        "VirusTotal_IP_Lookup": ["Succeeded"],
+        "AbuseIPDB_Lookup": ["Succeeded"],
+        "GeoIP_Lookup": ["Succeeded"]
+      }
+    }
+  }
+}</code></pre>
+                    </section>
+
+                    <!-- Best Practices -->
+                    <section>
+                        <h2 id="best-practices">Playbook Best Practices</h2>
+
+                        <div class="accordion">
+                            <div class="accordion-item expanded">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">1. Use Managed Identity</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <p>Always use Managed Identity instead of storing credentials in playbooks. 
+                                    Grant the Logic App's identity the minimum required permissions (RBAC).</p>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">2. Add Approval for Destructive Actions</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <p>For high-impact actions (VM isolation, user disablement), add Teams/email approval step 
+                                    before execution. Use timeout to auto-deny if no response.</p>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">3. Implement Error Handling</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <p>Use "Configure run after" to handle failures gracefully. Add notification on failure 
+                                    so SOC knows the automation didn't complete.</p>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">4. Test in Non-Production First</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <p>Always test playbooks with simulated alerts in a dev/test environment before 
+                                    connecting to production automation rules.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Key Takeaways -->
+                    <div class="key-takeaways">
+                        <div class="key-takeaways-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 2a.75.75 0 01.75.75v.258a33.186 33.186 0 016.668.83.75.75 0 01-.336 1.461z" clip-rule="evenodd" />
+                            </svg>
+                            Key Takeaways
+                        </div>
+                        <ul>
+                            <li>Categorize playbooks: Enrichment, Notification, Containment, Remediation</li>
+                            <li>Start with low-risk automation (notifications, enrichment) before containment</li>
+                            <li>Use Managed Identity and Key Vault for credentials - never hardcode</li>
+                            <li>Add approval workflows for high-impact actions</li>
+                            <li>Implement proper error handling and failure notifications</li>
+                            <li>Test thoroughly in non-production before enabling in production</li>
+                        </ul>
+                    </div>
+
+                    <div class="related-pages">
+                        <div class="related-title">Related Pages</div>
+                        <div class="related-list">
+                            <a href="5-9-analytics-rules.html" class="related-link">Analytics Rules</a>
+                            <a href="5-13-soar.html" class="related-link">SOAR Use Cases</a>
+                            <a href="8-2-alert-triage.html" class="related-link">Alert Triage</a>
+                            <a href="9-6-logic-apps.html" class="related-link">Logic App Examples</a>
+                        </div>
+                    </div>
+
+                    <nav class="page-nav">
+                        <a href="5-11-incidents.html" class="page-nav-link prev">
+                            <span class="page-nav-label">← Previous</span>
+                            <span class="page-nav-title">Incident Investigation</span>
+                        </a>
+                        <a href="5-13-soar.html" class="page-nav-link next">
+                            <span class="page-nav-label">Next →</span>
+                            <span class="page-nav-title">SOAR Use Cases</span>
+                        </a>
+                    </nav>
+                </article>
+
+                <aside class="toc-sidebar">
+                    <div class="toc-title">On This Page</div>
+                    <ul class="toc-list">
+                        <li class="toc-item"><a href="#categories" class="toc-link">Categories</a></li>
+                        <li class="toc-item"><a href="#playbook-teams" class="toc-link">Teams Notification</a></li>
+                        <li class="toc-item"><a href="#playbook-isolate" class="toc-link">Isolate VM</a></li>
+                        <li class="toc-item"><a href="#playbook-snow" class="toc-link">ServiceNow Ticket</a></li>
+                        <li class="toc-item"><a href="#playbook-enrich" class="toc-link">Alert Enrichment</a></li>
+                        <li class="toc-item"><a href="#best-practices" class="toc-link">Best Practices</a></li>
+                    </ul>
+                </aside>
+            </div>
+        </main>
+        <div class="mobile-overlay"></div>
+    </div>
+
+    <div class="search-modal">
+        <div class="search-modal-content">
+            <input type="text" class="search-modal-input" placeholder="Search documentation..." autofocus>
+            <div class="search-results"></div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MDC Alert Reference - Comprehensive catalog of Microsoft Defender for Cloud security alerts by type, severity, and MITRE ATT&CK mapping.">
+    <title>Alert Reference - Microsoft Defender for Cloud</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="../index.html" class="sidebar-logo">
+                    <div class="logo-icon">MDC</div>
+                    <span class="logo-text">Defender for Cloud</span>
+                </a>
+                <button class="sidebar-toggle" aria-label="Toggle sidebar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Threat Detection</div>
+                    <div class="nav-group expanded" data-group="alerts">
+                        <div class="nav-group-header">
+                            <span class="nav-group-title">Alerts</span>
+                            <svg class="nav-group-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="nav-group-items">
+                            <a href="10-1-alert-reference.html" class="nav-subitem active">Alert Reference</a>
+                            <a href="10-2-vm-alerts.html" class="nav-subitem">VM Alerts</a>
+                            <a href="10-3-container-alerts.html" class="nav-subitem">Container Alerts</a>
+                            <a href="10-4-identity-alerts.html" class="nav-subitem">Identity Alerts</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" aria-label="Open menu">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10zm0 5.25a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75a.75.75 0 01-.75-.75z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div class="search-box">
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                        </svg>
+                        <input type="text" class="search-input" placeholder="Search documentation..." readonly>
+                        <span class="search-shortcut">⌘K</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <article class="page-content">
+                    <nav class="breadcrumbs">
+                        <a href="../index.html" class="breadcrumb-item">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <a href="10-1-alert-reference.html" class="breadcrumb-item">Threat Detection</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span class="breadcrumb-item current">Alert Reference</span>
+                    </nav>
+
+                    <header class="page-header">
+                        <h1>Alert Reference</h1>
+                        <div class="page-meta">
+                            <span class="badge badge-l1">L1 Fundamentals</span>
+                            <span class="badge badge-l2">L2 Technical</span>
+                            <span class="page-meta-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clip-rule="evenodd" />
+                                </svg>
+                                20 min read
+                            </span>
+                        </div>
+                    </header>
+
+                    <section>
+                        <p>
+                            Microsoft Defender for Cloud generates security alerts when threats are detected 
+                            across your cloud resources. This reference catalogs alert types by resource, 
+                            severity, and MITRE ATT&CK mapping.
+                        </p>
+                    </section>
+
+                    <!-- Alert Structure -->
+                    <section>
+                        <h2 id="structure">Alert Structure</h2>
+
+                        <div class="ascii-diagram">
+<span class="highlight-cyan">╔══════════════════════════════════════════════════════════════════════════════════════════════╗</span>
+<span class="highlight-cyan">║</span>                              <span class="highlight-blue">MDC ALERT ANATOMY</span>                                             <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">╠══════════════════════════════════════════════════════════════════════════════════════════════╣</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">┌─────────────────────────────────────────────────────────────────────────────────────┐</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">│  ALERT: Suspicious PowerShell activity detected                                    │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">├─────────────────────────────────────────────────────────────────────────────────────┤</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">│                                                                                     │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">│  <span class="highlight-red">Severity: High</span>          <span class="highlight-blue">Status: Active</span>           <span class="highlight-green">Time: 2024-01-15 14:32:00</span>     │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">│                                                                                     │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">│  Resource: vm-prod-web-01                                                          │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">│  Subscription: Production-Subscription                                              │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">│                                                                                     │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">│  <span class="highlight-purple">MITRE ATT&CK: Execution (T1059.001)</span>                                                │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">│                                                                                     │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">│  Description:                                                                       │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">│  Analysis of host data detected suspicious PowerShell command line that            │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">│  may indicate an attacker attempting to execute malicious code...                  │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">│                                                                                     │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">│  Evidence:                                                                          │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">│  • Process: powershell.exe                                                         │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">│  • Command: -enc JABjAGwAaQBlAG4AdAAgAD0AIABOAGUAdwAtA...                           │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">│  • User: NT AUTHORITY\SYSTEM                                                       │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">│                                                                                     │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">│  [Take Action]  [Dismiss]  [Suppress]  [Investigate in MDE]                        │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">└─────────────────────────────────────────────────────────────────────────────────────┘</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">╚══════════════════════════════════════════════════════════════════════════════════════════════╝</span>
+                        </div>
+                    </section>
+
+                    <!-- Severity Levels -->
+                    <section>
+                        <h2 id="severity">Severity Levels</h2>
+
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Severity</th>
+                                        <th>Response Time</th>
+                                        <th>Description</th>
+                                        <th>Examples</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span class="badge badge-high">Critical</span></td>
+                                        <td>&lt; 1 hour</td>
+                                        <td>Active attack, immediate response required</td>
+                                        <td>Ransomware detected, data exfiltration</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge badge-high">High</span></td>
+                                        <td>&lt; 4 hours</td>
+                                        <td>Likely malicious activity requiring investigation</td>
+                                        <td>Malware execution, privilege escalation</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge badge-medium">Medium</span></td>
+                                        <td>&lt; 24 hours</td>
+                                        <td>Potentially unwanted or suspicious activity</td>
+                                        <td>Unusual access patterns, recon activity</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge badge-low">Low</span></td>
+                                        <td>&lt; 72 hours</td>
+                                        <td>Informational, may indicate early attack stages</td>
+                                        <td>Port scanning, anomalous login</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge" style="background: var(--bg-tertiary);">Informational</span></td>
+                                        <td>As needed</td>
+                                        <td>No immediate threat, awareness only</td>
+                                        <td>Security configuration issues</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Alerts by Resource -->
+                    <section>
+                        <h2 id="by-resource">Alerts by Resource Type</h2>
+
+                        <div class="accordion">
+                            <div class="accordion-item expanded">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">Virtual Machines (Windows/Linux)</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <div class="table-wrapper">
+                                        <table class="compact">
+                                            <thead>
+                                                <tr>
+                                                    <th>Alert</th>
+                                                    <th>Severity</th>
+                                                    <th>MITRE</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Suspicious PowerShell activity</td>
+                                                    <td><span class="badge badge-high">High</span></td>
+                                                    <td>Execution</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Malicious credential theft tool detected</td>
+                                                    <td><span class="badge badge-high">High</span></td>
+                                                    <td>Credential Access</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Ransomware indicators detected</td>
+                                                    <td><span class="badge badge-high">Critical</span></td>
+                                                    <td>Impact</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Suspicious process executed</td>
+                                                    <td><span class="badge badge-medium">Medium</span></td>
+                                                    <td>Execution</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Cryptomining activity detected</td>
+                                                    <td><span class="badge badge-medium">Medium</span></td>
+                                                    <td>Impact</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Possible attack tool detected</td>
+                                                    <td><span class="badge badge-high">High</span></td>
+                                                    <td>Execution</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Lateral movement detected</td>
+                                                    <td><span class="badge badge-high">High</span></td>
+                                                    <td>Lateral Movement</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">Kubernetes / Containers</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <div class="table-wrapper">
+                                        <table class="compact">
+                                            <thead>
+                                                <tr>
+                                                    <th>Alert</th>
+                                                    <th>Severity</th>
+                                                    <th>MITRE</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Privileged container detected</td>
+                                                    <td><span class="badge badge-medium">Medium</span></td>
+                                                    <td>Privilege Escalation</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Container running as root</td>
+                                                    <td><span class="badge badge-medium">Medium</span></td>
+                                                    <td>Privilege Escalation</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Exposed Kubernetes dashboard</td>
+                                                    <td><span class="badge badge-high">High</span></td>
+                                                    <td>Initial Access</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>New container in kube-system</td>
+                                                    <td><span class="badge badge-medium">Medium</span></td>
+                                                    <td>Persistence</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Suspicious Kubernetes API call</td>
+                                                    <td><span class="badge badge-high">High</span></td>
+                                                    <td>Discovery</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Container image from untrusted registry</td>
+                                                    <td><span class="badge badge-medium">Medium</span></td>
+                                                    <td>Defense Evasion</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">Storage Accounts</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <div class="table-wrapper">
+                                        <table class="compact">
+                                            <thead>
+                                                <tr>
+                                                    <th>Alert</th>
+                                                    <th>Severity</th>
+                                                    <th>MITRE</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Malware uploaded to storage</td>
+                                                    <td><span class="badge badge-high">High</span></td>
+                                                    <td>Initial Access</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Access from Tor exit node</td>
+                                                    <td><span class="badge badge-high">High</span></td>
+                                                    <td>Initial Access</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Unusual data extraction</td>
+                                                    <td><span class="badge badge-high">High</span></td>
+                                                    <td>Exfiltration</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Anonymous access to storage</td>
+                                                    <td><span class="badge badge-medium">Medium</span></td>
+                                                    <td>Initial Access</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Access from suspicious IP</td>
+                                                    <td><span class="badge badge-medium">Medium</span></td>
+                                                    <td>Initial Access</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">Azure SQL / Databases</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <div class="table-wrapper">
+                                        <table class="compact">
+                                            <thead>
+                                                <tr>
+                                                    <th>Alert</th>
+                                                    <th>Severity</th>
+                                                    <th>MITRE</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>SQL injection attempt</td>
+                                                    <td><span class="badge badge-high">High</span></td>
+                                                    <td>Initial Access</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Brute force attack</td>
+                                                    <td><span class="badge badge-high">High</span></td>
+                                                    <td>Credential Access</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Successful login after brute force</td>
+                                                    <td><span class="badge badge-high">Critical</span></td>
+                                                    <td>Initial Access</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Unusual data export</td>
+                                                    <td><span class="badge badge-medium">Medium</span></td>
+                                                    <td>Exfiltration</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Access from unusual location</td>
+                                                    <td><span class="badge badge-medium">Medium</span></td>
+                                                    <td>Initial Access</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">Key Vault</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <div class="table-wrapper">
+                                        <table class="compact">
+                                            <thead>
+                                                <tr>
+                                                    <th>Alert</th>
+                                                    <th>Severity</th>
+                                                    <th>MITRE</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Unusual secret access pattern</td>
+                                                    <td><span class="badge badge-high">High</span></td>
+                                                    <td>Credential Access</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Access from suspicious IP</td>
+                                                    <td><span class="badge badge-medium">Medium</span></td>
+                                                    <td>Initial Access</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>High volume of operations</td>
+                                                    <td><span class="badge badge-medium">Medium</span></td>
+                                                    <td>Discovery</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Access from Tor</td>
+                                                    <td><span class="badge badge-high">High</span></td>
+                                                    <td>Defense Evasion</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">Azure Resource Manager</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <div class="table-wrapper">
+                                        <table class="compact">
+                                            <thead>
+                                                <tr>
+                                                    <th>Alert</th>
+                                                    <th>Severity</th>
+                                                    <th>MITRE</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>AZUREHOUND tool detected</td>
+                                                    <td><span class="badge badge-high">High</span></td>
+                                                    <td>Discovery</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>MicroBurst toolkit usage</td>
+                                                    <td><span class="badge badge-high">High</span></td>
+                                                    <td>Discovery</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Suspicious resource deployment</td>
+                                                    <td><span class="badge badge-medium">Medium</span></td>
+                                                    <td>Resource Development</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Crypto mining VM deployed</td>
+                                                    <td><span class="badge badge-high">High</span></td>
+                                                    <td>Impact</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- MITRE Mapping -->
+                    <section>
+                        <h2 id="mitre">MITRE ATT&CK Mapping</h2>
+
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Tactic</th>
+                                        <th>MDC Detection Coverage</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Initial Access</strong></td>
+                                        <td>SQL injection, brute force, suspicious login, phishing domain access</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Execution</strong></td>
+                                        <td>Suspicious PowerShell, script execution, attack tools</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Persistence</strong></td>
+                                        <td>Startup scripts, scheduled tasks, container modifications</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Privilege Escalation</strong></td>
+                                        <td>Privileged containers, sudo abuse, role assignment changes</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Defense Evasion</strong></td>
+                                        <td>Tor access, log tampering, disabling security tools</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Credential Access</strong></td>
+                                        <td>Mimikatz, credential theft tools, Key Vault access</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Discovery</strong></td>
+                                        <td>AzureHound, MicroBurst, network scanning, API enumeration</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Lateral Movement</strong></td>
+                                        <td>RDP from compromised VM, service account abuse</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Collection</strong></td>
+                                        <td>Data staging, storage access patterns</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Exfiltration</strong></td>
+                                        <td>Unusual data download, DNS tunneling, cloud storage abuse</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Impact</strong></td>
+                                        <td>Ransomware, crypto mining, data destruction</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Query Alerts -->
+                    <section>
+                        <h2 id="query">Querying Alerts</h2>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// All alerts by severity - last 7 days
+SecurityAlert
+| where TimeGenerated > ago(7d)
+| summarize Count = count() by AlertSeverity
+| order by Count desc</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Alerts mapped to MITRE tactics
+SecurityAlert
+| where TimeGenerated > ago(30d)
+| extend Tactics = todynamic(Tactics)
+| mv-expand Tactics
+| summarize AlertCount = count() by tostring(Tactics)
+| order by AlertCount desc</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// High/Critical alerts with entity details
+SecurityAlert
+| where TimeGenerated > ago(24h)
+| where AlertSeverity in ("High", "Critical")
+| extend Entities = todynamic(Entities)
+| mv-expand Entities
+| extend EntityType = Entities.Type, EntityName = Entities.Name
+| project TimeGenerated, AlertName, AlertSeverity, EntityType, EntityName, Status</code></pre>
+                    </section>
+
+                    <!-- Key Takeaways -->
+                    <div class="key-takeaways">
+                        <div class="key-takeaways-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 2a.75.75 0 01.75.75v.258a33.186 33.186 0 016.668.83.75.75 0 01-.336 1.461z" clip-rule="evenodd" />
+                            </svg>
+                            Key Takeaways
+                        </div>
+                        <ul>
+                            <li>MDC generates alerts for VMs, containers, storage, databases, and more</li>
+                            <li>Five severity levels: Critical, High, Medium, Low, Informational</li>
+                            <li>All alerts map to MITRE ATT&CK tactics and techniques</li>
+                            <li>Critical/High alerts require immediate investigation</li>
+                            <li>Alerts include affected resource, evidence, and remediation steps</li>
+                            <li>Use KQL to query and analyze alert patterns</li>
+                            <li>Integrate with MDE for deeper investigation</li>
+                            <li>Configure automation to respond to specific alert types</li>
+                        </ul>
+                    </div>
+
+                    <div class="related-pages">
+                        <div class="related-title">Related Pages</div>
+                        <div class="related-list">
+                            <a href="8-2-alert-triage.html" class="related-link">Alert Triage</a>
+                            <a href="8-3-vm-playbook.html" class="related-link">VM Playbook</a>
+                            <a href="5-12-playbooks.html" class="related-link">Automation</a>
+                            <a href="12-1-kql-library.html" class="related-link">KQL Library</a>
+                        </div>
+                    </div>
+
+                    <nav class="page-nav">
+                        <a href="9-1-devsecops.html" class="page-nav-link prev">
+                            <span class="page-nav-label">← Previous</span>
+                            <span class="page-nav-title">DevSecOps Integration</span>
+                        </a>
+                        <a href="10-2-vm-alerts.html" class="page-nav-link next">
+                            <span class="page-nav-label">Next →</span>
+                            <span class="page-nav-title">VM Alert Details</span>
+                        </a>
+                    </nav>
+                </article>
+
+                <aside class="toc-sidebar">
+                    <div class="toc-title">On This Page</div>
+                    <ul class="toc-list">
+                        <li class="toc-item"><a href="#structure" class="toc-link">Alert Structure</a></li>
+                        <li class="toc-item"><a href="#severity" class="toc-link">Severity Levels</a></li>
+                        <li class="toc-item"><a href="#by-resource" class="toc-link">By Resource Type</a></li>
+                        <li class="toc-item"><a href="#mitre" class="toc-link">MITRE ATT&CK</a></li>
+                        <li class="toc-item"><a href="#query" class="toc-link">Querying Alerts</a></li>
+                    </ul>
+                </aside>
+            </div>
+        </main>
+        <div class="mobile-overlay"></div>
+    </div>
+
+    <div class="search-modal">
+        <div class="search-modal-content">
+            <input type="text" class="search-modal-input" placeholder="Search documentation..." autofocus>
+            <div class="search-results"></div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

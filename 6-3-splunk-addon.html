@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Splunk Add-on Configuration - Detailed setup guide for the Splunk Add-on for Microsoft Cloud Services.">
+    <title>Splunk Add-on Configuration - Microsoft Defender for Cloud</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="../index.html" class="sidebar-logo">
+                    <div class="logo-icon">MDC</div>
+                    <span class="logo-text">Defender for Cloud</span>
+                </a>
+                <button class="sidebar-toggle" aria-label="Toggle sidebar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Splunk Integration</div>
+                    <div class="nav-group expanded" data-group="splunk">
+                        <div class="nav-group-header">
+                            <span class="nav-group-title">Splunk</span>
+                            <svg class="nav-group-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="nav-group-items">
+                            <a href="6-1-splunk-integration.html" class="nav-subitem">Overview</a>
+                            <a href="6-2-splunk-dashboards.html" class="nav-subitem">Dashboards</a>
+                            <a href="6-3-splunk-addon.html" class="nav-subitem active">Add-on Config</a>
+                            <a href="6-4-splunk-alerts.html" class="nav-subitem">Alerts</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" aria-label="Open menu">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10zm0 5.25a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75a.75.75 0 01-.75-.75z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div class="search-box">
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                        </svg>
+                        <input type="text" class="search-input" placeholder="Search documentation..." readonly>
+                        <span class="search-shortcut">⌘K</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <article class="page-content">
+                    <nav class="breadcrumbs">
+                        <a href="../index.html" class="breadcrumb-item">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <a href="6-1-splunk-integration.html" class="breadcrumb-item">Splunk</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span class="breadcrumb-item current">Add-on Config</span>
+                    </nav>
+
+                    <header class="page-header">
+                        <h1>Splunk Add-on Configuration</h1>
+                        <div class="page-meta">
+                            <span class="badge badge-l2">L2 Technical</span>
+                            <span class="page-meta-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clip-rule="evenodd" />
+                                </svg>
+                                11 min read
+                            </span>
+                        </div>
+                    </header>
+
+                    <section>
+                        <p>
+                            Detailed configuration guide for the Splunk Add-on for Microsoft Cloud Services 
+                            to ingest Microsoft Defender for Cloud alerts and security data into Splunk.
+                        </p>
+                    </section>
+
+                    <!-- Prerequisites -->
+                    <section>
+                        <h2 id="prerequisites">Prerequisites</h2>
+
+                        <ul>
+                            <li>Splunk Enterprise 8.x or Splunk Cloud</li>
+                            <li>Admin access to Splunk</li>
+                            <li>Azure subscription with MDC enabled</li>
+                            <li>Azure AD app registration with appropriate permissions</li>
+                        </ul>
+
+                        <h3>Required Azure Permissions</h3>
+                        <div class="table-wrapper">
+                            <table class="compact">
+                                <thead>
+                                    <tr>
+                                        <th>Data Type</th>
+                                        <th>Required Permission</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Security Alerts</td>
+                                        <td>SecurityEvents.Read.All (Graph API)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Recommendations</td>
+                                        <td>Security Reader (Azure RBAC)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Secure Score</td>
+                                        <td>Security Reader (Azure RBAC)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Event Hub</td>
+                                        <td>Azure Event Hubs Data Receiver</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Install Add-on -->
+                    <section>
+                        <h2 id="install">Install Add-on</h2>
+
+                        <h3>From Splunkbase</h3>
+                        <ol>
+                            <li>Go to <strong>Apps</strong> → <strong>Find More Apps</strong></li>
+                            <li>Search for "Splunk Add-on for Microsoft Cloud Services"</li>
+                            <li>Click <strong>Install</strong></li>
+                            <li>Enter Splunk.com credentials</li>
+                            <li>Restart Splunk when prompted</li>
+                        </ol>
+
+                        <h3>Manual Installation</h3>
+                        <div class="code-header">
+                            <span class="code-lang">Bash</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-bash"># Download from Splunkbase
+cd $SPLUNK_HOME/etc/apps
+
+# Extract the add-on
+tar -xvf Splunk_TA_microsoft-cloudservices-*.tgz
+
+# Restart Splunk
+$SPLUNK_HOME/bin/splunk restart</code></pre>
+                    </section>
+
+                    <!-- Azure App Registration -->
+                    <section>
+                        <h2 id="azure-app">Azure App Registration</h2>
+
+                        <h3>Create App Registration</h3>
+                        <div class="code-header">
+                            <span class="code-lang">Azure CLI</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-bash"># Create app registration
+az ad app create \
+    --display-name "Splunk-MDC-Integration" \
+    --sign-in-audience "AzureADMyOrg"
+
+# Get the App ID
+APP_ID=$(az ad app list --display-name "Splunk-MDC-Integration" --query "[0].appId" -o tsv)
+
+# Create service principal
+az ad sp create --id $APP_ID
+
+# Create client secret (save this!)
+az ad app credential reset \
+    --id $APP_ID \
+    --append \
+    --years 2 \
+    --query password -o tsv</code></pre>
+
+                        <h3>Assign Permissions</h3>
+                        <div class="code-header">
+                            <span class="code-lang">Azure CLI</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-bash"># Get service principal object ID
+SP_ID=$(az ad sp list --display-name "Splunk-MDC-Integration" --query "[0].id" -o tsv)
+
+# Assign Security Reader role at subscription level
+az role assignment create \
+    --assignee $SP_ID \
+    --role "Security Reader" \
+    --scope "/subscriptions/$SUBSCRIPTION_ID"
+
+# For multiple subscriptions, repeat or assign at management group level
+az role assignment create \
+    --assignee $SP_ID \
+    --role "Security Reader" \
+    --scope "/providers/Microsoft.Management/managementGroups/$MG_ID"</code></pre>
+
+                        <h3>Grant Graph API Permissions</h3>
+                        <ol>
+                            <li>Go to <strong>Azure AD</strong> → <strong>App registrations</strong></li>
+                            <li>Select "Splunk-MDC-Integration"</li>
+                            <li>Click <strong>API permissions</strong> → <strong>Add a permission</strong></li>
+                            <li>Select <strong>Microsoft Graph</strong> → <strong>Application permissions</strong></li>
+                            <li>Add: <code>SecurityEvents.Read.All</code></li>
+                            <li>Click <strong>Grant admin consent</strong></li>
+                        </ol>
+                    </section>
+
+                    <!-- Configure Add-on -->
+                    <section>
+                        <h2 id="configure">Configure Add-on</h2>
+
+                        <h3>Add Azure Account</h3>
+                        <ol>
+                            <li>In Splunk, go to <strong>Settings</strong> → <strong>Data inputs</strong></li>
+                            <li>Click <strong>Splunk Add-on for Microsoft Cloud Services</strong></li>
+                            <li>Go to <strong>Configuration</strong> → <strong>Account</strong></li>
+                            <li>Click <strong>Add</strong></li>
+                            <li>Configure:
+                                <ul>
+                                    <li><strong>Account Name:</strong> azure-mdc-prod</li>
+                                    <li><strong>Client ID:</strong> (from app registration)</li>
+                                    <li><strong>Client Secret:</strong> (from app registration)</li>
+                                    <li><strong>Tenant ID:</strong> (your Azure AD tenant)</li>
+                                </ul>
+                            </li>
+                            <li>Click <strong>Add</strong></li>
+                        </ol>
+
+                        <h3>Create Security Alerts Input</h3>
+                        <ol>
+                            <li>Go to <strong>Inputs</strong> tab</li>
+                            <li>Click <strong>Create New Input</strong> → <strong>Azure Security Center Alerts</strong></li>
+                            <li>Configure:
+                                <ul>
+                                    <li><strong>Name:</strong> mdc-alerts</li>
+                                    <li><strong>Interval:</strong> 300 (5 minutes)</li>
+                                    <li><strong>Index:</strong> azure_security</li>
+                                    <li><strong>Azure Account:</strong> azure-mdc-prod</li>
+                                    <li><strong>Subscription ID:</strong> (your subscription or * for all)</li>
+                                </ul>
+                            </li>
+                            <li>Click <strong>Add</strong></li>
+                        </ol>
+
+                        <h3>Input Configuration File</h3>
+                        <div class="code-header">
+                            <span class="code-lang">conf</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-properties"># inputs.conf
+[azure_security_center_alerts://mdc-alerts]
+account = azure-mdc-prod
+index = azure_security
+interval = 300
+sourcetype = azure:security:alert
+subscription_id = *
+start_time = -7d
+
+[azure_security_center_recommendations://mdc-recommendations]
+account = azure-mdc-prod
+index = azure_security
+interval = 3600
+sourcetype = azure:security:recommendation
+subscription_id = *
+
+[azure_security_center_secure_score://mdc-score]
+account = azure-mdc-prod
+index = azure_security
+interval = 3600
+sourcetype = azure:security:score
+subscription_id = *</code></pre>
+                    </section>
+
+                    <!-- Event Hub Method -->
+                    <section>
+                        <h2 id="eventhub">Event Hub Method (Alternative)</h2>
+
+                        <p>For higher throughput and real-time streaming:</p>
+
+                        <h3>Azure Setup</h3>
+                        <div class="code-header">
+                            <span class="code-lang">Azure CLI</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-bash"># Create Event Hub namespace
+az eventhubs namespace create \
+    --name "mdc-splunk-eh" \
+    --resource-group "security-rg" \
+    --sku Standard
+
+# Create Event Hub
+az eventhubs eventhub create \
+    --name "security-alerts" \
+    --namespace-name "mdc-splunk-eh" \
+    --resource-group "security-rg" \
+    --partition-count 4
+
+# Create consumer group for Splunk
+az eventhubs eventhub consumer-group create \
+    --name "splunk-consumer" \
+    --namespace-name "mdc-splunk-eh" \
+    --eventhub-name "security-alerts" \
+    --resource-group "security-rg"
+
+# Get connection string
+az eventhubs namespace authorization-rule keys list \
+    --namespace-name "mdc-splunk-eh" \
+    --resource-group "security-rg" \
+    --name RootManageSharedAccessKey \
+    --query primaryConnectionString -o tsv</code></pre>
+
+                        <h3>Splunk Event Hub Input</h3>
+                        <div class="code-header">
+                            <span class="code-lang">conf</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-properties"># inputs.conf for Event Hub
+[azure_event_hub://mdc-alerts-eventhub]
+account = azure-mdc-prod
+index = azure_security
+sourcetype = azure:security:alert
+event_hub_namespace = mdc-splunk-eh.servicebus.windows.net
+event_hub_name = security-alerts
+consumer_group = splunk-consumer
+max_batch_size = 100
+interval = 60</code></pre>
+                    </section>
+
+                    <!-- Index Configuration -->
+                    <section>
+                        <h2 id="indexes">Index Configuration</h2>
+
+                        <div class="code-header">
+                            <span class="code-lang">conf</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-properties"># indexes.conf
+[azure_security]
+homePath = $SPLUNK_DB/azure_security/db
+coldPath = $SPLUNK_DB/azure_security/colddb
+thawedPath = $SPLUNK_DB/azure_security/thaweddb
+maxTotalDataSizeMB = 500000
+frozenTimePeriodInSecs = 7776000  # 90 days</code></pre>
+
+                        <h3>Recommended Sourcetypes</h3>
+                        <div class="table-wrapper">
+                            <table class="compact">
+                                <thead>
+                                    <tr>
+                                        <th>Data Type</th>
+                                        <th>Sourcetype</th>
+                                        <th>Index</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Security Alerts</td>
+                                        <td>azure:security:alert</td>
+                                        <td>azure_security</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Recommendations</td>
+                                        <td>azure:security:recommendation</td>
+                                        <td>azure_security</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Secure Score</td>
+                                        <td>azure:security:score</td>
+                                        <td>azure_security</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Activity Logs</td>
+                                        <td>azure:activity</td>
+                                        <td>azure_audit</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Field Extractions -->
+                    <section>
+                        <h2 id="fields">Field Extractions</h2>
+
+                        <div class="code-header">
+                            <span class="code-lang">conf</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-properties"># props.conf
+[azure:security:alert]
+SHOULD_LINEMERGE = false
+TIME_FORMAT = %Y-%m-%dT%H:%M:%S
+TIME_PREFIX = "startTimeUtc"\s*:\s*"
+MAX_TIMESTAMP_LOOKAHEAD = 30
+KV_MODE = json
+TRUNCATE = 0
+
+# Field aliases for CIM compliance
+FIELDALIAS-dest = compromisedEntity AS dest
+FIELDALIAS-severity = severity AS severity
+FIELDALIAS-signature = alertDisplayName AS signature
+FIELDALIAS-vendor_product = "Microsoft Defender for Cloud" AS vendor_product
+
+[azure:security:recommendation]
+SHOULD_LINEMERGE = false
+KV_MODE = json
+TIME_FORMAT = %Y-%m-%dT%H:%M:%S</code></pre>
+                    </section>
+
+                    <!-- Validation -->
+                    <section>
+                        <h2 id="validate">Validate Configuration</h2>
+
+                        <h3>Check Data Ingestion</h3>
+                        <div class="code-header">
+                            <span class="code-lang">SPL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-spl">| tstats count WHERE index=azure_security by sourcetype, _time span=1h
+| timechart span=1h count by sourcetype</code></pre>
+
+                        <h3>Verify Field Extraction</h3>
+                        <div class="code-header">
+                            <span class="code-lang">SPL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-spl">index=azure_security sourcetype="azure:security:alert"
+| head 10
+| table _time, alertDisplayName, severity, compromisedEntity, status</code></pre>
+
+                        <h3>Check Input Status</h3>
+                        <div class="code-header">
+                            <span class="code-lang">SPL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-spl">index=_internal sourcetype=splunkd component=ModularInputs
+| search "azure_security_center"
+| table _time, log_level, message</code></pre>
+                    </section>
+
+                    <!-- Troubleshooting -->
+                    <section>
+                        <h2 id="troubleshooting">Troubleshooting</h2>
+
+                        <div class="accordion">
+                            <div class="accordion-item">
+                                <button class="accordion-header">
+                                    <span>Authentication errors</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </button>
+                                <div class="accordion-content">
+                                    <ul>
+                                        <li>Verify Client ID and Tenant ID</li>
+                                        <li>Check if client secret has expired</li>
+                                        <li>Confirm admin consent was granted</li>
+                                        <li>Verify service principal has required roles</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <button class="accordion-header">
+                                    <span>No data appearing</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </button>
+                                <div class="accordion-content">
+                                    <ul>
+                                        <li>Check input is enabled</li>
+                                        <li>Verify subscription ID is correct</li>
+                                        <li>Check _internal logs for errors</li>
+                                        <li>Confirm MDC has alerts to collect</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <button class="accordion-header">
+                                    <span>Duplicate events</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </button>
+                                <div class="accordion-content">
+                                    <ul>
+                                        <li>Check for multiple inputs configured</li>
+                                        <li>Verify checkpoint file is working</li>
+                                        <li>Adjust start_time setting</li>
+                                        <li>Deduplicate using alert ID</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Best Practices -->
+                    <section>
+                        <h2 id="best-practices">Best Practices</h2>
+
+                        <div class="checklist">
+                            <div class="checklist-title">Add-on Configuration Checklist</div>
+                            <ul>
+                                <li>
+                                    <input type="checkbox" id="ao1">
+                                    <label for="ao1">Use dedicated service principal for Splunk</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="ao2">
+                                    <label for="ao2">Apply least-privilege permissions</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="ao3">
+                                    <label for="ao3">Create dedicated index for Azure security data</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="ao4">
+                                    <label for="ao4">Configure appropriate polling intervals</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="ao5">
+                                    <label for="ao5">Use Event Hub for high-volume environments</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="ao6">
+                                    <label for="ao6">Monitor _internal for ingestion errors</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="ao7">
+                                    <label for="ao7">Set up client secret rotation reminders</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="ao8">
+                                    <label for="ao8">Validate data with sample queries</label>
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- Key Takeaways -->
+                    <div class="key-takeaways">
+                        <div class="key-takeaways-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 2a.75.75 0 01.75.75v.258a33.186 33.186 0 016.668.83.75.75 0 01-.336 1.461z" clip-rule="evenodd" />
+                            </svg>
+                            Key Takeaways
+                        </div>
+                        <ul>
+                            <li>Use Splunk Add-on for Microsoft Cloud Services</li>
+                            <li>Create dedicated Azure AD app registration</li>
+                            <li>Grant Security Reader and Graph API permissions</li>
+                            <li>Configure separate inputs for alerts, recommendations, score</li>
+                            <li>Use Event Hub for real-time, high-volume data</li>
+                            <li>Create dedicated index for Azure security data</li>
+                            <li>Monitor _internal for ingestion issues</li>
+                            <li>Rotate client secrets before expiration</li>
+                        </ul>
+                    </div>
+
+                    <div class="related-pages">
+                        <div class="related-title">Related Pages</div>
+                        <div class="related-list">
+                            <a href="6-1-splunk-integration.html" class="related-link">Splunk Integration</a>
+                            <a href="6-2-splunk-dashboards.html" class="related-link">Splunk Dashboards</a>
+                            <a href="6-4-splunk-alerts.html" class="related-link">Splunk Alerts</a>
+                            <a href="7-1-siem-overview.html" class="related-link">SIEM Overview</a>
+                        </div>
+                    </div>
+
+                    <nav class="page-nav">
+                        <a href="6-2-splunk-dashboards.html" class="page-nav-link prev">
+                            <span class="page-nav-label">← Previous</span>
+                            <span class="page-nav-title">Dashboards</span>
+                        </a>
+                        <a href="6-4-splunk-alerts.html" class="page-nav-link next">
+                            <span class="page-nav-label">Next →</span>
+                            <span class="page-nav-title">Splunk Alerts</span>
+                        </a>
+                    </nav>
+                </article>
+
+                <aside class="toc-sidebar">
+                    <div class="toc-title">On This Page</div>
+                    <ul class="toc-list">
+                        <li class="toc-item"><a href="#prerequisites" class="toc-link">Prerequisites</a></li>
+                        <li class="toc-item"><a href="#install" class="toc-link">Install</a></li>
+                        <li class="toc-item"><a href="#azure-app" class="toc-link">Azure App</a></li>
+                        <li class="toc-item"><a href="#configure" class="toc-link">Configure</a></li>
+                        <li class="toc-item"><a href="#eventhub" class="toc-link">Event Hub</a></li>
+                        <li class="toc-item"><a href="#indexes" class="toc-link">Indexes</a></li>
+                        <li class="toc-item"><a href="#fields" class="toc-link">Fields</a></li>
+                        <li class="toc-item"><a href="#validate" class="toc-link">Validate</a></li>
+                        <li class="toc-item"><a href="#troubleshooting" class="toc-link">Troubleshooting</a></li>
+                        <li class="toc-item"><a href="#best-practices" class="toc-link">Best Practices</a></li>
+                    </ul>
+                </aside>
+            </div>
+        </main>
+        <div class="mobile-overlay"></div>
+    </div>
+
+    <div class="search-modal">
+        <div class="search-modal-content">
+            <input type="text" class="search-modal-input" placeholder="Search documentation..." autofocus>
+            <div class="search-results"></div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

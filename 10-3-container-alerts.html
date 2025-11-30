@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Container Alert Deep Dive - Detailed investigation guide for container and Kubernetes security alerts.">
+    <title>Container Alert Deep Dive - Microsoft Defender for Cloud</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="../index.html" class="sidebar-logo">
+                    <div class="logo-icon">MDC</div>
+                    <span class="logo-text">Defender for Cloud</span>
+                </a>
+                <button class="sidebar-toggle" aria-label="Toggle sidebar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Threat Detection</div>
+                    <div class="nav-group expanded" data-group="alerts">
+                        <div class="nav-group-header">
+                            <span class="nav-group-title">Alert Details</span>
+                            <svg class="nav-group-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="nav-group-items">
+                            <a href="10-1-alert-reference.html" class="nav-subitem">Alert Reference</a>
+                            <a href="10-2-vm-alerts.html" class="nav-subitem">VM Alerts</a>
+                            <a href="10-3-container-alerts.html" class="nav-subitem active">Container Alerts</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" aria-label="Open menu">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10zm0 5.25a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75a.75.75 0 01-.75-.75z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div class="search-box">
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                        </svg>
+                        <input type="text" class="search-input" placeholder="Search documentation..." readonly>
+                        <span class="search-shortcut">⌘K</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <article class="page-content">
+                    <nav class="breadcrumbs">
+                        <a href="../index.html" class="breadcrumb-item">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <a href="10-1-alert-reference.html" class="breadcrumb-item">Threat Detection</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span class="breadcrumb-item current">Container Alerts</span>
+                    </nav>
+
+                    <header class="page-header">
+                        <h1>Container Alert Deep Dive</h1>
+                        <div class="page-meta">
+                            <span class="badge badge-l2">L2 Technical</span>
+                            <span class="badge badge-l3">L3 Advanced</span>
+                            <span class="page-meta-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clip-rule="evenodd" />
+                                </svg>
+                                14 min read
+                            </span>
+                        </div>
+                    </header>
+
+                    <section>
+                        <p>
+                            This guide provides detailed investigation procedures for container and Kubernetes 
+                            security alerts from Defender for Containers. Each alert includes investigation 
+                            queries, kubectl commands, and response actions.
+                        </p>
+                    </section>
+
+                    <!-- Alert Categories -->
+                    <section>
+                        <h2 id="categories">Container Alert Categories</h2>
+
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Category</th>
+                                        <th>MITRE Tactic</th>
+                                        <th>Common Alerts</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Privileged Container</strong></td>
+                                        <td>Privilege Escalation</td>
+                                        <td>Privileged container, hostPID, hostNetwork</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Crypto Mining</strong></td>
+                                        <td>Impact</td>
+                                        <td>Mining process, pool connection</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Anomalous Process</strong></td>
+                                        <td>Execution</td>
+                                        <td>Reverse shell, unusual process</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Image Vulnerability</strong></td>
+                                        <td>Initial Access</td>
+                                        <td>Critical CVE, malware in image</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Kubernetes API</strong></td>
+                                        <td>Discovery</td>
+                                        <td>Anonymous access, secrets enumeration</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Network Anomaly</strong></td>
+                                        <td>Exfiltration</td>
+                                        <td>Unusual egress, C2 communication</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Privileged Container -->
+                    <section>
+                        <h2 id="privileged">Privileged Container Detected</h2>
+
+                        <div class="callout callout-error">
+                            <div class="callout-title">Alert: K8S_PrivilegedContainer</div>
+                            <div class="callout-content">
+                                <p><strong>Severity:</strong> High | <strong>MITRE:</strong> T1611 (Escape to Host)</p>
+                                <p>A container running with privileged security context was detected.</p>
+                            </div>
+                        </div>
+
+                        <h3>Investigation Steps</h3>
+
+                        <div class="code-header">
+                            <span class="code-lang">kubectl</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-bash"># Get pod details
+kubectl get pod PODNAME -n NAMESPACE -o yaml
+
+# Check security context
+kubectl get pod PODNAME -n NAMESPACE -o jsonpath='{.spec.containers[*].securityContext}'
+
+# Check if running as root
+kubectl get pod PODNAME -n NAMESPACE -o jsonpath='{.spec.containers[*].securityContext.runAsUser}'
+
+# Get all privileged pods across cluster
+kubectl get pods --all-namespaces -o json | jq '.items[] | select(.spec.containers[].securityContext.privileged==true) | {namespace:.metadata.namespace, name:.metadata.name}'</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL (Log Analytics)</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Find privileged container creation events
+AzureDiagnostics
+| where Category == "kube-audit"
+| where log_s contains "privileged"
+| extend AuditLog = parse_json(log_s)
+| where AuditLog.objectRef.resource == "pods"
+| project TimeGenerated,
+          User = AuditLog.user.username,
+          Namespace = AuditLog.objectRef.namespace,
+          Pod = AuditLog.objectRef.name,
+          Verb = AuditLog.verb
+| order by TimeGenerated desc</code></pre>
+
+                        <h3>Response Actions</h3>
+                        <div class="code-header">
+                            <span class="code-lang">kubectl</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-bash"># Delete the privileged pod
+kubectl delete pod PODNAME -n NAMESPACE
+
+# If part of deployment, scale down
+kubectl scale deployment DEPLOYMENTNAME -n NAMESPACE --replicas=0
+
+# Apply Pod Security Policy/Standard to prevent
+kubectl label namespace NAMESPACE pod-security.kubernetes.io/enforce=restricted</code></pre>
+                    </section>
+
+                    <!-- Crypto Mining in Container -->
+                    <section>
+                        <h2 id="cryptomining">Crypto Mining in Container</h2>
+
+                        <div class="callout callout-error">
+                            <div class="callout-title">Alert: K8S_MaliciousContainerImage</div>
+                            <div class="callout-content">
+                                <p><strong>Severity:</strong> High | <strong>MITRE:</strong> T1496 (Resource Hijacking)</p>
+                                <p>Cryptocurrency mining activity detected in a container.</p>
+                            </div>
+                        </div>
+
+                        <h3>Investigation Steps</h3>
+
+                        <div class="code-header">
+                            <span class="code-lang">kubectl</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-bash"># Check running processes in container
+kubectl exec -it PODNAME -n NAMESPACE -- ps aux
+
+# Check network connections
+kubectl exec -it PODNAME -n NAMESPACE -- netstat -tulpn
+
+# Look for mining processes
+kubectl exec -it PODNAME -n NAMESPACE -- ps aux | grep -E "(xmrig|miner|cryptonight)"
+
+# Check container image
+kubectl get pod PODNAME -n NAMESPACE -o jsonpath='{.spec.containers[*].image}'</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL (Log Analytics)</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Container network connections to mining pools
+ContainerLog
+| where LogEntry contains_any ("stratum+tcp", "pool.", "mining", "3333", "4444")
+| project TimeGenerated, ContainerID, LogEntry
+| order by TimeGenerated desc
+
+// High CPU containers (potential mining)
+Perf
+| where ObjectName == "K8SContainer"
+| where CounterName == "cpuUsageNanoCores"
+| summarize AvgCPU = avg(CounterValue) by InstanceName, bin(TimeGenerated, 5m)
+| where AvgCPU > 900000000  // ~90% CPU
+| order by AvgCPU desc</code></pre>
+
+                        <h3>Immediate Response</h3>
+                        <div class="code-header">
+                            <span class="code-lang">kubectl</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-bash"># Immediately delete the compromised pod
+kubectl delete pod PODNAME -n NAMESPACE --grace-period=0 --force
+
+# If deployment, scale to zero and investigate image
+kubectl scale deployment DEPLOYMENTNAME -n NAMESPACE --replicas=0
+
+# Block egress to mining pools via NetworkPolicy
+cat <<EOF | kubectl apply -f -
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: block-mining-egress
+  namespace: NAMESPACE
+spec:
+  podSelector: {}
+  policyTypes:
+  - Egress
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 0.0.0.0/0
+        except:
+        - 10.0.0.0/8
+    ports:
+    - port: 443
+    - port: 80
+EOF</code></pre>
+                    </section>
+
+                    <!-- Kubernetes API Anomaly -->
+                    <section>
+                        <h2 id="api">Kubernetes API Anomaly</h2>
+
+                        <div class="callout callout-warning">
+                            <div class="callout-title">Alert: K8S_SensitiveMount</div>
+                            <div class="callout-content">
+                                <p><strong>Severity:</strong> Medium | <strong>MITRE:</strong> T1552 (Unsecured Credentials)</p>
+                                <p>Pod mounted sensitive host path or accessed Kubernetes secrets.</p>
+                            </div>
+                        </div>
+
+                        <h3>Investigation Steps</h3>
+
+                        <div class="code-header">
+                            <span class="code-lang">kubectl</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-bash"># Check pod volume mounts
+kubectl get pod PODNAME -n NAMESPACE -o jsonpath='{.spec.volumes[*]}'
+
+# Check for hostPath mounts
+kubectl get pod PODNAME -n NAMESPACE -o json | jq '.spec.volumes[] | select(.hostPath != null)'
+
+# List secrets accessed by pod's service account
+SA=$(kubectl get pod PODNAME -n NAMESPACE -o jsonpath='{.spec.serviceAccountName}')
+kubectl auth can-i --list --as=system:serviceaccount:NAMESPACE:$SA
+
+# Check RBAC bindings for service account
+kubectl get rolebindings,clusterrolebindings --all-namespaces -o json | jq ".items[] | select(.subjects[]?.name==\"$SA\")"</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL (Log Analytics)</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Secrets access audit
+AzureDiagnostics
+| where Category == "kube-audit"
+| extend AuditLog = parse_json(log_s)
+| where AuditLog.objectRef.resource == "secrets"
+| where AuditLog.verb in ("get", "list", "watch")
+| project TimeGenerated,
+          User = AuditLog.user.username,
+          Namespace = AuditLog.objectRef.namespace,
+          Secret = AuditLog.objectRef.name,
+          Verb = AuditLog.verb,
+          SourceIP = AuditLog.sourceIPs[0]
+| order by TimeGenerated desc</code></pre>
+                    </section>
+
+                    <!-- Reverse Shell -->
+                    <section>
+                        <h2 id="reverseshell">Reverse Shell in Container</h2>
+
+                        <div class="callout callout-error">
+                            <div class="callout-title">Alert: K8S_ReverseShell</div>
+                            <div class="callout-content">
+                                <p><strong>Severity:</strong> Critical | <strong>MITRE:</strong> T1059 (Command and Scripting)</p>
+                                <p>Reverse shell connection detected from container.</p>
+                            </div>
+                        </div>
+
+                        <h3>Investigation Steps</h3>
+
+                        <div class="code-header">
+                            <span class="code-lang">kubectl</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-bash"># Check network connections
+kubectl exec -it PODNAME -n NAMESPACE -- netstat -an | grep ESTABLISHED
+
+# Check for suspicious processes
+kubectl exec -it PODNAME -n NAMESPACE -- ps aux | grep -E "(nc|ncat|bash|sh|python|perl|ruby)"
+
+# Check container logs
+kubectl logs PODNAME -n NAMESPACE --tail=100
+
+# Get container entry point
+kubectl get pod PODNAME -n NAMESPACE -o jsonpath='{.spec.containers[*].command}'</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL (Log Analytics)</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Detect reverse shell patterns in container logs
+ContainerLog
+| where LogEntry has_any ("bash -i", "/dev/tcp", "nc -e", "python -c", 
+                          "perl -e", "ruby -rsocket", "mkfifo")
+| project TimeGenerated, ContainerID, LogEntry
+| order by TimeGenerated desc
+
+// Outbound connections on unusual ports
+AzureNetworkAnalytics_CL
+| where SrcIP_s startswith "10."  // Pod network
+| where DestPort_d in (4444, 5555, 6666, 1234, 9001)
+| project TimeGenerated, SrcIP_s, DestIP_s, DestPort_d</code></pre>
+
+                        <h3>Immediate Response</h3>
+                        <div class="code-header">
+                            <span class="code-lang">kubectl</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-bash"># IMMEDIATELY isolate with NetworkPolicy
+cat <<EOF | kubectl apply -f -
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: isolate-compromised-pod
+  namespace: NAMESPACE
+spec:
+  podSelector:
+    matchLabels:
+      app: PODLABEL
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress: []
+  egress: []
+EOF
+
+# Delete the pod
+kubectl delete pod PODNAME -n NAMESPACE --grace-period=0 --force
+
+# Rotate any secrets the pod had access to
+kubectl delete secret SECRETNAME -n NAMESPACE
+kubectl create secret generic SECRETNAME --from-literal=key=NEWVALUE -n NAMESPACE</code></pre>
+                    </section>
+
+                    <!-- Image Vulnerability -->
+                    <section>
+                        <h2 id="vulnerability">Vulnerable Container Image</h2>
+
+                        <div class="callout callout-warning">
+                            <div class="callout-title">Alert: K8S_VulnerableImage</div>
+                            <div class="callout-content">
+                                <p><strong>Severity:</strong> Medium-High | <strong>MITRE:</strong> T1190 (Exploit Public-Facing App)</p>
+                                <p>Container running with critical vulnerability detected in image.</p>
+                            </div>
+                        </div>
+
+                        <h3>Investigation Steps</h3>
+
+                        <div class="code-header">
+                            <span class="code-lang">kubectl</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-bash"># Get image details
+kubectl get pod PODNAME -n NAMESPACE -o jsonpath='{.spec.containers[*].image}'
+
+# Check image digest
+kubectl get pod PODNAME -n NAMESPACE -o jsonpath='{.status.containerStatuses[*].imageID}'
+
+# Scan image with Trivy
+trivy image IMAGENAME:TAG
+
+# Check all pods using same image
+IMAGE="vulnerable-image:tag"
+kubectl get pods --all-namespaces -o json | jq ".items[] | select(.spec.containers[].image==\"$IMAGE\") | {namespace:.metadata.namespace, name:.metadata.name}"</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL (Log Analytics)</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Container image vulnerabilities from MDC
+SecurityResources
+| where type == "microsoft.security/assessments/subassessments"
+| where properties.category == "Container"
+| extend 
+    CVE = properties.id,
+    Severity = properties.status.severity,
+    Image = properties.resourceDetails.id
+| where Severity in ("High", "Critical")
+| project CVE, Severity, Image</code></pre>
+
+                        <h3>Remediation</h3>
+                        <div class="code-header">
+                            <span class="code-lang">Bash</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-bash"># Update deployment to use patched image
+kubectl set image deployment/DEPLOYMENTNAME CONTAINERNAME=NEWIMAGE:TAG -n NAMESPACE
+
+# Or edit deployment directly
+kubectl edit deployment DEPLOYMENTNAME -n NAMESPACE
+
+# Verify rollout
+kubectl rollout status deployment/DEPLOYMENTNAME -n NAMESPACE</code></pre>
+                    </section>
+
+                    <!-- Investigation Checklist -->
+                    <section>
+                        <h2 id="checklist">Container Investigation Checklist</h2>
+
+                        <div class="checklist">
+                            <div class="checklist-title">Investigation Steps</div>
+                            <ul>
+                                <li>
+                                    <input type="checkbox" id="c1">
+                                    <label for="c1">Identify affected pod, namespace, and node</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="c2">
+                                    <label for="c2">Check pod security context (privileged, capabilities)</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="c3">
+                                    <label for="c3">Review container image and scan for vulnerabilities</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="c4">
+                                    <label for="c4">Check service account permissions (RBAC)</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="c5">
+                                    <label for="c5">Analyze network connections and traffic</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="c6">
+                                    <label for="c6">Review Kubernetes audit logs</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="c7">
+                                    <label for="c7">Check for lateral movement to other pods/nodes</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="c8">
+                                    <label for="c8">Document findings and rotate compromised secrets</label>
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- Key Takeaways -->
+                    <div class="key-takeaways">
+                        <div class="key-takeaways-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 2a.75.75 0 01.75.75v.258a33.186 33.186 0 016.668.83.75.75 0 01-.336 1.461z" clip-rule="evenodd" />
+                            </svg>
+                            Key Takeaways
+                        </div>
+                        <ul>
+                            <li>Use kubectl and KQL together for comprehensive investigation</li>
+                            <li>Privileged containers pose container escape risk</li>
+                            <li>Crypto mining: look for pool connections on ports 3333, 4444</li>
+                            <li>Apply NetworkPolicy to isolate compromised pods</li>
+                            <li>Check Kubernetes audit logs for API abuse</li>
+                            <li>Scan images with Trivy before and during runtime</li>
+                            <li>Rotate secrets after any container compromise</li>
+                            <li>Use Pod Security Standards to prevent future issues</li>
+                        </ul>
+                    </div>
+
+                    <div class="related-pages">
+                        <div class="related-title">Related Pages</div>
+                        <div class="related-list">
+                            <a href="8-5-container-playbook.html" class="related-link">Container Playbook</a>
+                            <a href="3-4-containers.html" class="related-link">Defender for Containers</a>
+                            <a href="10-1-alert-reference.html" class="related-link">Alert Reference</a>
+                            <a href="10-2-vm-alerts.html" class="related-link">VM Alerts</a>
+                        </div>
+                    </div>
+
+                    <nav class="page-nav">
+                        <a href="10-2-vm-alerts.html" class="page-nav-link prev">
+                            <span class="page-nav-label">← Previous</span>
+                            <span class="page-nav-title">VM Alerts</span>
+                        </a>
+                        <a href="11-1-alternatives.html" class="page-nav-link next">
+                            <span class="page-nav-label">Next →</span>
+                            <span class="page-nav-title">Alternatives</span>
+                        </a>
+                    </nav>
+                </article>
+
+                <aside class="toc-sidebar">
+                    <div class="toc-title">On This Page</div>
+                    <ul class="toc-list">
+                        <li class="toc-item"><a href="#categories" class="toc-link">Categories</a></li>
+                        <li class="toc-item"><a href="#privileged" class="toc-link">Privileged Container</a></li>
+                        <li class="toc-item"><a href="#cryptomining" class="toc-link">Crypto Mining</a></li>
+                        <li class="toc-item"><a href="#api" class="toc-link">API Anomaly</a></li>
+                        <li class="toc-item"><a href="#reverseshell" class="toc-link">Reverse Shell</a></li>
+                        <li class="toc-item"><a href="#vulnerability" class="toc-link">Vulnerable Image</a></li>
+                        <li class="toc-item"><a href="#checklist" class="toc-link">Checklist</a></li>
+                    </ul>
+                </aside>
+            </div>
+        </main>
+        <div class="mobile-overlay"></div>
+    </div>
+
+    <div class="search-modal">
+        <div class="search-modal-content">
+            <input type="text" class="search-modal-input" placeholder="Search documentation..." autofocus>
+            <div class="search-results"></div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Microsoft Defender for SQL - Threat detection, vulnerability assessment, and data discovery for Azure SQL, SQL Server, and Synapse.">
+    <title>Defender for SQL - Microsoft Defender for Cloud</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="../index.html" class="sidebar-logo">
+                    <div class="logo-icon">MDC</div>
+                    <span class="logo-text">Defender for Cloud</span>
+                </a>
+                <button class="sidebar-toggle" aria-label="Toggle sidebar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">CWPP</div>
+                    <div class="nav-group expanded" data-group="cwpp">
+                        <div class="nav-group-header">
+                            <span class="nav-group-title">Workload Protection</span>
+                            <svg class="nav-group-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="nav-group-items">
+                            <a href="3-1-servers-overview.html" class="nav-subitem">Defender for Servers</a>
+                            <a href="3-4-containers.html" class="nav-subitem">Defender for Containers</a>
+                            <a href="3-7-storage.html" class="nav-subitem">Defender for Storage</a>
+                            <a href="3-8-sql.html" class="nav-subitem active">Defender for SQL</a>
+                            <a href="3-9-app-service.html" class="nav-subitem">Defender for App Service</a>
+                            <a href="3-10-key-vault.html" class="nav-subitem">Defender for Key Vault</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" aria-label="Open menu">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10zm0 5.25a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75a.75.75 0 01-.75-.75z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div class="search-box">
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                        </svg>
+                        <input type="text" class="search-input" placeholder="Search documentation..." readonly>
+                        <span class="search-shortcut">⌘K</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <article class="page-content">
+                    <nav class="breadcrumbs">
+                        <a href="../index.html" class="breadcrumb-item">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <a href="3-1-servers-overview.html" class="breadcrumb-item">CWPP</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span class="breadcrumb-item current">Defender for SQL</span>
+                    </nav>
+
+                    <header class="page-header">
+                        <h1>Defender for SQL</h1>
+                        <div class="page-meta">
+                            <span class="badge badge-l1">L1 Fundamentals</span>
+                            <span class="badge badge-l2">L2 Technical</span>
+                            <span class="page-meta-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clip-rule="evenodd" />
+                                </svg>
+                                20 min read
+                            </span>
+                        </div>
+                    </header>
+
+                    <section>
+                        <p>
+                            Microsoft Defender for SQL provides advanced threat protection for SQL databases across 
+                            Azure SQL Database, Azure SQL Managed Instance, SQL Server on VMs, and Azure Synapse Analytics. 
+                            It detects SQL injection, anomalous access, and potential data exfiltration.
+                        </p>
+                    </section>
+
+                    <!-- Coverage -->
+                    <section>
+                        <h2 id="coverage">Supported SQL Platforms</h2>
+
+                        <div class="ascii-diagram">
+<span class="highlight-cyan">╔══════════════════════════════════════════════════════════════════════════════════════════════╗</span>
+<span class="highlight-cyan">║</span>                       <span class="highlight-blue">DEFENDER FOR SQL - PLATFORM COVERAGE</span>                                <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">╠══════════════════════════════════════════════════════════════════════════════════════════════╣</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">┌──────────────────────────────────────────────────────────────────────────────────────┐</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">│                         AZURE SQL (PaaS - Native Integration)                       │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">│                                                                                      │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">│  ┌────────────────┐   ┌────────────────┐   ┌────────────────┐   ┌────────────────┐  │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">│  │  Azure SQL DB  │   │ SQL Managed    │   │ SQL Elastic    │   │    Synapse     │  │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">│  │  (Single/Pool) │   │   Instance     │   │     Pool       │   │   Analytics    │  │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">│  └────────────────┘   └────────────────┘   └────────────────┘   └────────────────┘  │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">│                                                                                      │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">│  ✓ Threat Detection    ✓ Vulnerability Assessment    ✓ Data Discovery               │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">└──────────────────────────────────────────────────────────────────────────────────────┘</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">┌──────────────────────────────────────────────────────────────────────────────────────┐</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">│                     SQL SERVER ON VMs (Requires Agent)                              │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">│                                                                                      │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">│  ┌────────────────┐   ┌────────────────┐   ┌────────────────┐                       │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">│  │   Azure VMs    │   │   Arc-enabled  │   │   AWS/GCP VMs  │                       │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">│  │ (Auto-discover)│   │    Servers     │   │   (via Arc)    │                       │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">│  └────────────────┘   └────────────────┘   └────────────────┘                       │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">│                                                                                      │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">│  ✓ Threat Detection    ✓ Vulnerability Assessment    ○ Data Discovery (Preview)    │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">└──────────────────────────────────────────────────────────────────────────────────────┘</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">╚══════════════════════════════════════════════════════════════════════════════════════════════╝</span>
+                        </div>
+
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Platform</th>
+                                        <th>Plan Name</th>
+                                        <th>Pricing</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Azure SQL Database</td>
+                                        <td>Defender for Azure SQL</td>
+                                        <td>~$15/server/month</td>
+                                    </tr>
+                                    <tr>
+                                        <td>SQL Managed Instance</td>
+                                        <td>Defender for Azure SQL</td>
+                                        <td>~$15/instance/month</td>
+                                    </tr>
+                                    <tr>
+                                        <td>SQL Server on Azure VMs</td>
+                                        <td>Defender for SQL servers on machines</td>
+                                        <td>~$15/instance/month</td>
+                                    </tr>
+                                    <tr>
+                                        <td>SQL Server on Arc</td>
+                                        <td>Defender for SQL servers on machines</td>
+                                        <td>~$15/instance/month</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Capabilities -->
+                    <section>
+                        <h2 id="capabilities">Key Capabilities</h2>
+
+                        <div class="card-grid">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-icon" style="background: var(--accent-red-glow); color: var(--accent-red);">🛡️</div>
+                                    <h4 class="card-title">Advanced Threat Protection</h4>
+                                </div>
+                                <div class="card-content">
+                                    <ul>
+                                        <li>SQL injection detection</li>
+                                        <li>Anomalous access patterns</li>
+                                        <li>Brute force attacks</li>
+                                        <li>Data exfiltration attempts</li>
+                                        <li>Suspicious stored procedure execution</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-icon" style="background: var(--accent-orange-glow); color: var(--accent-orange);">🔍</div>
+                                    <h4 class="card-title">Vulnerability Assessment</h4>
+                                </div>
+                                <div class="card-content">
+                                    <ul>
+                                        <li>Configuration vulnerabilities</li>
+                                        <li>Excessive permissions</li>
+                                        <li>Unprotected sensitive data</li>
+                                        <li>Remediation recommendations</li>
+                                        <li>Baseline tracking</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-icon" style="background: var(--accent-purple-glow); color: var(--accent-purple);">🔐</div>
+                                    <h4 class="card-title">Sensitive Data Discovery</h4>
+                                </div>
+                                <div class="card-content">
+                                    <ul>
+                                        <li>Automatic classification</li>
+                                        <li>PII, financial, health data</li>
+                                        <li>Custom classification rules</li>
+                                        <li>Purview integration</li>
+                                        <li>Compliance reporting</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Enablement -->
+                    <section>
+                        <h2 id="enablement">Enablement</h2>
+
+                        <div class="tabs">
+                            <div class="tab-list">
+                                <button class="tab-btn active" data-tab="azure-sql">Azure SQL</button>
+                                <button class="tab-btn" data-tab="sql-vm">SQL on VMs</button>
+                                <button class="tab-btn" data-tab="terraform">Terraform</button>
+                            </div>
+
+                            <div class="tab-panel active" data-panel="azure-sql">
+                                <h4>Enable for Azure SQL (Subscription Level)</h4>
+                                
+                                <div class="code-header">
+                                    <span class="code-lang">Azure CLI</span>
+                                    <button class="code-copy-btn">Copy</button>
+                                </div>
+                                <pre><code class="language-bash"># Enable Defender for Azure SQL Database servers
+az security pricing create \
+    --name SqlServers \
+    --tier Standard
+
+# Enable Defender for SQL servers on machines (VMs)
+az security pricing create \
+    --name SqlServerVirtualMachines \
+    --tier Standard
+
+# Verify
+az security pricing show --name SqlServers
+az security pricing show --name SqlServerVirtualMachines</code></pre>
+
+                                <h4>Enable at Server Level</h4>
+                                
+                                <div class="code-header">
+                                    <span class="code-lang">Azure CLI</span>
+                                    <button class="code-copy-btn">Copy</button>
+                                </div>
+                                <pre><code class="language-bash"># Enable Advanced Threat Protection on specific server
+az sql server threat-policy update \
+    --resource-group "your-rg" \
+    --server "your-sql-server" \
+    --state Enabled \
+    --email-addresses "security@company.com" \
+    --email-account-admins true
+
+# Enable Vulnerability Assessment
+az sql server va setting update \
+    --resource-group "your-rg" \
+    --server "your-sql-server" \
+    --storage-account "yourstorageaccount" \
+    --storage-container-path "https://yourstorageaccount.blob.core.windows.net/vulnerability-assessment"</code></pre>
+                            </div>
+
+                            <div class="tab-panel" data-panel="sql-vm">
+                                <h4>SQL Server on Azure VMs</h4>
+                                
+                                <p>For SQL Server on VMs, you need to:</p>
+                                <ol>
+                                    <li>Enable Defender for SQL servers on machines at subscription level</li>
+                                    <li>SQL IaaS Agent extension must be installed (auto-installed on Azure VMs)</li>
+                                    <li>For Arc-enabled servers, install SQL extension</li>
+                                </ol>
+
+                                <div class="code-header">
+                                    <span class="code-lang">PowerShell</span>
+                                    <button class="code-copy-btn">Copy</button>
+                                </div>
+                                <pre><code class="language-powershell"># Check SQL IaaS extension status on Azure VM
+Get-AzVMExtension -ResourceGroupName "your-rg" -VMName "sql-vm" | 
+    Where-Object { $_.Publisher -eq "Microsoft.SqlServer.Management" }
+
+# Register SQL VM with SQL IaaS extension
+az sql vm create \
+    --name "sql-vm" \
+    --resource-group "your-rg" \
+    --location "eastus" \
+    --sql-mgmt-type Full
+
+# For Arc-enabled SQL Server
+az connectedmachine extension create \
+    --name "WindowsAgent.SqlServer" \
+    --machine-name "arc-sql-server" \
+    --resource-group "your-rg" \
+    --type "WindowsAgent.SqlServer" \
+    --publisher "Microsoft.AzureData"</code></pre>
+                            </div>
+
+                            <div class="tab-panel" data-panel="terraform">
+                                <h4>Terraform Configuration</h4>
+                                
+                                <div class="code-header">
+                                    <span class="code-lang">HCL (Terraform)</span>
+                                    <button class="code-copy-btn">Copy</button>
+                                </div>
+                                <pre><code class="language-hcl"># Enable Defender for SQL plans
+resource "azurerm_security_center_subscription_pricing" "sql_servers" {
+  tier          = "Standard"
+  resource_type = "SqlServers"
+}
+
+resource "azurerm_security_center_subscription_pricing" "sql_vms" {
+  tier          = "Standard"
+  resource_type = "SqlServerVirtualMachines"
+}
+
+# Configure Azure SQL Server with Defender
+resource "azurerm_mssql_server" "example" {
+  name                         = "example-sql-server"
+  resource_group_name          = azurerm_resource_group.example.name
+  location                     = azurerm_resource_group.example.location
+  version                      = "12.0"
+  administrator_login          = "sqladmin"
+  administrator_login_password = var.sql_admin_password
+
+  azuread_administrator {
+    login_username = "AzureAD Admin"
+    object_id      = data.azuread_user.admin.object_id
+  }
+}
+
+# Enable Advanced Threat Protection
+resource "azurerm_mssql_server_security_alert_policy" "example" {
+  resource_group_name = azurerm_resource_group.example.name
+  server_name         = azurerm_mssql_server.example.name
+  state               = "Enabled"
+  email_addresses     = ["security@company.com"]
+  email_account_admins = true
+}
+
+# Enable Vulnerability Assessment
+resource "azurerm_mssql_server_vulnerability_assessment" "example" {
+  server_security_alert_policy_id = azurerm_mssql_server_security_alert_policy.example.id
+  storage_container_path          = "${azurerm_storage_account.example.primary_blob_endpoint}vulnerability-assessment/"
+  
+  recurring_scans {
+    enabled                   = true
+    email_subscription_admins = true
+    emails                    = ["security@company.com"]
+  }
+}</code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Alert Types -->
+                    <section>
+                        <h2 id="alerts">Common Alert Types</h2>
+
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Alert</th>
+                                        <th>Severity</th>
+                                        <th>Tactic</th>
+                                        <th>Response</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Potential SQL injection</strong></td>
+                                        <td><span class="badge badge-high">High</span></td>
+                                        <td>Initial Access</td>
+                                        <td>Block IP, review app code, check for data access</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Brute force attack</strong></td>
+                                        <td><span class="badge badge-high">High</span></td>
+                                        <td>Credential Access</td>
+                                        <td>Block IP, review firewall rules, check for success</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Login from unusual location</strong></td>
+                                        <td><span class="badge badge-medium">Medium</span></td>
+                                        <td>Initial Access</td>
+                                        <td>Verify user, check for data access</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Data exfiltration</strong></td>
+                                        <td><span class="badge badge-high">High</span></td>
+                                        <td>Exfiltration</td>
+                                        <td>Revoke access, investigate scope, notify DPO</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Suspicious database activity</strong></td>
+                                        <td><span class="badge badge-medium">Medium</span></td>
+                                        <td>Discovery</td>
+                                        <td>Review query patterns, check user activity</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Unusual export</strong></td>
+                                        <td><span class="badge badge-medium">Medium</span></td>
+                                        <td>Collection</td>
+                                        <td>Verify business justification, check destination</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h3>KQL Queries for SQL Alerts</h3>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// All SQL-related alerts
+SecurityAlert
+| where TimeGenerated > ago(7d)
+| where ProductName == "Azure Security Center"
+| where AlertName has_any ("SQL", "database", "injection", "brute force")
+| summarize 
+    Count = count(),
+    Databases = make_set(CompromisedEntity)
+    by AlertName, AlertSeverity
+| order by Count desc
+
+// SQL injection attempts
+SecurityAlert
+| where TimeGenerated > ago(24h)
+| where AlertName contains "SQL injection"
+| extend 
+    SourceIP = tostring(parse_json(ExtendedProperties).["Client IP Address"]),
+    Database = tostring(parse_json(ExtendedProperties).["Database name"]),
+    Query = tostring(parse_json(ExtendedProperties).["Query"])
+| project TimeGenerated, SourceIP, Database, Query, Description</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Failed login attempts by database
+AzureDiagnostics
+| where ResourceProvider == "MICROSOFT.SQL"
+| where Category == "SQLSecurityAuditEvents"
+| where action_name_s == "DATABASE AUTHENTICATION FAILED"
+| summarize 
+    FailedAttempts = count(),
+    DistinctIPs = dcount(client_ip_s)
+    by database_name_s, bin(TimeGenerated, 1h)
+| where FailedAttempts > 10
+| order by FailedAttempts desc</code></pre>
+                    </section>
+
+                    <!-- Vulnerability Assessment -->
+                    <section>
+                        <h2 id="vulnerability-assessment">Vulnerability Assessment</h2>
+
+                        <p>SQL Vulnerability Assessment scans for security misconfigurations and provides remediation guidance:</p>
+
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Check Category</th>
+                                        <th>Examples</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Authentication</strong></td>
+                                        <td>Contained database users, guest account enabled, orphaned users</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Authorization</strong></td>
+                                        <td>Excessive permissions, sysadmin role, db_owner abuse</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Encryption</strong></td>
+                                        <td>TDE not enabled, unencrypted connections, certificate expiry</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Auditing</strong></td>
+                                        <td>Audit not enabled, incomplete audit coverage</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Data Protection</strong></td>
+                                        <td>Unmasked sensitive columns, no row-level security</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h3>Run On-Demand Scan</h3>
+
+                        <div class="code-header">
+                            <span class="code-lang">PowerShell</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-powershell"># Run vulnerability assessment scan
+Invoke-AzSqlDatabaseVulnerabilityAssessmentScan `
+    -ResourceGroupName "your-rg" `
+    -ServerName "your-sql-server" `
+    -DatabaseName "your-database"
+
+# Get scan results
+$scanId = (Get-AzSqlDatabaseVulnerabilityAssessmentScanRecord `
+    -ResourceGroupName "your-rg" `
+    -ServerName "your-sql-server" `
+    -DatabaseName "your-database" | 
+    Sort-Object -Property StartTime -Descending | 
+    Select-Object -First 1).ScanId
+
+# Export results
+Get-AzSqlDatabaseVulnerabilityAssessmentScanRecord `
+    -ResourceGroupName "your-rg" `
+    -ServerName "your-sql-server" `
+    -DatabaseName "your-database" `
+    -ScanId $scanId</code></pre>
+
+                        <h3>Set Baseline</h3>
+
+                        <p>Use baselines to track approved deviations from security standards:</p>
+
+                        <div class="code-header">
+                            <span class="code-lang">PowerShell</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-powershell"># Set baseline for a specific rule (approve current state)
+Set-AzSqlDatabaseVulnerabilityAssessmentRuleBaseline `
+    -ResourceGroupName "your-rg" `
+    -ServerName "your-sql-server" `
+    -DatabaseName "your-database" `
+    -RuleId "VA1234" `
+    -BaselineResult @(
+        @{
+            Result = @("dbo", "excessive_permission_user")
+        }
+    )
+
+# Clear baseline (re-enable alerting)
+Clear-AzSqlDatabaseVulnerabilityAssessmentRuleBaseline `
+    -ResourceGroupName "your-rg" `
+    -ServerName "your-sql-server" `
+    -DatabaseName "your-database" `
+    -RuleId "VA1234"</code></pre>
+                    </section>
+
+                    <!-- Investigation Playbook -->
+                    <section>
+                        <h2 id="playbook">SQL Alert Investigation</h2>
+
+                        <div class="accordion">
+                            <div class="accordion-item expanded">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">SQL Injection Alert</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <ol>
+                                        <li><strong>Immediate:</strong> Block source IP at firewall if external</li>
+                                        <li><strong>Investigate:</strong>
+                                            <ul>
+                                                <li>Was the injection successful? Check audit logs</li>
+                                                <li>What data was accessed? Query logs</li>
+                                                <li>What application sent the query?</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>Remediate:</strong>
+                                            <ul>
+                                                <li>Fix vulnerable application code (parameterized queries)</li>
+                                                <li>Review WAF rules if applicable</li>
+                                                <li>Consider additional input validation</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>Document:</strong> Record timeline, affected data, remediation steps</li>
+                                    </ol>
+
+                                    <div class="code-header">
+                                        <span class="code-lang">KQL</span>
+                                        <button class="code-copy-btn">Copy</button>
+                                    </div>
+                                    <pre><code class="language-kql">// Check what the attacker accessed after injection
+AzureDiagnostics
+| where ResourceProvider == "MICROSOFT.SQL"
+| where client_ip_s == "attacker-ip"
+| where TimeGenerated > datetime(alert-time)
+| project TimeGenerated, action_name_s, statement_s, 
+    database_name_s, server_principal_name_s
+| order by TimeGenerated asc</code></pre>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">Brute Force Attack</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <ol>
+                                        <li><strong>Immediate:</strong> Block source IP(s)</li>
+                                        <li><strong>Check:</strong> Were any attempts successful?</li>
+                                        <li><strong>If successful:</strong>
+                                            <ul>
+                                                <li>Reset compromised account password</li>
+                                                <li>Revoke active sessions</li>
+                                                <li>Audit what the account accessed</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>Harden:</strong>
+                                            <ul>
+                                                <li>Enable Entra ID authentication</li>
+                                                <li>Restrict firewall to known IPs</li>
+                                                <li>Enable account lockout</li>
+                                            </ul>
+                                        </li>
+                                    </ol>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">Data Exfiltration Alert</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <ol>
+                                        <li><strong>Scope:</strong> Determine what data was accessed</li>
+                                        <li><strong>User:</strong> Is this a legitimate user? Verify with manager</li>
+                                        <li><strong>Data classification:</strong> Was sensitive/PII data involved?</li>
+                                        <li><strong>If unauthorized:</strong>
+                                            <ul>
+                                                <li>Disable user account</li>
+                                                <li>Engage legal/compliance</li>
+                                                <li>Prepare breach notification if required</li>
+                                            </ul>
+                                        </li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Key Takeaways -->
+                    <div class="key-takeaways">
+                        <div class="key-takeaways-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 2a.75.75 0 01.75.75v.258a33.186 33.186 0 016.668.83.75.75 0 01-.336 1.461z" clip-rule="evenodd" />
+                            </svg>
+                            Key Takeaways
+                        </div>
+                        <ul>
+                            <li>Enable both "SqlServers" and "SqlServerVirtualMachines" plans for full coverage</li>
+                            <li>Configure email notifications for threat detection alerts</li>
+                            <li>Set up recurring vulnerability assessment scans (weekly recommended)</li>
+                            <li>Use baselines to track approved security exceptions</li>
+                            <li>SQL on VMs requires the SQL IaaS extension to be installed</li>
+                            <li>Integrate with Entra ID for stronger authentication than SQL auth</li>
+                        </ul>
+                    </div>
+
+                    <div class="related-pages">
+                        <div class="related-title">Related Pages</div>
+                        <div class="related-list">
+                            <a href="3-7-storage.html" class="related-link">Defender for Storage</a>
+                            <a href="3-10-key-vault.html" class="related-link">Defender for Key Vault</a>
+                            <a href="8-2-alert-triage.html" class="related-link">Alert Triage</a>
+                            <a href="12-1-kql-library.html" class="related-link">KQL Library</a>
+                        </div>
+                    </div>
+
+                    <nav class="page-nav">
+                        <a href="3-7-storage.html" class="page-nav-link prev">
+                            <span class="page-nav-label">← Previous</span>
+                            <span class="page-nav-title">Defender for Storage</span>
+                        </a>
+                        <a href="3-9-app-service.html" class="page-nav-link next">
+                            <span class="page-nav-label">Next →</span>
+                            <span class="page-nav-title">Defender for App Service</span>
+                        </a>
+                    </nav>
+                </article>
+
+                <aside class="toc-sidebar">
+                    <div class="toc-title">On This Page</div>
+                    <ul class="toc-list">
+                        <li class="toc-item"><a href="#coverage" class="toc-link">Platform Coverage</a></li>
+                        <li class="toc-item"><a href="#capabilities" class="toc-link">Capabilities</a></li>
+                        <li class="toc-item"><a href="#enablement" class="toc-link">Enablement</a></li>
+                        <li class="toc-item"><a href="#alerts" class="toc-link">Alert Types</a></li>
+                        <li class="toc-item"><a href="#vulnerability-assessment" class="toc-link">Vulnerability Assessment</a></li>
+                        <li class="toc-item"><a href="#playbook" class="toc-link">Investigation Playbook</a></li>
+                    </ul>
+                </aside>
+            </div>
+        </main>
+        <div class="mobile-overlay"></div>
+    </div>
+
+    <div class="search-modal">
+        <div class="search-modal-content">
+            <input type="text" class="search-modal-input" placeholder="Search documentation..." autofocus>
+            <div class="search-results"></div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

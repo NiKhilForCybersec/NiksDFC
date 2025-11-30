@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Third-Party SIEM Integration - Stream MDC alerts and data to QRadar, ArcSight, and other SIEM platforms.">
+    <title>Third-Party SIEM Integration - Microsoft Defender for Cloud</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="../index.html" class="sidebar-logo">
+                    <div class="logo-icon">MDC</div>
+                    <span class="logo-text">Defender for Cloud</span>
+                </a>
+                <button class="sidebar-toggle" aria-label="Toggle sidebar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">SIEM Integration</div>
+                    <div class="nav-group expanded" data-group="siem">
+                        <div class="nav-group-header">
+                            <span class="nav-group-title">Third-Party SIEM</span>
+                            <svg class="nav-group-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="nav-group-items">
+                            <a href="7-1-siem-overview.html" class="nav-subitem active">Integration Overview</a>
+                            <a href="6-1-splunk-integration.html" class="nav-subitem">Splunk</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" aria-label="Open menu">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10zm0 5.25a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75a.75.75 0 01-.75-.75z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div class="search-box">
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                        </svg>
+                        <input type="text" class="search-input" placeholder="Search documentation..." readonly>
+                        <span class="search-shortcut">⌘K</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <article class="page-content">
+                    <nav class="breadcrumbs">
+                        <a href="../index.html" class="breadcrumb-item">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span class="breadcrumb-item current">Third-Party SIEM</span>
+                    </nav>
+
+                    <header class="page-header">
+                        <h1>Third-Party SIEM Integration</h1>
+                        <div class="page-meta">
+                            <span class="badge badge-l2">L2 Technical</span>
+                            <span class="badge badge-l3">L3 Advanced</span>
+                            <span class="page-meta-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clip-rule="evenodd" />
+                                </svg>
+                                12 min read
+                            </span>
+                        </div>
+                    </header>
+
+                    <section>
+                        <p>
+                            Microsoft Defender for Cloud can stream security alerts and data to third-party 
+                            SIEM platforms like IBM QRadar, Micro Focus ArcSight, and others using Azure 
+                            Event Hubs as the integration point.
+                        </p>
+
+                        <div class="callout callout-info">
+                            <div class="callout-title">Integration Methods</div>
+                            <div class="callout-content">
+                                <ul>
+                                    <li><strong>Event Hub:</strong> Real-time streaming (recommended)</li>
+                                    <li><strong>Graph Security API:</strong> REST-based polling</li>
+                                    <li><strong>Log Analytics Export:</strong> Data export rules</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Architecture -->
+                    <section>
+                        <h2 id="architecture">Integration Architecture</h2>
+
+                        <div class="ascii-diagram">
+<span class="highlight-cyan">╔══════════════════════════════════════════════════════════════════════════════════════════════╗</span>
+<span class="highlight-cyan">║</span>                      <span class="highlight-blue">MDC TO THIRD-PARTY SIEM ARCHITECTURE</span>                                  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">╠══════════════════════════════════════════════════════════════════════════════════════════════╣</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">┌─────────────────────────────────────────────────────────────────────────────────────┐</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">│                      MICROSOFT DEFENDER FOR CLOUD                                  │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">│                                                                                     │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">│   [Alerts]    [Recommendations]    [Secure Score]    [Regulatory Compliance]      │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">└──────────────────────────────────┬──────────────────────────────────────────────────┘</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                      │                                                       <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>              ┌───────────────────────┼───────────────────────┐                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>              ▼                       ▼                       ▼                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-purple">┌──────────────────┐</span>   <span class="highlight-green">┌──────────────────┐</span>   <span class="highlight-orange">┌──────────────────┐</span>                 <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-purple">│   Event Hub      │</span>   <span class="highlight-green">│  Graph Security  │</span>   <span class="highlight-orange">│  Log Analytics   │</span>                 <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-purple">│   (Streaming)    │</span>   <span class="highlight-green">│      API         │</span>   <span class="highlight-orange">│   Data Export    │</span>                 <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-purple">│                  │</span>   <span class="highlight-green">│   (Polling)      │</span>   <span class="highlight-orange">│                  │</span>                 <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-purple">└────────┬─────────┘</span>   <span class="highlight-green">└────────┬─────────┘</span>   <span class="highlight-orange">└────────┬─────────┘</span>                 <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>            │                       │                       │                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>            └───────────────────────┼───────────────────────┘                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                    ▼                                                       <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">┌─────────────────────────────────────────────────────────────────────────────────────┐</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">│                           THIRD-PARTY SIEM                                         │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">│                                                                                     │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">│   ┌─────────────┐   ┌─────────────┐   ┌─────────────┐   ┌─────────────┐           │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">│   │   Splunk    │   │   QRadar    │   │  ArcSight   │   │   Other     │           │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">│   └─────────────┘   └─────────────┘   └─────────────┘   └─────────────┘           │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">└─────────────────────────────────────────────────────────────────────────────────────┘</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">╚══════════════════════════════════════════════════════════════════════════════════════════════╝</span>
+                        </div>
+                    </section>
+
+                    <!-- Method Comparison -->
+                    <section>
+                        <h2 id="comparison">Integration Methods Comparison</h2>
+
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Method</th>
+                                        <th>Latency</th>
+                                        <th>Data Types</th>
+                                        <th>Best For</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Event Hub</strong></td>
+                                        <td>Near real-time</td>
+                                        <td>Alerts, Activity Logs</td>
+                                        <td>High-volume streaming, SOC operations</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Graph Security API</strong></td>
+                                        <td>5-15 minutes</td>
+                                        <td>Alerts, Secure Score</td>
+                                        <td>Periodic polling, compliance reports</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Log Analytics Export</strong></td>
+                                        <td>Minutes</td>
+                                        <td>All Log Analytics data</td>
+                                        <td>Long-term storage, analytics</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Event Hub Setup -->
+                    <section>
+                        <h2 id="eventhub">Event Hub Configuration</h2>
+
+                        <h3>Step 1: Create Event Hub Namespace</h3>
+                        <div class="code-header">
+                            <span class="code-lang">Azure CLI</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-bash"># Create Event Hub namespace
+az eventhubs namespace create \
+    --name "mdc-siem-namespace" \
+    --resource-group "security-rg" \
+    --location "eastus" \
+    --sku Standard \
+    --enable-auto-inflate true \
+    --maximum-throughput-units 20
+
+# Create Event Hub for alerts
+az eventhubs eventhub create \
+    --name "mdc-alerts" \
+    --namespace-name "mdc-siem-namespace" \
+    --resource-group "security-rg" \
+    --partition-count 4 \
+    --message-retention 7
+
+# Create authorization rule for SIEM
+az eventhubs eventhub authorization-rule create \
+    --name "siem-listen" \
+    --namespace-name "mdc-siem-namespace" \
+    --eventhub-name "mdc-alerts" \
+    --resource-group "security-rg" \
+    --rights Listen
+
+# Get connection string
+az eventhubs eventhub authorization-rule keys list \
+    --name "siem-listen" \
+    --namespace-name "mdc-siem-namespace" \
+    --eventhub-name "mdc-alerts" \
+    --resource-group "security-rg" \
+    --query "primaryConnectionString" -o tsv</code></pre>
+
+                        <h3>Step 2: Configure Continuous Export</h3>
+                        <div class="code-header">
+                            <span class="code-lang">Azure CLI</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-bash"># Create continuous export to Event Hub
+az security automation create \
+    --name "export-to-siem" \
+    --resource-group "security-rg" \
+    --scopes '[{"scopePath": "/subscriptions/YOUR-SUBSCRIPTION-ID"}]' \
+    --sources '[{"eventSource": "Alerts", "ruleSets": []}]' \
+    --actions '[{
+        "actionType": "EventHub",
+        "eventHubResourceId": "/subscriptions/.../eventhubs/mdc-alerts",
+        "connectionString": "YOUR-CONNECTION-STRING"
+    }]'</code></pre>
+
+                        <h3>Step 3: Verify Export</h3>
+                        <div class="code-header">
+                            <span class="code-lang">Azure CLI</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-bash"># Check Event Hub metrics
+az monitor metrics list \
+    --resource "/subscriptions/.../namespaces/mdc-siem-namespace/eventhubs/mdc-alerts" \
+    --metric "IncomingMessages" \
+    --interval PT1H</code></pre>
+                    </section>
+
+                    <!-- QRadar Integration -->
+                    <section>
+                        <h2 id="qradar">IBM QRadar Integration</h2>
+
+                        <div class="callout callout-info">
+                            <div class="callout-title">Prerequisites</div>
+                            <div class="callout-content">
+                                <ul>
+                                    <li>QRadar 7.3.2+ with Microsoft Azure DSM</li>
+                                    <li>Event Hub with Listen access</li>
+                                    <li>Network connectivity to Azure</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <h3>QRadar Configuration Steps</h3>
+                        <ol>
+                            <li><strong>Install Azure DSM:</strong> Admin → Extension Management → Install Microsoft Azure DSM</li>
+                            <li><strong>Create Log Source:</strong> Admin → Log Sources → Add</li>
+                            <li><strong>Configure Protocol:</strong> Microsoft Azure Event Hubs</li>
+                            <li><strong>Enter Connection Details:</strong>
+                                <ul>
+                                    <li>Event Hub namespace</li>
+                                    <li>Event Hub name</li>
+                                    <li>SAS policy name and key</li>
+                                    <li>Consumer group</li>
+                                </ul>
+                            </li>
+                            <li><strong>Deploy Changes:</strong> Admin → Deploy Changes</li>
+                        </ol>
+
+                        <h3>QRadar AQL Query Examples</h3>
+                        <div class="code-header">
+                            <span class="code-lang">AQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-sql">-- MDC High severity alerts last 24 hours
+SELECT 
+    DATEFORMAT(starttime, 'yyyy-MM-dd HH:mm:ss') as EventTime,
+    LOGSOURCENAME(logsourceid) as Source,
+    "alertDisplayName" as AlertName,
+    "severity" as Severity,
+    "compromisedEntity" as Resource
+FROM events
+WHERE LOGSOURCENAME(logsourceid) ILIKE '%Azure%Defender%'
+    AND "severity" IN ('High', 'Critical')
+    AND starttime > NOW() - 24 HOURS
+ORDER BY starttime DESC</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">AQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-sql">-- Alert count by resource type
+SELECT 
+    "resourceType" as ResourceType,
+    COUNT(*) as AlertCount
+FROM events
+WHERE LOGSOURCENAME(logsourceid) ILIKE '%Azure%Defender%'
+    AND starttime > NOW() - 7 DAYS
+GROUP BY "resourceType"
+ORDER BY AlertCount DESC</code></pre>
+                    </section>
+
+                    <!-- ArcSight Integration -->
+                    <section>
+                        <h2 id="arcsight">Micro Focus ArcSight Integration</h2>
+
+                        <h3>ArcSight SmartConnector Configuration</h3>
+                        <ol>
+                            <li><strong>Install Connector:</strong> Microsoft Azure Event Hub SmartConnector</li>
+                            <li><strong>Configure Azure Settings:</strong>
+                                <div class="code-header">
+                                    <span class="code-lang">Properties</span>
+                                    <button class="code-copy-btn">Copy</button>
+                                </div>
+                                <pre><code class="language-properties"># agent.properties
+azure.eventhub.namespace=mdc-siem-namespace
+azure.eventhub.name=mdc-alerts
+azure.eventhub.sas.keyname=siem-listen
+azure.eventhub.sas.key=YOUR-SAS-KEY
+azure.eventhub.consumer.group=$Default</code></pre>
+                            </li>
+                            <li><strong>Map to CEF:</strong> Configure field mappings to Common Event Format</li>
+                            <li><strong>Set Destination:</strong> ArcSight ESM or Logger</li>
+                        </ol>
+
+                        <h3>CEF Field Mapping</h3>
+                        <div class="table-wrapper">
+                            <table class="compact">
+                                <thead>
+                                    <tr>
+                                        <th>MDC Field</th>
+                                        <th>CEF Field</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>alertDisplayName</td>
+                                        <td>name</td>
+                                        <td>Alert title</td>
+                                    </tr>
+                                    <tr>
+                                        <td>severity</td>
+                                        <td>severity</td>
+                                        <td>1-10 scale</td>
+                                    </tr>
+                                    <tr>
+                                        <td>compromisedEntity</td>
+                                        <td>dhost</td>
+                                        <td>Affected resource</td>
+                                    </tr>
+                                    <tr>
+                                        <td>status</td>
+                                        <td>outcome</td>
+                                        <td>Alert status</td>
+                                    </tr>
+                                    <tr>
+                                        <td>intent</td>
+                                        <td>cat</td>
+                                        <td>MITRE ATT&CK tactic</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Graph API -->
+                    <section>
+                        <h2 id="graphapi">Microsoft Graph Security API</h2>
+
+                        <p>Use the Graph Security API for polling-based integration with any SIEM.</p>
+
+                        <h3>API Authentication</h3>
+                        <div class="code-header">
+                            <span class="code-lang">Bash</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-bash"># Get access token
+curl -X POST "https://login.microsoftonline.com/$TENANT_ID/oauth2/v2.0/token" \
+    -H "Content-Type: application/x-www-form-urlencoded" \
+    -d "client_id=$CLIENT_ID" \
+    -d "client_secret=$CLIENT_SECRET" \
+    -d "scope=https://graph.microsoft.com/.default" \
+    -d "grant_type=client_credentials"</code></pre>
+
+                        <h3>Query Alerts</h3>
+                        <div class="code-header">
+                            <span class="code-lang">Bash</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-bash"># Get security alerts
+curl -X GET "https://graph.microsoft.com/v1.0/security/alerts_v2?\$top=100&\$filter=severity eq 'high'" \
+    -H "Authorization: Bearer $ACCESS_TOKEN" \
+    -H "Content-Type: application/json"</code></pre>
+
+                        <h3>Python Integration Example</h3>
+                        <div class="code-header">
+                            <span class="code-lang">Python</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-python">import requests
+from datetime import datetime, timedelta
+
+class MDCAlertCollector:
+    def __init__(self, tenant_id, client_id, client_secret):
+        self.tenant_id = tenant_id
+        self.client_id = client_id
+        self.client_secret = client_secret
+        self.token = None
+    
+    def get_token(self):
+        url = f"https://login.microsoftonline.com/{self.tenant_id}/oauth2/v2.0/token"
+        data = {
+            "client_id": self.client_id,
+            "client_secret": self.client_secret,
+            "scope": "https://graph.microsoft.com/.default",
+            "grant_type": "client_credentials"
+        }
+        response = requests.post(url, data=data)
+        self.token = response.json()["access_token"]
+    
+    def get_alerts(self, hours=24):
+        """Fetch alerts from last N hours"""
+        if not self.token:
+            self.get_token()
+        
+        since = (datetime.utcnow() - timedelta(hours=hours)).isoformat() + "Z"
+        url = "https://graph.microsoft.com/v1.0/security/alerts_v2"
+        params = {
+            "$filter": f"createdDateTime ge {since}",
+            "$top": 1000,
+            "$orderby": "createdDateTime desc"
+        }
+        headers = {"Authorization": f"Bearer {self.token}"}
+        
+        response = requests.get(url, headers=headers, params=params)
+        return response.json().get("value", [])
+    
+    def format_for_siem(self, alert):
+        """Convert to SIEM-friendly format"""
+        return {
+            "timestamp": alert.get("createdDateTime"),
+            "alert_id": alert.get("id"),
+            "title": alert.get("title"),
+            "severity": alert.get("severity"),
+            "status": alert.get("status"),
+            "category": alert.get("category"),
+            "description": alert.get("description"),
+            "evidence": alert.get("evidence", []),
+            "mitre_techniques": alert.get("mitreTechniques", [])
+        }
+
+# Usage
+collector = MDCAlertCollector(TENANT_ID, CLIENT_ID, CLIENT_SECRET)
+alerts = collector.get_alerts(hours=24)
+for alert in alerts:
+    siem_event = collector.format_for_siem(alert)
+    # Send to your SIEM via API/syslog/etc.
+    print(siem_event)</code></pre>
+                    </section>
+
+                    <!-- Alert Schema -->
+                    <section>
+                        <h2 id="schema">Alert JSON Schema</h2>
+
+                        <div class="code-header">
+                            <span class="code-lang">JSON</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-json">{
+  "id": "alert-guid",
+  "alertDisplayName": "Suspicious PowerShell activity detected",
+  "alertType": "VM_SuspiciousPowerShell",
+  "severity": "High",
+  "status": "Active",
+  "startTimeUtc": "2024-01-15T10:30:00Z",
+  "endTimeUtc": "2024-01-15T10:35:00Z",
+  "processingEndTime": "2024-01-15T10:36:00Z",
+  "intent": "Execution",
+  "compromisedEntity": "/subscriptions/.../virtualMachines/vm-prod-01",
+  "remediationSteps": ["Isolate the VM", "Run antivirus scan"],
+  "extendedProperties": {
+    "resourceType": "Virtual Machine",
+    "ProcessName": "powershell.exe",
+    "CommandLine": "powershell -enc ...",
+    "User": "DOMAIN\\user"
+  },
+  "entities": [
+    {
+      "type": "host",
+      "hostName": "vm-prod-01",
+      "azureID": "/subscriptions/.../virtualMachines/vm-prod-01"
+    },
+    {
+      "type": "process",
+      "processId": "1234",
+      "commandLine": "powershell -enc ..."
+    }
+  ]
+}</code></pre>
+                    </section>
+
+                    <!-- Best Practices -->
+                    <section>
+                        <h2 id="best-practices">Best Practices</h2>
+
+                        <div class="checklist">
+                            <div class="checklist-title">SIEM Integration Checklist</div>
+                            <ul>
+                                <li>
+                                    <input type="checkbox" id="siem1">
+                                    <label for="siem1">Use Event Hub for real-time alert streaming</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="siem2">
+                                    <label for="siem2">Configure proper partitioning for high volume</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="siem3">
+                                    <label for="siem3">Set message retention based on SIEM processing rate</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="siem4">
+                                    <label for="siem4">Create dedicated consumer groups per SIEM</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="siem5">
+                                    <label for="siem5">Map MDC fields to your SIEM's schema</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="siem6">
+                                    <label for="siem6">Test alert flow with sample events</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="siem7">
+                                    <label for="siem7">Monitor Event Hub metrics for lag</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="siem8">
+                                    <label for="siem8">Create correlation rules for MDC alerts</label>
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- Key Takeaways -->
+                    <div class="key-takeaways">
+                        <div class="key-takeaways-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 2a.75.75 0 01.75.75v.258a33.186 33.186 0 016.668.83.75.75 0 01-.336 1.461z" clip-rule="evenodd" />
+                            </svg>
+                            Key Takeaways
+                        </div>
+                        <ul>
+                            <li>Event Hub provides real-time streaming to any SIEM</li>
+                            <li>Graph Security API enables polling-based integration</li>
+                            <li>QRadar uses Microsoft Azure DSM with Event Hub connector</li>
+                            <li>ArcSight requires SmartConnector for Event Hub</li>
+                            <li>Map MDC fields to CEF/LEEF for standardization</li>
+                            <li>Use dedicated consumer groups per SIEM instance</li>
+                            <li>Monitor Event Hub throughput and lag</li>
+                            <li>Python/REST can integrate with any custom SIEM</li>
+                        </ul>
+                    </div>
+
+                    <div class="related-pages">
+                        <div class="related-title">Related Pages</div>
+                        <div class="related-list">
+                            <a href="6-1-splunk-integration.html" class="related-link">Splunk Integration</a>
+                            <a href="5-1-integration-arch.html" class="related-link">Sentinel Integration</a>
+                            <a href="5-12-playbooks.html" class="related-link">Automation Playbooks</a>
+                            <a href="10-1-alert-reference.html" class="related-link">Alert Reference</a>
+                        </div>
+                    </div>
+
+                    <nav class="page-nav">
+                        <a href="6-1-splunk-integration.html" class="page-nav-link prev">
+                            <span class="page-nav-label">← Previous</span>
+                            <span class="page-nav-title">Splunk Integration</span>
+                        </a>
+                        <a href="8-2-alert-triage.html" class="page-nav-link next">
+                            <span class="page-nav-label">Next →</span>
+                            <span class="page-nav-title">Alert Triage</span>
+                        </a>
+                    </nav>
+                </article>
+
+                <aside class="toc-sidebar">
+                    <div class="toc-title">On This Page</div>
+                    <ul class="toc-list">
+                        <li class="toc-item"><a href="#architecture" class="toc-link">Architecture</a></li>
+                        <li class="toc-item"><a href="#comparison" class="toc-link">Method Comparison</a></li>
+                        <li class="toc-item"><a href="#eventhub" class="toc-link">Event Hub Setup</a></li>
+                        <li class="toc-item"><a href="#qradar" class="toc-link">QRadar</a></li>
+                        <li class="toc-item"><a href="#arcsight" class="toc-link">ArcSight</a></li>
+                        <li class="toc-item"><a href="#graphapi" class="toc-link">Graph API</a></li>
+                        <li class="toc-item"><a href="#schema" class="toc-link">Alert Schema</a></li>
+                        <li class="toc-item"><a href="#best-practices" class="toc-link">Best Practices</a></li>
+                    </ul>
+                </aside>
+            </div>
+        </main>
+        <div class="mobile-overlay"></div>
+    </div>
+
+    <div class="search-modal">
+        <div class="search-modal-content">
+            <input type="text" class="search-modal-input" placeholder="Search documentation..." autofocus>
+            <div class="search-results"></div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

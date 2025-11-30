@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="DevSecOps Integration - Integrate Microsoft Defender for Cloud into CI/CD pipelines for shift-left security.">
+    <title>DevSecOps Integration - Microsoft Defender for Cloud</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="../index.html" class="sidebar-logo">
+                    <div class="logo-icon">MDC</div>
+                    <span class="logo-text">Defender for Cloud</span>
+                </a>
+                <button class="sidebar-toggle" aria-label="Toggle sidebar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Automation & DevSecOps</div>
+                    <div class="nav-group expanded" data-group="devsecops">
+                        <div class="nav-group-header">
+                            <span class="nav-group-title">CI/CD Security</span>
+                            <svg class="nav-group-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="nav-group-items">
+                            <a href="9-1-devsecops.html" class="nav-subitem active">DevSecOps Overview</a>
+                            <a href="9-2-azure-devops.html" class="nav-subitem">Azure DevOps Integration</a>
+                            <a href="9-3-github-actions.html" class="nav-subitem">GitHub Actions</a>
+                            <a href="9-4-iac-scanning.html" class="nav-subitem">IaC Scanning</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" aria-label="Open menu">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10zm0 5.25a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75a.75.75 0 01-.75-.75z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div class="search-box">
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                        </svg>
+                        <input type="text" class="search-input" placeholder="Search documentation..." readonly>
+                        <span class="search-shortcut">⌘K</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <article class="page-content">
+                    <nav class="breadcrumbs">
+                        <a href="../index.html" class="breadcrumb-item">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <a href="9-1-devsecops.html" class="breadcrumb-item">Automation</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span class="breadcrumb-item current">DevSecOps Integration</span>
+                    </nav>
+
+                    <header class="page-header">
+                        <h1>DevSecOps Integration</h1>
+                        <div class="page-meta">
+                            <span class="badge badge-l2">L2 Technical</span>
+                            <span class="badge badge-l3">L3 Advanced</span>
+                            <span class="page-meta-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clip-rule="evenodd" />
+                                </svg>
+                                15 min read
+                            </span>
+                        </div>
+                    </header>
+
+                    <section>
+                        <p>
+                            DevSecOps integrates security practices into the DevOps pipeline, enabling "shift-left" 
+                            security where vulnerabilities are caught early in development rather than in production. 
+                            Microsoft Defender for Cloud provides tools for CI/CD pipeline security.
+                        </p>
+                    </section>
+
+                    <!-- Shift-Left Architecture -->
+                    <section>
+                        <h2 id="architecture">Shift-Left Security Architecture</h2>
+
+                        <div class="ascii-diagram">
+<span class="highlight-cyan">╔══════════════════════════════════════════════════════════════════════════════════════════════╗</span>
+<span class="highlight-cyan">║</span>                          <span class="highlight-blue">DEVSECOPS PIPELINE INTEGRATION</span>                                    <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">╠══════════════════════════════════════════════════════════════════════════════════════════════╣</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">CODE</span>           <span class="highlight-green">BUILD</span>          <span class="highlight-orange">TEST</span>           <span class="highlight-purple">DEPLOY</span>         <span class="highlight-red">RUNTIME</span>               <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>     │               │               │               │               │                       <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>     ▼               ▼               ▼               ▼               ▼                       <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   ┌─────┐       ┌─────┐       ┌─────┐       ┌─────┐       ┌─────┐                          <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   │ IDE │──────►│ CI  │──────►│ QA  │──────►│ CD  │──────►│ Prod│                          <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   └──┬──┘       └──┬──┘       └──┬──┘       └──┬──┘       └──┬──┘                          <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>      │             │             │             │             │                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">┌──▼──┐</span>       <span class="highlight-green">┌──▼──┐</span>       <span class="highlight-orange">┌──▼──┐</span>       <span class="highlight-purple">┌──▼──┐</span>       <span class="highlight-red">┌──▼──┐</span>                          <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">│SAST │</span>       <span class="highlight-green">│Image│</span>       <span class="highlight-orange">│DAST │</span>       <span class="highlight-purple">│ IaC │</span>       <span class="highlight-red">│ MDC │</span>                          <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">│Scan │</span>       <span class="highlight-green">│Scan │</span>       <span class="highlight-orange">│Scan │</span>       <span class="highlight-purple">│Scan │</span>       <span class="highlight-red">│CWPP │</span>                          <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">└─────┘</span>       <span class="highlight-green">└─────┘</span>       <span class="highlight-orange">└─────┘</span>       <span class="highlight-purple">└─────┘</span>       <span class="highlight-red">└─────┘</span>                          <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">◄──────────────── SHIFT LEFT (Catch issues earlier) ─────────────────►</span>                   <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">$100 to fix</span>     <span class="highlight-orange">$1,000 to fix</span>              <span class="highlight-red">$100,000 to fix</span>                            <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">╚══════════════════════════════════════════════════════════════════════════════════════════════╝</span>
+                        </div>
+                    </section>
+
+                    <!-- Microsoft Tools -->
+                    <section>
+                        <h2 id="tools">Microsoft DevSecOps Tools</h2>
+
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Tool</th>
+                                        <th>Stage</th>
+                                        <th>Purpose</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>GitHub Advanced Security</strong></td>
+                                        <td>Code</td>
+                                        <td>SAST, secret scanning, dependency review</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Defender for DevOps</strong></td>
+                                        <td>Build</td>
+                                        <td>Pipeline visibility, IaC scanning</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Defender for Containers</strong></td>
+                                        <td>Build/Deploy</td>
+                                        <td>Container image scanning</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Azure Policy</strong></td>
+                                        <td>Deploy</td>
+                                        <td>Prevent non-compliant deployments</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Defender for Cloud</strong></td>
+                                        <td>Runtime</td>
+                                        <td>CSPM, CWPP, threat detection</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Defender for DevOps -->
+                    <section>
+                        <h2 id="defender-devops">Defender for DevOps</h2>
+
+                        <p>Defender for DevOps connects Azure DevOps and GitHub to MDC, providing visibility 
+                        into pipeline security posture.</p>
+
+                        <h3>Connect Azure DevOps</h3>
+                        <ol>
+                            <li>Azure Portal → Defender for Cloud → Environment settings</li>
+                            <li>Click "Add environment" → Azure DevOps</li>
+                            <li>Authorize connection and select organizations</li>
+                            <li>Enable auto-discovery of repositories</li>
+                        </ol>
+
+                        <h3>Connect GitHub</h3>
+                        <ol>
+                            <li>Azure Portal → Defender for Cloud → Environment settings</li>
+                            <li>Click "Add environment" → GitHub</li>
+                            <li>Install the Microsoft Security DevOps GitHub App</li>
+                            <li>Select repositories to connect</li>
+                        </ol>
+
+                        <div class="callout callout-info">
+                            <div class="callout-title">Capabilities</div>
+                            <div class="callout-content">
+                                <ul>
+                                    <li>View code scanning results in MDC</li>
+                                    <li>IaC template scanning (Terraform, ARM, Bicep)</li>
+                                    <li>Secret detection in repositories</li>
+                                    <li>Dependency vulnerability scanning</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- GitHub Actions -->
+                    <section>
+                        <h2 id="github-actions">GitHub Actions Integration</h2>
+
+                        <div class="code-header">
+                            <span class="code-lang">YAML (GitHub Actions)</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-yaml">name: Microsoft Security DevOps
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  security-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run Microsoft Security DevOps
+        uses: microsoft/security-devops-action@v1
+        id: msdo
+        with:
+          # Specify which tools to run
+          tools: 'templateanalyzer,terrascan,trivy'
+          
+      - name: Upload results to Security tab
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: ${{ steps.msdo.outputs.sarifFile }}
+
+  container-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build container image
+        run: docker build -t myapp:${{ github.sha }} .
+
+      - name: Scan container image
+        uses: azure/container-scan@v0
+        with:
+          image-name: myapp:${{ github.sha }}
+          severity-threshold: HIGH
+          run-quality-checks: true</code></pre>
+                    </section>
+
+                    <!-- Azure DevOps -->
+                    <section>
+                        <h2 id="azure-devops">Azure DevOps Integration</h2>
+
+                        <div class="code-header">
+                            <span class="code-lang">YAML (Azure Pipelines)</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-yaml">trigger:
+  - main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+stages:
+  - stage: SecurityScan
+    displayName: 'Security Scanning'
+    jobs:
+      - job: MSDO
+        displayName: 'Microsoft Security DevOps'
+        steps:
+          - task: MicrosoftSecurityDevOps@1
+            displayName: 'Run Security Scan'
+            inputs:
+              categories: 'IaC,secrets,code'
+              tools: 'templateanalyzer,credscan,eslint'
+
+          - task: PublishPipelineArtifact@1
+            inputs:
+              targetPath: '$(System.DefaultWorkingDirectory)/.gdn'
+              artifact: 'SecurityResults'
+
+      - job: ContainerScan
+        displayName: 'Container Image Scan'
+        steps:
+          - task: Docker@2
+            displayName: 'Build image'
+            inputs:
+              command: 'build'
+              dockerfile: 'Dockerfile'
+              tags: '$(Build.BuildId)'
+
+          - task: ContainerScan@0
+            displayName: 'Scan container'
+            inputs:
+              imageName: 'myapp:$(Build.BuildId)'
+              severityThreshold: 'High'
+
+  - stage: Deploy
+    displayName: 'Deploy to Azure'
+    dependsOn: SecurityScan
+    condition: succeeded()
+    jobs:
+      - deployment: DeployToAKS
+        environment: 'production'
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - script: echo "Deploying..."</code></pre>
+                    </section>
+
+                    <!-- IaC Scanning -->
+                    <section>
+                        <h2 id="iac-scanning">Infrastructure as Code Scanning</h2>
+
+                        <p>Scan Terraform, ARM, Bicep, and CloudFormation templates for misconfigurations:</p>
+
+                        <h3>Supported Scanners</h3>
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Scanner</th>
+                                        <th>Templates</th>
+                                        <th>Focus</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Template Analyzer</strong></td>
+                                        <td>ARM, Bicep</td>
+                                        <td>Azure-specific misconfigurations</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Terrascan</strong></td>
+                                        <td>Terraform, K8s YAML</td>
+                                        <td>Multi-cloud IaC scanning</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Checkov</strong></td>
+                                        <td>Terraform, ARM, K8s</td>
+                                        <td>Policy-as-code</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>tfsec</strong></td>
+                                        <td>Terraform</td>
+                                        <td>Terraform-specific security</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h3>Example Findings</h3>
+                        <div class="code-header">
+                            <span class="code-lang">Terraform (Insecure)</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-hcl"># ❌ INSECURE - Flagged by IaC scanner
+resource "azurerm_storage_account" "example" {
+  name                     = "examplesa"
+  resource_group_name      = azurerm_resource_group.example.name
+  location                 = "eastus"
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
+  
+  # Missing: min_tls_version, https_traffic_only, public_network_access
+}</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">Terraform (Secure)</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-hcl"># ✅ SECURE - Passes IaC scanning
+resource "azurerm_storage_account" "example" {
+  name                      = "examplesa"
+  resource_group_name       = azurerm_resource_group.example.name
+  location                  = "eastus"
+  account_tier              = "Standard"
+  account_replication_type  = "LRS"
+  
+  min_tls_version           = "TLS1_2"
+  enable_https_traffic_only = true
+  public_network_access_enabled = false
+  
+  blob_properties {
+    delete_retention_policy {
+      days = 7
+    }
+  }
+  
+  network_rules {
+    default_action = "Deny"
+  }
+}</code></pre>
+                    </section>
+
+                    <!-- Container Image Scanning -->
+                    <section>
+                        <h2 id="container-scanning">Container Image Scanning</h2>
+
+                        <p>Scan container images in CI/CD before pushing to registry:</p>
+
+                        <div class="code-header">
+                            <span class="code-lang">Bash</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-bash"># Using Trivy (open-source scanner)
+trivy image --severity HIGH,CRITICAL myapp:latest
+
+# Using Defender for Containers (ACR integration)
+# Images pushed to ACR are automatically scanned
+az acr build --registry myregistry --image myapp:v1 .
+
+# Check scan results
+az acr repository show-manifests \
+    --name myregistry \
+    --repository myapp \
+    --query "[].{Digest:digest,Vulnerabilities:changeableAttributes.quarantineState}"</code></pre>
+
+                        <h3>Block Vulnerable Images</h3>
+
+                        <div class="code-header">
+                            <span class="code-lang">YAML (Azure Policy - AKS)</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-yaml"># Kubernetes Admission Controller policy
+# Block pods with images that have critical vulnerabilities
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sAllowedImages
+metadata:
+  name: require-scanned-images
+spec:
+  match:
+    kinds:
+      - apiGroups: [""]
+        kinds: ["Pod"]
+  parameters:
+    repos:
+      - "myregistry.azurecr.io/"
+    # Only allow images from ACR that have passed scanning</code></pre>
+                    </section>
+
+                    <!-- Best Practices -->
+                    <section>
+                        <h2 id="best-practices">Best Practices</h2>
+
+                        <div class="checklist">
+                            <div class="checklist-title">DevSecOps Implementation Checklist</div>
+                            <ul>
+                                <li>
+                                    <input type="checkbox" id="dev1">
+                                    <label for="dev1">Connect Azure DevOps / GitHub to Defender for DevOps</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="dev2">
+                                    <label for="dev2">Enable IaC scanning in all pipelines</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="dev3">
+                                    <label for="dev3">Scan container images before pushing to registry</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="dev4">
+                                    <label for="dev4">Block deployments with critical vulnerabilities</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="dev5">
+                                    <label for="dev5">Enable secret scanning in repositories</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="dev6">
+                                    <label for="dev6">Implement branch protection requiring security checks</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="dev7">
+                                    <label for="dev7">Review security findings in pull requests</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="dev8">
+                                    <label for="dev8">Set severity thresholds for pipeline gates</label>
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- Key Takeaways -->
+                    <div class="key-takeaways">
+                        <div class="key-takeaways-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 2a.75.75 0 01.75.75v.258a33.186 33.186 0 016.668.83.75.75 0 01-.336 1.461z" clip-rule="evenodd" />
+                            </svg>
+                            Key Takeaways
+                        </div>
+                        <ul>
+                            <li>Shift-left security catches issues earlier and cheaper</li>
+                            <li>Defender for DevOps connects GitHub and Azure DevOps to MDC</li>
+                            <li>Microsoft Security DevOps Action provides unified scanning</li>
+                            <li>IaC scanning catches misconfigurations before deployment</li>
+                            <li>Container scanning prevents vulnerable images in production</li>
+                            <li>Use pipeline gates to block high-severity findings</li>
+                            <li>Branch protection enforces security checks on PRs</li>
+                            <li>Combine pipeline security with runtime MDC protection</li>
+                        </ul>
+                    </div>
+
+                    <div class="related-pages">
+                        <div class="related-title">Related Pages</div>
+                        <div class="related-list">
+                            <a href="3-4-containers.html" class="related-link">Defender for Containers</a>
+                            <a href="5-12-playbooks.html" class="related-link">Automation Playbooks</a>
+                            <a href="2-5-governance.html" class="related-link">Governance Rules</a>
+                            <a href="12-2-powershell.html" class="related-link">PowerShell Scripts</a>
+                        </div>
+                    </div>
+
+                    <nav class="page-nav">
+                        <a href="8-6-storage-playbook.html" class="page-nav-link prev">
+                            <span class="page-nav-label">← Previous</span>
+                            <span class="page-nav-title">Storage Playbook</span>
+                        </a>
+                        <a href="9-2-azure-devops.html" class="page-nav-link next">
+                            <span class="page-nav-label">Next →</span>
+                            <span class="page-nav-title">Azure DevOps Integration</span>
+                        </a>
+                    </nav>
+                </article>
+
+                <aside class="toc-sidebar">
+                    <div class="toc-title">On This Page</div>
+                    <ul class="toc-list">
+                        <li class="toc-item"><a href="#architecture" class="toc-link">Architecture</a></li>
+                        <li class="toc-item"><a href="#tools" class="toc-link">Microsoft Tools</a></li>
+                        <li class="toc-item"><a href="#defender-devops" class="toc-link">Defender for DevOps</a></li>
+                        <li class="toc-item"><a href="#github-actions" class="toc-link">GitHub Actions</a></li>
+                        <li class="toc-item"><a href="#azure-devops" class="toc-link">Azure DevOps</a></li>
+                        <li class="toc-item"><a href="#iac-scanning" class="toc-link">IaC Scanning</a></li>
+                        <li class="toc-item"><a href="#container-scanning" class="toc-link">Container Scanning</a></li>
+                        <li class="toc-item"><a href="#best-practices" class="toc-link">Best Practices</a></li>
+                    </ul>
+                </aside>
+            </div>
+        </main>
+        <div class="mobile-overlay"></div>
+    </div>
+
+    <div class="search-modal">
+        <div class="search-modal-content">
+            <input type="text" class="search-modal-input" placeholder="Search documentation..." autofocus>
+            <div class="search-results"></div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Microsoft Defender for Storage - Malware scanning, sensitive data discovery, and threat detection for Azure Storage.">
+    <title>Defender for Storage - Microsoft Defender for Cloud</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="../index.html" class="sidebar-logo">
+                    <div class="logo-icon">MDC</div>
+                    <span class="logo-text">Defender for Cloud</span>
+                </a>
+                <button class="sidebar-toggle" aria-label="Toggle sidebar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">CWPP</div>
+                    <div class="nav-group expanded" data-group="cwpp">
+                        <div class="nav-group-header">
+                            <span class="nav-group-title">Workload Protection</span>
+                            <svg class="nav-group-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="nav-group-items">
+                            <a href="3-1-servers-overview.html" class="nav-subitem">Defender for Servers</a>
+                            <a href="3-4-containers.html" class="nav-subitem">Defender for Containers</a>
+                            <a href="3-7-storage.html" class="nav-subitem active">Defender for Storage</a>
+                            <a href="3-8-sql.html" class="nav-subitem">Defender for SQL</a>
+                            <a href="3-9-app-service.html" class="nav-subitem">Defender for App Service</a>
+                            <a href="3-10-key-vault.html" class="nav-subitem">Defender for Key Vault</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" aria-label="Open menu">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10zm0 5.25a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75a.75.75 0 01-.75-.75z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div class="search-box">
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                        </svg>
+                        <input type="text" class="search-input" placeholder="Search documentation..." readonly>
+                        <span class="search-shortcut">⌘K</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <article class="page-content">
+                    <nav class="breadcrumbs">
+                        <a href="../index.html" class="breadcrumb-item">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <a href="3-1-servers-overview.html" class="breadcrumb-item">CWPP</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span class="breadcrumb-item current">Defender for Storage</span>
+                    </nav>
+
+                    <header class="page-header">
+                        <h1>Defender for Storage</h1>
+                        <div class="page-meta">
+                            <span class="badge badge-l1">L1 Fundamentals</span>
+                            <span class="badge badge-l2">L2 Technical</span>
+                            <span class="page-meta-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clip-rule="evenodd" />
+                                </svg>
+                                20 min read
+                            </span>
+                        </div>
+                    </header>
+
+                    <section>
+                        <p>
+                            Microsoft Defender for Storage provides advanced threat protection for Azure Storage accounts, 
+                            including real-time malware scanning, sensitive data discovery, and anomalous access detection. 
+                            It protects Blob Storage, Azure Files, and Azure Data Lake Storage Gen2.
+                        </p>
+
+                        <div class="callout callout-success">
+                            <svg class="callout-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd" />
+                            </svg>
+                            <div class="callout-title">New in 2024</div>
+                            <div class="callout-content">
+                                <p>Defender for Storage V2 (DefenderForStorageV2) includes <strong>on-upload malware scanning</strong> - 
+                                files are scanned in real-time as they're uploaded, blocking malware before it's stored.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Capabilities -->
+                    <section>
+                        <h2 id="capabilities">Capabilities Overview</h2>
+
+                        <div class="ascii-diagram">
+<span class="highlight-cyan">╔══════════════════════════════════════════════════════════════════════════════════════════════╗</span>
+<span class="highlight-cyan">║</span>                    <span class="highlight-blue">DEFENDER FOR STORAGE - THREE PILLARS</span>                                   <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">╠══════════════════════════════════════════════════════════════════════════════════════════════╣</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">┌────────────────────────────┐</span>  <span class="highlight-blue">┌────────────────────────────┐</span>  <span class="highlight-purple">┌────────────────────────────┐</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│     MALWARE SCANNING       │</span>  <span class="highlight-blue">│   SENSITIVE DATA THREAT    │</span>  <span class="highlight-purple">│    ACTIVITY MONITORING     │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│                            │</span>  <span class="highlight-blue">│        DETECTION           │</span>  <span class="highlight-purple">│                            │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│  ┌────────────────────┐    │</span>  <span class="highlight-blue">│  ┌────────────────────┐    │</span>  <span class="highlight-purple">│  ┌────────────────────┐    │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│  │ • On-upload scan   │    │</span>  <span class="highlight-blue">│  │ • PII detection    │    │</span>  <span class="highlight-purple">│  │ • Anomalous access │    │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│  │ • Near real-time   │    │</span>  <span class="highlight-blue">│  │ • Credit cards     │    │</span>  <span class="highlight-purple">│  │ • Unusual IPs      │    │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│  │ • Block malware    │    │</span>  <span class="highlight-blue">│  │ • Health records   │    │</span>  <span class="highlight-purple">│  │ • Mass download    │    │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│  │ • Hash reputation  │    │</span>  <span class="highlight-blue">│  │ • SSN/Tax IDs      │    │</span>  <span class="highlight-purple">│  │ • Permission abuse │    │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│  │ • Scan results API │    │</span>  <span class="highlight-blue">│  │ • Risk indicators  │    │</span>  <span class="highlight-purple">│  │ • Tor exit nodes   │    │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│  └────────────────────┘    │</span>  <span class="highlight-blue">│  └────────────────────┘    │</span>  <span class="highlight-purple">│  └────────────────────┘    │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│                            │</span>  <span class="highlight-blue">│                            │</span>  <span class="highlight-purple">│                            │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│  💰 ~$0.15/GB scanned      │</span>  <span class="highlight-blue">│  🔒 Requires Purview       │</span>  <span class="highlight-purple">│  📊 Included in base plan  │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">└────────────────────────────┘</span>  <span class="highlight-blue">└────────────────────────────┘</span>  <span class="highlight-purple">└────────────────────────────┘</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">╚══════════════════════════════════════════════════════════════════════════════════════════════╝</span>
+                        </div>
+
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Feature</th>
+                                        <th>Description</th>
+                                        <th>Pricing</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Activity Monitoring</strong></td>
+                                        <td>Anomaly detection, suspicious access patterns</td>
+                                        <td>~$10/storage account/month</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Malware Scanning</strong></td>
+                                        <td>On-upload scanning for malware</td>
+                                        <td>~$0.15/GB scanned (add-on)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Sensitive Data Discovery</strong></td>
+                                        <td>PII, credentials, health data detection</td>
+                                        <td>Included (requires Purview)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Enablement -->
+                    <section>
+                        <h2 id="enablement">Enablement</h2>
+
+                        <div class="tabs">
+                            <div class="tab-list">
+                                <button class="tab-btn active" data-tab="sub-level">Subscription Level</button>
+                                <button class="tab-btn" data-tab="storage-level">Storage Account Level</button>
+                                <button class="tab-btn" data-tab="terraform">Terraform</button>
+                            </div>
+
+                            <div class="tab-panel active" data-panel="sub-level">
+                                <h4>Enable for All Storage Accounts (Recommended)</h4>
+                                
+                                <div class="code-header">
+                                    <span class="code-lang">Azure CLI</span>
+                                    <button class="code-copy-btn">Copy</button>
+                                </div>
+                                <pre><code class="language-bash"># Enable Defender for Storage V2 with malware scanning
+az security pricing create \
+    --name StorageAccounts \
+    --tier Standard \
+    --subplan DefenderForStorageV2 \
+    --extensions '[{
+        "name": "OnUploadMalwareScanning",
+        "isEnabled": "True",
+        "additionalExtensionProperties": {
+            "CapGBPerMonthPerStorageAccount": "5000"
+        }
+    }, {
+        "name": "SensitiveDataDiscovery", 
+        "isEnabled": "True"
+    }]'
+
+# Verify enablement
+az security pricing show --name StorageAccounts</code></pre>
+
+                                <div class="callout callout-warning" style="margin-top: var(--space-md);">
+                                    <div class="callout-title">Cost Control</div>
+                                    <div class="callout-content">
+                                        <p>Set <code>CapGBPerMonthPerStorageAccount</code> to limit malware scanning costs. 
+                                        5000 GB/month = ~$750/month max per storage account.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-panel" data-panel="storage-level">
+                                <h4>Enable for Specific Storage Account</h4>
+                                
+                                <div class="code-header">
+                                    <span class="code-lang">Azure CLI</span>
+                                    <button class="code-copy-btn">Copy</button>
+                                </div>
+                                <pre><code class="language-bash"># Enable on specific storage account
+az security defender-for-storage setting create \
+    --resource-group "your-rg" \
+    --storage-account-name "yourstorageaccount" \
+    --is-enabled true \
+    --override-subscription-setting true \
+    --malware-scanning-on-upload-is-enabled true \
+    --malware-scanning-on-upload-cap-gb-per-month 1000 \
+    --sensitive-data-discovery-is-enabled true</code></pre>
+                            </div>
+
+                            <div class="tab-panel" data-panel="terraform">
+                                <h4>Terraform Configuration</h4>
+                                
+                                <div class="code-header">
+                                    <span class="code-lang">HCL (Terraform)</span>
+                                    <button class="code-copy-btn">Copy</button>
+                                </div>
+                                <pre><code class="language-hcl"># Enable Defender for Storage V2
+resource "azurerm_security_center_subscription_pricing" "storage" {
+  tier          = "Standard"
+  resource_type = "StorageAccounts"
+  subplan       = "DefenderForStorageV2"
+
+  extension {
+    name = "OnUploadMalwareScanning"
+    additional_extension_properties = {
+      CapGBPerMonthPerStorageAccount = "5000"
+    }
+  }
+
+  extension {
+    name = "SensitiveDataDiscovery"
+  }
+}
+
+# Optional: Per-storage-account override
+resource "azurerm_security_center_storage_defender" "example" {
+  storage_account_id                        = azurerm_storage_account.example.id
+  override_subscription_settings_enabled    = true
+  malware_scanning_on_upload_enabled        = true
+  malware_scanning_on_upload_cap_gb_per_month = 1000
+  sensitive_data_discovery_enabled          = true
+}</code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Malware Scanning -->
+                    <section>
+                        <h2 id="malware-scanning">Malware Scanning Deep Dive</h2>
+
+                        <div class="ascii-diagram">
+<span class="highlight-cyan">╔══════════════════════════════════════════════════════════════════════════════════════╗</span>
+<span class="highlight-cyan">║</span>                   <span class="highlight-blue">ON-UPLOAD MALWARE SCANNING FLOW</span>                                    <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">╠══════════════════════════════════════════════════════════════════════════════════════╣</span>
+<span class="highlight-cyan">║</span>                                                                                      <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">┌──────────┐</span>     <span class="highlight-blue">┌──────────────┐</span>     <span class="highlight-purple">┌──────────────┐</span>     <span class="highlight-orange">┌──────────────┐</span>    <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│  Client  │</span>────►<span class="highlight-blue">│   Storage    │</span>────►<span class="highlight-purple">│   Malware    │</span>────►<span class="highlight-orange">│    Blob      │</span>    <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│  Upload  │</span>     <span class="highlight-blue">│   Account    │</span>     <span class="highlight-purple">│   Scanner    │</span>     <span class="highlight-orange">│   Indexed    │</span>    <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">└──────────┘</span>     <span class="highlight-blue">└──────────────┘</span>     <span class="highlight-purple">└───────┬──────┘</span>     <span class="highlight-orange">└──────────────┘</span>    <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                │                                      <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                    ┌───────────┼───────────┐                          <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                    │           │           │                          <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                    ▼           ▼           ▼                          <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                              <span class="highlight-green">┌──────────┐</span> <span class="highlight-orange">┌──────────┐</span> <span class="highlight-red">┌──────────┐</span>               <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                              <span class="highlight-green">│   CLEAN  │</span> <span class="highlight-orange">│ UNKNOWN  │</span> <span class="highlight-red">│ MALWARE  │</span>               <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                              <span class="highlight-green">│          │</span> <span class="highlight-orange">│          │</span> <span class="highlight-red">│ DETECTED │</span>               <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                              <span class="highlight-green">└────┬─────┘</span> <span class="highlight-orange">└────┬─────┘</span> <span class="highlight-red">└────┬─────┘</span>               <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                   │           │           │                          <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                   ▼           ▼           ▼                          <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                              <span class="highlight-green">Blob tag:</span>   <span class="highlight-orange">Blob tag:</span>   <span class="highlight-red">• Alert generated</span>             <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                              <span class="highlight-green">scan=clean</span>  <span class="highlight-orange">scan=unknown</span> <span class="highlight-red">• Blob tag: malicious</span>        <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                       <span class="highlight-red">• Optional: auto-delete</span>      <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                                                      <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">╚══════════════════════════════════════════════════════════════════════════════════════╝</span>
+                        </div>
+
+                        <h3 id="scan-results">Working with Scan Results</h3>
+
+                        <p>Scan results are stored as blob index tags:</p>
+
+                        <div class="code-header">
+                            <span class="code-lang">Bash</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-bash"># Check scan result for a blob
+az storage blob tag list \
+    --account-name "yourstorageaccount" \
+    --container-name "uploads" \
+    --name "file.exe" \
+    --auth-mode login
+
+# Expected tags:
+# "Malware Scanning scan result": "Malicious" | "No threats found" | "Scan not completed"
+# "Malware Scanning scan time": "2024-01-15T10:30:00Z"</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">PowerShell</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-powershell"># Query all malicious blobs in a storage account
+$ctx = New-AzStorageContext -StorageAccountName "yourstorageaccount"
+
+# Find malicious files using blob index tags
+$maliciousBlobs = Get-AzStorageBlob -Context $ctx -Container "uploads" `
+    -TagCondition "`"Malware Scanning scan result`"='Malicious'"
+
+foreach ($blob in $maliciousBlobs) {
+    Write-Host "Malicious file: $($blob.Name)" -ForegroundColor Red
+    # Take action: quarantine, delete, alert
+}</code></pre>
+
+                        <h3 id="auto-remediate">Automated Remediation</h3>
+
+                        <div class="code-header">
+                            <span class="code-lang">PowerShell (Azure Function)</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-powershell"># Azure Function triggered by Event Grid on malware detection
+# Automatically moves malicious blobs to quarantine container
+
+param($eventGridEvent, $TriggerMetadata)
+
+$blobUrl = $eventGridEvent.data.blobUrl
+$scanResult = $eventGridEvent.data.scanResultType
+
+if ($scanResult -eq "Malicious") {
+    Write-Host "Malware detected in: $blobUrl"
+    
+    # Parse blob URL
+    $uri = [System.Uri]$blobUrl
+    $containerName = $uri.Segments[1].TrimEnd('/')
+    $blobName = $uri.Segments[2..($uri.Segments.Length-1)] -join ''
+    
+    # Move to quarantine
+    $ctx = New-AzStorageContext -StorageAccountName $uri.Host.Split('.')[0]
+    
+    # Copy to quarantine
+    Start-AzStorageBlobCopy `
+        -SrcContainer $containerName `
+        -SrcBlob $blobName `
+        -DestContainer "quarantine" `
+        -DestBlob "$blobName.quarantined" `
+        -Context $ctx
+    
+    # Delete original
+    Remove-AzStorageBlob -Container $containerName -Blob $blobName -Context $ctx
+    
+    Write-Host "Blob quarantined: $blobName"
+}</code></pre>
+                    </section>
+
+                    <!-- Common Alerts -->
+                    <section>
+                        <h2 id="alerts">Common Alert Types</h2>
+
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Alert</th>
+                                        <th>Severity</th>
+                                        <th>Description</th>
+                                        <th>Response</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Malware uploaded to storage</strong></td>
+                                        <td><span class="badge badge-high">High</span></td>
+                                        <td>Malicious file detected during upload</td>
+                                        <td>Quarantine/delete blob, investigate source</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Access from Tor exit node</strong></td>
+                                        <td><span class="badge badge-high">High</span></td>
+                                        <td>Storage accessed from anonymizing network</td>
+                                        <td>Check for data exfiltration, rotate SAS tokens</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Unusual data extraction</strong></td>
+                                        <td><span class="badge badge-medium">Medium</span></td>
+                                        <td>Large amount of data downloaded</td>
+                                        <td>Verify legitimate use, check access logs</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Access from unusual location</strong></td>
+                                        <td><span class="badge badge-medium">Medium</span></td>
+                                        <td>Access from atypical geographic location</td>
+                                        <td>Verify user activity, check for compromised credentials</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Publicly accessible storage</strong></td>
+                                        <td><span class="badge badge-medium">Medium</span></td>
+                                        <td>Container/blob set to public access</td>
+                                        <td>Remove public access if unintended</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Suspicious SAS token usage</strong></td>
+                                        <td><span class="badge badge-medium">Medium</span></td>
+                                        <td>SAS token used from unusual pattern</td>
+                                        <td>Rotate SAS tokens, review access policies</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Defender for Storage alerts - Last 7 days
+SecurityAlert
+| where TimeGenerated > ago(7d)
+| where ProductName == "Azure Security Center"
+| where AlertName has_any ("storage", "blob", "malware", "upload", "exfiltration")
+| summarize 
+    Count = count(),
+    Accounts = make_set(CompromisedEntity)
+    by AlertName, AlertSeverity
+| order by Count desc</code></pre>
+                    </section>
+
+                    <!-- Key Takeaways -->
+                    <div class="key-takeaways">
+                        <div class="key-takeaways-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 2a.75.75 0 01.75.75v.258a33.186 33.186 0 016.668.83.75.75 0 01-.336 1.461z" clip-rule="evenodd" />
+                            </svg>
+                            Key Takeaways
+                        </div>
+                        <ul>
+                            <li>Use DefenderForStorageV2 subplan for latest features including on-upload scanning</li>
+                            <li>Malware scanning adds ~$0.15/GB - set monthly caps to control costs</li>
+                            <li>Scan results are stored as blob index tags - query them for compliance</li>
+                            <li>Use Event Grid + Azure Functions for automated malware response</li>
+                            <li>Sensitive data discovery requires Microsoft Purview integration</li>
+                            <li>Activity monitoring detects anomalous access patterns and Tor usage</li>
+                        </ul>
+                    </div>
+
+                    <div class="related-pages">
+                        <div class="related-title">Related Pages</div>
+                        <div class="related-list">
+                            <a href="3-8-sql.html" class="related-link">Defender for SQL</a>
+                            <a href="3-10-key-vault.html" class="related-link">Defender for Key Vault</a>
+                            <a href="5-12-playbooks.html" class="related-link">Automation Playbooks</a>
+                            <a href="1-3-pricing.html" class="related-link">Pricing Guide</a>
+                        </div>
+                    </div>
+
+                    <nav class="page-nav">
+                        <a href="3-4-containers.html" class="page-nav-link prev">
+                            <span class="page-nav-label">← Previous</span>
+                            <span class="page-nav-title">Defender for Containers</span>
+                        </a>
+                        <a href="3-8-sql.html" class="page-nav-link next">
+                            <span class="page-nav-label">Next →</span>
+                            <span class="page-nav-title">Defender for SQL</span>
+                        </a>
+                    </nav>
+                </article>
+
+                <aside class="toc-sidebar">
+                    <div class="toc-title">On This Page</div>
+                    <ul class="toc-list">
+                        <li class="toc-item"><a href="#capabilities" class="toc-link">Capabilities</a></li>
+                        <li class="toc-item"><a href="#enablement" class="toc-link">Enablement</a></li>
+                        <li class="toc-item"><a href="#malware-scanning" class="toc-link">Malware Scanning</a></li>
+                        <li class="toc-item"><a href="#scan-results" class="toc-link toc-h3">Scan Results</a></li>
+                        <li class="toc-item"><a href="#auto-remediate" class="toc-link toc-h3">Auto Remediation</a></li>
+                        <li class="toc-item"><a href="#alerts" class="toc-link">Alert Types</a></li>
+                    </ul>
+                </aside>
+            </div>
+        </main>
+        <div class="mobile-overlay"></div>
+    </div>
+
+    <div class="search-modal">
+        <div class="search-modal-content">
+            <input type="text" class="search-modal-input" placeholder="Search documentation..." autofocus>
+            <div class="search-results"></div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Microsoft Defender for Endpoint Integration - Configure MDE with Defender for Cloud for unified endpoint and cloud security.">
+    <title>MDE Integration - Microsoft Defender for Cloud</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="../index.html" class="sidebar-logo">
+                    <div class="logo-icon">MDC</div>
+                    <span class="logo-text">Defender for Cloud</span>
+                </a>
+                <button class="sidebar-toggle" aria-label="Toggle sidebar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">CWPP</div>
+                    <div class="nav-group expanded" data-group="cwpp-servers">
+                        <div class="nav-group-header">
+                            <span class="nav-group-title">Server Protection</span>
+                            <svg class="nav-group-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="nav-group-items">
+                            <a href="3-1-servers-overview.html" class="nav-subitem">Servers Overview</a>
+                            <a href="3-2-mde-integration.html" class="nav-subitem active">MDE Integration</a>
+                            <a href="3-14-agentless-scanning.html" class="nav-subitem">Agentless Scanning</a>
+                            <a href="3-15-jit-access.html" class="nav-subitem">JIT VM Access</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" aria-label="Open menu">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10zm0 5.25a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75a.75.75 0 01-.75-.75z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div class="search-box">
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                        </svg>
+                        <input type="text" class="search-input" placeholder="Search documentation..." readonly>
+                        <span class="search-shortcut">⌘K</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <article class="page-content">
+                    <nav class="breadcrumbs">
+                        <a href="../index.html" class="breadcrumb-item">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <a href="3-1-servers-overview.html" class="breadcrumb-item">CWPP</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span class="breadcrumb-item current">MDE Integration</span>
+                    </nav>
+
+                    <header class="page-header">
+                        <h1>Microsoft Defender for Endpoint Integration</h1>
+                        <div class="page-meta">
+                            <span class="badge badge-p1">P1 Included</span>
+                            <span class="badge badge-p2">P2 Enhanced</span>
+                            <span class="page-meta-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clip-rule="evenodd" />
+                                </svg>
+                                14 min read
+                            </span>
+                        </div>
+                    </header>
+
+                    <section>
+                        <p>
+                            Microsoft Defender for Endpoint (MDE) is automatically integrated with Defender for 
+                            Servers. This provides enterprise-grade EDR capabilities for Azure VMs, Arc-enabled 
+                            servers, and multi-cloud workloads without additional licensing costs.
+                        </p>
+
+                        <div class="callout callout-success">
+                            <div class="callout-title">Included with Defender for Servers</div>
+                            <div class="callout-content">
+                                <p><strong>Plan 1:</strong> MDE Plan 2 capabilities for servers</p>
+                                <p><strong>Plan 2:</strong> MDE Plan 2 + vulnerability management, JIT, FIM</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Architecture -->
+                    <section>
+                        <h2 id="architecture">Integration Architecture</h2>
+
+                        <div class="ascii-diagram">
+<span class="highlight-cyan">╔══════════════════════════════════════════════════════════════════════════════════════════════╗</span>
+<span class="highlight-cyan">║</span>                         <span class="highlight-blue">MDC + MDE UNIFIED ARCHITECTURE</span>                                     <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">╠══════════════════════════════════════════════════════════════════════════════════════════════╣</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">┌─────────────────────────────────────────────────────────────────────────────────────┐</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">│                               PROTECTED SERVERS                                    │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">│                                                                                     │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">│   ┌──────────────┐   ┌──────────────┐   ┌──────────────┐   ┌──────────────┐       │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">│   │   Azure VM   │   │  Arc Server  │   │   AWS EC2    │   │   GCP GCE    │       │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">│   │  (Windows)   │   │   (Linux)    │   │  (Windows)   │   │   (Linux)    │       │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">│   │              │   │              │   │              │   │              │       │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">│   │  [MDE Agent] │   │  [MDE Agent] │   │  [MDE Agent] │   │  [MDE Agent] │       │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">│   └──────┬───────┘   └──────┬───────┘   └──────┬───────┘   └──────┬───────┘       │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">└──────────┼──────────────────┼──────────────────┼──────────────────┼───────────────┘</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>              └──────────────────┴──────────────────┴──────────────────┘                       <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                          │                                                    <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                          ▼                                                    <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-purple">┌─────────────────────────────────────────────────────────────────────────────────────┐</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-purple">│                        MICROSOFT DEFENDER XDR                                      │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-purple">│                                                                                     │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-purple">│   ┌─────────────┐   ┌─────────────┐   ┌─────────────┐   ┌─────────────┐           │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-purple">│   │    EDR      │   │  Threat     │   │   Live      │   │  Automated  │           │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-purple">│   │  Detection  │   │  Analytics  │   │  Response   │   │  Response   │           │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-purple">│   └─────────────┘   └─────────────┘   └─────────────┘   └─────────────┘           │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-purple">└─────────────────────────────────────────────────────────────────────────────────────┘</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                          │                                                    <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                    ┌─────────────────────┴─────────────────────┐                             <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                    ▼                                           ▼                             <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">┌─────────────────────────────────┐</span>   <span class="highlight-orange">┌─────────────────────────────────┐</span>              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│   MICROSOFT DEFENDER FOR CLOUD  │</span>   <span class="highlight-orange">│     MICROSOFT SENTINEL          │</span>              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│   (Unified alerts & posture)    │</span>   <span class="highlight-orange">│     (SIEM correlation)          │</span>              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">└─────────────────────────────────┘</span>   <span class="highlight-orange">└─────────────────────────────────┘</span>              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">╚══════════════════════════════════════════════════════════════════════════════════════════════╝</span>
+                        </div>
+                    </section>
+
+                    <!-- MDE Capabilities -->
+                    <section>
+                        <h2 id="capabilities">MDE Capabilities for Servers</h2>
+
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Capability</th>
+                                        <th>P1</th>
+                                        <th>P2</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>EDR</strong></td>
+                                        <td>✅</td>
+                                        <td>✅</td>
+                                        <td>Endpoint detection and response</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Next-gen AV</strong></td>
+                                        <td>✅</td>
+                                        <td>✅</td>
+                                        <td>Real-time protection, cloud-delivered</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Attack surface reduction</strong></td>
+                                        <td>✅</td>
+                                        <td>✅</td>
+                                        <td>Exploit guard, network protection</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Threat analytics</strong></td>
+                                        <td>✅</td>
+                                        <td>✅</td>
+                                        <td>Threat intelligence reports</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Live response</strong></td>
+                                        <td>✅</td>
+                                        <td>✅</td>
+                                        <td>Remote shell access for IR</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Automated investigation</strong></td>
+                                        <td>✅</td>
+                                        <td>✅</td>
+                                        <td>AI-powered alert triage</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Vulnerability management</strong></td>
+                                        <td>❌</td>
+                                        <td>✅</td>
+                                        <td>MDVM software inventory</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>File integrity monitoring</strong></td>
+                                        <td>❌</td>
+                                        <td>✅</td>
+                                        <td>Critical file change detection</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Auto-Provisioning -->
+                    <section>
+                        <h2 id="deployment">Deployment Options</h2>
+
+                        <h3>Automatic Deployment (Recommended)</h3>
+                        <p>MDE agent is automatically deployed when Defender for Servers is enabled with auto-provisioning.</p>
+
+                        <div class="tabs">
+                            <div class="tab-list">
+                                <button class="tab-btn active" data-tab="cli-mde">Azure CLI</button>
+                                <button class="tab-btn" data-tab="ps-mde">PowerShell</button>
+                                <button class="tab-btn" data-tab="portal-mde">Portal</button>
+                            </div>
+
+                            <div class="tab-panel active" data-panel="cli-mde">
+                                <div class="code-header">
+                                    <span class="code-lang">Azure CLI</span>
+                                    <button class="code-copy-btn">Copy</button>
+                                </div>
+                                <pre><code class="language-bash"># Enable auto-provisioning for MDE
+az security auto-provisioning-setting update \
+    --name "default" \
+    --auto-provision "On"
+
+# Verify MDE extension deployment status
+az vm extension list \
+    --resource-group "vm-rg" \
+    --vm-name "vm-name" \
+    --query "[?contains(name, 'MDE')]"
+
+# Check all VMs with MDE extension
+az graph query -q "
+    Resources
+    | where type == 'microsoft.compute/virtualmachines'
+    | extend extensions = properties.instanceView.extensions
+    | mv-expand extensions
+    | where extensions.name contains 'MDE'
+    | project name, resourceGroup, extensions.name
+"</code></pre>
+                            </div>
+
+                            <div class="tab-panel" data-panel="ps-mde">
+                                <div class="code-header">
+                                    <span class="code-lang">PowerShell</span>
+                                    <button class="code-copy-btn">Copy</button>
+                                </div>
+                                <pre><code class="language-powershell"># Enable auto-provisioning
+Set-AzSecurityAutoProvisioningSetting -Name "default" -EnableAutoProvision
+
+# Check MDE extension on specific VM
+Get-AzVMExtension -ResourceGroupName "vm-rg" -VMName "vm-name" | 
+    Where-Object { $_.Name -like "*MDE*" }
+
+# List all VMs with MDE status
+$vms = Get-AzVM
+foreach ($vm in $vms) {
+    $extensions = Get-AzVMExtension -ResourceGroupName $vm.ResourceGroupName -VMName $vm.Name
+    $mde = $extensions | Where-Object { $_.Name -like "*MDE*" }
+    [PSCustomObject]@{
+        VM = $vm.Name
+        MDE = if ($mde) { "Installed" } else { "Not Installed" }
+        Status = $mde.ProvisioningState
+    }
+}</code></pre>
+                            </div>
+
+                            <div class="tab-panel" data-panel="portal-mde">
+                                <ol>
+                                    <li>Azure Portal → Microsoft Defender for Cloud</li>
+                                    <li>Environment settings → Select subscription</li>
+                                    <li>Defender plans → Servers → Settings</li>
+                                    <li>Ensure "Endpoint protection" is set to "MDE"</li>
+                                    <li>Auto-provisioning will deploy to new and existing VMs</li>
+                                </ol>
+                            </div>
+                        </div>
+
+                        <h3>Manual Deployment</h3>
+                        <div class="code-header">
+                            <span class="code-lang">Azure CLI</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-bash"># Deploy MDE extension to Windows VM
+az vm extension set \
+    --resource-group "vm-rg" \
+    --vm-name "windows-vm" \
+    --name "MDE.Windows" \
+    --publisher "Microsoft.Azure.AzureDefenderForServers" \
+    --settings '{}'
+
+# Deploy MDE extension to Linux VM
+az vm extension set \
+    --resource-group "vm-rg" \
+    --vm-name "linux-vm" \
+    --name "MDE.Linux" \
+    --publisher "Microsoft.Azure.AzureDefenderForServers" \
+    --settings '{}'</code></pre>
+                    </section>
+
+                    <!-- Accessing MDE Portal -->
+                    <section>
+                        <h2 id="portal">Accessing MDE Portal</h2>
+
+                        <p>Servers protected by Defender for Cloud appear in the Microsoft Defender portal:</p>
+
+                        <div class="card-grid">
+                            <div class="card">
+                                <div class="card-header">
+                                    <span class="card-icon">🖥️</span>
+                                    <h3 class="card-title">Device Inventory</h3>
+                                </div>
+                                <div class="card-content">
+                                    <p><strong>URL:</strong> security.microsoft.com → Assets → Devices</p>
+                                    <p>View all onboarded servers with health status, OS, and last seen time.</p>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <span class="card-icon">🚨</span>
+                                    <h3 class="card-title">Alerts Queue</h3>
+                                </div>
+                                <div class="card-content">
+                                    <p><strong>URL:</strong> security.microsoft.com → Incidents & alerts</p>
+                                    <p>Unified view of endpoint and cloud alerts with correlation.</p>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <span class="card-icon">🔍</span>
+                                    <h3 class="card-title">Advanced Hunting</h3>
+                                </div>
+                                <div class="card-content">
+                                    <p><strong>URL:</strong> security.microsoft.com → Hunting</p>
+                                    <p>KQL-based threat hunting across endpoint telemetry.</p>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <span class="card-icon">⚡</span>
+                                    <h3 class="card-title">Live Response</h3>
+                                </div>
+                                <div class="card-content">
+                                    <p><strong>URL:</strong> Device page → Live response</p>
+                                    <p>Remote shell for incident response and forensics.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Hunting Queries -->
+                    <section>
+                        <h2 id="hunting">Hunting Queries</h2>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL (MDE Advanced Hunting)</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Suspicious PowerShell on Azure VMs
+DeviceProcessEvents
+| where Timestamp > ago(24h)
+| where FileName =~ "powershell.exe"
+| where ProcessCommandLine has_any ("-enc", "-encoded", "bypass", "hidden", "downloadstring")
+| project Timestamp, DeviceName, AccountName, ProcessCommandLine
+| order by Timestamp desc</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL (MDE Advanced Hunting)</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Lateral movement attempts
+DeviceNetworkEvents
+| where Timestamp > ago(24h)
+| where RemotePort in (445, 3389, 5985, 5986, 22)
+| where ActionType == "ConnectionSuccess"
+| summarize Connections = count(), Targets = dcount(RemoteIP) by DeviceName
+| where Targets > 5
+| order by Targets desc</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL (MDE Advanced Hunting)</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Credential dumping indicators
+DeviceProcessEvents
+| where Timestamp > ago(7d)
+| where FileName in~ ("mimikatz.exe", "procdump.exe", "sekurlsa.dll")
+    or ProcessCommandLine has_any ("sekurlsa", "lsadump", "dcsync", "minidump")
+| project Timestamp, DeviceName, FileName, ProcessCommandLine, AccountName</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL (MDE Advanced Hunting)</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Azure VM software inventory
+DeviceTvmSoftwareInventory
+| where DeviceName startswith "az-" or DeviceName contains "azure"
+| summarize SoftwareCount = dcount(SoftwareName) by DeviceName, OSPlatform
+| order by SoftwareCount desc</code></pre>
+                    </section>
+
+                    <!-- Isolation Actions -->
+                    <section>
+                        <h2 id="response">Response Actions</h2>
+
+                        <h3>Isolate Compromised VM</h3>
+                        <div class="code-header">
+                            <span class="code-lang">PowerShell (MDE API)</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-powershell"># Get device ID from MDE
+$deviceName = "compromised-vm"
+$device = Invoke-MgGraphRequest -Method GET `
+    -Uri "https://api.securitycenter.microsoft.com/api/machines?`$filter=computerDnsName eq '$deviceName'"
+
+$deviceId = $device.value[0].id
+
+# Isolate the device
+$body = @{
+    Comment = "Isolated due to security incident - Ticket #12345"
+    IsolationType = "Full"  # or "Selective"
+} | ConvertTo-Json
+
+Invoke-MgGraphRequest -Method POST `
+    -Uri "https://api.securitycenter.microsoft.com/api/machines/$deviceId/isolate" `
+    -Body $body</code></pre>
+
+                        <h3>Collect Investigation Package</h3>
+                        <div class="code-header">
+                            <span class="code-lang">PowerShell (MDE API)</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-powershell"># Collect investigation package
+$body = @{
+    Comment = "Collecting forensic data for incident investigation"
+} | ConvertTo-Json
+
+Invoke-MgGraphRequest -Method POST `
+    -Uri "https://api.securitycenter.microsoft.com/api/machines/$deviceId/collectInvestigationPackage" `
+    -Body $body</code></pre>
+
+                        <h3>Run Antivirus Scan</h3>
+                        <div class="code-header">
+                            <span class="code-lang">PowerShell (MDE API)</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-powershell"># Run full antivirus scan
+$body = @{
+    Comment = "Running full scan after alert detection"
+    ScanType = "Full"  # or "Quick"
+} | ConvertTo-Json
+
+Invoke-MgGraphRequest -Method POST `
+    -Uri "https://api.securitycenter.microsoft.com/api/machines/$deviceId/runAntiVirusScan" `
+    -Body $body</code></pre>
+                    </section>
+
+                    <!-- Troubleshooting -->
+                    <section>
+                        <h2 id="troubleshooting">Troubleshooting</h2>
+
+                        <div class="accordion">
+                            <div class="accordion-item expanded">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">MDE Agent Not Communicating</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <p><strong>Check service status (Windows):</strong></p>
+                                    <div class="code-header">
+                                        <span class="code-lang">PowerShell</span>
+                                        <button class="code-copy-btn">Copy</button>
+                                    </div>
+                                    <pre><code class="language-powershell">Get-Service -Name "Sense" | Select-Object Status, StartType
+Get-Service -Name "WinDefend" | Select-Object Status, StartType</code></pre>
+
+                                    <p><strong>Check connectivity:</strong></p>
+                                    <div class="code-header">
+                                        <span class="code-lang">PowerShell</span>
+                                        <button class="code-copy-btn">Copy</button>
+                                    </div>
+                                    <pre><code class="language-powershell"># Test MDE cloud connectivity
+& "C:\Program Files\Windows Defender Advanced Threat Protection\MsSense.exe" -t</code></pre>
+
+                                    <p><strong>Check Linux agent:</strong></p>
+                                    <div class="code-header">
+                                        <span class="code-lang">Bash</span>
+                                        <button class="code-copy-btn">Copy</button>
+                                    </div>
+                                    <pre><code class="language-bash">sudo mdatp health
+sudo mdatp connectivity test</code></pre>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">VM Not Appearing in MDE Portal</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <ol>
+                                        <li>Verify MDE extension is installed and succeeded</li>
+                                        <li>Check VM has outbound connectivity to MDE URLs</li>
+                                        <li>Allow up to 24 hours for initial onboarding</li>
+                                        <li>Verify Defender for Servers is enabled on subscription</li>
+                                    </ol>
+
+                                    <p><strong>Required URLs (outbound HTTPS):</strong></p>
+                                    <ul>
+                                        <li>*.wd.microsoft.com</li>
+                                        <li>*.securitycenter.windows.com</li>
+                                        <li>*.blob.core.windows.net</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Key Takeaways -->
+                    <div class="key-takeaways">
+                        <div class="key-takeaways-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 2a.75.75 0 01.75.75v.258a33.186 33.186 0 016.668.83.75.75 0 01-.336 1.461z" clip-rule="evenodd" />
+                            </svg>
+                            Key Takeaways
+                        </div>
+                        <ul>
+                            <li>MDE is included with Defender for Servers P1 and P2</li>
+                            <li>Auto-provisioning deploys MDE agent automatically</li>
+                            <li>Full EDR capabilities: detection, investigation, response</li>
+                            <li>Live response enables remote forensics on servers</li>
+                            <li>Alerts correlate between MDC and MDE in unified timeline</li>
+                            <li>Advanced hunting with KQL across endpoint telemetry</li>
+                            <li>Supports Windows, Linux, Azure VMs, Arc, and multi-cloud</li>
+                            <li>Response actions: isolate, scan, collect package, restrict apps</li>
+                        </ul>
+                    </div>
+
+                    <div class="related-pages">
+                        <div class="related-title">Related Pages</div>
+                        <div class="related-list">
+                            <a href="3-1-servers-overview.html" class="related-link">Servers Overview</a>
+                            <a href="3-14-agentless-scanning.html" class="related-link">Agentless Scanning</a>
+                            <a href="8-3-vm-playbook.html" class="related-link">VM Threat Playbook</a>
+                            <a href="4-5-arc-integration.html" class="related-link">Azure Arc</a>
+                        </div>
+                    </div>
+
+                    <nav class="page-nav">
+                        <a href="3-1-servers-overview.html" class="page-nav-link prev">
+                            <span class="page-nav-label">← Previous</span>
+                            <span class="page-nav-title">Servers Overview</span>
+                        </a>
+                        <a href="3-4-containers.html" class="page-nav-link next">
+                            <span class="page-nav-label">Next →</span>
+                            <span class="page-nav-title">Defender for Containers</span>
+                        </a>
+                    </nav>
+                </article>
+
+                <aside class="toc-sidebar">
+                    <div class="toc-title">On This Page</div>
+                    <ul class="toc-list">
+                        <li class="toc-item"><a href="#architecture" class="toc-link">Architecture</a></li>
+                        <li class="toc-item"><a href="#capabilities" class="toc-link">Capabilities</a></li>
+                        <li class="toc-item"><a href="#deployment" class="toc-link">Deployment</a></li>
+                        <li class="toc-item"><a href="#portal" class="toc-link">MDE Portal</a></li>
+                        <li class="toc-item"><a href="#hunting" class="toc-link">Hunting Queries</a></li>
+                        <li class="toc-item"><a href="#response" class="toc-link">Response Actions</a></li>
+                        <li class="toc-item"><a href="#troubleshooting" class="toc-link">Troubleshooting</a></li>
+                    </ul>
+                </aside>
+            </div>
+        </main>
+        <div class="mobile-overlay"></div>
+    </div>
+
+    <div class="search-modal">
+        <div class="search-modal-content">
+            <input type="text" class="search-modal-input" placeholder="Search documentation..." autofocus>
+            <div class="search-results"></div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

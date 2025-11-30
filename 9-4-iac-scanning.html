@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="IaC Security Scanning - Comprehensive guide to scanning Terraform, ARM, and CloudFormation for security issues.">
+    <title>IaC Security Scanning - Microsoft Defender for Cloud</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="../index.html" class="sidebar-logo">
+                    <div class="logo-icon">MDC</div>
+                    <span class="logo-text">Defender for Cloud</span>
+                </a>
+                <button class="sidebar-toggle" aria-label="Toggle sidebar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">DevSecOps</div>
+                    <div class="nav-group expanded" data-group="devsecops">
+                        <div class="nav-group-header">
+                            <span class="nav-group-title">CI/CD Security</span>
+                            <svg class="nav-group-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="nav-group-items">
+                            <a href="9-1-devsecops.html" class="nav-subitem">Overview</a>
+                            <a href="9-2-github-actions.html" class="nav-subitem">GitHub Actions</a>
+                            <a href="9-3-azure-devops.html" class="nav-subitem">Azure DevOps</a>
+                            <a href="9-4-iac-scanning.html" class="nav-subitem active">IaC Scanning</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" aria-label="Open menu">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10zm0 5.25a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75a.75.75 0 01-.75-.75z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div class="search-box">
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                        </svg>
+                        <input type="text" class="search-input" placeholder="Search documentation..." readonly>
+                        <span class="search-shortcut">⌘K</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <article class="page-content">
+                    <nav class="breadcrumbs">
+                        <a href="../index.html" class="breadcrumb-item">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <a href="9-1-devsecops.html" class="breadcrumb-item">DevSecOps</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span class="breadcrumb-item current">IaC Scanning</span>
+                    </nav>
+
+                    <header class="page-header">
+                        <h1>IaC Security Scanning</h1>
+                        <div class="page-meta">
+                            <span class="badge badge-l2">L2 Technical</span>
+                            <span class="page-meta-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clip-rule="evenodd" />
+                                </svg>
+                                13 min read
+                            </span>
+                        </div>
+                    </header>
+
+                    <section>
+                        <p>
+                            Comprehensive guide to scanning Infrastructure as Code (IaC) for security 
+                            misconfigurations before deployment. Prevent security issues from reaching 
+                            production by catching them in the CI/CD pipeline.
+                        </p>
+                    </section>
+
+                    <!-- Supported Formats -->
+                    <section>
+                        <h2 id="formats">Supported IaC Formats</h2>
+
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Format</th>
+                                        <th>Extensions</th>
+                                        <th>Scanning Tools</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Terraform</strong></td>
+                                        <td>.tf, .tfvars</td>
+                                        <td>Checkov, Terrascan, tfsec</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>ARM Templates</strong></td>
+                                        <td>.json</td>
+                                        <td>Template Analyzer, Checkov</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Bicep</strong></td>
+                                        <td>.bicep</td>
+                                        <td>Template Analyzer, PSRule</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>CloudFormation</strong></td>
+                                        <td>.yaml, .json</td>
+                                        <td>Checkov, cfn-lint</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Kubernetes</strong></td>
+                                        <td>.yaml</td>
+                                        <td>Checkov, Trivy, Kubesec</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Dockerfile</strong></td>
+                                        <td>Dockerfile</td>
+                                        <td>Checkov, Trivy, Hadolint</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Common Findings -->
+                    <section>
+                        <h2 id="findings">Common Security Findings</h2>
+
+                        <h3>High Severity Issues</h3>
+                        <div class="table-wrapper">
+                            <table class="compact">
+                                <thead>
+                                    <tr>
+                                        <th>Finding</th>
+                                        <th>Risk</th>
+                                        <th>Example</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Public storage containers</td>
+                                        <td>Data exposure</td>
+                                        <td>container_access_type = "blob"</td>
+                                    </tr>
+                                    <tr>
+                                        <td>No encryption at rest</td>
+                                        <td>Data breach</td>
+                                        <td>encryption_at_host_enabled = false</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Open security groups</td>
+                                        <td>Network exposure</td>
+                                        <td>source_address_prefix = "*"</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Hardcoded secrets</td>
+                                        <td>Credential leak</td>
+                                        <td>password = "MySecret123"</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Privileged containers</td>
+                                        <td>Container escape</td>
+                                        <td>privileged: true</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Checkov -->
+                    <section>
+                        <h2 id="checkov">Checkov Scanning</h2>
+
+                        <h3>Installation</h3>
+                        <div class="code-header">
+                            <span class="code-lang">Bash</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-bash"># Install Checkov
+pip install checkov
+
+# Or use Docker
+docker pull bridgecrew/checkov</code></pre>
+
+                        <h3>Scan Terraform</h3>
+                        <div class="code-header">
+                            <span class="code-lang">Bash</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-bash"># Scan directory
+checkov -d ./terraform
+
+# Scan specific file
+checkov -f main.tf
+
+# Output as SARIF for GitHub/ADO
+checkov -d ./terraform -o sarif --output-file results.sarif
+
+# Skip specific checks
+checkov -d ./terraform --skip-check CKV_AZURE_35,CKV_AZURE_36
+
+# Only run specific checks
+checkov -d ./terraform --check CKV_AZURE_1,CKV_AZURE_2</code></pre>
+
+                        <h3>GitHub Actions with Checkov</h3>
+                        <div class="code-header">
+                            <span class="code-lang">YAML</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-yaml">name: IaC Security Scan
+on:
+  pull_request:
+    paths:
+      - 'terraform/**'
+      - 'infrastructure/**'
+
+jobs:
+  checkov:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Run Checkov
+        uses: bridgecrewio/checkov-action@v12
+        with:
+          directory: terraform/
+          framework: terraform
+          output_format: sarif
+          output_file_path: results.sarif
+          soft_fail: false
+          skip_check: CKV_AZURE_35
+          
+      - name: Upload SARIF
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: results.sarif</code></pre>
+                    </section>
+
+                    <!-- Terrascan -->
+                    <section>
+                        <h2 id="terrascan">Terrascan</h2>
+
+                        <h3>Installation</h3>
+                        <div class="code-header">
+                            <span class="code-lang">Bash</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-bash"># Install via brew
+brew install terrascan
+
+# Or via Go
+go install github.com/tenable/terrascan/cmd/terrascan@latest
+
+# Or Docker
+docker pull tenable/terrascan</code></pre>
+
+                        <h3>Scan Commands</h3>
+                        <div class="code-header">
+                            <span class="code-lang">Bash</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-bash"># Scan Terraform for Azure
+terrascan scan -t azure -i terraform -d ./terraform
+
+# Scan with specific policy
+terrascan scan -t azure -i terraform -d ./terraform -p /path/to/policies
+
+# Output as SARIF
+terrascan scan -t azure -i terraform -d ./terraform -o sarif > results.sarif
+
+# Scan Kubernetes manifests
+terrascan scan -t k8s -i k8s -d ./kubernetes</code></pre>
+                    </section>
+
+                    <!-- ARM Template Analyzer -->
+                    <section>
+                        <h2 id="arm">ARM Template Analyzer</h2>
+
+                        <h3>Using MSDO Task</h3>
+                        <div class="code-header">
+                            <span class="code-lang">YAML</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-yaml"># Azure DevOps Pipeline
+- task: MicrosoftSecurityDevOps@1
+  displayName: 'Scan ARM Templates'
+  inputs:
+    categories: 'IaC'
+    tools: 'templateanalyzer'
+    
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathToPublish: '$(System.DefaultWorkingDirectory)/.gdn'
+    artifactName: 'ARMResults'</code></pre>
+
+                        <h3>PSRule for Azure</h3>
+                        <div class="code-header">
+                            <span class="code-lang">PowerShell</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-powershell"># Install PSRule
+Install-Module -Name PSRule.Rules.Azure -Scope CurrentUser
+
+# Scan ARM templates
+Assert-PSRule -InputPath ./templates/*.json -Module PSRule.Rules.Azure -OutputFormat Sarif -OutputPath results.sarif
+
+# Scan Bicep files
+Assert-PSRule -InputPath ./bicep/*.bicep -Module PSRule.Rules.Azure</code></pre>
+
+                        <h3>GitHub Actions with PSRule</h3>
+                        <div class="code-header">
+                            <span class="code-lang">YAML</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-yaml">- name: Run PSRule
+  uses: microsoft/ps-rule@v2
+  with:
+    modules: 'PSRule.Rules.Azure'
+    inputPath: './templates/'
+    outputFormat: Sarif
+    outputPath: psrule-results.sarif
+    
+- name: Upload Results
+  uses: github/codeql-action/upload-sarif@v3
+  with:
+    sarif_file: psrule-results.sarif</code></pre>
+                    </section>
+
+                    <!-- Custom Policies -->
+                    <section>
+                        <h2 id="custom">Custom Security Policies</h2>
+
+                        <h3>Checkov Custom Policy</h3>
+                        <div class="code-header">
+                            <span class="code-lang">Python</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-python"># custom_checks/storage_https.py
+from checkov.terraform.checks.resource.base_resource_check import BaseResourceCheck
+from checkov.common.models.enums import CheckResult, CheckCategories
+
+class StorageAccountHTTPS(BaseResourceCheck):
+    def __init__(self):
+        name = "Ensure storage account enforces HTTPS"
+        id = "CKV_CUSTOM_1"
+        supported_resources = ["azurerm_storage_account"]
+        categories = [CheckCategories.ENCRYPTION]
+        super().__init__(name=name, id=id, categories=categories, 
+                         supported_resources=supported_resources)
+
+    def scan_resource_conf(self, conf):
+        if conf.get("enable_https_traffic_only", [True])[0] == True:
+            return CheckResult.PASSED
+        return CheckResult.FAILED
+
+check = StorageAccountHTTPS()</code></pre>
+
+                        <h3>Run with Custom Policies</h3>
+                        <div class="code-header">
+                            <span class="code-lang">Bash</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-bash"># Run Checkov with custom checks
+checkov -d ./terraform --external-checks-dir ./custom_checks</code></pre>
+                    </section>
+
+                    <!-- Baseline and Exclusions -->
+                    <section>
+                        <h2 id="baseline">Baseline and Exclusions</h2>
+
+                        <h3>Checkov Config File</h3>
+                        <div class="code-header">
+                            <span class="code-lang">YAML</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-yaml"># .checkov.yaml
+soft-fail: false
+compact: true
+skip-check:
+  - CKV_AZURE_35  # Storage account public access
+  - CKV_AZURE_36  # Storage queue logging
+check:
+  - CKV_AZURE_1
+  - CKV_AZURE_2
+framework:
+  - terraform
+  - arm</code></pre>
+
+                        <h3>Inline Suppressions</h3>
+                        <div class="code-header">
+                            <span class="code-lang">HCL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-hcl"># Terraform - skip check for specific resource
+resource "azurerm_storage_account" "example" {
+  #checkov:skip=CKV_AZURE_35:Public access required for CDN
+  name                     = "examplesa"
+  resource_group_name      = azurerm_resource_group.example.name
+  location                 = azurerm_resource_group.example.location
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
+  allow_blob_public_access = true  # Documented exception
+}</code></pre>
+                    </section>
+
+                    <!-- Integration -->
+                    <section>
+                        <h2 id="integration">MDC DevOps Integration</h2>
+
+                        <h3>Connect to MDC Dashboard</h3>
+                        <ol>
+                            <li>Go to <strong>Defender for Cloud</strong> → <strong>DevOps Security</strong></li>
+                            <li>Click <strong>Add environment</strong></li>
+                            <li>Select <strong>GitHub</strong> or <strong>Azure DevOps</strong></li>
+                            <li>Authorize and select repositories</li>
+                            <li>IaC findings will appear in the dashboard</li>
+                        </ol>
+
+                        <h3>View Findings</h3>
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Query IaC findings in Sentinel
+SecurityRecommendation
+| where RecommendationName contains "IaC"
+| summarize count() by RecommendationName, RecommendationSeverity
+| order by count_ desc</code></pre>
+                    </section>
+
+                    <!-- Best Practices -->
+                    <section>
+                        <h2 id="best-practices">Best Practices</h2>
+
+                        <div class="checklist">
+                            <div class="checklist-title">IaC Security Checklist</div>
+                            <ul>
+                                <li>
+                                    <input type="checkbox" id="iac1">
+                                    <label for="iac1">Scan IaC on every pull request</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="iac2">
+                                    <label for="iac2">Block merges on high/critical findings</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="iac3">
+                                    <label for="iac3">Use multiple tools for coverage</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="iac4">
+                                    <label for="iac4">Upload SARIF to GitHub Security tab</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="iac5">
+                                    <label for="iac5">Document exceptions with inline comments</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="iac6">
+                                    <label for="iac6">Create custom policies for org standards</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="iac7">
+                                    <label for="iac7">Connect to MDC DevOps dashboard</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="iac8">
+                                    <label for="iac8">Review and update exclusions quarterly</label>
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- Key Takeaways -->
+                    <div class="key-takeaways">
+                        <div class="key-takeaways-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 2a.75.75 0 01.75.75v.258a33.186 33.186 0 016.668.83.75.75 0 01-.336 1.461z" clip-rule="evenodd" />
+                            </svg>
+                            Key Takeaways
+                        </div>
+                        <ul>
+                            <li>Scan IaC early in the development lifecycle</li>
+                            <li>Use Checkov for multi-cloud, multi-format support</li>
+                            <li>Template Analyzer for ARM/Bicep specific rules</li>
+                            <li>Upload SARIF for GitHub Security integration</li>
+                            <li>Block merges on critical findings</li>
+                            <li>Document exceptions with inline suppressions</li>
+                            <li>Create custom policies for organization standards</li>
+                            <li>Connect to MDC for unified visibility</li>
+                        </ul>
+                    </div>
+
+                    <div class="related-pages">
+                        <div class="related-title">Related Pages</div>
+                        <div class="related-list">
+                            <a href="9-1-devsecops.html" class="related-link">DevSecOps Overview</a>
+                            <a href="9-2-github-actions.html" class="related-link">GitHub Actions</a>
+                            <a href="9-3-azure-devops.html" class="related-link">Azure DevOps</a>
+                            <a href="2-2-recommendations.html" class="related-link">Recommendations</a>
+                        </div>
+                    </div>
+
+                    <nav class="page-nav">
+                        <a href="9-3-azure-devops.html" class="page-nav-link prev">
+                            <span class="page-nav-label">← Previous</span>
+                            <span class="page-nav-title">Azure DevOps</span>
+                        </a>
+                        <a href="10-1-alert-reference.html" class="page-nav-link next">
+                            <span class="page-nav-label">Next →</span>
+                            <span class="page-nav-title">Alert Reference</span>
+                        </a>
+                    </nav>
+                </article>
+
+                <aside class="toc-sidebar">
+                    <div class="toc-title">On This Page</div>
+                    <ul class="toc-list">
+                        <li class="toc-item"><a href="#formats" class="toc-link">Formats</a></li>
+                        <li class="toc-item"><a href="#findings" class="toc-link">Common Findings</a></li>
+                        <li class="toc-item"><a href="#checkov" class="toc-link">Checkov</a></li>
+                        <li class="toc-item"><a href="#terrascan" class="toc-link">Terrascan</a></li>
+                        <li class="toc-item"><a href="#arm" class="toc-link">ARM Analyzer</a></li>
+                        <li class="toc-item"><a href="#custom" class="toc-link">Custom Policies</a></li>
+                        <li class="toc-item"><a href="#baseline" class="toc-link">Exclusions</a></li>
+                        <li class="toc-item"><a href="#integration" class="toc-link">MDC Integration</a></li>
+                        <li class="toc-item"><a href="#best-practices" class="toc-link">Best Practices</a></li>
+                    </ul>
+                </aside>
+            </div>
+        </main>
+        <div class="mobile-overlay"></div>
+    </div>
+
+    <div class="search-modal">
+        <div class="search-modal-content">
+            <input type="text" class="search-modal-input" placeholder="Search documentation..." autofocus>
+            <div class="search-results"></div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Azure DevOps Pipelines - Implement security scanning in Azure DevOps CI/CD pipelines with MDC.">
+    <title>Azure DevOps Pipelines - Microsoft Defender for Cloud</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="../index.html" class="sidebar-logo">
+                    <div class="logo-icon">MDC</div>
+                    <span class="logo-text">Defender for Cloud</span>
+                </a>
+                <button class="sidebar-toggle" aria-label="Toggle sidebar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">DevSecOps</div>
+                    <div class="nav-group expanded" data-group="devsecops">
+                        <div class="nav-group-header">
+                            <span class="nav-group-title">CI/CD Integration</span>
+                            <svg class="nav-group-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="nav-group-items">
+                            <a href="9-1-devsecops.html" class="nav-subitem">DevSecOps Overview</a>
+                            <a href="9-2-github-actions.html" class="nav-subitem">GitHub Actions</a>
+                            <a href="9-3-azure-devops.html" class="nav-subitem active">Azure DevOps</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" aria-label="Open menu">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10zm0 5.25a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75a.75.75 0 01-.75-.75z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div class="search-box">
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                        </svg>
+                        <input type="text" class="search-input" placeholder="Search documentation..." readonly>
+                        <span class="search-shortcut">⌘K</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <article class="page-content">
+                    <nav class="breadcrumbs">
+                        <a href="../index.html" class="breadcrumb-item">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <a href="9-1-devsecops.html" class="breadcrumb-item">DevSecOps</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span class="breadcrumb-item current">Azure DevOps</span>
+                    </nav>
+
+                    <header class="page-header">
+                        <h1>Azure DevOps Pipelines</h1>
+                        <div class="page-meta">
+                            <span class="badge badge-l2">L2 Technical</span>
+                            <span class="page-meta-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clip-rule="evenodd" />
+                                </svg>
+                                13 min read
+                            </span>
+                        </div>
+                    </header>
+
+                    <section>
+                        <p>
+                            Integrate Microsoft Defender for Cloud security scanning into Azure DevOps 
+                            pipelines. This guide covers IaC scanning, container security, and connecting 
+                            findings to the MDC DevOps security dashboard.
+                        </p>
+                    </section>
+
+                    <!-- Prerequisites -->
+                    <section>
+                        <h2 id="prerequisites">Prerequisites</h2>
+
+                        <ul>
+                            <li>Azure DevOps organization and project</li>
+                            <li>MDC Defender CSPM or Defender for DevOps enabled</li>
+                            <li>Service connection to Azure subscription</li>
+                            <li>Microsoft Security DevOps extension installed</li>
+                        </ul>
+
+                        <h3>Install Extension</h3>
+                        <ol>
+                            <li>Go to <strong>Azure DevOps</strong> → <strong>Organization Settings</strong></li>
+                            <li>Navigate to <strong>Extensions</strong> → <strong>Browse marketplace</strong></li>
+                            <li>Search for "Microsoft Security DevOps"</li>
+                            <li>Click <strong>Get it free</strong> and install to your organization</li>
+                        </ol>
+                    </section>
+
+                    <!-- Basic Pipeline -->
+                    <section>
+                        <h2 id="basic">Basic Security Pipeline</h2>
+
+                        <div class="code-header">
+                            <span class="code-lang">YAML</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-yaml"># azure-pipelines.yml
+trigger:
+  branches:
+    include:
+      - main
+      - develop
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+stages:
+- stage: SecurityScan
+  displayName: 'Security Scanning'
+  jobs:
+  - job: MSDO
+    displayName: 'Microsoft Security DevOps'
+    steps:
+    - task: MicrosoftSecurityDevOps@1
+      displayName: 'Run Security Scan'
+      inputs:
+        categories: 'IaC,secrets'
+        
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Security Results'
+      inputs:
+        pathToPublish: '$(System.DefaultWorkingDirectory)/.gdn/msdo.sarif'
+        artifactName: 'SecurityResults'</code></pre>
+                    </section>
+
+                    <!-- Full Pipeline -->
+                    <section>
+                        <h2 id="full">Comprehensive Security Pipeline</h2>
+
+                        <div class="code-header">
+                            <span class="code-lang">YAML</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-yaml"># azure-pipelines-security.yml
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - '**/*.tf'
+      - '**/*.json'
+      - '**/Dockerfile'
+      - 'src/**'
+
+pr:
+  branches:
+    include:
+      - main
+
+variables:
+  - name: azureSubscription
+    value: 'your-service-connection'
+  - name: acrName
+    value: 'yourregistry.azurecr.io'
+
+stages:
+# Stage 1: Security Scanning
+- stage: SecurityScan
+  displayName: 'Security Scanning'
+  jobs:
+  - job: IaCSecurityScan
+    displayName: 'Infrastructure as Code Scan'
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - task: MicrosoftSecurityDevOps@1
+      displayName: 'MSDO - IaC Scan'
+      inputs:
+        categories: 'IaC'
+        tools: 'checkov,terrascan,templateanalyzer'
+        break: true  # Fail on findings
+
+    - task: PublishBuildArtifacts@1
+      condition: always()
+      inputs:
+        pathToPublish: '$(System.DefaultWorkingDirectory)/.gdn'
+        artifactName: 'IaCResults'
+
+  - job: SecretsScan
+    displayName: 'Secrets Detection'
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - task: MicrosoftSecurityDevOps@1
+      displayName: 'MSDO - Secrets Scan'
+      inputs:
+        categories: 'secrets'
+        
+    - task: PublishBuildArtifacts@1
+      condition: always()
+      inputs:
+        pathToPublish: '$(System.DefaultWorkingDirectory)/.gdn'
+        artifactName: 'SecretsResults'
+
+  - job: ContainerScan
+    displayName: 'Container Image Scan'
+    pool:
+      vmImage: 'ubuntu-latest'
+    condition: |
+      or(
+        contains(variables['Build.SourceVersionMessage'], 'Dockerfile'),
+        eq(variables['Build.Reason'], 'Schedule')
+      )
+    steps:
+    - task: Docker@2
+      displayName: 'Build Container Image'
+      inputs:
+        containerRegistry: '$(azureSubscription)'
+        repository: 'myapp'
+        command: 'build'
+        Dockerfile: '**/Dockerfile'
+        tags: '$(Build.BuildId)'
+
+    - task: MicrosoftSecurityDevOps@1
+      displayName: 'MSDO - Container Scan'
+      inputs:
+        categories: 'containers'
+
+# Stage 2: Build (only if security passes)
+- stage: Build
+  displayName: 'Build'
+  dependsOn: SecurityScan
+  condition: succeeded()
+  jobs:
+  - job: BuildApp
+    displayName: 'Build Application'
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - task: DotNetCoreCLI@2
+      displayName: 'Build'
+      inputs:
+        command: 'build'
+        
+    - task: DotNetCoreCLI@2
+      displayName: 'Test'
+      inputs:
+        command: 'test'
+
+# Stage 3: Deploy (with approval gate)
+- stage: Deploy
+  displayName: 'Deploy to Production'
+  dependsOn: Build
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+  jobs:
+  - deployment: DeployProd
+    displayName: 'Deploy to Production'
+    environment: 'production'
+    pool:
+      vmImage: 'ubuntu-latest'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: AzureWebApp@1
+            inputs:
+              azureSubscription: '$(azureSubscription)'
+              appType: 'webApp'
+              appName: 'myapp-prod'</code></pre>
+                    </section>
+
+                    <!-- Container Scanning -->
+                    <section>
+                        <h2 id="container">Container Scanning</h2>
+
+                        <h3>ACR with Defender Scan</h3>
+                        <div class="code-header">
+                            <span class="code-lang">YAML</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-yaml"># Container build, scan, and push
+- stage: ContainerBuildPush
+  jobs:
+  - job: BuildScanPush
+    steps:
+    - task: AzureCLI@2
+      displayName: 'Login to ACR'
+      inputs:
+        azureSubscription: '$(azureSubscription)'
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
+          az acr login --name $(acrName)
+
+    - task: Docker@2
+      displayName: 'Build Image'
+      inputs:
+        containerRegistry: '$(acrName)'
+        repository: 'myapp'
+        command: 'build'
+        Dockerfile: 'Dockerfile'
+        tags: |
+          $(Build.BuildId)
+          latest
+
+    - task: MicrosoftSecurityDevOps@1
+      displayName: 'Scan Container Image'
+      inputs:
+        categories: 'containers'
+        
+    - script: |
+        # Check for critical vulnerabilities
+        CRITICAL=$(cat .gdn/msdo.sarif | jq '[.runs[].results[] | select(.level=="error")] | length')
+        if [ "$CRITICAL" -gt 0 ]; then
+          echo "##vso[task.logissue type=error]Critical vulnerabilities found: $CRITICAL"
+          exit 1
+        fi
+      displayName: 'Check Critical Vulnerabilities'
+
+    - task: Docker@2
+      displayName: 'Push Image'
+      condition: succeeded()
+      inputs:
+        containerRegistry: '$(acrName)'
+        repository: 'myapp'
+        command: 'push'
+        tags: |
+          $(Build.BuildId)
+          latest</code></pre>
+
+                        <h3>Trivy Alternative</h3>
+                        <div class="code-header">
+                            <span class="code-lang">YAML</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-yaml">- script: |
+    # Install Trivy
+    curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin
+    
+    # Scan image
+    trivy image --exit-code 1 --severity CRITICAL,HIGH \
+      --format sarif --output trivy-results.sarif \
+      $(acrName)/myapp:$(Build.BuildId)
+  displayName: 'Trivy Container Scan'
+  continueOnError: true
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathToPublish: 'trivy-results.sarif'
+    artifactName: 'TrivyResults'</code></pre>
+                    </section>
+
+                    <!-- IaC Templates -->
+                    <section>
+                        <h2 id="iac">IaC Scanning Templates</h2>
+
+                        <h3>Terraform Pipeline</h3>
+                        <div class="code-header">
+                            <span class="code-lang">YAML</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-yaml"># terraform-security.yml
+stages:
+- stage: TerraformSecurity
+  jobs:
+  - job: ScanAndPlan
+    steps:
+    - task: TerraformInstaller@1
+      inputs:
+        terraformVersion: 'latest'
+
+    - task: TerraformCLI@1
+      displayName: 'Terraform Init'
+      inputs:
+        command: 'init'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+
+    - task: TerraformCLI@1
+      displayName: 'Terraform Validate'
+      inputs:
+        command: 'validate'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+
+    - task: MicrosoftSecurityDevOps@1
+      displayName: 'Scan Terraform'
+      inputs:
+        categories: 'IaC'
+        tools: 'checkov,terrascan'
+
+    - task: TerraformCLI@1
+      displayName: 'Terraform Plan'
+      condition: succeeded()
+      inputs:
+        command: 'plan'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+        environmentServiceName: '$(azureSubscription)'</code></pre>
+
+                        <h3>ARM Template Pipeline</h3>
+                        <div class="code-header">
+                            <span class="code-lang">YAML</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-yaml"># arm-security.yml
+- task: MicrosoftSecurityDevOps@1
+  displayName: 'Scan ARM Templates'
+  inputs:
+    categories: 'IaC'
+    tools: 'templateanalyzer'
+
+- task: AzureResourceManagerTemplateDeployment@3
+  displayName: 'Validate ARM Template'
+  inputs:
+    deploymentScope: 'Resource Group'
+    azureResourceManagerConnection: '$(azureSubscription)'
+    action: 'Create Or Update Resource Group'
+    resourceGroupName: '$(resourceGroup)'
+    location: '$(location)'
+    templateLocation: 'Linked artifact'
+    csmFile: '$(System.DefaultWorkingDirectory)/templates/main.json'
+    deploymentMode: 'Validation'</code></pre>
+                    </section>
+
+                    <!-- Branch Policies -->
+                    <section>
+                        <h2 id="policies">Branch Policies</h2>
+
+                        <p>Configure branch policies to require security scans:</p>
+
+                        <ol>
+                            <li>Go to <strong>Project Settings</strong> → <strong>Repositories</strong></li>
+                            <li>Select repository → <strong>Policies</strong> → <strong>Branch Policies</strong></li>
+                            <li>Select <strong>main</strong> branch</li>
+                            <li>Enable <strong>Build validation</strong></li>
+                            <li>Add build pipeline for security scanning</li>
+                            <li>Set <strong>Policy requirement</strong> to Required</li>
+                        </ol>
+
+                        <div class="callout callout-tip">
+                            <div class="callout-title">Security Gates</div>
+                            <div class="callout-content">
+                                <p>Add approval gates to deployment stages that check MDC recommendations 
+                                before allowing production deployments.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- MDC Integration -->
+                    <section>
+                        <h2 id="mdc">MDC DevOps Dashboard</h2>
+
+                        <h3>Connect Azure DevOps to MDC</h3>
+                        <ol>
+                            <li>Go to <strong>Defender for Cloud</strong> → <strong>Environment settings</strong></li>
+                            <li>Click <strong>Add environment</strong> → <strong>Azure DevOps</strong></li>
+                            <li>Authorize MDC to access your Azure DevOps organization</li>
+                            <li>Select repositories to scan</li>
+                            <li>Enable auto-discovery for new repositories</li>
+                        </ol>
+
+                        <h3>View Findings in MDC</h3>
+                        <p>Once connected, view DevOps security findings in:</p>
+                        <ul>
+                            <li><strong>Defender for Cloud</strong> → <strong>DevOps Security</strong></li>
+                            <li>Filter by repository, severity, or finding type</li>
+                            <li>Drill down to specific code locations</li>
+                            <li>Track remediation progress</li>
+                        </ul>
+                    </section>
+
+                    <!-- Service Connections -->
+                    <section>
+                        <h2 id="connections">Service Connections</h2>
+
+                        <div class="code-header">
+                            <span class="code-lang">Azure CLI</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-bash"># Create service principal for pipeline
+az ad sp create-for-rbac \
+    --name "AzureDevOps-SecurityPipeline" \
+    --role "Security Reader" \
+    --scopes /subscriptions/$SUBSCRIPTION_ID
+
+# Grant additional permissions for deployments
+az role assignment create \
+    --assignee $SP_APP_ID \
+    --role "Contributor" \
+    --scope /subscriptions/$SUBSCRIPTION_ID/resourceGroups/$RG_NAME</code></pre>
+                    </section>
+
+                    <!-- Best Practices -->
+                    <section>
+                        <h2 id="best-practices">Best Practices</h2>
+
+                        <div class="checklist">
+                            <div class="checklist-title">Azure DevOps Security Checklist</div>
+                            <ul>
+                                <li>
+                                    <input type="checkbox" id="ado1">
+                                    <label for="ado1">Install Microsoft Security DevOps extension</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="ado2">
+                                    <label for="ado2">Run security scans on every PR</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="ado3">
+                                    <label for="ado3">Block merges on critical findings</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="ado4">
+                                    <label for="ado4">Scan containers before pushing to ACR</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="ado5">
+                                    <label for="ado5">Connect Azure DevOps to MDC dashboard</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="ado6">
+                                    <label for="ado6">Use approval gates for production</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="ado7">
+                                    <label for="ado7">Publish SARIF results as artifacts</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="ado8">
+                                    <label for="ado8">Use managed identity for service connections</label>
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- Key Takeaways -->
+                    <div class="key-takeaways">
+                        <div class="key-takeaways-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 2a.75.75 0 01.75.75v.258a33.186 33.186 0 016.668.83.75.75 0 01-.336 1.461z" clip-rule="evenodd" />
+                            </svg>
+                            Key Takeaways
+                        </div>
+                        <ul>
+                            <li>Install Microsoft Security DevOps extension</li>
+                            <li>Use MicrosoftSecurityDevOps@1 task for scanning</li>
+                            <li>Categories: IaC, secrets, containers</li>
+                            <li>Connect Azure DevOps to MDC for unified dashboard</li>
+                            <li>Configure branch policies to require scans</li>
+                            <li>Publish SARIF results for tracking</li>
+                            <li>Use approval gates for production deployments</li>
+                            <li>Scan containers before pushing to ACR</li>
+                        </ul>
+                    </div>
+
+                    <div class="related-pages">
+                        <div class="related-title">Related Pages</div>
+                        <div class="related-list">
+                            <a href="9-1-devsecops.html" class="related-link">DevSecOps Overview</a>
+                            <a href="9-2-github-actions.html" class="related-link">GitHub Actions</a>
+                            <a href="3-4-containers.html" class="related-link">Defender for Containers</a>
+                            <a href="2-2-recommendations.html" class="related-link">Recommendations</a>
+                        </div>
+                    </div>
+
+                    <nav class="page-nav">
+                        <a href="9-2-github-actions.html" class="page-nav-link prev">
+                            <span class="page-nav-label">← Previous</span>
+                            <span class="page-nav-title">GitHub Actions</span>
+                        </a>
+                        <a href="10-1-alert-reference.html" class="page-nav-link next">
+                            <span class="page-nav-label">Next →</span>
+                            <span class="page-nav-title">Alert Reference</span>
+                        </a>
+                    </nav>
+                </article>
+
+                <aside class="toc-sidebar">
+                    <div class="toc-title">On This Page</div>
+                    <ul class="toc-list">
+                        <li class="toc-item"><a href="#prerequisites" class="toc-link">Prerequisites</a></li>
+                        <li class="toc-item"><a href="#basic" class="toc-link">Basic Pipeline</a></li>
+                        <li class="toc-item"><a href="#full" class="toc-link">Full Pipeline</a></li>
+                        <li class="toc-item"><a href="#container" class="toc-link">Container Scanning</a></li>
+                        <li class="toc-item"><a href="#iac" class="toc-link">IaC Scanning</a></li>
+                        <li class="toc-item"><a href="#policies" class="toc-link">Branch Policies</a></li>
+                        <li class="toc-item"><a href="#mdc" class="toc-link">MDC Dashboard</a></li>
+                        <li class="toc-item"><a href="#connections" class="toc-link">Connections</a></li>
+                        <li class="toc-item"><a href="#best-practices" class="toc-link">Best Practices</a></li>
+                    </ul>
+                </aside>
+            </div>
+        </main>
+        <div class="mobile-overlay"></div>
+    </div>
+
+    <div class="search-modal">
+        <div class="search-modal-content">
+            <input type="text" class="search-modal-input" placeholder="Search documentation..." autofocus>
+            <div class="search-results"></div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

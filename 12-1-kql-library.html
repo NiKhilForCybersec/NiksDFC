@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Microsoft Defender for Cloud KQL Query Library - 50+ production-ready queries for alerts, recommendations, and threat hunting.">
+    <title>KQL Query Library - Microsoft Defender for Cloud</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="../index.html" class="sidebar-logo">
+                    <div class="logo-icon">MDC</div>
+                    <span class="logo-text">Defender for Cloud</span>
+                </a>
+                <button class="sidebar-toggle" aria-label="Toggle sidebar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Reference</div>
+                    <div class="nav-group expanded" data-group="reference">
+                        <div class="nav-group-header">
+                            <span class="nav-group-title">
+                                <svg class="nav-item-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M10.75 16.82A7.462 7.462 0 0115 15.5c.71 0 1.396.098 2.046.282A.75.75 0 0018 15.06v-11a.75.75 0 00-.546-.721A9.006 9.006 0 0015 3a8.963 8.963 0 00-4.25 1.065V16.82z" />
+                                </svg>
+                                Reference & Appendix
+                            </span>
+                            <svg class="nav-group-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="nav-group-items">
+                            <a href="12-1-kql-library.html" class="nav-subitem active">KQL Query Library</a>
+                            <a href="12-2-powershell.html" class="nav-subitem">PowerShell Scripts</a>
+                            <a href="12-3-rest-api.html" class="nav-subitem">REST API Reference</a>
+                            <a href="12-4-quick-reference.html" class="nav-subitem">Alert Quick Reference</a>
+                            <a href="12-5-compliance-mapping.html" class="nav-subitem">Compliance Mapping</a>
+                            <a href="12-6-troubleshooting.html" class="nav-subitem">Troubleshooting Guide</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" aria-label="Open menu">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10zm0 5.25a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75a.75.75 0 01-.75-.75z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div class="search-box">
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                        </svg>
+                        <input type="text" class="search-input" placeholder="Search documentation..." readonly>
+                        <span class="search-shortcut">⌘K</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <article class="page-content">
+                    <nav class="breadcrumbs">
+                        <a href="../index.html" class="breadcrumb-item">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <a href="12-1-kql-library.html" class="breadcrumb-item">Reference</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span class="breadcrumb-item current">KQL Query Library</span>
+                    </nav>
+
+                    <header class="page-header">
+                        <h1>KQL Query Library</h1>
+                        <div class="page-meta">
+                            <span class="badge badge-l2">L2 Technical</span>
+                            <span class="badge badge-l3">L3 Advanced</span>
+                            <span class="page-meta-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clip-rule="evenodd" />
+                                </svg>
+                                Reference Guide
+                            </span>
+                        </div>
+                    </header>
+
+                    <section>
+                        <p>
+                            A comprehensive collection of production-ready KQL queries for Microsoft Defender for Cloud 
+                            data in Log Analytics and Microsoft Sentinel. All queries are optimized for performance and 
+                            ready for use in dashboards, alerts, and hunting.
+                        </p>
+
+                        <div class="callout callout-info">
+                            <svg class="callout-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0z" clip-rule="evenodd" />
+                            </svg>
+                            <div class="callout-title">Prerequisites</div>
+                            <div class="callout-content">
+                                <p>These queries require the Microsoft Defender for Cloud data connector enabled in Sentinel, 
+                                or a Log Analytics workspace with MDC data collection configured.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Security Alerts Section -->
+                    <section>
+                        <h2 id="alerts">Security Alerts</h2>
+
+                        <h3 id="alert-overview">Alert Overview & Trends</h3>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// High severity MDC alerts - Last 24 hours
+SecurityAlert
+| where TimeGenerated > ago(24h)
+| where ProductName == "Azure Security Center"
+| where AlertSeverity == "High"
+| project 
+    TimeGenerated,
+    AlertName,
+    Description,
+    ResourceId,
+    Tactics,
+    Status
+| order by TimeGenerated desc</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Alert trend by severity - Last 7 days
+SecurityAlert
+| where TimeGenerated > ago(7d)
+| where ProductName == "Azure Security Center"
+| summarize 
+    Critical = countif(AlertSeverity == "High"),
+    Medium = countif(AlertSeverity == "Medium"),
+    Low = countif(AlertSeverity == "Low"),
+    Informational = countif(AlertSeverity == "Informational")
+    by bin(TimeGenerated, 1d)
+| order by TimeGenerated asc
+| render columnchart</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Top 10 most frequent alerts
+SecurityAlert
+| where TimeGenerated > ago(30d)
+| where ProductName == "Azure Security Center"
+| summarize 
+    Count = count(),
+    FirstSeen = min(TimeGenerated),
+    LastSeen = max(TimeGenerated)
+    by AlertName, AlertSeverity
+| top 10 by Count
+| project AlertName, AlertSeverity, Count, FirstSeen, LastSeen</code></pre>
+
+                        <h3 id="alert-analysis">Alert Deep Analysis</h3>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Parse extended properties for detailed alert info
+SecurityAlert
+| where TimeGenerated > ago(24h)
+| where ProductName == "Azure Security Center"
+| extend ExtProps = parse_json(ExtendedProperties)
+| extend 
+    ResourceType = tostring(ExtProps["resourceType"]),
+    AttackerIP = tostring(ExtProps["attacker source IP"]),
+    Username = tostring(ExtProps["user name"]),
+    ProcessName = tostring(ExtProps["suspicious process"])
+| project 
+    TimeGenerated,
+    AlertName,
+    ResourceType,
+    AttackerIP,
+    Username,
+    ProcessName,
+    Tactics
+| where isnotempty(AttackerIP) or isnotempty(ProcessName)</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// MITRE ATT&CK tactics distribution
+SecurityAlert
+| where TimeGenerated > ago(30d)
+| where ProductName == "Azure Security Center"
+| where isnotempty(Tactics)
+| mv-expand Tactic = split(Tactics, ",")
+| summarize AlertCount = count() by tostring(Tactic)
+| order by AlertCount desc
+| render piechart</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Alerts with entities - identify affected resources
+SecurityAlert
+| where TimeGenerated > ago(7d)
+| where ProductName == "Azure Security Center"
+| mv-expand Entity = parse_json(Entities)
+| extend 
+    EntityType = tostring(Entity["Type"]),
+    EntityName = coalesce(
+        tostring(Entity["HostName"]),
+        tostring(Entity["Address"]),
+        tostring(Entity["Name"]),
+        tostring(Entity["ProcessId"])
+    )
+| summarize 
+    Alerts = make_set(AlertName),
+    AlertCount = dcount(AlertName)
+    by EntityType, EntityName
+| where AlertCount > 1
+| order by AlertCount desc</code></pre>
+                    </section>
+
+                    <!-- Recommendations Section -->
+                    <section>
+                        <h2 id="recommendations">Security Recommendations</h2>
+
+                        <h3 id="rec-overview">Recommendation Overview</h3>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// All unhealthy recommendations by severity
+SecurityRecommendation
+| where TimeGenerated > ago(1d)
+| where RecommendationState == "Unhealthy"
+| summarize arg_max(TimeGenerated, *) by RecommendationName, AssessedResourceId
+| summarize 
+    UnhealthyCount = count()
+    by RecommendationName, RecommendationSeverity
+| order by 
+    case(
+        RecommendationSeverity == "High", 1,
+        RecommendationSeverity == "Medium", 2,
+        RecommendationSeverity == "Low", 3,
+        4
+    ),
+    UnhealthyCount desc</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Recommendations by resource type
+SecurityRecommendation
+| where TimeGenerated > ago(1d)
+| where RecommendationState == "Unhealthy"
+| summarize arg_max(TimeGenerated, *) by RecommendationName, AssessedResourceId
+| extend ResourceType = tostring(split(AssessedResourceId, "/")[6])
+| summarize 
+    Count = count(),
+    Recommendations = make_set(RecommendationName)
+    by ResourceType
+| order by Count desc</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Newly unhealthy resources (last 7 days)
+SecurityRecommendation
+| where TimeGenerated > ago(7d)
+| where RecommendationState == "Unhealthy"
+| summarize FirstUnhealthy = min(TimeGenerated) by RecommendationName, AssessedResourceId
+| where FirstUnhealthy > ago(7d)
+| summarize NewUnhealthyCount = count() by bin(FirstUnhealthy, 1d), RecommendationName
+| order by FirstUnhealthy desc</code></pre>
+
+                        <h3 id="rec-tracking">Recommendation Compliance Tracking</h3>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Compliance percentage by recommendation
+SecurityRecommendation
+| where TimeGenerated > ago(1d)
+| summarize arg_max(TimeGenerated, *) by RecommendationName, AssessedResourceId
+| summarize 
+    Healthy = countif(RecommendationState == "Healthy"),
+    Unhealthy = countif(RecommendationState == "Unhealthy"),
+    Total = count()
+    by RecommendationName
+| extend CompliancePercent = round(100.0 * Healthy / Total, 1)
+| project 
+    RecommendationName, 
+    CompliancePercent, 
+    Healthy, 
+    Unhealthy
+| order by CompliancePercent asc
+| take 20  // Bottom 20 by compliance</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Subscription-level compliance summary
+SecurityRecommendation
+| where TimeGenerated > ago(1d)
+| summarize arg_max(TimeGenerated, *) by RecommendationName, AssessedResourceId
+| extend SubscriptionId = tostring(split(AssessedResourceId, "/")[2])
+| summarize 
+    Healthy = countif(RecommendationState == "Healthy"),
+    Unhealthy = countif(RecommendationState == "Unhealthy")
+    by SubscriptionId
+| extend CompliancePercent = round(100.0 * Healthy / (Healthy + Unhealthy), 1)
+| order by CompliancePercent asc</code></pre>
+                    </section>
+
+                    <!-- Secure Score Section -->
+                    <section>
+                        <h2 id="secure-score">Secure Score Queries</h2>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Secure Score trend - Last 30 days
+SecureScores
+| where TimeGenerated > ago(30d)
+| summarize 
+    AvgScore = round(avg(PercentageScore), 1),
+    MinScore = round(min(PercentageScore), 1),
+    MaxScore = round(max(PercentageScore), 1)
+    by bin(TimeGenerated, 1d)
+| order by TimeGenerated asc
+| render timechart with (title="Secure Score Trend")</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Control-level score breakdown (current)
+SecureScoreControls
+| where TimeGenerated > ago(1d)
+| summarize arg_max(TimeGenerated, *) by ControlName
+| project 
+    ControlName,
+    CurrentScore = round(PercentageScore, 1),
+    MaxScore,
+    HealthyResources,
+    UnhealthyResources,
+    Weight
+| extend PotentialGain = MaxScore - CurrentScore
+| order by PotentialGain desc</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Secure Score change detection (week over week)
+let CurrentWeek = SecureScores
+| where TimeGenerated > ago(7d)
+| summarize CurrentScore = avg(PercentageScore);
+let PreviousWeek = SecureScores
+| where TimeGenerated between (ago(14d) .. ago(7d))
+| summarize PreviousScore = avg(PercentageScore);
+CurrentWeek
+| extend PreviousScore = toscalar(PreviousWeek)
+| extend 
+    Change = round(CurrentScore - PreviousScore, 2),
+    ChangePercent = round(100.0 * (CurrentScore - PreviousScore) / PreviousScore, 2)
+| project CurrentScore, PreviousScore, Change, ChangePercent</code></pre>
+                    </section>
+
+                    <!-- Threat Hunting Section -->
+                    <section>
+                        <h2 id="hunting">Threat Hunting Queries</h2>
+
+                        <h3 id="hunting-vm">VM & Server Hunting</h3>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Suspicious process execution patterns
+SecurityAlert
+| where TimeGenerated > ago(7d)
+| where ProductName == "Azure Security Center"
+| where AlertName has_any ("process", "command", "powershell", "script")
+| extend ExtProps = parse_json(ExtendedProperties)
+| extend 
+    ProcessName = tostring(ExtProps["suspicious process"]),
+    CommandLine = tostring(ExtProps["command line"]),
+    ParentProcess = tostring(ExtProps["parent process"])
+| where isnotempty(ProcessName)
+| summarize 
+    Count = count(),
+    Hosts = make_set(CompromisedEntity)
+    by ProcessName, CommandLine
+| order by Count desc</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Brute force attempts correlation
+SecurityAlert
+| where TimeGenerated > ago(24h)
+| where AlertName has_any ("brute", "failed login", "password spray")
+| extend ExtProps = parse_json(ExtendedProperties)
+| extend 
+    TargetAccount = tostring(ExtProps["user name"]),
+    SourceIP = tostring(ExtProps["attacker source IP"]),
+    FailedAttempts = toint(ExtProps["failed attempts"])
+| summarize 
+    TotalAttempts = sum(FailedAttempts),
+    TargetAccounts = make_set(TargetAccount),
+    AlertCount = count()
+    by SourceIP
+| where TotalAttempts > 100
+| order by TotalAttempts desc</code></pre>
+
+                        <h3 id="hunting-data">Data Exfiltration Hunting</h3>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Storage account anomalous access
+SecurityAlert
+| where TimeGenerated > ago(7d)
+| where AlertName has_any ("storage", "blob", "unusual", "anomalous")
+| extend ExtProps = parse_json(ExtendedProperties)
+| extend 
+    StorageAccount = tostring(ExtProps["storage account"]),
+    Operation = tostring(ExtProps["operation type"]),
+    SourceIP = tostring(ExtProps["client IP address"]),
+    DataVolume = tostring(ExtProps["data accessed"])
+| summarize 
+    Operations = make_set(Operation),
+    SourceIPs = make_set(SourceIP),
+    AlertCount = count()
+    by StorageAccount
+| order by AlertCount desc</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// DNS exfiltration indicators
+SecurityAlert
+| where TimeGenerated > ago(7d)
+| where AlertName has_any ("DNS", "domain", "C2", "command and control")
+| extend ExtProps = parse_json(ExtendedProperties)
+| extend 
+    MaliciousDomain = tostring(ExtProps["domain name"]),
+    QueryType = tostring(ExtProps["DNS query type"]),
+    ClientIP = tostring(ExtProps["client IP"])
+| summarize 
+    QueryCount = count(),
+    Clients = make_set(ClientIP)
+    by MaliciousDomain
+| order by QueryCount desc</code></pre>
+
+                        <h3 id="hunting-lateral">Lateral Movement Detection</h3>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Potential lateral movement patterns
+SecurityAlert
+| where TimeGenerated > ago(7d)
+| where Tactics has "LateralMovement" or AlertName has_any ("lateral", "RDP", "SSH", "WMI", "PSExec")
+| extend 
+    SourceHost = CompromisedEntity,
+    Tactic = Tactics
+| summarize 
+    AlertTypes = make_set(AlertName),
+    AlertCount = count(),
+    FirstSeen = min(TimeGenerated),
+    LastSeen = max(TimeGenerated)
+    by SourceHost
+| where AlertCount > 2
+| order by AlertCount desc</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Cross-resource alert correlation (attack chain detection)
+SecurityAlert
+| where TimeGenerated > ago(24h)
+| where ProductName == "Azure Security Center"
+| extend Hour = bin(TimeGenerated, 1h)
+| summarize 
+    Alerts = make_list(pack("name", AlertName, "severity", AlertSeverity, "resource", CompromisedEntity)),
+    AlertCount = count(),
+    Tactics = make_set(Tactics)
+    by Hour
+| where AlertCount > 3
+| order by Hour desc</code></pre>
+                    </section>
+
+                    <!-- Vulnerability Section -->
+                    <section>
+                        <h2 id="vulnerabilities">Vulnerability Management</h2>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Critical and High CVEs across environment
+SecurityRecommendation
+| where TimeGenerated > ago(1d)
+| where RecommendationName has "vulnerability" or RecommendationName has "CVE"
+| where RecommendationState == "Unhealthy"
+| where RecommendationSeverity in ("High", "Critical")
+| summarize arg_max(TimeGenerated, *) by AssessedResourceId, RecommendationName
+| summarize 
+    AffectedResources = dcount(AssessedResourceId),
+    Resources = make_set(AssessedResourceId)
+    by RecommendationName
+| order by AffectedResources desc
+| take 20</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Software vulnerability inventory (if MDE integrated)
+DeviceTvmSoftwareVulnerabilities
+| where TimeGenerated > ago(1d)
+| where VulnerabilitySeverityLevel in ("Critical", "High")
+| summarize 
+    VulnCount = count(),
+    Devices = make_set(DeviceName)
+    by CveId, SoftwareName, VulnerabilitySeverityLevel
+| extend DeviceCount = array_length(Devices)
+| order by DeviceCount desc
+| take 25</code></pre>
+                    </section>
+
+                    <!-- Operational Queries -->
+                    <section>
+                        <h2 id="operational">Operational Queries</h2>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// MDC data ingestion health check
+union withsource=TableName 
+    SecurityAlert,
+    SecurityRecommendation,
+    SecureScores,
+    SecureScoreControls
+| where TimeGenerated > ago(24h)
+| summarize 
+    LastRecord = max(TimeGenerated),
+    RecordCount = count()
+    by TableName
+| extend HoursSinceLastRecord = datetime_diff('hour', now(), LastRecord)
+| project TableName, LastRecord, RecordCount, HoursSinceLastRecord
+| order by HoursSinceLastRecord desc</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Alert SLA tracking (time to acknowledge)
+SecurityAlert
+| where TimeGenerated > ago(30d)
+| where ProductName == "Azure Security Center"
+| where Status == "Resolved" or Status == "Dismissed"
+| extend 
+    CreatedTime = TimeGenerated,
+    ResolvedTime = todatetime(ExtendedProperties["resolvedTime"])
+| where isnotempty(ResolvedTime)
+| extend TimeToResolveHours = datetime_diff('hour', ResolvedTime, CreatedTime)
+| summarize 
+    AvgTimeToResolve = round(avg(TimeToResolveHours), 1),
+    MaxTimeToResolve = max(TimeToResolveHours),
+    MinTimeToResolve = min(TimeToResolveHours),
+    AlertCount = count()
+    by AlertSeverity
+| order by case(
+    AlertSeverity == "High", 1,
+    AlertSeverity == "Medium", 2,
+    AlertSeverity == "Low", 3,
+    4)</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Daily security operations summary
+let Alerts = SecurityAlert
+| where TimeGenerated > ago(24h)
+| where ProductName == "Azure Security Center"
+| summarize 
+    NewAlerts = count(),
+    HighSeverity = countif(AlertSeverity == "High"),
+    Resolved = countif(Status == "Resolved");
+let Score = SecureScores
+| where TimeGenerated > ago(24h)
+| summarize CurrentScore = round(avg(PercentageScore), 1);
+let Recommendations = SecurityRecommendation
+| where TimeGenerated > ago(24h)
+| where RecommendationState == "Unhealthy"
+| summarize arg_max(TimeGenerated, *) by RecommendationName, AssessedResourceId
+| summarize UnhealthyRecs = count();
+Alerts
+| extend 
+    SecureScore = toscalar(Score),
+    UnhealthyRecommendations = toscalar(Recommendations)
+| project 
+    NewAlerts,
+    HighSeverity,
+    ResolvedAlerts = Resolved,
+    SecureScore,
+    UnhealthyRecommendations</code></pre>
+                    </section>
+
+                    <!-- Key Takeaways -->
+                    <div class="key-takeaways">
+                        <div class="key-takeaways-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 2a.75.75 0 01.75.75v.258a33.186 33.186 0 016.668.83.75.75 0 01-.336 1.461z" clip-rule="evenodd" />
+                            </svg>
+                            Query Best Practices
+                        </div>
+                        <ul>
+                            <li>Always specify time ranges to optimize query performance</li>
+                            <li>Use <code>summarize arg_max()</code> to get latest record per entity</li>
+                            <li>Parse ExtendedProperties with <code>parse_json()</code> for detailed alert data</li>
+                            <li>Use <code>mv-expand</code> for multi-valued fields like Tactics and Entities</li>
+                            <li>Test queries with <code>take 100</code> before running full dataset</li>
+                            <li>Save frequently-used queries as functions in Log Analytics</li>
+                        </ul>
+                    </div>
+
+                    <div class="related-pages">
+                        <div class="related-title">Related Pages</div>
+                        <div class="related-list">
+                            <a href="5-5-alerts-analysis.html" class="related-link">Alert Analysis in Sentinel</a>
+                            <a href="5-8-workbooks.html" class="related-link">Workbooks</a>
+                            <a href="5-10-hunting.html" class="related-link">Hunting Queries</a>
+                            <a href="12-2-powershell.html" class="related-link">PowerShell Scripts</a>
+                        </div>
+                    </div>
+
+                    <nav class="page-nav">
+                        <a href="11-10-migration.html" class="page-nav-link prev">
+                            <span class="page-nav-label">← Previous</span>
+                            <span class="page-nav-title">Migration Guide</span>
+                        </a>
+                        <a href="12-2-powershell.html" class="page-nav-link next">
+                            <span class="page-nav-label">Next →</span>
+                            <span class="page-nav-title">PowerShell Scripts</span>
+                        </a>
+                    </nav>
+                </article>
+
+                <aside class="toc-sidebar">
+                    <div class="toc-title">On This Page</div>
+                    <ul class="toc-list">
+                        <li class="toc-item"><a href="#alerts" class="toc-link">Security Alerts</a></li>
+                        <li class="toc-item"><a href="#alert-overview" class="toc-link toc-h3">Alert Overview</a></li>
+                        <li class="toc-item"><a href="#alert-analysis" class="toc-link toc-h3">Deep Analysis</a></li>
+                        <li class="toc-item"><a href="#recommendations" class="toc-link">Recommendations</a></li>
+                        <li class="toc-item"><a href="#secure-score" class="toc-link">Secure Score</a></li>
+                        <li class="toc-item"><a href="#hunting" class="toc-link">Threat Hunting</a></li>
+                        <li class="toc-item"><a href="#hunting-vm" class="toc-link toc-h3">VM Hunting</a></li>
+                        <li class="toc-item"><a href="#hunting-data" class="toc-link toc-h3">Data Exfil</a></li>
+                        <li class="toc-item"><a href="#hunting-lateral" class="toc-link toc-h3">Lateral Movement</a></li>
+                        <li class="toc-item"><a href="#vulnerabilities" class="toc-link">Vulnerabilities</a></li>
+                        <li class="toc-item"><a href="#operational" class="toc-link">Operational</a></li>
+                    </ul>
+                </aside>
+            </div>
+        </main>
+        <div class="mobile-overlay"></div>
+    </div>
+
+    <div class="search-modal">
+        <div class="search-modal-content">
+            <input type="text" class="search-modal-input" placeholder="Search documentation..." autofocus>
+            <div class="search-results"></div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

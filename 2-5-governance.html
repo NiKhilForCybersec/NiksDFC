@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Governance Rules in Microsoft Defender for Cloud - Automate security remediation workflows with owner assignment and due dates.">
+    <title>Governance Rules - Microsoft Defender for Cloud</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="../index.html" class="sidebar-logo">
+                    <div class="logo-icon">MDC</div>
+                    <span class="logo-text">Defender for Cloud</span>
+                </a>
+                <button class="sidebar-toggle" aria-label="Toggle sidebar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">CSPM</div>
+                    <div class="nav-group expanded" data-group="cspm">
+                        <div class="nav-group-header">
+                            <span class="nav-group-title">Cloud Security Posture</span>
+                            <svg class="nav-group-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="nav-group-items">
+                            <a href="2-1-secure-score.html" class="nav-subitem">Secure Score</a>
+                            <a href="2-3-attack-path.html" class="nav-subitem">Attack Path Analysis</a>
+                            <a href="2-4-regulatory-compliance.html" class="nav-subitem">Compliance Dashboard</a>
+                            <a href="2-5-governance.html" class="nav-subitem active">Governance Rules</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" aria-label="Open menu">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10zm0 5.25a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75a.75.75 0 01-.75-.75z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div class="search-box">
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                        </svg>
+                        <input type="text" class="search-input" placeholder="Search documentation..." readonly>
+                        <span class="search-shortcut">⌘K</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <article class="page-content">
+                    <nav class="breadcrumbs">
+                        <a href="../index.html" class="breadcrumb-item">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <a href="2-1-secure-score.html" class="breadcrumb-item">CSPM</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span class="breadcrumb-item current">Governance Rules</span>
+                    </nav>
+
+                    <header class="page-header">
+                        <h1>Governance Rules</h1>
+                        <div class="page-meta">
+                            <span class="badge badge-l1">L1 Fundamentals</span>
+                            <span class="badge badge-l2">L2 Operations</span>
+                            <span class="page-meta-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clip-rule="evenodd" />
+                                </svg>
+                                12 min read
+                            </span>
+                            <span class="badge" style="background: var(--accent-purple-glow); color: var(--accent-purple);">Defender CSPM</span>
+                        </div>
+                    </header>
+
+                    <section>
+                        <p>
+                            Governance rules in Microsoft Defender for Cloud automate the assignment of security 
+                            recommendations to resource owners with defined remediation timeframes. This transforms 
+                            security findings into actionable tasks with accountability.
+                        </p>
+
+                        <div class="callout callout-info">
+                            <div class="callout-title">Requires Defender CSPM</div>
+                            <div class="callout-content">
+                                <p>Governance rules are a premium feature requiring <strong>Defender CSPM</strong> plan. 
+                                The free tier includes basic recommendations but not automated governance workflows.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- How It Works -->
+                    <section>
+                        <h2 id="how-it-works">How It Works</h2>
+
+                        <div class="ascii-diagram">
+<span class="highlight-cyan">╔══════════════════════════════════════════════════════════════════════════════════════════════╗</span>
+<span class="highlight-cyan">║</span>                           <span class="highlight-blue">GOVERNANCE RULE WORKFLOW</span>                                         <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">╠══════════════════════════════════════════════════════════════════════════════════════════════╣</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">┌─────────────────┐</span>      <span class="highlight-blue">┌─────────────────┐</span>      <span class="highlight-green">┌─────────────────┐</span>               <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">│  RECOMMENDATION │</span>─────►<span class="highlight-blue">│  GOVERNANCE     │</span>─────►<span class="highlight-green">│  OWNER ASSIGNED │</span>               <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">│   TRIGGERED     │</span>      <span class="highlight-blue">│  RULE MATCHES   │</span>      <span class="highlight-green">│  + DUE DATE     │</span>               <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">└─────────────────┘</span>      <span class="highlight-blue">└─────────────────┘</span>      <span class="highlight-green">└────────┬────────┘</span>               <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                               │                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                               ▼                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">┌─────────────────┐</span>      <span class="highlight-purple">┌─────────────────┐</span>      <span class="highlight-green">┌─────────────────┐</span>               <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">│   OVERDUE       │</span>◄─────<span class="highlight-purple">│  EMAIL REMINDER │</span>◄─────<span class="highlight-green">│  TRACKING       │</span>               <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">│  ESCALATION     │</span>      <span class="highlight-purple">│  (OPTIONAL)     │</span>      <span class="highlight-green">│  IN PROGRESS    │</span>               <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">└─────────────────┘</span>      <span class="highlight-purple">└─────────────────┘</span>      <span class="highlight-green">└─────────────────┘</span>               <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">Rule Components:</span>                                                                           <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   • Scope: Subscription, Resource Group, or Management Group                                <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   • Conditions: Severity, recommendation type, resource type                                <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   • Owner: Email address or "By resource tag"                                               <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   • Timeframe: Days to remediate (7-180 days)                                               <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   • Grace Period: Days before due date to start reminders                                   <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">╚══════════════════════════════════════════════════════════════════════════════════════════════╝</span>
+                        </div>
+                    </section>
+
+                    <!-- Create Rules -->
+                    <section>
+                        <h2 id="create-rules">Creating Governance Rules</h2>
+
+                        <div class="tabs">
+                            <div class="tab-list">
+                                <button class="tab-btn active" data-tab="portal-gov">Portal</button>
+                                <button class="tab-btn" data-tab="api-gov">REST API</button>
+                            </div>
+
+                            <div class="tab-panel active" data-panel="portal-gov">
+                                <h4>Create via Portal</h4>
+                                <ol>
+                                    <li>Azure Portal → Defender for Cloud → Environment settings</li>
+                                    <li>Select subscription → Governance rules</li>
+                                    <li>Click "+ Create governance rule"</li>
+                                    <li>Configure:
+                                        <ul>
+                                            <li><strong>Name:</strong> Descriptive rule name</li>
+                                            <li><strong>Scope:</strong> Where to apply (subscription/RG)</li>
+                                            <li><strong>Priority:</strong> Lower number = higher priority</li>
+                                            <li><strong>Conditions:</strong> Which recommendations to match</li>
+                                            <li><strong>Owner:</strong> Email or resource tag</li>
+                                            <li><strong>Remediation timeframe:</strong> 7-180 days by severity</li>
+                                        </ul>
+                                    </li>
+                                    <li>Enable email notifications if desired</li>
+                                    <li>Save the rule</li>
+                                </ol>
+                            </div>
+
+                            <div class="tab-panel" data-panel="api-gov">
+                                <div class="code-header">
+                                    <span class="code-lang">PowerShell (REST API)</span>
+                                    <button class="code-copy-btn">Copy</button>
+                                </div>
+                                <pre><code class="language-powershell"># Create governance rule via REST API
+$subscriptionId = (Get-AzContext).Subscription.Id
+$ruleName = "critical-findings-14-days"
+
+$body = @{
+    properties = @{
+        displayName = "Critical Findings - 14 Day Remediation"
+        description = "Assign critical findings to owners with 14-day SLA"
+        isDisabled = $false
+        rulePriority = 100
+        sourceResourceType = "Assessments"
+        conditionSets = @(
+            @{
+                conditions = @(
+                    @{
+                        property = "$.AssessmentProperties.Metadata.Severity"
+                        value = "High"
+                        operator = "Equals"
+                    }
+                )
+            }
+        )
+        ownerSource = @{
+            type = "ByTag"
+            value = "SecurityOwner"
+        }
+        governanceEmailNotification = @{
+            disableManagerEmailNotification = $false
+            disableOwnerEmailNotification = $false
+        }
+        remediationTimeframe = "14.00:00:00"
+        isGracePeriod = $true
+        gracePeriod = "7.00:00:00"
+    }
+} | ConvertTo-Json -Depth 10
+
+Invoke-AzRestMethod -Method PUT `
+    -Path "/subscriptions/$subscriptionId/providers/Microsoft.Security/governanceRules/$ruleName`?api-version=2022-01-01-preview" `
+    -Payload $body</code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Rule Examples -->
+                    <section>
+                        <h2 id="examples">Common Rule Examples</h2>
+
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Rule Name</th>
+                                        <th>Condition</th>
+                                        <th>Owner</th>
+                                        <th>Timeframe</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Critical - 7 Days</strong></td>
+                                        <td>Severity = High</td>
+                                        <td>By Tag: SecurityOwner</td>
+                                        <td>7 days</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Identity Findings</strong></td>
+                                        <td>Category = Identity</td>
+                                        <td>identity-team@company.com</td>
+                                        <td>14 days</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Network Security</strong></td>
+                                        <td>Category = Networking</td>
+                                        <td>network-team@company.com</td>
+                                        <td>21 days</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Low Priority</strong></td>
+                                        <td>Severity = Low</td>
+                                        <td>By Tag: Owner</td>
+                                        <td>90 days</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Production VMs</strong></td>
+                                        <td>Resource Type = VM, Tag: Env=Prod</td>
+                                        <td>By Tag: TeamLead</td>
+                                        <td>14 days</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="callout callout-tip">
+                            <div class="callout-title">Using Resource Tags for Owner Assignment</div>
+                            <div class="callout-content">
+                                <p>The most scalable approach is to assign owners based on resource tags. 
+                                Ensure your tagging strategy includes an owner email tag like <code>SecurityOwner</code> 
+                                or <code>TeamEmail</code> on all resources.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Monitoring -->
+                    <section>
+                        <h2 id="monitoring">Monitoring Governance</h2>
+
+                        <h3>Governance Workbook</h3>
+                        <p>Access the built-in governance workbook at: Defender for Cloud → Workbooks → Governance</p>
+
+                        <h3>KQL Queries</h3>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Governance assignments status
+SecurityRecommendation
+| where TimeGenerated > ago(7d)
+| where isnotempty(Owner)
+| summarize 
+    arg_max(TimeGenerated, *) 
+    by RecommendationName, AssessedResourceId
+| summarize 
+    TotalAssignments = count(),
+    Overdue = countif(RemediationDueDate < now() and RecommendationState == "Unhealthy"),
+    Completed = countif(RecommendationState == "Healthy")
+    by Owner
+| extend CompletionRate = round(100.0 * Completed / TotalAssignments, 1)
+| order by Overdue desc</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Overdue remediation items
+SecurityRecommendation
+| where TimeGenerated > ago(1d)
+| where RecommendationState == "Unhealthy"
+| where RemediationDueDate < now()
+| project 
+    RecommendationName,
+    AssessedResourceId,
+    Owner,
+    Severity = RecommendationSeverity,
+    DueDate = RemediationDueDate,
+    DaysOverdue = datetime_diff('day', now(), RemediationDueDate)
+| order by DaysOverdue desc</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Remediation trends by severity
+SecurityRecommendation
+| where TimeGenerated > ago(30d)
+| summarize 
+    Unhealthy = countif(RecommendationState == "Unhealthy"),
+    Healthy = countif(RecommendationState == "Healthy")
+    by RecommendationSeverity, bin(TimeGenerated, 1d)
+| extend RemediationRate = round(100.0 * Healthy / (Healthy + Unhealthy), 1)
+| order by TimeGenerated asc, RecommendationSeverity
+| render timechart</code></pre>
+                    </section>
+
+                    <!-- Best Practices -->
+                    <section>
+                        <h2 id="best-practices">Best Practices</h2>
+
+                        <div class="checklist">
+                            <div class="checklist-title">Governance Implementation Checklist</div>
+                            <ul>
+                                <li>
+                                    <input type="checkbox" id="gov1">
+                                    <label for="gov1">Define remediation SLAs by severity (Critical: 7d, High: 14d, Medium: 30d)</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="gov2">
+                                    <label for="gov2">Implement resource tagging strategy with owner emails</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="gov3">
+                                    <label for="gov3">Create rules from highest to lowest priority</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="gov4">
+                                    <label for="gov4">Enable email notifications for new assignments</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="gov5">
+                                    <label for="gov5">Set grace periods before due dates</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="gov6">
+                                    <label for="gov6">Review governance dashboard weekly</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="gov7">
+                                    <label for="gov7">Escalate chronically overdue items to management</label>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <h3>Recommended SLA Structure</h3>
+
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Severity</th>
+                                        <th>Remediation SLA</th>
+                                        <th>Grace Period</th>
+                                        <th>Escalation</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span class="badge badge-high">Critical</span></td>
+                                        <td>7 days</td>
+                                        <td>3 days</td>
+                                        <td>Immediate to CISO</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge badge-high">High</span></td>
+                                        <td>14 days</td>
+                                        <td>5 days</td>
+                                        <td>7 days overdue → Manager</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge badge-medium">Medium</span></td>
+                                        <td>30 days</td>
+                                        <td>7 days</td>
+                                        <td>14 days overdue → Manager</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge badge-low">Low</span></td>
+                                        <td>90 days</td>
+                                        <td>14 days</td>
+                                        <td>30 days overdue → Team Lead</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Integration -->
+                    <section>
+                        <h2 id="integration">Integration Options</h2>
+
+                        <div class="card-grid">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">ServiceNow Integration</h4>
+                                </div>
+                                <div class="card-content">
+                                    <p>Create ServiceNow tickets automatically for governance assignments 
+                                    using Logic Apps or Azure Functions.</p>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Jira Integration</h4>
+                                </div>
+                                <div class="card-content">
+                                    <p>Sync governance assignments to Jira issues for teams using 
+                                    agile workflows for security remediation.</p>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Power BI Reporting</h4>
+                                </div>
+                                <div class="card-content">
+                                    <p>Build executive dashboards showing governance metrics, 
+                                    SLA compliance, and team performance.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Key Takeaways -->
+                    <div class="key-takeaways">
+                        <div class="key-takeaways-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 2a.75.75 0 01.75.75v.258a33.186 33.186 0 016.668.83.75.75 0 01-.336 1.461z" clip-rule="evenodd" />
+                            </svg>
+                            Key Takeaways
+                        </div>
+                        <ul>
+                            <li>Governance rules require Defender CSPM plan</li>
+                            <li>Rules automatically assign owners and due dates to recommendations</li>
+                            <li>Use resource tags for scalable owner assignment</li>
+                            <li>Set remediation SLAs based on severity (7/14/30/90 days)</li>
+                            <li>Enable email notifications for new assignments and approaching due dates</li>
+                            <li>Rules are processed by priority (lower number = higher priority)</li>
+                            <li>Monitor governance metrics in the built-in workbook</li>
+                            <li>Integrate with ITSM tools for enterprise workflows</li>
+                        </ul>
+                    </div>
+
+                    <div class="related-pages">
+                        <div class="related-title">Related Pages</div>
+                        <div class="related-list">
+                            <a href="2-1-secure-score.html" class="related-link">Secure Score</a>
+                            <a href="2-4-regulatory-compliance.html" class="related-link">Compliance Dashboard</a>
+                            <a href="5-12-playbooks.html" class="related-link">Automation Playbooks</a>
+                            <a href="12-1-kql-library.html" class="related-link">KQL Library</a>
+                        </div>
+                    </div>
+
+                    <nav class="page-nav">
+                        <a href="2-4-regulatory-compliance.html" class="page-nav-link prev">
+                            <span class="page-nav-label">← Previous</span>
+                            <span class="page-nav-title">Compliance Dashboard</span>
+                        </a>
+                        <a href="2-6-cloud-security-explorer.html" class="page-nav-link next">
+                            <span class="page-nav-label">Next →</span>
+                            <span class="page-nav-title">Cloud Security Explorer</span>
+                        </a>
+                    </nav>
+                </article>
+
+                <aside class="toc-sidebar">
+                    <div class="toc-title">On This Page</div>
+                    <ul class="toc-list">
+                        <li class="toc-item"><a href="#how-it-works" class="toc-link">How It Works</a></li>
+                        <li class="toc-item"><a href="#create-rules" class="toc-link">Creating Rules</a></li>
+                        <li class="toc-item"><a href="#examples" class="toc-link">Rule Examples</a></li>
+                        <li class="toc-item"><a href="#monitoring" class="toc-link">Monitoring</a></li>
+                        <li class="toc-item"><a href="#best-practices" class="toc-link">Best Practices</a></li>
+                        <li class="toc-item"><a href="#integration" class="toc-link">Integration</a></li>
+                    </ul>
+                </aside>
+            </div>
+        </main>
+        <div class="mobile-overlay"></div>
+    </div>
+
+    <div class="search-modal">
+        <div class="search-modal-content">
+            <input type="text" class="search-modal-input" placeholder="Search documentation..." autofocus>
+            <div class="search-results"></div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

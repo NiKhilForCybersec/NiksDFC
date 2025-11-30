@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Microsoft Defender for Key Vault - Threat detection for Azure Key Vault secrets, keys, and certificates.">
+    <title>Defender for Key Vault - Microsoft Defender for Cloud</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="../index.html" class="sidebar-logo">
+                    <div class="logo-icon">MDC</div>
+                    <span class="logo-text">Defender for Cloud</span>
+                </a>
+                <button class="sidebar-toggle" aria-label="Toggle sidebar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">CWPP</div>
+                    <div class="nav-group expanded" data-group="cwpp">
+                        <div class="nav-group-header">
+                            <span class="nav-group-title">Workload Protection</span>
+                            <svg class="nav-group-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="nav-group-items">
+                            <a href="3-1-servers-overview.html" class="nav-subitem">Defender for Servers</a>
+                            <a href="3-4-containers.html" class="nav-subitem">Defender for Containers</a>
+                            <a href="3-7-storage.html" class="nav-subitem">Defender for Storage</a>
+                            <a href="3-8-sql.html" class="nav-subitem">Defender for SQL</a>
+                            <a href="3-9-app-service.html" class="nav-subitem">Defender for App Service</a>
+                            <a href="3-10-key-vault.html" class="nav-subitem active">Defender for Key Vault</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" aria-label="Open menu">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10zm0 5.25a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75a.75.75 0 01-.75-.75z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div class="search-box">
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                        </svg>
+                        <input type="text" class="search-input" placeholder="Search documentation..." readonly>
+                        <span class="search-shortcut">⌘K</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <article class="page-content">
+                    <nav class="breadcrumbs">
+                        <a href="../index.html" class="breadcrumb-item">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <a href="3-1-servers-overview.html" class="breadcrumb-item">CWPP</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span class="breadcrumb-item current">Defender for Key Vault</span>
+                    </nav>
+
+                    <header class="page-header">
+                        <h1>Defender for Key Vault</h1>
+                        <div class="page-meta">
+                            <span class="badge badge-l1">L1 Fundamentals</span>
+                            <span class="badge badge-l2">L2 Technical</span>
+                            <span class="page-meta-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clip-rule="evenodd" />
+                                </svg>
+                                15 min read
+                            </span>
+                        </div>
+                    </header>
+
+                    <section>
+                        <p>
+                            Microsoft Defender for Key Vault provides advanced threat protection for Azure Key Vault, 
+                            detecting unusual and potentially harmful attempts to access or exploit secrets, keys, 
+                            and certificates. It monitors access patterns and alerts on suspicious activity that 
+                            could indicate credential theft or compromise.
+                        </p>
+
+                        <div class="callout callout-info">
+                            <div class="callout-title">Why Key Vault Protection Matters</div>
+                            <div class="callout-content">
+                                <p>Key Vault stores your most sensitive secrets - database connection strings, API keys, 
+                                certificates, and encryption keys. A compromised Key Vault can lead to full environment 
+                                compromise. Defender for Key Vault provides an additional detection layer beyond access policies.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Capabilities -->
+                    <section>
+                        <h2 id="capabilities">Detection Capabilities</h2>
+
+                        <div class="ascii-diagram">
+<span class="highlight-cyan">╔══════════════════════════════════════════════════════════════════════════════════════════════╗</span>
+<span class="highlight-cyan">║</span>                    <span class="highlight-blue">DEFENDER FOR KEY VAULT - THREAT DETECTION</span>                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">╠══════════════════════════════════════════════════════════════════════════════════════════════╣</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">┌────────────────────────────┐</span>  <span class="highlight-blue">┌────────────────────────────┐</span>  <span class="highlight-purple">┌────────────────────────────┐</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">│    ANOMALOUS ACCESS        │</span>  <span class="highlight-blue">│   SUSPICIOUS OPERATIONS    │</span>  <span class="highlight-purple">│    POLICY VIOLATIONS       │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">│                            │</span>  <span class="highlight-blue">│                            │</span>  <span class="highlight-purple">│                            │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">│  • Unusual IP addresses    │</span>  <span class="highlight-blue">│  • Mass secret retrieval   │</span>  <span class="highlight-purple">│  • Access policy changes   │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">│  • Tor exit nodes          │</span>  <span class="highlight-blue">│  • Unusual list operations │</span>  <span class="highlight-purple">│  • Firewall rule changes   │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">│  • Unusual locations       │</span>  <span class="highlight-blue">│  • Backup/restore abuse    │</span>  <span class="highlight-purple">│  • Purge operations        │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">│  • New user agents         │</span>  <span class="highlight-blue">│  • Certificate export      │</span>  <span class="highlight-purple">│  • Soft-delete disable     │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">│  • Suspicious applications │</span>  <span class="highlight-blue">│  • Key material access     │</span>  <span class="highlight-purple">│  • Network bypass          │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">└────────────────────────────┘</span>  <span class="highlight-blue">└────────────────────────────┘</span>  <span class="highlight-purple">└────────────────────────────┘</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">Pricing: ~$0.02 per 10,000 transactions</span>                                                  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">╚══════════════════════════════════════════════════════════════════════════════════════════════╝</span>
+                        </div>
+                    </section>
+
+                    <!-- Enablement -->
+                    <section>
+                        <h2 id="enablement">Enablement</h2>
+
+                        <div class="tabs">
+                            <div class="tab-list">
+                                <button class="tab-btn active" data-tab="subscription">Subscription Level</button>
+                                <button class="tab-btn" data-tab="terraform">Terraform</button>
+                                <button class="tab-btn" data-tab="policy">Azure Policy</button>
+                            </div>
+
+                            <div class="tab-panel active" data-panel="subscription">
+                                <h4>Enable for All Key Vaults in Subscription</h4>
+                                
+                                <div class="code-header">
+                                    <span class="code-lang">Azure CLI</span>
+                                    <button class="code-copy-btn">Copy</button>
+                                </div>
+                                <pre><code class="language-bash"># Enable Defender for Key Vault
+az security pricing create \
+    --name KeyVaults \
+    --tier Standard
+
+# Verify enablement
+az security pricing show --name KeyVaults
+
+# Check all Defender plans status
+az security pricing list -o table</code></pre>
+
+                                <div class="code-header">
+                                    <span class="code-lang">PowerShell</span>
+                                    <button class="code-copy-btn">Copy</button>
+                                </div>
+                                <pre><code class="language-powershell"># Enable Defender for Key Vault
+Set-AzSecurityPricing -Name "KeyVaults" -PricingTier "Standard"
+
+# Verify
+Get-AzSecurityPricing | Where-Object { $_.Name -eq "KeyVaults" }</code></pre>
+                            </div>
+
+                            <div class="tab-panel" data-panel="terraform">
+                                <h4>Terraform Configuration</h4>
+                                
+                                <div class="code-header">
+                                    <span class="code-lang">HCL (Terraform)</span>
+                                    <button class="code-copy-btn">Copy</button>
+                                </div>
+                                <pre><code class="language-hcl"># Enable Defender for Key Vault
+resource "azurerm_security_center_subscription_pricing" "keyvault" {
+  tier          = "Standard"
+  resource_type = "KeyVaults"
+}
+
+# Create Key Vault with best practices
+resource "azurerm_key_vault" "example" {
+  name                        = "example-keyvault"
+  location                    = azurerm_resource_group.example.location
+  resource_group_name         = azurerm_resource_group.example.name
+  tenant_id                   = data.azurerm_client_config.current.tenant_id
+  sku_name                    = "standard"
+  
+  # Security best practices
+  enabled_for_disk_encryption = false
+  soft_delete_retention_days  = 90
+  purge_protection_enabled    = true
+  
+  # Network restrictions
+  network_acls {
+    default_action = "Deny"
+    bypass         = "AzureServices"
+    ip_rules       = ["your-ip/32"]
+  }
+  
+  # Enable diagnostic logging
+  # (Required for full visibility)
+}
+
+# Diagnostic settings for Key Vault
+resource "azurerm_monitor_diagnostic_setting" "keyvault" {
+  name                       = "keyvault-diagnostics"
+  target_resource_id         = azurerm_key_vault.example.id
+  log_analytics_workspace_id = azurerm_log_analytics_workspace.example.id
+
+  enabled_log {
+    category = "AuditEvent"
+  }
+
+  metric {
+    category = "AllMetrics"
+  }
+}</code></pre>
+                            </div>
+
+                            <div class="tab-panel" data-panel="policy">
+                                <h4>Enforce with Azure Policy</h4>
+                                
+                                <div class="code-header">
+                                    <span class="code-lang">Azure CLI</span>
+                                    <button class="code-copy-btn">Copy</button>
+                                </div>
+                                <pre><code class="language-bash"># Assign built-in policy to enable Defender for Key Vault
+az policy assignment create \
+    --name "Enable-Defender-KeyVault" \
+    --display-name "Enable Microsoft Defender for Key Vault" \
+    --policy "/providers/Microsoft.Authorization/policyDefinitions/1f725891-01c0-420a-9059-4fa46cb770b7" \
+    --scope "/subscriptions/your-subscription-id"
+
+# Policy for Key Vault diagnostic logging
+az policy assignment create \
+    --name "KeyVault-Diagnostics" \
+    --display-name "Deploy Diagnostic Settings for Key Vault" \
+    --policy "/providers/Microsoft.Authorization/policyDefinitions/951af2fa-529b-416e-ab6e-066fd85ac459" \
+    --scope "/subscriptions/your-subscription-id" \
+    --params '{"logAnalytics": {"value": "/subscriptions/.../workspaces/your-workspace"}}'</code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Alert Types -->
+                    <section>
+                        <h2 id="alerts">Alert Types</h2>
+
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Alert</th>
+                                        <th>Severity</th>
+                                        <th>MITRE Tactic</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Access from suspicious IP</strong></td>
+                                        <td><span class="badge badge-high">High</span></td>
+                                        <td>Credential Access</td>
+                                        <td>Key Vault accessed from known malicious IP or Tor</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Unusual secret retrieval</strong></td>
+                                        <td><span class="badge badge-high">High</span></td>
+                                        <td>Collection</td>
+                                        <td>High volume of secret reads in short time</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Access from unusual location</strong></td>
+                                        <td><span class="badge badge-medium">Medium</span></td>
+                                        <td>Initial Access</td>
+                                        <td>Access from atypical geographic location</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Unusual application access</strong></td>
+                                        <td><span class="badge badge-medium">Medium</span></td>
+                                        <td>Credential Access</td>
+                                        <td>New or suspicious application accessing vault</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Suspicious policy change</strong></td>
+                                        <td><span class="badge badge-medium">Medium</span></td>
+                                        <td>Defense Evasion</td>
+                                        <td>Access policy modified unexpectedly</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>High volume key operations</strong></td>
+                                        <td><span class="badge badge-medium">Medium</span></td>
+                                        <td>Collection</td>
+                                        <td>Unusual number of cryptographic operations</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Certificate export detected</strong></td>
+                                        <td><span class="badge badge-medium">Medium</span></td>
+                                        <td>Exfiltration</td>
+                                        <td>Private certificate exported from vault</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h3>KQL Queries for Key Vault Alerts</h3>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// All Key Vault security alerts
+SecurityAlert
+| where TimeGenerated > ago(7d)
+| where ProductName == "Azure Security Center"
+| where AlertName has_any ("Key Vault", "keyvault", "secret", "certificate")
+| summarize 
+    Count = count(),
+    Vaults = make_set(CompromisedEntity)
+    by AlertName, AlertSeverity
+| order by Count desc</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Key Vault access patterns (requires diagnostic logs)
+AzureDiagnostics
+| where ResourceProvider == "MICROSOFT.KEYVAULT"
+| where TimeGenerated > ago(24h)
+| summarize 
+    Operations = count(),
+    UniqueCallers = dcount(identity_claim_upn_s),
+    UniqueIPs = dcount(CallerIPAddress)
+    by Resource, OperationName
+| where Operations > 100
+| order by Operations desc</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Detect secret enumeration (listing all secrets)
+AzureDiagnostics
+| where ResourceProvider == "MICROSOFT.KEYVAULT"
+| where OperationName == "SecretList"
+| summarize 
+    ListOperations = count(),
+    by CallerIPAddress, identity_claim_upn_s, Resource, bin(TimeGenerated, 1h)
+| where ListOperations > 10
+| order by ListOperations desc</code></pre>
+                    </section>
+
+                    <!-- Investigation -->
+                    <section>
+                        <h2 id="investigation">Alert Investigation</h2>
+
+                        <div class="accordion">
+                            <div class="accordion-item expanded">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">Access from Suspicious IP / Tor</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <p><strong>Investigation Steps:</strong></p>
+                                    <ol>
+                                        <li>Identify the caller (user, service principal, managed identity)</li>
+                                        <li>Check what operations were performed</li>
+                                        <li>Verify if secrets were successfully retrieved</li>
+                                        <li>Check for subsequent use of retrieved credentials</li>
+                                    </ol>
+
+                                    <div class="code-header">
+                                        <span class="code-lang">KQL</span>
+                                        <button class="code-copy-btn">Copy</button>
+                                    </div>
+                                    <pre><code class="language-kql">// Investigate suspicious IP access
+let suspiciousIP = "1.2.3.4";
+AzureDiagnostics
+| where ResourceProvider == "MICROSOFT.KEYVAULT"
+| where CallerIPAddress == suspiciousIP
+| project 
+    TimeGenerated,
+    Resource,
+    OperationName,
+    ResultType,
+    identity_claim_upn_s,
+    identity_claim_appid_g,
+    id_s
+| order by TimeGenerated asc</code></pre>
+
+                                    <p><strong>Response Actions:</strong></p>
+                                    <ul>
+                                        <li><strong>If legitimate:</strong> Whitelist IP in vault firewall</li>
+                                        <li><strong>If suspicious:</strong>
+                                            <ul>
+                                                <li>Rotate affected secrets immediately</li>
+                                                <li>Revoke access for compromised identity</li>
+                                                <li>Add IP to deny list</li>
+                                                <li>Review access policy for over-permissioning</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">Mass Secret Retrieval</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <p><strong>Investigation Steps:</strong></p>
+                                    <ol>
+                                        <li>Identify which secrets were accessed</li>
+                                        <li>Determine if this is normal behavior (deployment, backup)</li>
+                                        <li>Check caller identity and context</li>
+                                    </ol>
+
+                                    <div class="code-header">
+                                        <span class="code-lang">KQL</span>
+                                        <button class="code-copy-btn">Copy</button>
+                                    </div>
+                                    <pre><code class="language-kql">// Find all secrets accessed by suspicious identity
+let suspiciousIdentity = "suspicious-app-id-or-upn";
+AzureDiagnostics
+| where ResourceProvider == "MICROSOFT.KEYVAULT"
+| where OperationName == "SecretGet"
+| where identity_claim_upn_s == suspiciousIdentity 
+    or identity_claim_appid_g == suspiciousIdentity
+| summarize 
+    SecretsAccessed = make_set(id_s),
+    Count = count()
+    by Resource, bin(TimeGenerated, 5m)</code></pre>
+
+                                    <p><strong>Response:</strong></p>
+                                    <ul>
+                                        <li>If unauthorized: Rotate ALL accessed secrets</li>
+                                        <li>Disable the service principal/user</li>
+                                        <li>Check downstream systems using those secrets</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">Access Policy Change</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <p><strong>Investigation:</strong></p>
+                                    <ul>
+                                        <li>Who made the change?</li>
+                                        <li>Was it through portal, CLI, or API?</li>
+                                        <li>What permissions were added/removed?</li>
+                                        <li>Is this part of a change request?</li>
+                                    </ul>
+
+                                    <div class="code-header">
+                                        <span class="code-lang">KQL</span>
+                                        <button class="code-copy-btn">Copy</button>
+                                    </div>
+                                    <pre><code class="language-kql">// Track access policy changes
+AzureActivity
+| where TimeGenerated > ago(7d)
+| where ResourceProvider == "MICROSOFT.KEYVAULT"
+| where OperationNameValue has_any ("accessPolicies", "VAULT/WRITE")
+| project 
+    TimeGenerated,
+    Caller,
+    CallerIpAddress,
+    OperationNameValue,
+    ResourceGroup,
+    Resource,
+    ActivityStatusValue
+| order by TimeGenerated desc</code></pre>
+
+                                    <p><strong>Response:</strong></p>
+                                    <ul>
+                                        <li>If unauthorized: Revert the policy change</li>
+                                        <li>Investigate the caller account</li>
+                                        <li>Enable Azure RBAC for Key Vault (more auditable)</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Best Practices -->
+                    <section>
+                        <h2 id="best-practices">Security Best Practices</h2>
+
+                        <div class="checklist">
+                            <div class="checklist-title">Key Vault Hardening Checklist</div>
+                            <ul>
+                                <li>
+                                    <input type="checkbox" id="kv1">
+                                    <label for="kv1">Enable Defender for Key Vault</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="kv2">
+                                    <label for="kv2">Enable diagnostic logging to Log Analytics</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="kv3">
+                                    <label for="kv3">Enable soft-delete and purge protection</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="kv4">
+                                    <label for="kv4">Restrict network access (firewall rules)</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="kv5">
+                                    <label for="kv5">Use Private Endpoints for production vaults</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="kv6">
+                                    <label for="kv6">Use Azure RBAC instead of access policies</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="kv7">
+                                    <label for="kv7">Use Managed Identities instead of service principals</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="kv8">
+                                    <label for="kv8">Implement secret rotation</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="kv9">
+                                    <label for="kv9">Set expiration dates on secrets and certificates</label>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <h3>Enable Azure RBAC for Key Vault</h3>
+
+                        <div class="code-header">
+                            <span class="code-lang">Azure CLI</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-bash"># Update Key Vault to use Azure RBAC
+az keyvault update \
+    --name "your-keyvault" \
+    --resource-group "your-rg" \
+    --enable-rbac-authorization true
+
+# Assign role to user/service principal
+az role assignment create \
+    --role "Key Vault Secrets User" \
+    --assignee "user@company.com" \
+    --scope "/subscriptions/.../resourceGroups/.../providers/Microsoft.KeyVault/vaults/your-keyvault"</code></pre>
+
+                        <div class="callout callout-tip">
+                            <div class="callout-title">Azure RBAC vs Access Policies</div>
+                            <div class="callout-content">
+                                <p>Azure RBAC provides:</p>
+                                <ul>
+                                    <li>Centralized access management with Azure AD</li>
+                                    <li>Fine-grained built-in roles</li>
+                                    <li>Better audit trail in Activity Log</li>
+                                    <li>Conditional Access policy support</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Key Takeaways -->
+                    <div class="key-takeaways">
+                        <div class="key-takeaways-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 2a.75.75 0 01.75.75v.258a33.186 33.186 0 016.668.83.75.75 0 01-.336 1.461z" clip-rule="evenodd" />
+                            </svg>
+                            Key Takeaways
+                        </div>
+                        <ul>
+                            <li>Defender for Key Vault is transaction-based pricing (~$0.02/10K transactions)</li>
+                            <li>Enable diagnostic logging for full investigation capabilities</li>
+                            <li>Tor/suspicious IP access should trigger immediate secret rotation</li>
+                            <li>Use Azure RBAC instead of access policies for better auditability</li>
+                            <li>Implement Private Endpoints for production Key Vaults</li>
+                            <li>Mass secret retrieval often indicates compromised service principal</li>
+                        </ul>
+                    </div>
+
+                    <div class="related-pages">
+                        <div class="related-title">Related Pages</div>
+                        <div class="related-list">
+                            <a href="3-7-storage.html" class="related-link">Defender for Storage</a>
+                            <a href="3-8-sql.html" class="related-link">Defender for SQL</a>
+                            <a href="8-4-identity-playbook.html" class="related-link">Identity Playbook</a>
+                            <a href="12-1-kql-library.html" class="related-link">KQL Library</a>
+                        </div>
+                    </div>
+
+                    <nav class="page-nav">
+                        <a href="3-9-app-service.html" class="page-nav-link prev">
+                            <span class="page-nav-label">← Previous</span>
+                            <span class="page-nav-title">Defender for App Service</span>
+                        </a>
+                        <a href="3-11-arm.html" class="page-nav-link next">
+                            <span class="page-nav-label">Next →</span>
+                            <span class="page-nav-title">Defender for Resource Manager</span>
+                        </a>
+                    </nav>
+                </article>
+
+                <aside class="toc-sidebar">
+                    <div class="toc-title">On This Page</div>
+                    <ul class="toc-list">
+                        <li class="toc-item"><a href="#capabilities" class="toc-link">Detection Capabilities</a></li>
+                        <li class="toc-item"><a href="#enablement" class="toc-link">Enablement</a></li>
+                        <li class="toc-item"><a href="#alerts" class="toc-link">Alert Types</a></li>
+                        <li class="toc-item"><a href="#investigation" class="toc-link">Investigation</a></li>
+                        <li class="toc-item"><a href="#best-practices" class="toc-link">Best Practices</a></li>
+                    </ul>
+                </aside>
+            </div>
+        </main>
+        <div class="mobile-overlay"></div>
+    </div>
+
+    <div class="search-modal">
+        <div class="search-modal-content">
+            <input type="text" class="search-modal-input" placeholder="Search documentation..." autofocus>
+            <div class="search-results"></div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

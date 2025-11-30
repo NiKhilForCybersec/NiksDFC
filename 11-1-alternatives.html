@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cloud Security Platform Comparison - Compare Microsoft Defender for Cloud with other CSPM and CWPP solutions.">
+    <title>Alternatives & Comparison - Microsoft Defender for Cloud</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="../index.html" class="sidebar-logo">
+                    <div class="logo-icon">MDC</div>
+                    <span class="logo-text">Defender for Cloud</span>
+                </a>
+                <button class="sidebar-toggle" aria-label="Toggle sidebar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Comparison</div>
+                    <div class="nav-group expanded" data-group="compare">
+                        <div class="nav-group-header">
+                            <span class="nav-group-title">Alternatives</span>
+                            <svg class="nav-group-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="nav-group-items">
+                            <a href="11-1-alternatives.html" class="nav-subitem active">Platform Comparison</a>
+                            <a href="11-2-migration.html" class="nav-subitem">Migration Guide</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" aria-label="Open menu">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10zm0 5.25a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75a.75.75 0 01-.75-.75z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div class="search-box">
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                        </svg>
+                        <input type="text" class="search-input" placeholder="Search documentation..." readonly>
+                        <span class="search-shortcut">⌘K</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <article class="page-content">
+                    <nav class="breadcrumbs">
+                        <a href="../index.html" class="breadcrumb-item">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span class="breadcrumb-item current">Alternatives & Comparison</span>
+                    </nav>
+
+                    <header class="page-header">
+                        <h1>Cloud Security Platform Comparison</h1>
+                        <div class="page-meta">
+                            <span class="badge badge-l1">L1 Fundamentals</span>
+                            <span class="badge badge-l2">L2 Technical</span>
+                            <span class="page-meta-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clip-rule="evenodd" />
+                                </svg>
+                                12 min read
+                            </span>
+                        </div>
+                    </header>
+
+                    <section>
+                        <p>
+                            Understanding how Microsoft Defender for Cloud compares to other cloud security 
+                            solutions helps organizations make informed decisions. This guide provides an 
+                            objective comparison of leading CSPM and CWPP platforms.
+                        </p>
+
+                        <div class="callout callout-info">
+                            <div class="callout-title">Note</div>
+                            <div class="callout-content">
+                                <p>This comparison is based on publicly available information. Features and 
+                                capabilities change frequently. Always verify current capabilities with vendors.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Market Overview -->
+                    <section>
+                        <h2 id="market">Cloud Security Market Overview</h2>
+
+                        <div class="ascii-diagram">
+<span class="highlight-cyan">╔══════════════════════════════════════════════════════════════════════════════════════════════╗</span>
+<span class="highlight-cyan">║</span>                        <span class="highlight-blue">CLOUD SECURITY PLATFORM LANDSCAPE</span>                                   <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">╠══════════════════════════════════════════════════════════════════════════════════════════════╣</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">┌─────────────────────────────────────────────────────────────────────────────────────┐</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">│                              CNAPP (Cloud-Native)                                   │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">│                                                                                     │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">│   ┌─────────────────────────────┐   ┌─────────────────────────────┐               │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">│   │           CSPM              │   │           CWPP              │               │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">│   │  Cloud Security Posture     │   │  Cloud Workload Protection  │               │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">│   │                             │   │                             │               │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">│   │  • Misconfigurations        │   │  • VM threat detection      │               │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">│   │  • Compliance               │   │  • Container security       │               │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">│   │  • Attack paths             │   │  • Vulnerability mgmt       │               │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">│   │  • Identity risks           │   │  • Runtime protection       │               │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">│   └─────────────────────────────┘   └─────────────────────────────┘               │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">│                                                                                     │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">│   + CIEM (Identity) + DSPM (Data) + DevSecOps + KSPM (Kubernetes)                  │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">└─────────────────────────────────────────────────────────────────────────────────────┘</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">╚══════════════════════════════════════════════════════════════════════════════════════════════╝</span>
+                        </div>
+                    </section>
+
+                    <!-- Platform Comparison -->
+                    <section>
+                        <h2 id="comparison">Platform Comparison</h2>
+
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Capability</th>
+                                        <th>MDC</th>
+                                        <th>Prisma Cloud</th>
+                                        <th>Wiz</th>
+                                        <th>AWS Security Hub</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>CSPM</strong></td>
+                                        <td>✅ Strong</td>
+                                        <td>✅ Strong</td>
+                                        <td>✅ Strong</td>
+                                        <td>✅ AWS-focused</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>CWPP</strong></td>
+                                        <td>✅ Integrated MDE</td>
+                                        <td>✅ Agent + Agentless</td>
+                                        <td>✅ Agentless</td>
+                                        <td>⚠️ Via GuardDuty</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Azure Native</strong></td>
+                                        <td>✅ Best</td>
+                                        <td>✅ Good</td>
+                                        <td>✅ Good</td>
+                                        <td>❌ Limited</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>AWS Native</strong></td>
+                                        <td>✅ Good</td>
+                                        <td>✅ Good</td>
+                                        <td>✅ Good</td>
+                                        <td>✅ Best</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>GCP Native</strong></td>
+                                        <td>✅ Good</td>
+                                        <td>✅ Good</td>
+                                        <td>✅ Good</td>
+                                        <td>❌ None</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Container Security</strong></td>
+                                        <td>✅ Strong</td>
+                                        <td>✅ Strong</td>
+                                        <td>✅ Strong</td>
+                                        <td>⚠️ Basic</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Attack Path Analysis</strong></td>
+                                        <td>✅ Graph-based</td>
+                                        <td>✅ Available</td>
+                                        <td>✅ Graph-based</td>
+                                        <td>❌ Limited</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Agentless Scanning</strong></td>
+                                        <td>✅ VMs, Containers</td>
+                                        <td>✅ VMs, Containers</td>
+                                        <td>✅ Primary approach</td>
+                                        <td>⚠️ Limited</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>SIEM Integration</strong></td>
+                                        <td>✅ Sentinel native</td>
+                                        <td>✅ Multiple</td>
+                                        <td>✅ Multiple</td>
+                                        <td>✅ CloudWatch/SIEM</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Pricing Model</strong></td>
+                                        <td>Per resource</td>
+                                        <td>Credits</td>
+                                        <td>Per workload</td>
+                                        <td>Per check/event</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- MDC Strengths -->
+                    <section>
+                        <h2 id="strengths">MDC Strengths</h2>
+
+                        <div class="card-grid">
+                            <div class="card">
+                                <div class="card-header">
+                                    <span class="card-icon">🔗</span>
+                                    <h3 class="card-title">Microsoft Integration</h3>
+                                </div>
+                                <div class="card-content">
+                                    <ul>
+                                        <li>Native Entra ID integration</li>
+                                        <li>Microsoft Defender XDR correlation</li>
+                                        <li>Sentinel SIEM native connector</li>
+                                        <li>Purview data governance</li>
+                                        <li>Intune device management</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <span class="card-icon">☁️</span>
+                                    <h3 class="card-title">Azure-Native</h3>
+                                </div>
+                                <div class="card-content">
+                                    <ul>
+                                        <li>Deepest Azure API integration</li>
+                                        <li>First-party resource support</li>
+                                        <li>Azure Policy integration</li>
+                                        <li>ARM/Bicep/Terraform support</li>
+                                        <li>Single pane of glass in Azure Portal</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <span class="card-icon">💰</span>
+                                    <h3 class="card-title">Cost Effective</h3>
+                                </div>
+                                <div class="card-content">
+                                    <ul>
+                                        <li>Free tier for basic CSPM</li>
+                                        <li>Per-resource pricing (predictable)</li>
+                                        <li>Bundled with E5 licenses</li>
+                                        <li>No separate agent costs</li>
+                                        <li>MDE included with Servers P2</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <span class="card-icon">🛡️</span>
+                                    <h3 class="card-title">Endpoint Integration</h3>
+                                </div>
+                                <div class="card-content">
+                                    <ul>
+                                        <li>MDE agent included</li>
+                                        <li>EDR capabilities built-in</li>
+                                        <li>Unified alert timeline</li>
+                                        <li>Live response for VMs</li>
+                                        <li>Threat intelligence sharing</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- MDC Considerations -->
+                    <section>
+                        <h2 id="considerations">MDC Considerations</h2>
+
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Area</th>
+                                        <th>Consideration</th>
+                                        <th>Mitigation</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Multi-cloud depth</strong></td>
+                                        <td>AWS/GCP features may lag Azure</td>
+                                        <td>Check specific feature availability for target cloud</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Agent requirement</strong></td>
+                                        <td>Some features need MDE agent</td>
+                                        <td>Use agentless scanning where possible</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Non-Microsoft SIEM</strong></td>
+                                        <td>Best with Sentinel, extra work for others</td>
+                                        <td>Use Event Hub for Splunk/other SIEM</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Learning curve</strong></td>
+                                        <td>Many features across multiple blades</td>
+                                        <td>Start with Secure Score, expand gradually</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- When to Choose -->
+                    <section>
+                        <h2 id="when-to-choose">When to Choose MDC</h2>
+
+                        <div class="accordion">
+                            <div class="accordion-item expanded">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">✅ Strong Fit for MDC</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <ul>
+                                        <li><strong>Azure-primary:</strong> Most workloads on Azure</li>
+                                        <li><strong>Microsoft ecosystem:</strong> Using M365, Entra ID, Sentinel</li>
+                                        <li><strong>E5 licensing:</strong> Already have Microsoft 365 E5</li>
+                                        <li><strong>Unified security:</strong> Want single vendor for cloud + endpoint</li>
+                                        <li><strong>Budget conscious:</strong> Free tier valuable, predictable costs</li>
+                                        <li><strong>Compliance focus:</strong> Strong regulatory compliance support</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">⚠️ Consider Alternatives</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <ul>
+                                        <li><strong>AWS-primary:</strong> AWS Security Hub + GuardDuty may be simpler</li>
+                                        <li><strong>Multi-cloud equal:</strong> Third-party CNAPP may offer more balanced coverage</li>
+                                        <li><strong>Agentless-only:</strong> Wiz if strict no-agent policy</li>
+                                        <li><strong>Existing investment:</strong> If deep investment in another platform</li>
+                                        <li><strong>Non-Microsoft SIEM:</strong> If Splunk/other SIEM is strategic choice</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Feature Matrix -->
+                    <section>
+                        <h2 id="features">Detailed Feature Matrix</h2>
+
+                        <h3>CSPM Features</h3>
+                        <div class="table-wrapper">
+                            <table class="compact">
+                                <thead>
+                                    <tr>
+                                        <th>Feature</th>
+                                        <th>MDC</th>
+                                        <th>Prisma</th>
+                                        <th>Wiz</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Misconfiguration detection</td>
+                                        <td>✅</td>
+                                        <td>✅</td>
+                                        <td>✅</td>
+                                    </tr>
+                                    <tr>
+                                        <td>CIS benchmarks</td>
+                                        <td>✅</td>
+                                        <td>✅</td>
+                                        <td>✅</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Custom policies</td>
+                                        <td>✅ Azure Policy</td>
+                                        <td>✅ RQL</td>
+                                        <td>✅ Wiz Query</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Attack path analysis</td>
+                                        <td>✅</td>
+                                        <td>✅</td>
+                                        <td>✅</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Graph-based queries</td>
+                                        <td>✅ Security Explorer</td>
+                                        <td>✅ RQL</td>
+                                        <td>✅ Graph</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Identity analysis (CIEM)</td>
+                                        <td>✅ Permissions Mgmt</td>
+                                        <td>✅</td>
+                                        <td>✅</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Data security (DSPM)</td>
+                                        <td>✅</td>
+                                        <td>✅</td>
+                                        <td>✅</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h3>CWPP Features</h3>
+                        <div class="table-wrapper">
+                            <table class="compact">
+                                <thead>
+                                    <tr>
+                                        <th>Feature</th>
+                                        <th>MDC</th>
+                                        <th>Prisma</th>
+                                        <th>Wiz</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>VM vulnerability scanning</td>
+                                        <td>✅ Qualys/MDVM</td>
+                                        <td>✅</td>
+                                        <td>✅ Agentless</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Container image scanning</td>
+                                        <td>✅</td>
+                                        <td>✅</td>
+                                        <td>✅</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Runtime protection</td>
+                                        <td>✅ MDE</td>
+                                        <td>✅</td>
+                                        <td>⚠️ Sensor</td>
+                                    </tr>
+                                    <tr>
+                                        <td>EDR capabilities</td>
+                                        <td>✅ Full MDE</td>
+                                        <td>⚠️ Limited</td>
+                                        <td>❌</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Agentless scanning</td>
+                                        <td>✅</td>
+                                        <td>✅</td>
+                                        <td>✅ Primary</td>
+                                    </tr>
+                                    <tr>
+                                        <td>File integrity monitoring</td>
+                                        <td>✅ P2</td>
+                                        <td>✅</td>
+                                        <td>⚠️</td>
+                                    </tr>
+                                    <tr>
+                                        <td>JIT access</td>
+                                        <td>✅</td>
+                                        <td>⚠️</td>
+                                        <td>❌</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Decision Framework -->
+                    <section>
+                        <h2 id="decision">Decision Framework</h2>
+
+                        <div class="checklist">
+                            <div class="checklist-title">Evaluation Checklist</div>
+                            <ul>
+                                <li>
+                                    <input type="checkbox" id="dec1">
+                                    <label for="dec1">Identify primary cloud (Azure, AWS, GCP, multi)</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="dec2">
+                                    <label for="dec2">Assess existing Microsoft investments (M365, Sentinel)</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="dec3">
+                                    <label for="dec3">Determine SIEM strategy (Sentinel vs other)</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="dec4">
+                                    <label for="dec4">Evaluate agent deployment feasibility</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="dec5">
+                                    <label for="dec5">Compare total cost of ownership</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="dec6">
+                                    <label for="dec6">Test proof-of-concept in target environment</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="dec7">
+                                    <label for="dec7">Assess compliance requirements coverage</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="dec8">
+                                    <label for="dec8">Review integration requirements with existing tools</label>
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- Key Takeaways -->
+                    <div class="key-takeaways">
+                        <div class="key-takeaways-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 2a.75.75 0 01.75.75v.258a33.186 33.186 0 016.668.83.75.75 0 01-.336 1.461z" clip-rule="evenodd" />
+                            </svg>
+                            Key Takeaways
+                        </div>
+                        <ul>
+                            <li>MDC excels for Azure-primary organizations with Microsoft ecosystem</li>
+                            <li>Strong value with E5 licensing and Sentinel SIEM</li>
+                            <li>Free CSPM tier provides significant value</li>
+                            <li>MDE integration provides best-in-class endpoint protection</li>
+                            <li>Consider alternatives if AWS-primary or strict agentless requirement</li>
+                            <li>All leading platforms converging on similar CNAPP capabilities</li>
+                            <li>Total cost of ownership often favors MDC for Microsoft shops</li>
+                            <li>Run POC in your environment before final decision</li>
+                        </ul>
+                    </div>
+
+                    <div class="related-pages">
+                        <div class="related-title">Related Pages</div>
+                        <div class="related-list">
+                            <a href="1-1-overview.html" class="related-link">MDC Overview</a>
+                            <a href="1-5-cost-optimization.html" class="related-link">Cost Optimization</a>
+                            <a href="1-2-architecture.html" class="related-link">Architecture</a>
+                            <a href="5-1-integration-arch.html" class="related-link">Sentinel Integration</a>
+                        </div>
+                    </div>
+
+                    <nav class="page-nav">
+                        <a href="10-1-alert-reference.html" class="page-nav-link prev">
+                            <span class="page-nav-label">← Previous</span>
+                            <span class="page-nav-title">Alert Reference</span>
+                        </a>
+                        <a href="12-1-kql-library.html" class="page-nav-link next">
+                            <span class="page-nav-label">Next →</span>
+                            <span class="page-nav-title">KQL Library</span>
+                        </a>
+                    </nav>
+                </article>
+
+                <aside class="toc-sidebar">
+                    <div class="toc-title">On This Page</div>
+                    <ul class="toc-list">
+                        <li class="toc-item"><a href="#market" class="toc-link">Market Overview</a></li>
+                        <li class="toc-item"><a href="#comparison" class="toc-link">Platform Comparison</a></li>
+                        <li class="toc-item"><a href="#strengths" class="toc-link">MDC Strengths</a></li>
+                        <li class="toc-item"><a href="#considerations" class="toc-link">Considerations</a></li>
+                        <li class="toc-item"><a href="#when-to-choose" class="toc-link">When to Choose</a></li>
+                        <li class="toc-item"><a href="#features" class="toc-link">Feature Matrix</a></li>
+                        <li class="toc-item"><a href="#decision" class="toc-link">Decision Framework</a></li>
+                    </ul>
+                </aside>
+            </div>
+        </main>
+        <div class="mobile-overlay"></div>
+    </div>
+
+    <div class="search-modal">
+        <div class="search-modal-content">
+            <input type="text" class="search-modal-input" placeholder="Search documentation..." autofocus>
+            <div class="search-results"></div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

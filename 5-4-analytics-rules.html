@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sentinel Analytics Rules - Configure detection rules for MDC alerts and security events.">
+    <title>Sentinel Analytics Rules - Microsoft Defender for Cloud</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="../index.html" class="sidebar-logo">
+                    <div class="logo-icon">MDC</div>
+                    <span class="logo-text">Defender for Cloud</span>
+                </a>
+                <button class="sidebar-toggle" aria-label="Toggle sidebar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Sentinel Integration</div>
+                    <div class="nav-group expanded" data-group="sentinel">
+                        <div class="nav-group-header">
+                            <span class="nav-group-title">Microsoft Sentinel</span>
+                            <svg class="nav-group-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="nav-group-items">
+                            <a href="5-1-integration-arch.html" class="nav-subitem">Integration Architecture</a>
+                            <a href="5-2-data-connectors.html" class="nav-subitem">Data Connectors</a>
+                            <a href="5-3-workbooks.html" class="nav-subitem">Workbooks</a>
+                            <a href="5-4-analytics-rules.html" class="nav-subitem active">Analytics Rules</a>
+                            <a href="5-12-playbooks.html" class="nav-subitem">Playbooks</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" aria-label="Open menu">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10zm0 5.25a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75a.75.75 0 01-.75-.75z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div class="search-box">
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                        </svg>
+                        <input type="text" class="search-input" placeholder="Search documentation..." readonly>
+                        <span class="search-shortcut">⌘K</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <article class="page-content">
+                    <nav class="breadcrumbs">
+                        <a href="../index.html" class="breadcrumb-item">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <a href="5-1-integration-arch.html" class="breadcrumb-item">Sentinel</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span class="breadcrumb-item current">Analytics Rules</span>
+                    </nav>
+
+                    <header class="page-header">
+                        <h1>Sentinel Analytics Rules</h1>
+                        <div class="page-meta">
+                            <span class="badge badge-l2">L2 Technical</span>
+                            <span class="badge badge-l3">L3 Advanced</span>
+                            <span class="page-meta-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clip-rule="evenodd" />
+                                </svg>
+                                14 min read
+                            </span>
+                        </div>
+                    </header>
+
+                    <section>
+                        <p>
+                            Analytics rules in Microsoft Sentinel detect threats by analyzing data from MDC 
+                            and other sources. Configure built-in rules and create custom detections for 
+                            your specific environment.
+                        </p>
+                    </section>
+
+                    <!-- Rule Types -->
+                    <section>
+                        <h2 id="types">Analytics Rule Types</h2>
+
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Description</th>
+                                        <th>Use Case</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Microsoft Security</strong></td>
+                                        <td>Auto-create incidents from Microsoft alerts</td>
+                                        <td>MDC, MDE, Entra ID alerts</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Scheduled</strong></td>
+                                        <td>KQL query runs on schedule</td>
+                                        <td>Custom threat detection</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>NRT (Near Real-Time)</strong></td>
+                                        <td>Runs every minute</td>
+                                        <td>Time-sensitive threats</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Fusion</strong></td>
+                                        <td>ML-based multi-stage detection</td>
+                                        <td>Advanced attack correlation</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Anomaly</strong></td>
+                                        <td>ML-based behavioral detection</td>
+                                        <td>Unusual activity patterns</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Built-in Rules -->
+                    <section>
+                        <h2 id="builtin">Built-in MDC Rules</h2>
+
+                        <h3>Enable Microsoft Security Rule</h3>
+                        <div class="code-header">
+                            <span class="code-lang">Azure CLI</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-bash"># Create Microsoft Security rule for MDC alerts
+az sentinel alert-rule create \
+    --resource-group "sentinel-rg" \
+    --workspace-name "sentinel-ws" \
+    --rule-name "MDC-Alerts-to-Incidents" \
+    --kind "MicrosoftSecurityIncidentCreation" \
+    --product-filter "Azure Security Center" \
+    --display-name "Create incidents from MDC alerts" \
+    --enabled true \
+    --severity-filter "High,Medium"</code></pre>
+
+                        <h3>Key Built-in Templates</h3>
+                        <div class="table-wrapper">
+                            <table class="compact">
+                                <thead>
+                                    <tr>
+                                        <th>Template Name</th>
+                                        <th>Severity</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Create incidents based on MDC</td>
+                                        <td>Varies</td>
+                                        <td>Auto-create incidents for all MDC alerts</td>
+                                    </tr>
+                                    <tr>
+                                        <td>MDC - Lateral Movement</td>
+                                        <td>High</td>
+                                        <td>Detect lateral movement patterns</td>
+                                    </tr>
+                                    <tr>
+                                        <td>MDC - Crypto Mining</td>
+                                        <td>High</td>
+                                        <td>Cryptocurrency mining detection</td>
+                                    </tr>
+                                    <tr>
+                                        <td>MDC - Brute Force</td>
+                                        <td>Medium</td>
+                                        <td>Failed login attempts exceeding threshold</td>
+                                    </tr>
+                                    <tr>
+                                        <td>MDC - Malicious IP</td>
+                                        <td>High</td>
+                                        <td>Communication with known malicious IPs</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Custom Rules -->
+                    <section>
+                        <h2 id="custom">Custom Analytics Rules</h2>
+
+                        <h3>High Severity Alert Spike</h3>
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Detect unusual spike in high severity MDC alerts
+let baseline = SecurityAlert
+| where TimeGenerated between (ago(14d) .. ago(1d))
+| where ProviderName == "Azure Security Center"
+| where AlertSeverity == "High"
+| summarize AvgDaily = count() / 14.0;
+
+SecurityAlert
+| where TimeGenerated > ago(1h)
+| where ProviderName == "Azure Security Center"
+| where AlertSeverity == "High"
+| summarize CurrentCount = count()
+| extend Baseline = toscalar(baseline)
+| where CurrentCount > Baseline * 3  // 3x normal
+| project 
+    AlertCount = CurrentCount,
+    NormalBaseline = Baseline,
+    Multiplier = CurrentCount / Baseline</code></pre>
+
+                        <h3>Multiple Alert Types on Single Resource</h3>
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Detect attack chain - multiple alert types on same resource
+SecurityAlert
+| where TimeGenerated > ago(1h)
+| where ProviderName == "Azure Security Center"
+| extend Resource = tostring(parse_json(ExtendedProperties).["Compromised Host"])
+| where isnotempty(Resource)
+| summarize 
+    AlertTypes = make_set(AlertName),
+    AlertCount = count(),
+    Severities = make_set(AlertSeverity),
+    FirstSeen = min(TimeGenerated),
+    LastSeen = max(TimeGenerated)
+    by Resource
+| where AlertCount >= 3
+| where array_length(AlertTypes) >= 2
+| extend 
+    AttackDuration = LastSeen - FirstSeen,
+    HasHighSeverity = Severities has "High"
+| project Resource, AlertCount, AlertTypes, AttackDuration, HasHighSeverity</code></pre>
+
+                        <h3>Secure Score Drop Detection</h3>
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Detect significant secure score decrease
+SecureScore_CL
+| where TimeGenerated > ago(2d)
+| summarize arg_max(TimeGenerated, *) by bin(TimeGenerated, 1d), SubscriptionId
+| order by SubscriptionId, TimeGenerated asc
+| serialize
+| extend PreviousScore = prev(Score_d, 1)
+| extend ScoreDrop = PreviousScore - Score_d
+| where ScoreDrop > 5  // More than 5 point drop
+| project 
+    TimeGenerated,
+    SubscriptionId,
+    CurrentScore = Score_d,
+    PreviousScore,
+    ScoreDrop</code></pre>
+
+                        <h3>New Critical Vulnerability</h3>
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Alert on new critical vulnerability findings
+SecurityRecommendation
+| where TimeGenerated > ago(1h)
+| where RecommendationSeverity == "High"
+| where RecommendationState == "Unhealthy"
+| where RecommendationName contains "vulnerability"
+| summarize 
+    AffectedResources = make_set(AssessedResourceId),
+    ResourceCount = dcount(AssessedResourceId)
+    by RecommendationName
+| where ResourceCount > 0
+| project RecommendationName, ResourceCount, AffectedResources</code></pre>
+                    </section>
+
+                    <!-- Create Rule -->
+                    <section>
+                        <h2 id="create">Create Analytics Rule</h2>
+
+                        <div class="tabs">
+                            <div class="tab-list">
+                                <button class="tab-btn active" data-tab="portal-rule">Portal</button>
+                                <button class="tab-btn" data-tab="cli-rule">Azure CLI</button>
+                                <button class="tab-btn" data-tab="arm-rule">ARM Template</button>
+                            </div>
+
+                            <div class="tab-panel active" data-panel="portal-rule">
+                                <ol>
+                                    <li>Navigate to <strong>Sentinel</strong> → <strong>Analytics</strong></li>
+                                    <li>Click <strong>+ Create</strong> → <strong>Scheduled query rule</strong></li>
+                                    <li>Configure General tab:
+                                        <ul>
+                                            <li>Name: Descriptive rule name</li>
+                                            <li>Severity: High/Medium/Low/Informational</li>
+                                            <li>MITRE ATT&CK tactics</li>
+                                        </ul>
+                                    </li>
+                                    <li>Set Rule logic:
+                                        <ul>
+                                            <li>KQL query</li>
+                                            <li>Entity mapping (Account, Host, IP)</li>
+                                            <li>Query scheduling (frequency, lookback)</li>
+                                            <li>Alert threshold</li>
+                                        </ul>
+                                    </li>
+                                    <li>Configure Incident settings</li>
+                                    <li>Set Automated response (optional)</li>
+                                    <li>Review and create</li>
+                                </ol>
+                            </div>
+
+                            <div class="tab-panel" data-panel="cli-rule">
+                                <div class="code-header">
+                                    <span class="code-lang">Azure CLI</span>
+                                    <button class="code-copy-btn">Copy</button>
+                                </div>
+                                <pre><code class="language-bash"># Create scheduled analytics rule
+az sentinel alert-rule create \
+    --resource-group "sentinel-rg" \
+    --workspace-name "sentinel-ws" \
+    --rule-name "MDC-MultipleAlerts-SameResource" \
+    --kind "Scheduled" \
+    --display-name "Multiple MDC alerts on same resource" \
+    --description "Detects potential attack chain with multiple alert types" \
+    --severity "High" \
+    --enabled true \
+    --query "SecurityAlert | where TimeGenerated > ago(1h) | where ProviderName == 'Azure Security Center' | extend Resource = tostring(parse_json(ExtendedProperties).['Compromised Host']) | summarize AlertCount = count(), AlertTypes = make_set(AlertName) by Resource | where AlertCount >= 3" \
+    --query-frequency "PT1H" \
+    --query-period "PT1H" \
+    --trigger-operator "GreaterThan" \
+    --trigger-threshold 0 \
+    --tactics "LateralMovement,Execution"</code></pre>
+                            </div>
+
+                            <div class="tab-panel" data-panel="arm-rule">
+                                <div class="code-header">
+                                    <span class="code-lang">JSON</span>
+                                    <button class="code-copy-btn">Copy</button>
+                                </div>
+                                <pre><code class="language-json">{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "resources": [
+    {
+      "type": "Microsoft.SecurityInsights/alertRules",
+      "apiVersion": "2022-11-01",
+      "name": "mdc-attack-chain-detection",
+      "kind": "Scheduled",
+      "properties": {
+        "displayName": "MDC Attack Chain Detection",
+        "description": "Detects multiple alert types on same resource",
+        "severity": "High",
+        "enabled": true,
+        "query": "SecurityAlert | where TimeGenerated > ago(1h) ...",
+        "queryFrequency": "PT1H",
+        "queryPeriod": "PT1H",
+        "triggerOperator": "GreaterThan",
+        "triggerThreshold": 0,
+        "tactics": ["LateralMovement", "Execution"],
+        "incidentConfiguration": {
+          "createIncident": true,
+          "groupingConfiguration": {
+            "enabled": true,
+            "lookbackDuration": "PT5H",
+            "matchingMethod": "AllEntities"
+          }
+        },
+        "entityMappings": [
+          {
+            "entityType": "Host",
+            "fieldMappings": [
+              {"identifier": "HostName", "columnName": "Resource"}
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}</code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Entity Mapping -->
+                    <section>
+                        <h2 id="entities">Entity Mapping</h2>
+
+                        <p>Map query results to Sentinel entities for investigation:</p>
+
+                        <div class="table-wrapper">
+                            <table class="compact">
+                                <thead>
+                                    <tr>
+                                        <th>Entity Type</th>
+                                        <th>Identifiers</th>
+                                        <th>Example Column</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Account</strong></td>
+                                        <td>Name, UPNSuffix, AadUserId</td>
+                                        <td>AccountName, UserPrincipalName</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Host</strong></td>
+                                        <td>HostName, AzureID</td>
+                                        <td>Computer, ResourceId</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>IP</strong></td>
+                                        <td>Address</td>
+                                        <td>SourceIP, DestinationIP</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>URL</strong></td>
+                                        <td>Url</td>
+                                        <td>RequestUrl</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>AzureResource</strong></td>
+                                        <td>ResourceId</td>
+                                        <td>_ResourceId</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Query with entity-friendly columns
+SecurityAlert
+| where ProviderName == "Azure Security Center"
+| extend 
+    HostName = tostring(parse_json(ExtendedProperties).["Compromised Host"]),
+    AccountName = tostring(parse_json(ExtendedProperties).["User Name"]),
+    SourceIP = tostring(parse_json(ExtendedProperties).["Attacker Source IP"]),
+    ResourceId = tostring(parse_json(ExtendedProperties).["Azure Resource ID"])
+| project TimeGenerated, AlertName, HostName, AccountName, SourceIP, ResourceId</code></pre>
+                    </section>
+
+                    <!-- Automation -->
+                    <section>
+                        <h2 id="automation">Automated Response</h2>
+
+                        <p>Attach playbooks to analytics rules for automated response:</p>
+
+                        <div class="code-header">
+                            <span class="code-lang">Azure CLI</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-bash"># Create automation rule to run playbook
+az sentinel automation-rule create \
+    --resource-group "sentinel-rg" \
+    --workspace-name "sentinel-ws" \
+    --automation-rule-name "auto-enrich-mdc-alerts" \
+    --display-name "Enrich MDC High Severity Alerts" \
+    --order 1 \
+    --triggering-logic '{
+        "isEnabled": true,
+        "triggersOn": "Incidents",
+        "triggersWhen": "Created",
+        "conditions": [
+            {
+                "conditionType": "Property",
+                "conditionProperties": {
+                    "propertyName": "IncidentProviderName",
+                    "operator": "Equals",
+                    "propertyValues": ["Azure Security Center"]
+                }
+            }
+        ]
+    }' \
+    --actions '[{
+        "actionType": "RunPlaybook",
+        "actionConfiguration": {
+            "logicAppResourceId": "/subscriptions/.../playbooks/enrich-alert"
+        }
+    }]'</code></pre>
+                    </section>
+
+                    <!-- Best Practices -->
+                    <section>
+                        <h2 id="best-practices">Best Practices</h2>
+
+                        <div class="checklist">
+                            <div class="checklist-title">Analytics Rules Checklist</div>
+                            <ul>
+                                <li>
+                                    <input type="checkbox" id="ar1">
+                                    <label for="ar1">Enable Microsoft Security rule for MDC alert ingestion</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="ar2">
+                                    <label for="ar2">Filter by severity to reduce noise</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="ar3">
+                                    <label for="ar3">Map entities for investigation context</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="ar4">
+                                    <label for="ar4">Enable incident grouping to reduce duplicates</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="ar5">
+                                    <label for="ar5">Attach playbooks for automated enrichment</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="ar6">
+                                    <label for="ar6">Test queries before enabling rules</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="ar7">
+                                    <label for="ar7">Add MITRE ATT&CK tactics for context</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="ar8">
+                                    <label for="ar8">Review and tune rules monthly</label>
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- Key Takeaways -->
+                    <div class="key-takeaways">
+                        <div class="key-takeaways-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 2a.75.75 0 01.75.75v.258a33.186 33.186 0 016.668.83.75.75 0 01-.336 1.461z" clip-rule="evenodd" />
+                            </svg>
+                            Key Takeaways
+                        </div>
+                        <ul>
+                            <li>Use Microsoft Security rules for automatic incident creation</li>
+                            <li>Create custom scheduled rules for specific detections</li>
+                            <li>Map entities (Host, Account, IP) for investigation</li>
+                            <li>Enable incident grouping to reduce alert fatigue</li>
+                            <li>Attach playbooks for automated response</li>
+                            <li>Add MITRE ATT&CK tactics for threat context</li>
+                            <li>Use NRT rules for time-sensitive detections</li>
+                            <li>Test and tune rules regularly</li>
+                        </ul>
+                    </div>
+
+                    <div class="related-pages">
+                        <div class="related-title">Related Pages</div>
+                        <div class="related-list">
+                            <a href="5-2-data-connectors.html" class="related-link">Data Connectors</a>
+                            <a href="5-12-playbooks.html" class="related-link">Playbooks</a>
+                            <a href="12-1-kql-library.html" class="related-link">KQL Library</a>
+                            <a href="8-2-alert-triage.html" class="related-link">Alert Triage</a>
+                        </div>
+                    </div>
+
+                    <nav class="page-nav">
+                        <a href="5-3-workbooks.html" class="page-nav-link prev">
+                            <span class="page-nav-label">← Previous</span>
+                            <span class="page-nav-title">Workbooks</span>
+                        </a>
+                        <a href="5-12-playbooks.html" class="page-nav-link next">
+                            <span class="page-nav-label">Next →</span>
+                            <span class="page-nav-title">Playbooks</span>
+                        </a>
+                    </nav>
+                </article>
+
+                <aside class="toc-sidebar">
+                    <div class="toc-title">On This Page</div>
+                    <ul class="toc-list">
+                        <li class="toc-item"><a href="#types" class="toc-link">Rule Types</a></li>
+                        <li class="toc-item"><a href="#builtin" class="toc-link">Built-in Rules</a></li>
+                        <li class="toc-item"><a href="#custom" class="toc-link">Custom Rules</a></li>
+                        <li class="toc-item"><a href="#create" class="toc-link">Create Rule</a></li>
+                        <li class="toc-item"><a href="#entities" class="toc-link">Entity Mapping</a></li>
+                        <li class="toc-item"><a href="#automation" class="toc-link">Automation</a></li>
+                        <li class="toc-item"><a href="#best-practices" class="toc-link">Best Practices</a></li>
+                    </ul>
+                </aside>
+            </div>
+        </main>
+        <div class="mobile-overlay"></div>
+    </div>
+
+    <div class="search-modal">
+        <div class="search-modal-content">
+            <input type="text" class="search-modal-input" placeholder="Search documentation..." autofocus>
+            <div class="search-results"></div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

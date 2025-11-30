@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="VM Threat Investigation Playbook - Step-by-step SOC procedures for investigating virtual machine security alerts.">
+    <title>VM Threat Investigation Playbook - Microsoft Defender for Cloud</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="../index.html" class="sidebar-logo">
+                    <div class="logo-icon">MDC</div>
+                    <span class="logo-text">Defender for Cloud</span>
+                </a>
+                <button class="sidebar-toggle" aria-label="Toggle sidebar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">SOC Operations</div>
+                    <div class="nav-group expanded" data-group="soc">
+                        <div class="nav-group-header">
+                            <span class="nav-group-title">Playbooks & Procedures</span>
+                            <svg class="nav-group-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="nav-group-items">
+                            <a href="8-1-soc-overview.html" class="nav-subitem">SOC Overview</a>
+                            <a href="8-2-alert-triage.html" class="nav-subitem">Alert Triage</a>
+                            <a href="8-3-vm-playbook.html" class="nav-subitem active">VM Threat Playbook</a>
+                            <a href="8-4-identity-playbook.html" class="nav-subitem">Identity Threat Playbook</a>
+                            <a href="8-5-container-playbook.html" class="nav-subitem">Container Playbook</a>
+                            <a href="8-6-storage-playbook.html" class="nav-subitem">Storage Playbook</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" aria-label="Open menu">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10zm0 5.25a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75a.75.75 0 01-.75-.75z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div class="search-box">
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                        </svg>
+                        <input type="text" class="search-input" placeholder="Search documentation..." readonly>
+                        <span class="search-shortcut">⌘K</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <article class="page-content">
+                    <nav class="breadcrumbs">
+                        <a href="../index.html" class="breadcrumb-item">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <a href="8-1-soc-overview.html" class="breadcrumb-item">SOC Operations</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span class="breadcrumb-item current">VM Threat Playbook</span>
+                    </nav>
+
+                    <header class="page-header">
+                        <h1>VM Threat Investigation Playbook</h1>
+                        <div class="page-meta">
+                            <span class="badge badge-l1">L1 SOC</span>
+                            <span class="badge badge-l2">L2 SOC</span>
+                            <span class="page-meta-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clip-rule="evenodd" />
+                                </svg>
+                                Operational Playbook
+                            </span>
+                        </div>
+                    </header>
+
+                    <section>
+                        <p>
+                            This playbook provides step-by-step procedures for investigating Defender for Servers 
+                            alerts on virtual machines. Follow these procedures to ensure consistent, thorough 
+                            investigations.
+                        </p>
+
+                        <div class="callout callout-warning">
+                            <div class="callout-title">Before You Begin</div>
+                            <div class="callout-content">
+                                <p>Ensure you have the following access:</p>
+                                <ul>
+                                    <li>Azure Portal - Security Reader role (minimum)</li>
+                                    <li>Microsoft 365 Defender portal access</li>
+                                    <li>Log Analytics workspace query permissions</li>
+                                    <li>Sentinel Responder role (for incident management)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Investigation Flow -->
+                    <section>
+                        <h2 id="investigation-flow">Investigation Flow</h2>
+
+                        <div class="ascii-diagram">
+<span class="highlight-cyan">╔══════════════════════════════════════════════════════════════════════════════════════════════╗</span>
+<span class="highlight-cyan">║</span>                        <span class="highlight-blue">VM THREAT INVESTIGATION WORKFLOW</span>                                    <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">╠══════════════════════════════════════════════════════════════════════════════════════════════╣</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-orange">┌─────────────┐</span>    <span class="highlight-blue">┌─────────────┐</span>    <span class="highlight-purple">┌─────────────┐</span>    <span class="highlight-green">┌─────────────┐</span>    <span class="highlight-red">┌─────────────┐</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-orange">│   ALERT     │</span>───►<span class="highlight-blue">│   TRIAGE    │</span>───►<span class="highlight-purple">│  ENRICH &   │</span>───►<span class="highlight-green">│   SCOPE     │</span>───►<span class="highlight-red">│  RESPOND    │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-orange">│  RECEIVED   │</span>    <span class="highlight-blue">│  (5 min)    │</span>    <span class="highlight-purple">│  CONTEXT    │</span>    <span class="highlight-green">│   IMPACT    │</span>    <span class="highlight-red">│  & CLOSE    │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-orange">└─────────────┘</span>    <span class="highlight-blue">└─────────────┘</span>    <span class="highlight-purple">└─────────────┘</span>    <span class="highlight-green">└─────────────┘</span>    <span class="highlight-red">└─────────────┘</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>        │                  │                  │                  │                  │        <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>        ▼                  ▼                  ▼                  ▼                  ▼        <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-orange">• Review alert</span>     <span class="highlight-blue">• Check asset</span>     <span class="highlight-purple">• MDE timeline</span>    <span class="highlight-green">• Lateral move?</span>   <span class="highlight-red">• Isolate VM</span>     <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-orange">• Note severity</span>    <span class="highlight-blue">• Recent changes</span>  <span class="highlight-purple">• Process tree</span>    <span class="highlight-green">• Other hosts?</span>    <span class="highlight-red">• Block IOCs</span>     <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-orange">• MITRE tactic</span>     <span class="highlight-blue">• Known issue?</span>    <span class="highlight-purple">• Network conn</span>    <span class="highlight-green">• Data access?</span>    <span class="highlight-red">• Remediate</span>      <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-orange">• Quick verdict</span>    <span class="highlight-blue">• FP check</span>        <span class="highlight-purple">• User activity</span>   <span class="highlight-green">• Timeline</span>        <span class="highlight-red">• Document</span>       <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">╚══════════════════════════════════════════════════════════════════════════════════════════════╝</span>
+                        </div>
+                    </section>
+
+                    <!-- Step 1: Initial Triage -->
+                    <section>
+                        <h2 id="step1">Step 1: Initial Triage (5 minutes)</h2>
+
+                        <div class="checklist">
+                            <div class="checklist-title">L1 Triage Checklist</div>
+                            <ul>
+                                <li>
+                                    <input type="checkbox" id="t1">
+                                    <label for="t1">Review alert title and description</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="t2">
+                                    <label for="t2">Note severity and MITRE ATT&CK tactic</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="t3">
+                                    <label for="t3">Identify affected VM name and resource group</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="t4">
+                                    <label for="t4">Check if VM is production or development</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="t5">
+                                    <label for="t5">Review past alerts on same VM (last 30 days)</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="t6">
+                                    <label for="t6">Check for similar alerts on other VMs</label>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <h3>Quick Context Queries</h3>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Get alert details and related alerts
+let vmName = "affected-vm-name";
+let alertTime = datetime(2024-01-15T10:30:00Z);
+SecurityAlert
+| where TimeGenerated between ((alertTime - 1h) .. (alertTime + 1h))
+| where CompromisedEntity == vmName or ExtendedProperties has vmName
+| project 
+    TimeGenerated,
+    AlertName,
+    AlertSeverity,
+    Description,
+    Tactics,
+    Techniques,
+    ExtendedProperties
+| order by TimeGenerated desc</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Check VM history - alerts in last 30 days
+let vmName = "affected-vm-name";
+SecurityAlert
+| where TimeGenerated > ago(30d)
+| where CompromisedEntity == vmName
+| summarize 
+    TotalAlerts = count(),
+    HighSeverity = countif(AlertSeverity == "High"),
+    UniqueAlertTypes = dcount(AlertName)
+| extend RiskIndicator = iff(TotalAlerts > 10, "High Activity - Review Needed", "Normal")</code></pre>
+
+                        <h3>Quick Decision Matrix</h3>
+
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Condition</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Known false positive (documented)</td>
+                                        <td>Close as FP, note in ticket</td>
+                                    </tr>
+                                    <tr>
+                                        <td>High severity + Production VM</td>
+                                        <td>Escalate to L2 immediately</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Medium severity + Dev/Test VM</td>
+                                        <td>Continue investigation, standard SLA</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Multiple VMs affected</td>
+                                        <td>Escalate as potential incident</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Unsure / Complex</td>
+                                        <td>Escalate to L2 with notes</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Step 2: Enrichment -->
+                    <section>
+                        <h2 id="step2">Step 2: Enrichment & Context</h2>
+
+                        <h3>MDE Device Timeline</h3>
+                        <p>Navigate to Microsoft 365 Defender portal → Devices → [VM Name] → Timeline</p>
+
+                        <div class="callout callout-tip">
+                            <div class="callout-title">Pro Tip</div>
+                            <div class="callout-content">
+                                Filter timeline to 1 hour before and after alert time. Look for:
+                                <ul>
+                                    <li>Process creations (especially from unusual parents)</li>
+                                    <li>Network connections to external IPs</li>
+                                    <li>File modifications in sensitive directories</li>
+                                    <li>Registry changes</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <h3>Process Tree Analysis</h3>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL (MDE)</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Process tree for suspicious activity
+let deviceName = "affected-vm-name";
+let alertTime = datetime(2024-01-15T10:30:00Z);
+DeviceProcessEvents
+| where Timestamp between ((alertTime - 30m) .. (alertTime + 30m))
+| where DeviceName =~ deviceName
+| project 
+    Timestamp,
+    FileName,
+    FolderPath,
+    ProcessCommandLine,
+    InitiatingProcessFileName,
+    InitiatingProcessCommandLine,
+    AccountName,
+    ProcessId,
+    InitiatingProcessId
+| order by Timestamp asc</code></pre>
+
+                        <h3>Network Connections</h3>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL (MDE)</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// External network connections around alert time
+let deviceName = "affected-vm-name";
+let alertTime = datetime(2024-01-15T10:30:00Z);
+DeviceNetworkEvents
+| where Timestamp between ((alertTime - 1h) .. (alertTime + 1h))
+| where DeviceName =~ deviceName
+| where RemoteIPType == "Public"
+| project 
+    Timestamp,
+    RemoteIP,
+    RemotePort,
+    RemoteUrl,
+    InitiatingProcessFileName,
+    InitiatingProcessCommandLine
+| summarize 
+    ConnectionCount = count(),
+    Ports = make_set(RemotePort),
+    Processes = make_set(InitiatingProcessFileName)
+    by RemoteIP
+| order by ConnectionCount desc</code></pre>
+
+                        <h3>User Activity Context</h3>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Who was logged in during the alert?
+let vmName = "affected-vm-name";
+let alertTime = datetime(2024-01-15T10:30:00Z);
+SecurityEvent
+| where TimeGenerated between ((alertTime - 2h) .. (alertTime + 1h))
+| where Computer =~ vmName
+| where EventID in (4624, 4625, 4648, 4672) // Logon events
+| project 
+    TimeGenerated,
+    EventID,
+    AccountName = TargetUserName,
+    LogonType,
+    IpAddress,
+    WorkstationName
+| order by TimeGenerated desc</code></pre>
+                    </section>
+
+                    <!-- Step 3: Scope Impact -->
+                    <section>
+                        <h2 id="step3">Step 3: Scope the Impact</h2>
+
+                        <h3>Check for Lateral Movement</h3>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL (MDE)</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Lateral movement indicators from affected VM
+let sourceDevice = "affected-vm-name";
+let alertTime = datetime(2024-01-15T10:30:00Z);
+DeviceNetworkEvents
+| where Timestamp between ((alertTime - 1h) .. (alertTime + 4h))
+| where DeviceName =~ sourceDevice
+| where RemoteIPType == "Private" // Internal network
+| where RemotePort in (22, 23, 135, 139, 445, 3389, 5985, 5986) // Admin ports
+| summarize 
+    ConnectionAttempts = count(),
+    FirstSeen = min(Timestamp),
+    LastSeen = max(Timestamp)
+    by RemoteIP, RemotePort
+| order by ConnectionAttempts desc</code></pre>
+
+                        <h3>Check Other Hosts for Same IOCs</h3>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL (MDE)</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Search for same malicious file hash across environment
+let maliciousHash = "abc123..."; // SHA256 from alert
+DeviceFileEvents
+| where Timestamp > ago(7d)
+| where SHA256 == maliciousHash
+| summarize 
+    AffectedDevices = dcount(DeviceName),
+    DeviceList = make_set(DeviceName),
+    FirstSeen = min(Timestamp),
+    LastSeen = max(Timestamp)
+
+// Search for same process name/command line
+let suspiciousProcess = "mimikatz"; // or command line pattern
+DeviceProcessEvents
+| where Timestamp > ago(7d)
+| where FileName contains suspiciousProcess 
+    or ProcessCommandLine contains suspiciousProcess
+| summarize 
+    Devices = make_set(DeviceName),
+    Users = make_set(AccountName)
+    by FileName, ProcessCommandLine</code></pre>
+
+                        <h3>Data Access Check</h3>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Check for data access from compromised VM
+let vmIP = "10.0.1.50"; // IP of affected VM
+let alertTime = datetime(2024-01-15T10:30:00Z);
+// Storage access
+StorageBlobLogs
+| where TimeGenerated between ((alertTime - 1h) .. (alertTime + 4h))
+| where CallerIpAddress == vmIP
+| summarize 
+    ReadOps = countif(OperationName == "GetBlob"),
+    WriteOps = countif(OperationName == "PutBlob"),
+    Containers = make_set(ObjectKey)
+    by AccountName</code></pre>
+                    </section>
+
+                    <!-- Step 4: Response Actions -->
+                    <section>
+                        <h2 id="step4">Step 4: Response Actions</h2>
+
+                        <div class="callout callout-error">
+                            <div class="callout-title">⚠️ High-Impact Actions</div>
+                            <div class="callout-content">
+                                <p>The following actions require L2/L3 approval and change management for production systems:</p>
+                                <ul>
+                                    <li>VM isolation</li>
+                                    <li>Account disabling</li>
+                                    <li>Network rule changes</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <h3>Containment Options</h3>
+
+                        <div class="tabs">
+                            <div class="tab-list">
+                                <button class="tab-btn active" data-tab="isolate">Isolate VM</button>
+                                <button class="tab-btn" data-tab="block-ioc">Block IOCs</button>
+                                <button class="tab-btn" data-tab="disable-user">Disable User</button>
+                            </div>
+
+                            <div class="tab-panel active" data-panel="isolate">
+                                <h4>Option 1: MDE Network Isolation (Recommended)</h4>
+                                <p>Isolates VM while maintaining management access.</p>
+                                
+                                <div class="code-header">
+                                    <span class="code-lang">PowerShell</span>
+                                    <button class="code-copy-btn">Copy</button>
+                                </div>
+                                <pre><code class="language-powershell"># Isolate via MDE API
+$deviceId = "device-id-from-mde"
+$isolationComment = "Isolated due to alert ID: XXX"
+
+# Using MDE API
+Invoke-MgGraphRequest -Method POST `
+    -Uri "https://api.securitycenter.microsoft.com/api/machines/$deviceId/isolate" `
+    -Body @{
+        Comment = $isolationComment
+        IsolationType = "Full" # or "Selective"
+    }</code></pre>
+
+                                <h4>Option 2: Azure NSG Isolation</h4>
+                                
+                                <div class="code-header">
+                                    <span class="code-lang">Azure CLI</span>
+                                    <button class="code-copy-btn">Copy</button>
+                                </div>
+                                <pre><code class="language-bash"># Create isolation NSG and apply to VM NIC
+az network nsg create \
+    --resource-group "your-rg" \
+    --name "NSG-Isolation-vmname"
+
+# Deny all inbound
+az network nsg rule create \
+    --resource-group "your-rg" \
+    --nsg-name "NSG-Isolation-vmname" \
+    --name "DenyAllInbound" \
+    --priority 100 \
+    --direction Inbound \
+    --access Deny \
+    --source-address-prefixes "*"
+
+# Deny all outbound (except Azure management)
+az network nsg rule create \
+    --resource-group "your-rg" \
+    --nsg-name "NSG-Isolation-vmname" \
+    --name "DenyAllOutbound" \
+    --priority 100 \
+    --direction Outbound \
+    --access Deny \
+    --destination-address-prefixes "*"
+
+# Apply to NIC
+az network nic update \
+    --resource-group "your-rg" \
+    --name "vm-nic-name" \
+    --network-security-group "NSG-Isolation-vmname"</code></pre>
+                            </div>
+
+                            <div class="tab-panel" data-panel="block-ioc">
+                                <h4>Block Malicious IPs/Domains</h4>
+                                
+                                <div class="code-header">
+                                    <span class="code-lang">PowerShell (MDE)</span>
+                                    <button class="code-copy-btn">Copy</button>
+                                </div>
+                                <pre><code class="language-powershell"># Add IP to MDE block list
+$indicator = @{
+    indicatorValue = "192.168.1.100"
+    indicatorType = "IpAddress"
+    action = "Block"
+    title = "Blocked due to incident XXX"
+    description = "C2 server identified in investigation"
+    severity = "High"
+    recommendedActions = "Block and investigate any connections"
+}
+
+Invoke-MgGraphRequest -Method POST `
+    -Uri "https://api.securitycenter.microsoft.com/api/indicators" `
+    -Body $indicator</code></pre>
+
+                                <h4>Block File Hash</h4>
+                                
+                                <div class="code-header">
+                                    <span class="code-lang">PowerShell (MDE)</span>
+                                    <button class="code-copy-btn">Copy</button>
+                                </div>
+                                <pre><code class="language-powershell"># Block malicious file hash
+$fileIndicator = @{
+    indicatorValue = "abc123sha256hash..."
+    indicatorType = "FileSha256"
+    action = "BlockAndRemediate"
+    title = "Malware hash from incident XXX"
+    description = "Ransomware dropper"
+    severity = "High"
+}
+
+Invoke-MgGraphRequest -Method POST `
+    -Uri "https://api.securitycenter.microsoft.com/api/indicators" `
+    -Body $fileIndicator</code></pre>
+                            </div>
+
+                            <div class="tab-panel" data-panel="disable-user">
+                                <h4>Disable Compromised Account</h4>
+                                
+                                <div class="code-header">
+                                    <span class="code-lang">PowerShell (Entra ID)</span>
+                                    <button class="code-copy-btn">Copy</button>
+                                </div>
+                                <pre><code class="language-powershell"># Disable user account
+$userId = "user@company.com"
+
+# Disable sign-in
+Update-MgUser -UserId $userId -AccountEnabled:$false
+
+# Revoke all sessions
+Revoke-MgUserSignInSession -UserId $userId
+
+# Force password reset on re-enable
+Update-MgUser -UserId $userId -PasswordProfile @{
+    ForceChangePasswordNextSignIn = $true
+}</code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Common Alert Types -->
+                    <section>
+                        <h2 id="common-alerts">Common VM Alert Types</h2>
+
+                        <div class="accordion">
+                            <div class="accordion-item expanded">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">Suspicious PowerShell Activity</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <p><strong>What to check:</strong></p>
+                                    <ul>
+                                        <li>Full command line - is it encoded (base64)?</li>
+                                        <li>Parent process - what launched PowerShell?</li>
+                                        <li>Network connections after execution</li>
+                                        <li>Files created/modified</li>
+                                    </ul>
+                                    
+                                    <p><strong>Common false positives:</strong></p>
+                                    <ul>
+                                        <li>SCCM/Intune management scripts</li>
+                                        <li>Azure Automation runbooks</li>
+                                        <li>IT admin troubleshooting</li>
+                                    </ul>
+                                    
+                                    <p><strong>True positive indicators:</strong></p>
+                                    <ul>
+                                        <li>Download cradles (IEX, Invoke-WebRequest to external)</li>
+                                        <li>Encoded commands with suspicious decoded content</li>
+                                        <li>AMSI bypass attempts</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">Ransomware Activity Detected</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <p><strong>IMMEDIATE ACTIONS:</strong></p>
+                                    <ol>
+                                        <li>Isolate VM immediately (MDE isolation preferred)</li>
+                                        <li>Check for lateral movement to other VMs</li>
+                                        <li>Identify patient zero and attack vector</li>
+                                        <li>Engage incident response team</li>
+                                    </ol>
+                                    
+                                    <p><strong>Do NOT:</strong></p>
+                                    <ul>
+                                        <li>Shut down VM (lose volatile memory)</li>
+                                        <li>Delete files (forensic evidence)</li>
+                                        <li>Pay ransom before consulting legal/IR</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">Crypto Mining Detected</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <p><strong>Investigation focus:</strong></p>
+                                    <ul>
+                                        <li>How did miner get installed? (vulnerability, stolen creds)</li>
+                                        <li>What else did attacker do? (miners often secondary payload)</li>
+                                        <li>Check for persistence mechanisms</li>
+                                    </ul>
+                                    
+                                    <p><strong>Response:</strong></p>
+                                    <ul>
+                                        <li>Kill mining process</li>
+                                        <li>Remove persistence</li>
+                                        <li>Patch initial access vulnerability</li>
+                                        <li>Rotate any exposed credentials</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">Brute Force Attack Detected</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <p><strong>Check:</strong></p>
+                                    <ul>
+                                        <li>Were any attempts successful? (EventID 4624 after 4625s)</li>
+                                        <li>Source IP - is it external or internal?</li>
+                                        <li>Targeted accounts - service accounts? admins?</li>
+                                    </ul>
+                                    
+                                    <p><strong>Response:</strong></p>
+                                    <ul>
+                                        <li>Block source IP at NSG/firewall</li>
+                                        <li>Enable JIT access if not already</li>
+                                        <li>Reset passwords for targeted accounts if successful</li>
+                                        <li>Review why RDP/SSH is exposed</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Key Takeaways -->
+                    <div class="key-takeaways">
+                        <div class="key-takeaways-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 2a.75.75 0 01.75.75v.258a33.186 33.186 0 016.668.83.75.75 0 01-.336 1.461z" clip-rule="evenodd" />
+                            </svg>
+                            Investigation Best Practices
+                        </div>
+                        <ul>
+                            <li>Always check MDE timeline for full context - MDC alerts are just the starting point</li>
+                            <li>Look for lateral movement before focusing on single host</li>
+                            <li>Document everything - screenshots, queries, findings</li>
+                            <li>Escalate early if unsure - better to involve L2 than miss something</li>
+                            <li>Check for persistence - attackers rarely do just one thing</li>
+                            <li>Preserve evidence before remediation - memory dumps, disk images for critical incidents</li>
+                        </ul>
+                    </div>
+
+                    <div class="related-pages">
+                        <div class="related-title">Related Pages</div>
+                        <div class="related-list">
+                            <a href="8-2-alert-triage.html" class="related-link">Alert Triage</a>
+                            <a href="8-4-identity-playbook.html" class="related-link">Identity Playbook</a>
+                            <a href="12-1-kql-library.html" class="related-link">KQL Library</a>
+                            <a href="5-12-playbooks.html" class="related-link">Automation Playbooks</a>
+                        </div>
+                    </div>
+
+                    <nav class="page-nav">
+                        <a href="8-2-alert-triage.html" class="page-nav-link prev">
+                            <span class="page-nav-label">← Previous</span>
+                            <span class="page-nav-title">Alert Triage</span>
+                        </a>
+                        <a href="8-4-identity-playbook.html" class="page-nav-link next">
+                            <span class="page-nav-label">Next →</span>
+                            <span class="page-nav-title">Identity Playbook</span>
+                        </a>
+                    </nav>
+                </article>
+
+                <aside class="toc-sidebar">
+                    <div class="toc-title">On This Page</div>
+                    <ul class="toc-list">
+                        <li class="toc-item"><a href="#investigation-flow" class="toc-link">Investigation Flow</a></li>
+                        <li class="toc-item"><a href="#step1" class="toc-link">Step 1: Triage</a></li>
+                        <li class="toc-item"><a href="#step2" class="toc-link">Step 2: Enrichment</a></li>
+                        <li class="toc-item"><a href="#step3" class="toc-link">Step 3: Scope Impact</a></li>
+                        <li class="toc-item"><a href="#step4" class="toc-link">Step 4: Response</a></li>
+                        <li class="toc-item"><a href="#common-alerts" class="toc-link">Common Alert Types</a></li>
+                    </ul>
+                </aside>
+            </div>
+        </main>
+        <div class="mobile-overlay"></div>
+    </div>
+
+    <div class="search-modal">
+        <div class="search-modal-content">
+            <input type="text" class="search-modal-input" placeholder="Search documentation..." autofocus>
+            <div class="search-results"></div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

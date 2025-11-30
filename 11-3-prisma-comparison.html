@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MDC vs Prisma Cloud Comparison - Feature comparison between Microsoft Defender for Cloud and Palo Alto Prisma Cloud.">
+    <title>MDC vs Prisma Cloud - Microsoft Defender for Cloud</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="../index.html" class="sidebar-logo">
+                    <div class="logo-icon">MDC</div>
+                    <span class="logo-text">Defender for Cloud</span>
+                </a>
+                <button class="sidebar-toggle" aria-label="Toggle sidebar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Alternatives</div>
+                    <div class="nav-group expanded" data-group="alternatives">
+                        <div class="nav-group-header">
+                            <span class="nav-group-title">Comparisons</span>
+                            <svg class="nav-group-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="nav-group-items">
+                            <a href="11-1-alternatives.html" class="nav-subitem">Overview</a>
+                            <a href="11-2-wiz-comparison.html" class="nav-subitem">vs Wiz</a>
+                            <a href="11-3-prisma-comparison.html" class="nav-subitem active">vs Prisma Cloud</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" aria-label="Open menu">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10zm0 5.25a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75a.75.75 0 01-.75-.75z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div class="search-box">
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                        </svg>
+                        <input type="text" class="search-input" placeholder="Search documentation..." readonly>
+                        <span class="search-shortcut">⌘K</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <article class="page-content">
+                    <nav class="breadcrumbs">
+                        <a href="../index.html" class="breadcrumb-item">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <a href="11-1-alternatives.html" class="breadcrumb-item">Alternatives</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span class="breadcrumb-item current">vs Prisma Cloud</span>
+                    </nav>
+
+                    <header class="page-header">
+                        <h1>MDC vs Prisma Cloud</h1>
+                        <div class="page-meta">
+                            <span class="badge badge-l1">L1 Fundamentals</span>
+                            <span class="page-meta-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clip-rule="evenodd" />
+                                </svg>
+                                10 min read
+                            </span>
+                        </div>
+                    </header>
+
+                    <section>
+                        <p>
+                            Compare Microsoft Defender for Cloud with Palo Alto Prisma Cloud, an established 
+                            cloud-native application protection platform (CNAPP). This comparison helps 
+                            organizations evaluate both solutions for their cloud security needs.
+                        </p>
+                    </section>
+
+                    <!-- Overview -->
+                    <section>
+                        <h2 id="overview">Platform Overview</h2>
+
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Aspect</th>
+                                        <th>Microsoft Defender for Cloud</th>
+                                        <th>Prisma Cloud</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Vendor</strong></td>
+                                        <td>Microsoft</td>
+                                        <td>Palo Alto Networks</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Type</strong></td>
+                                        <td>CNAPP (CSPM + CWPP)</td>
+                                        <td>CNAPP (CSPM + CWPP + CIEM)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Heritage</strong></td>
+                                        <td>Azure Security Center</td>
+                                        <td>RedLock + Twistlock + others</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Deployment</strong></td>
+                                        <td>Agent + Agentless</td>
+                                        <td>Agent + Agentless</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Primary Strength</strong></td>
+                                        <td>Azure native, XDR integration</td>
+                                        <td>Multi-cloud, code-to-cloud</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Feature Comparison -->
+                    <section>
+                        <h2 id="features">Feature Comparison</h2>
+
+                        <h3>CSPM Capabilities</h3>
+                        <div class="table-wrapper">
+                            <table class="compact">
+                                <thead>
+                                    <tr>
+                                        <th>Feature</th>
+                                        <th>MDC</th>
+                                        <th>Prisma Cloud</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Misconfiguration Detection</td>
+                                        <td>✅ Comprehensive</td>
+                                        <td>✅ Comprehensive</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Compliance Frameworks</td>
+                                        <td>✅ 50+ standards</td>
+                                        <td>✅ 30+ standards</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Custom Policies</td>
+                                        <td>✅ Azure Policy</td>
+                                        <td>✅ RQL (custom query)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Attack Path Analysis</td>
+                                        <td>✅ Native</td>
+                                        <td>✅ Attack Path Policies</td>
+                                    </tr>
+                                    <tr>
+                                        <td>CIEM</td>
+                                        <td>✅ Entra Permissions Mgmt</td>
+                                        <td>✅ Native IAM Security</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Data Security (DSPM)</td>
+                                        <td>✅ Data-aware security</td>
+                                        <td>✅ Data Security</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h3>CWPP Capabilities</h3>
+                        <div class="table-wrapper">
+                            <table class="compact">
+                                <thead>
+                                    <tr>
+                                        <th>Feature</th>
+                                        <th>MDC</th>
+                                        <th>Prisma Cloud</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>VM/Server Protection</td>
+                                        <td>✅ MDE Integration</td>
+                                        <td>✅ Defender agent</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Container Security</td>
+                                        <td>✅ Defender for Containers</td>
+                                        <td>✅ Twistlock heritage</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Kubernetes Runtime</td>
+                                        <td>✅ AKS, Arc-enabled</td>
+                                        <td>✅ All K8s distributions</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Serverless Security</td>
+                                        <td>⚠️ Limited</td>
+                                        <td>✅ Comprehensive</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Host Vulnerability</td>
+                                        <td>✅ MDVM</td>
+                                        <td>✅ Native scanning</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Web App Firewall</td>
+                                        <td>❌ Separate (Azure WAF)</td>
+                                        <td>✅ WAAS included</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h3>Code Security</h3>
+                        <div class="table-wrapper">
+                            <table class="compact">
+                                <thead>
+                                    <tr>
+                                        <th>Feature</th>
+                                        <th>MDC</th>
+                                        <th>Prisma Cloud</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>IaC Scanning</td>
+                                        <td>✅ DevOps integration</td>
+                                        <td>✅ Checkov + Bridgecrew</td>
+                                    </tr>
+                                    <tr>
+                                        <td>SCA (Dependencies)</td>
+                                        <td>✅ Via GitHub/ADO</td>
+                                        <td>✅ Native SCA</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Secrets Detection</td>
+                                        <td>✅ In CI/CD</td>
+                                        <td>✅ Native secrets scanning</td>
+                                    </tr>
+                                    <tr>
+                                        <td>SAST</td>
+                                        <td>⚠️ Via CodeQL (GitHub)</td>
+                                        <td>✅ Native SAST</td>
+                                    </tr>
+                                    <tr>
+                                        <td>CI/CD Integration</td>
+                                        <td>✅ GitHub, Azure DevOps</td>
+                                        <td>✅ Multi-platform</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Strengths -->
+                    <section>
+                        <h2 id="strengths">Platform Strengths</h2>
+
+                        <div class="card-grid">
+                            <div class="card">
+                                <div class="card-header">
+                                    <span class="card-icon">🔵</span>
+                                    <h3 class="card-title">MDC Strengths</h3>
+                                </div>
+                                <div class="card-content">
+                                    <ul>
+                                        <li><strong>Azure Native:</strong> Deepest Azure integration</li>
+                                        <li><strong>XDR:</strong> Unified with Microsoft 365 Defender</li>
+                                        <li><strong>EDR:</strong> MDE provides best-in-class endpoint protection</li>
+                                        <li><strong>Free Tier:</strong> Basic CSPM at no cost</li>
+                                        <li><strong>Sentinel:</strong> Native SIEM integration</li>
+                                        <li><strong>E5 Licensing:</strong> Often included in enterprise agreements</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <span class="card-icon">🟠</span>
+                                    <h3 class="card-title">Prisma Cloud Strengths</h3>
+                                </div>
+                                <div class="card-content">
+                                    <ul>
+                                        <li><strong>Code-to-Cloud:</strong> Full lifecycle coverage</li>
+                                        <li><strong>Multi-Cloud:</strong> Equal support across clouds</li>
+                                        <li><strong>Container Heritage:</strong> Twistlock best practices</li>
+                                        <li><strong>WAAS:</strong> Built-in web app firewall</li>
+                                        <li><strong>RQL:</strong> Powerful custom query language</li>
+                                        <li><strong>Serverless:</strong> Comprehensive function security</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Cloud Support -->
+                    <section>
+                        <h2 id="clouds">Cloud Support</h2>
+
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Cloud</th>
+                                        <th>MDC</th>
+                                        <th>Prisma Cloud</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Azure</strong></td>
+                                        <td>✅ Native (deepest)</td>
+                                        <td>✅ Full support</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>AWS</strong></td>
+                                        <td>✅ Via connector</td>
+                                        <td>✅ Native support</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>GCP</strong></td>
+                                        <td>✅ Via connector</td>
+                                        <td>✅ Native support</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>OCI</strong></td>
+                                        <td>❌ Not supported</td>
+                                        <td>✅ Supported</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Alibaba Cloud</strong></td>
+                                        <td>❌ Not supported</td>
+                                        <td>✅ Supported</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>On-Premises</strong></td>
+                                        <td>✅ Azure Arc</td>
+                                        <td>✅ Defender agent</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Use Cases -->
+                    <section>
+                        <h2 id="use-cases">Best Fit Scenarios</h2>
+
+                        <h3>Choose MDC When</h3>
+                        <ul>
+                            <li>Azure is primary or majority cloud environment</li>
+                            <li>Already invested in Microsoft security stack (M365, Sentinel)</li>
+                            <li>Need unified XDR across endpoints, identity, and cloud</li>
+                            <li>E5 licensing provides cost advantage</li>
+                            <li>Require deep Azure PaaS protection (SQL, Storage, etc.)</li>
+                            <li>Want tight Sentinel SIEM integration</li>
+                        </ul>
+
+                        <h3>Choose Prisma Cloud When</h3>
+                        <ul>
+                            <li>True multi-cloud with significant AWS/GCP presence</li>
+                            <li>Need comprehensive code-to-cloud security</li>
+                            <li>Serverless-heavy architecture (Lambda, Functions)</li>
+                            <li>Require built-in WAAS for container apps</li>
+                            <li>Want unified platform across all clouds</li>
+                            <li>Already using Palo Alto network security</li>
+                        </ul>
+                    </section>
+
+                    <!-- Integration -->
+                    <section>
+                        <h2 id="integration">Integration Ecosystem</h2>
+
+                        <div class="table-wrapper">
+                            <table class="compact">
+                                <thead>
+                                    <tr>
+                                        <th>Integration</th>
+                                        <th>MDC</th>
+                                        <th>Prisma Cloud</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>SIEM</td>
+                                        <td>Sentinel (native), Splunk, QRadar</td>
+                                        <td>Splunk, Cortex XSIAM, others</td>
+                                    </tr>
+                                    <tr>
+                                        <td>SOAR</td>
+                                        <td>Logic Apps, Sentinel</td>
+                                        <td>Cortex XSOAR, others</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ticketing</td>
+                                        <td>ServiceNow, Jira</td>
+                                        <td>ServiceNow, Jira</td>
+                                    </tr>
+                                    <tr>
+                                        <td>CI/CD</td>
+                                        <td>GitHub, Azure DevOps</td>
+                                        <td>GitHub, GitLab, Jenkins, etc.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Network Security</td>
+                                        <td>Azure Firewall, NSG</td>
+                                        <td>Palo Alto NGFW (native)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Pricing -->
+                    <section>
+                        <h2 id="pricing">Pricing Model</h2>
+
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Aspect</th>
+                                        <th>MDC</th>
+                                        <th>Prisma Cloud</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Model</strong></td>
+                                        <td>Per-resource pricing</td>
+                                        <td>Credit-based consumption</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Free Tier</strong></td>
+                                        <td>✅ Basic CSPM</td>
+                                        <td>❌ No free tier</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Bundles</strong></td>
+                                        <td>E5 includes many features</td>
+                                        <td>Module-based pricing</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Trial</strong></td>
+                                        <td>30-day trial</td>
+                                        <td>30-day trial</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="callout callout-info">
+                            <div class="callout-title">Pricing Note</div>
+                            <div class="callout-content">
+                                <p>Prisma Cloud uses a credit system where different features consume credits 
+                                at different rates. MDC pricing is more straightforward with per-resource rates.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Key Takeaways -->
+                    <div class="key-takeaways">
+                        <div class="key-takeaways-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 2a.75.75 0 01.75.75v.258a33.186 33.186 0 016.668.83.75.75 0 01-.336 1.461z" clip-rule="evenodd" />
+                            </svg>
+                            Key Takeaways
+                        </div>
+                        <ul>
+                            <li>MDC: Best for Azure-centric, Microsoft stack organizations</li>
+                            <li>Prisma: Best for multi-cloud, code-to-cloud requirements</li>
+                            <li>MDC provides deeper Azure native integration</li>
+                            <li>Prisma offers more comprehensive serverless security</li>
+                            <li>MDC has XDR advantage with Microsoft 365 Defender</li>
+                            <li>Prisma includes WAAS (web app firewall)</li>
+                            <li>MDC free tier provides cost entry point</li>
+                            <li>Both are mature CNAPP platforms</li>
+                        </ul>
+                    </div>
+
+                    <div class="related-pages">
+                        <div class="related-title">Related Pages</div>
+                        <div class="related-list">
+                            <a href="11-1-alternatives.html" class="related-link">Alternatives Overview</a>
+                            <a href="11-2-wiz-comparison.html" class="related-link">vs Wiz</a>
+                            <a href="1-1-overview.html" class="related-link">MDC Overview</a>
+                            <a href="4-1-multicloud-overview.html" class="related-link">Multi-Cloud</a>
+                        </div>
+                    </div>
+
+                    <nav class="page-nav">
+                        <a href="11-2-wiz-comparison.html" class="page-nav-link prev">
+                            <span class="page-nav-label">← Previous</span>
+                            <span class="page-nav-title">vs Wiz</span>
+                        </a>
+                        <a href="12-1-kql-library.html" class="page-nav-link next">
+                            <span class="page-nav-label">Next →</span>
+                            <span class="page-nav-title">KQL Library</span>
+                        </a>
+                    </nav>
+                </article>
+
+                <aside class="toc-sidebar">
+                    <div class="toc-title">On This Page</div>
+                    <ul class="toc-list">
+                        <li class="toc-item"><a href="#overview" class="toc-link">Overview</a></li>
+                        <li class="toc-item"><a href="#features" class="toc-link">Features</a></li>
+                        <li class="toc-item"><a href="#strengths" class="toc-link">Strengths</a></li>
+                        <li class="toc-item"><a href="#clouds" class="toc-link">Cloud Support</a></li>
+                        <li class="toc-item"><a href="#use-cases" class="toc-link">Use Cases</a></li>
+                        <li class="toc-item"><a href="#integration" class="toc-link">Integration</a></li>
+                        <li class="toc-item"><a href="#pricing" class="toc-link">Pricing</a></li>
+                    </ul>
+                </aside>
+            </div>
+        </main>
+        <div class="mobile-overlay"></div>
+    </div>
+
+    <div class="search-modal">
+        <div class="search-modal-content">
+            <input type="text" class="search-modal-input" placeholder="Search documentation..." autofocus>
+            <div class="search-results"></div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Microsoft Defender for Cloud Attack Path Analysis - Cloud Security Graph, risk prioritization, and remediation guidance.">
+    <title>Attack Path Analysis - Microsoft Defender for Cloud</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="../index.html" class="sidebar-logo">
+                    <div class="logo-icon">MDC</div>
+                    <span class="logo-text">Defender for Cloud</span>
+                </a>
+                <button class="sidebar-toggle" aria-label="Toggle sidebar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">CSPM</div>
+                    <div class="nav-group expanded" data-group="cspm">
+                        <div class="nav-group-header">
+                            <span class="nav-group-title">Security Posture</span>
+                            <svg class="nav-group-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="nav-group-items">
+                            <a href="2-1-secure-score.html" class="nav-subitem">Secure Score Deep Dive</a>
+                            <a href="2-2-recommendations.html" class="nav-subitem">Security Recommendations</a>
+                            <a href="2-3-attack-path.html" class="nav-subitem active">Attack Path Analysis</a>
+                            <a href="2-4-security-graph.html" class="nav-subitem">Cloud Security Graph</a>
+                            <a href="2-5-inventory.html" class="nav-subitem">Asset Inventory</a>
+                            <a href="2-6-policies.html" class="nav-subitem">Security Policies</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" aria-label="Open menu">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10zm0 5.25a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75a.75.75 0 01-.75-.75z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div class="search-box">
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                        </svg>
+                        <input type="text" class="search-input" placeholder="Search documentation..." readonly>
+                        <span class="search-shortcut">⌘K</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <article class="page-content">
+                    <nav class="breadcrumbs">
+                        <a href="../index.html" class="breadcrumb-item">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <a href="2-1-secure-score.html" class="breadcrumb-item">CSPM</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span class="breadcrumb-item current">Attack Path Analysis</span>
+                    </nav>
+
+                    <header class="page-header">
+                        <h1>Attack Path Analysis</h1>
+                        <div class="page-meta">
+                            <span class="badge badge-l2">L2 Technical</span>
+                            <span class="badge badge-l3">L3 Advanced</span>
+                            <span class="badge badge-new">Defender CSPM</span>
+                            <span class="page-meta-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clip-rule="evenodd" />
+                                </svg>
+                                20 min read
+                            </span>
+                        </div>
+                    </header>
+
+                    <section>
+                        <p>
+                            Attack Path Analysis is a premium CSPM feature that uses graph-based analysis to identify 
+                            potential attack routes through your cloud environment. It answers the critical question: 
+                            <strong>"How could an attacker reach my critical assets?"</strong>
+                        </p>
+
+                        <div class="callout callout-warning">
+                            <svg class="callout-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495z" clip-rule="evenodd" />
+                            </svg>
+                            <div class="callout-title">Licensing Requirement</div>
+                            <div class="callout-content">
+                                <p>Attack Path Analysis requires <strong>Defender CSPM plan</strong> (not included in free foundational CSPM). 
+                                This also enables Cloud Security Graph, agentless scanning, and data-aware security posture.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- What is Attack Path -->
+                    <section>
+                        <h2 id="what-is">What is Attack Path Analysis?</h2>
+
+                        <p>
+                            Traditional security tools identify individual misconfigurations in isolation. Attack Path Analysis 
+                            connects these findings to show how they could be chained together to compromise critical assets.
+                        </p>
+
+                        <div class="ascii-diagram">
+<span class="highlight-cyan">╔══════════════════════════════════════════════════════════════════════════════════════════════╗</span>
+<span class="highlight-cyan">║</span>                    <span class="highlight-blue">ATTACK PATH ANALYSIS CONCEPT</span>                                           <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">╠══════════════════════════════════════════════════════════════════════════════════════════════╣</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">TRADITIONAL VIEW</span>                          <span class="highlight-green">ATTACK PATH VIEW</span>                             <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   (Isolated Findings)                       (Connected Risk)                               <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">┌──────────────────┐</span>                                                                     <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">│ • VM has RDP open│</span>                      <span class="highlight-red">INTERNET</span>                                        <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">│ • Storage public │</span>                          │                                          <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">│ • SQL has vuln   │</span>                          ▼                                          <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">│ • Key in code    │</span>                   <span class="highlight-orange">┌──────────────┐</span>                                 <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">│ • MFA disabled   │</span>                   <span class="highlight-orange">│  VM with RDP │</span>  ◄── Entry Point               <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">└──────────────────┘</span>                   <span class="highlight-orange">│    exposed   │</span>                                 <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                          <span class="highlight-orange">└──────┬───────┘</span>                                 <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">No context on how</span>                             │                                          <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">findings relate!</span>                              │ <span class="highlight-purple">Lateral Movement</span>                          <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                  ▼                                          <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                          <span class="highlight-purple">┌──────────────┐</span>                                 <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                          <span class="highlight-purple">│ VM with Key  │</span>  ◄── Credential found          <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                          <span class="highlight-purple">│  in config   │</span>      in file system           <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                          <span class="highlight-purple">└──────┬───────┘</span>                                 <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                  │                                          <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                  │ <span class="highlight-blue">Key Access</span>                                <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                  ▼                                          <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                          <span class="highlight-red">┌──────────────┐</span>                                 <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                          <span class="highlight-red">│  SQL Server  │</span>  ◄── CRITICAL ASSET            <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                          <span class="highlight-red">│ (PII Data)   │</span>      COMPROMISED!              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                          <span class="highlight-red">└──────────────┘</span>                                 <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">╚══════════════════════════════════════════════════════════════════════════════════════════════╝</span>
+                        </div>
+                    </section>
+
+                    <!-- How It Works -->
+                    <section>
+                        <h2 id="how-it-works">How Attack Path Analysis Works</h2>
+
+                        <div class="timeline">
+                            <div class="timeline-item completed">
+                                <div class="timeline-marker"></div>
+                                <div class="timeline-title">1. Cloud Security Graph Creation</div>
+                                <div class="timeline-content">
+                                    <p>MDC builds a graph of all resources, their configurations, identities, network paths, 
+                                    and data sensitivity classifications.</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item completed">
+                                <div class="timeline-marker"></div>
+                                <div class="timeline-title">2. Critical Asset Identification</div>
+                                <div class="timeline-content">
+                                    <p>Automatically identifies high-value targets: databases with sensitive data, 
+                                    key vaults, identity stores, and resources you've tagged as critical.</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item completed">
+                                <div class="timeline-marker"></div>
+                                <div class="timeline-title">3. Entry Point Discovery</div>
+                                <div class="timeline-content">
+                                    <p>Identifies internet-exposed resources, public endpoints, and exploitable vulnerabilities 
+                                    that could serve as initial access points.</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-marker"></div>
+                                <div class="timeline-title">4. Path Calculation</div>
+                                <div class="timeline-content">
+                                    <p>Uses graph algorithms to find all possible paths from entry points to critical assets, 
+                                    considering permissions, network paths, and vulnerabilities.</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-marker"></div>
+                                <div class="timeline-title">5. Risk Prioritization</div>
+                                <div class="timeline-content">
+                                    <p>Ranks paths by exploitability, impact, and number of steps. Provides specific 
+                                    remediation recommendations to break each attack chain.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Common Attack Paths -->
+                    <section>
+                        <h2 id="common-paths">Common Attack Path Types</h2>
+
+                        <div class="accordion">
+                            <div class="accordion-item expanded">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">Internet → VM → Sensitive Data</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <p><strong>Pattern:</strong> Exposed management port → Vulnerable VM → Storage with sensitive data</p>
+                                    <p><strong>Fix:</strong> Enable JIT access, patch VM, restrict storage network access</p>
+                                    <div class="terminal" style="margin-top: var(--space-md);">
+                                        <div class="terminal-body">
+<span class="terminal-output"><span class="highlight-red">Internet</span> ──► <span class="highlight-orange">VM (RDP:3389 open)</span> ──► <span class="highlight-purple">Storage Account</span> ──► <span class="highlight-red">💀 PII Data</span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">Overprivileged Identity → Cross-Tenant Access</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <p><strong>Pattern:</strong> Managed Identity with excessive permissions → Key Vault → Database credentials</p>
+                                    <p><strong>Fix:</strong> Apply least privilege, use workload identity federation</p>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">Container Escape → Host Compromise</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <p><strong>Pattern:</strong> Privileged container → Node access → Cloud credentials → Critical resources</p>
+                                    <p><strong>Fix:</strong> Remove privileged flag, enable Pod Security Standards, use managed identities</p>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">Exposed Secrets → Lateral Movement</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <p><strong>Pattern:</strong> Connection string in code → Database access → Sensitive data exfiltration</p>
+                                    <p><strong>Fix:</strong> Use Key Vault references, enable secret scanning, rotate credentials</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Using Attack Paths -->
+                    <section>
+                        <h2 id="using">Using Attack Path Analysis</h2>
+
+                        <h3 id="portal-nav">Portal Navigation</h3>
+
+                        <div class="terminal">
+                            <div class="terminal-header">
+                                <span class="terminal-dot red"></span>
+                                <span class="terminal-dot yellow"></span>
+                                <span class="terminal-dot green"></span>
+                                <span class="terminal-title">Portal Navigation</span>
+                            </div>
+                            <div class="terminal-body">
+<span class="terminal-output">Azure Portal</span>
+<span class="terminal-output">  └── Microsoft Defender for Cloud</span>
+<span class="terminal-output">       └── Cloud Security Explorer</span>
+<span class="terminal-output">            └── <span class="highlight-green">Attack Path Analysis</span></span>
+<span class="terminal-output"></span>
+<span class="terminal-output">OR</span>
+<span class="terminal-output"></span>
+<span class="terminal-output">Azure Portal</span>
+<span class="terminal-output">  └── Microsoft Defender for Cloud</span>
+<span class="terminal-output">       └── Recommendations</span>
+<span class="terminal-output">            └── Filter: "Attack path" risk factor</span>
+                            </div>
+                        </div>
+
+                        <h3 id="api-query">API & KQL Queries</h3>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Query attack paths via Azure Resource Graph
+// Run in Azure Resource Graph Explorer
+securityresources
+| where type == "microsoft.security/attackpaths"
+| extend 
+    PathName = properties.displayName,
+    RiskLevel = properties.riskLevel,
+    EntryPoint = properties.entryPointEntityInfo.entityName,
+    Target = properties.targetEntityInfo.entityName,
+    StepCount = array_length(properties.graphComponent.nodes)
+| project 
+    PathName,
+    RiskLevel,
+    EntryPoint,
+    Target,
+    StepCount
+| order by RiskLevel desc</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Find recommendations that are part of attack paths
+securityresources
+| where type == "microsoft.security/assessments"
+| where properties.status.code == "Unhealthy"
+| where properties.metadata.attackPathsReferencingThisAssessment > 0
+| project
+    RecommendationName = properties.displayName,
+    AttackPathCount = properties.metadata.attackPathsReferencingThisAssessment,
+    ResourceId = properties.resourceDetails.Id
+| order by AttackPathCount desc</code></pre>
+                    </section>
+
+                    <!-- Remediation Priority -->
+                    <section>
+                        <h2 id="remediation">Remediation Prioritization</h2>
+
+                        <p>
+                            Attack path analysis helps prioritize remediation by showing which findings have the most 
+                            impact on your overall risk posture.
+                        </p>
+
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Risk Level</th>
+                                        <th>Description</th>
+                                        <th>Priority</th>
+                                        <th>SLA</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span class="badge badge-critical">Critical</span></td>
+                                        <td>Direct path to sensitive data with high exploitability</td>
+                                        <td class="text-red">Immediate</td>
+                                        <td>24-48 hours</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge badge-high">High</span></td>
+                                        <td>Path requires 2-3 steps, moderate exploitability</td>
+                                        <td class="text-orange">High</td>
+                                        <td>1 week</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge badge-medium">Medium</span></td>
+                                        <td>Longer path (4+ steps) or lower impact target</td>
+                                        <td class="text-blue">Medium</td>
+                                        <td>30 days</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge badge-low">Low</span></td>
+                                        <td>Theoretical path with low exploitability</td>
+                                        <td class="text-green">Low</td>
+                                        <td>90 days</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="callout callout-tip">
+                            <svg class="callout-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0z" clip-rule="evenodd" />
+                            </svg>
+                            <div class="callout-title">Strategic Fix</div>
+                            <div class="callout-content">
+                                <p>Look for "choke points" - single fixes that break multiple attack paths. For example, 
+                                enabling JIT access on one VM might eliminate 5+ different attack paths.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Key Takeaways -->
+                    <div class="key-takeaways">
+                        <div class="key-takeaways-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 2a.75.75 0 01.75.75v.258a33.186 33.186 0 016.668.83.75.75 0 01-.336 1.461z" clip-rule="evenodd" />
+                            </svg>
+                            Key Takeaways
+                        </div>
+                        <ul>
+                            <li>Attack Path Analysis requires Defender CSPM plan (paid tier)</li>
+                            <li>Shows how misconfigurations chain together to reach critical assets</li>
+                            <li>Uses Cloud Security Graph to map resources, identities, and data</li>
+                            <li>Prioritize fixes that break multiple attack paths ("choke points")</li>
+                            <li>Query attack paths via Azure Resource Graph for reporting</li>
+                            <li>Focus on Critical/High risk paths first - these have highest exploitability</li>
+                        </ul>
+                    </div>
+
+                    <div class="related-pages">
+                        <div class="related-title">Related Pages</div>
+                        <div class="related-list">
+                            <a href="2-4-security-graph.html" class="related-link">Cloud Security Graph</a>
+                            <a href="2-1-secure-score.html" class="related-link">Secure Score</a>
+                            <a href="2-2-recommendations.html" class="related-link">Recommendations</a>
+                            <a href="3-15-jit.html" class="related-link">JIT VM Access</a>
+                        </div>
+                    </div>
+
+                    <nav class="page-nav">
+                        <a href="2-2-recommendations.html" class="page-nav-link prev">
+                            <span class="page-nav-label">← Previous</span>
+                            <span class="page-nav-title">Recommendations</span>
+                        </a>
+                        <a href="2-4-security-graph.html" class="page-nav-link next">
+                            <span class="page-nav-label">Next →</span>
+                            <span class="page-nav-title">Cloud Security Graph</span>
+                        </a>
+                    </nav>
+                </article>
+
+                <aside class="toc-sidebar">
+                    <div class="toc-title">On This Page</div>
+                    <ul class="toc-list">
+                        <li class="toc-item"><a href="#what-is" class="toc-link">What is Attack Path</a></li>
+                        <li class="toc-item"><a href="#how-it-works" class="toc-link">How It Works</a></li>
+                        <li class="toc-item"><a href="#common-paths" class="toc-link">Common Path Types</a></li>
+                        <li class="toc-item"><a href="#using" class="toc-link">Using Attack Paths</a></li>
+                        <li class="toc-item"><a href="#portal-nav" class="toc-link toc-h3">Portal Navigation</a></li>
+                        <li class="toc-item"><a href="#api-query" class="toc-link toc-h3">API & KQL</a></li>
+                        <li class="toc-item"><a href="#remediation" class="toc-link">Remediation Priority</a></li>
+                    </ul>
+                </aside>
+            </div>
+        </main>
+        <div class="mobile-overlay"></div>
+    </div>
+
+    <div class="search-modal">
+        <div class="search-modal-content">
+            <input type="text" class="search-modal-input" placeholder="Search documentation..." autofocus>
+            <div class="search-results"></div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

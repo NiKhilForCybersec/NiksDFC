@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Hybrid Cloud Security - Secure on-premises and hybrid environments with Azure Arc and MDC.">
+    <title>Hybrid Cloud Security - Microsoft Defender for Cloud</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="../index.html" class="sidebar-logo">
+                    <div class="logo-icon">MDC</div>
+                    <span class="logo-text">Defender for Cloud</span>
+                </a>
+                <button class="sidebar-toggle" aria-label="Toggle sidebar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Multi-Cloud</div>
+                    <div class="nav-group expanded" data-group="multicloud">
+                        <div class="nav-group-header">
+                            <span class="nav-group-title">Cloud Connectors</span>
+                            <svg class="nav-group-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="nav-group-items">
+                            <a href="4-1-multicloud-overview.html" class="nav-subitem">Overview</a>
+                            <a href="4-2-aws-connector.html" class="nav-subitem">AWS</a>
+                            <a href="4-3-gcp-connector.html" class="nav-subitem">GCP</a>
+                            <a href="4-4-azure-arc.html" class="nav-subitem">Azure Arc</a>
+                            <a href="4-5-hybrid-security.html" class="nav-subitem active">Hybrid Security</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" aria-label="Open menu">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10zm0 5.25a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75a.75.75 0 01-.75-.75z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div class="search-box">
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                        </svg>
+                        <input type="text" class="search-input" placeholder="Search documentation..." readonly>
+                        <span class="search-shortcut">⌘K</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <article class="page-content">
+                    <nav class="breadcrumbs">
+                        <a href="../index.html" class="breadcrumb-item">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <a href="4-1-multicloud-overview.html" class="breadcrumb-item">Multi-Cloud</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span class="breadcrumb-item current">Hybrid Security</span>
+                    </nav>
+
+                    <header class="page-header">
+                        <h1>Hybrid Cloud Security</h1>
+                        <div class="page-meta">
+                            <span class="badge badge-l2">L2 Technical</span>
+                            <span class="page-meta-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clip-rule="evenodd" />
+                                </svg>
+                                12 min read
+                            </span>
+                        </div>
+                    </header>
+
+                    <section>
+                        <p>
+                            Extend Microsoft Defender for Cloud protection to on-premises servers, edge 
+                            locations, and other cloud environments using Azure Arc. Achieve unified 
+                            security visibility across your entire infrastructure.
+                        </p>
+                    </section>
+
+                    <!-- Architecture -->
+                    <section>
+                        <h2 id="architecture">Hybrid Architecture</h2>
+
+                        <div class="terminal">
+                            <div class="terminal-header">
+                                <span class="terminal-title">Hybrid Security Architecture</span>
+                            </div>
+                            <div class="terminal-content">
+<pre>
+┌─────────────────────────────────────────────────────────────────────────┐
+│                        Microsoft Defender for Cloud                      │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐    │
+│  │   Alerts    │  │    Recs     │  │   Score     │  │  Inventory  │    │
+│  └──────┬──────┘  └──────┬──────┘  └──────┬──────┘  └──────┬──────┘    │
+└─────────┼────────────────┼────────────────┼────────────────┼────────────┘
+          │                │                │                │
+          └────────────────┴────────────────┴────────────────┘
+                                    │
+                          ┌─────────┴─────────┐
+                          │    Azure Arc      │
+                          │   Control Plane   │
+                          └─────────┬─────────┘
+                                    │
+        ┌───────────────────────────┼───────────────────────────┐
+        │                           │                           │
+┌───────▼───────┐          ┌────────▼────────┐         ┌────────▼────────┐
+│   On-Premises │          │   Edge/Branch   │         │  Other Clouds   │
+│   Data Center │          │   Locations     │         │   (VMware etc)  │
+│  ┌─────────┐  │          │  ┌─────────┐    │         │  ┌─────────┐    │
+│  │  VMs    │  │          │  │ Servers │    │         │  │  VMs    │    │
+│  │  + Arc  │  │          │  │  + Arc  │    │         │  │  + Arc  │    │
+│  └─────────┘  │          │  └─────────┘    │         │  └─────────┘    │
+└───────────────┘          └─────────────────┘         └─────────────────┘
+</pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Supported Scenarios -->
+                    <section>
+                        <h2 id="scenarios">Supported Scenarios</h2>
+
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Environment</th>
+                                        <th>Connection Method</th>
+                                        <th>Defender Plans</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>On-Premises VMs</strong></td>
+                                        <td>Azure Arc Agent</td>
+                                        <td>Servers P1/P2, SQL</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>VMware vSphere</strong></td>
+                                        <td>Arc-enabled VMware</td>
+                                        <td>Servers P1/P2</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>SCVMM</strong></td>
+                                        <td>Arc-enabled SCVMM</td>
+                                        <td>Servers P1/P2</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>AWS EC2</strong></td>
+                                        <td>AWS Connector + Arc</td>
+                                        <td>Servers, Containers</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>GCP Compute</strong></td>
+                                        <td>GCP Connector + Arc</td>
+                                        <td>Servers, Containers</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Kubernetes</strong></td>
+                                        <td>Arc-enabled K8s</td>
+                                        <td>Containers</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Onboarding -->
+                    <section>
+                        <h2 id="onboarding">Onboard On-Premises Servers</h2>
+
+                        <h3>Single Server Installation</h3>
+                        <div class="tabs">
+                            <div class="tab-list">
+                                <button class="tab-btn active" data-tab="windows-arc">Windows</button>
+                                <button class="tab-btn" data-tab="linux-arc">Linux</button>
+                            </div>
+
+                            <div class="tab-panel active" data-panel="windows-arc">
+                                <div class="code-header">
+                                    <span class="code-lang">PowerShell</span>
+                                    <button class="code-copy-btn">Copy</button>
+                                </div>
+                                <pre><code class="language-powershell"># Download and run Arc agent installer
+$env:SUBSCRIPTION_ID = "your-subscription-id"
+$env:RESOURCE_GROUP = "arc-servers-rg"
+$env:TENANT_ID = "your-tenant-id"
+$env:LOCATION = "eastus"
+
+# Download the agent
+Invoke-WebRequest -Uri "https://aka.ms/AzureConnectedMachineAgent" `
+    -OutFile "$env:TEMP\AzureConnectedMachineAgent.msi"
+
+# Install the agent
+msiexec /i "$env:TEMP\AzureConnectedMachineAgent.msi" /quiet
+
+# Connect to Azure
+& "$env:ProgramFiles\AzureConnectedMachineAgent\azcmagent.exe" connect `
+    --resource-group $env:RESOURCE_GROUP `
+    --tenant-id $env:TENANT_ID `
+    --location $env:LOCATION `
+    --subscription-id $env:SUBSCRIPTION_ID</code></pre>
+                            </div>
+
+                            <div class="tab-panel" data-panel="linux-arc">
+                                <div class="code-header">
+                                    <span class="code-lang">Bash</span>
+                                    <button class="code-copy-btn">Copy</button>
+                                </div>
+                                <pre><code class="language-bash"># Download and install Arc agent
+export SUBSCRIPTION_ID="your-subscription-id"
+export RESOURCE_GROUP="arc-servers-rg"
+export TENANT_ID="your-tenant-id"
+export LOCATION="eastus"
+
+# Download installation script
+wget https://aka.ms/azcmagent -O ~/install_linux_azcmagent.sh
+
+# Install agent
+bash ~/install_linux_azcmagent.sh
+
+# Connect to Azure
+azcmagent connect \
+    --resource-group $RESOURCE_GROUP \
+    --tenant-id $TENANT_ID \
+    --location $LOCATION \
+    --subscription-id $SUBSCRIPTION_ID</code></pre>
+                            </div>
+                        </div>
+
+                        <h3>At-Scale Onboarding</h3>
+                        <div class="code-header">
+                            <span class="code-lang">PowerShell</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-powershell"># Generate service principal for at-scale deployment
+$sp = New-AzADServicePrincipal -DisplayName "Arc-Onboarding-SP"
+$credential = New-Object System.Management.Automation.PSCredential(
+    $sp.AppId, 
+    (ConvertTo-SecureString $sp.PasswordCredentials.SecretText -AsPlainText -Force)
+)
+
+# Assign Azure Connected Machine Onboarding role
+New-AzRoleAssignment -ServicePrincipalName $sp.AppId `
+    -RoleDefinitionName "Azure Connected Machine Onboarding" `
+    -Scope "/subscriptions/$subscriptionId/resourceGroups/$resourceGroup"
+
+# Export credentials for use in deployment scripts
+@{
+    ServicePrincipalId = $sp.AppId
+    ServicePrincipalSecret = $sp.PasswordCredentials.SecretText
+    TenantId = (Get-AzContext).Tenant.Id
+} | ConvertTo-Json | Out-File "arc-credentials.json"</code></pre>
+                    </section>
+
+                    <!-- Enable Defender -->
+                    <section>
+                        <h2 id="defender">Enable Defender for Arc Servers</h2>
+
+                        <h3>Deploy MDE Extension</h3>
+                        <div class="code-header">
+                            <span class="code-lang">Azure CLI</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-bash"># Enable Defender for Servers on subscription
+az security pricing create \
+    --name "VirtualMachines" \
+    --tier "Standard" \
+    --subplan "P2"
+
+# Deploy MDE extension to Arc server
+az connectedmachine extension create \
+    --machine-name "arc-server-01" \
+    --resource-group "arc-servers-rg" \
+    --name "MDE.Windows" \
+    --publisher "Microsoft.Azure.AzureDefenderForServers" \
+    --type "MDE.Windows" \
+    --settings '{}'
+
+# For Linux
+az connectedmachine extension create \
+    --machine-name "arc-server-linux-01" \
+    --resource-group "arc-servers-rg" \
+    --name "MDE.Linux" \
+    --publisher "Microsoft.Azure.AzureDefenderForServers" \
+    --type "MDE.Linux" \
+    --settings '{}'</code></pre>
+
+                        <h3>Enable Auto-Provisioning</h3>
+                        <div class="code-header">
+                            <span class="code-lang">Azure CLI</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-bash"># Enable auto-provisioning for MDE
+az security auto-provisioning-setting update \
+    --name "default" \
+    --auto-provision "On"
+
+# Verify extension deployment
+az connectedmachine extension list \
+    --machine-name "arc-server-01" \
+    --resource-group "arc-servers-rg" \
+    -o table</code></pre>
+                    </section>
+
+                    <!-- Monitoring -->
+                    <section>
+                        <h2 id="monitoring">Unified Monitoring</h2>
+
+                        <h3>Query Hybrid Inventory</h3>
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Get all Arc-enabled servers with health status
+Resources
+| where type == "microsoft.hybridcompute/machines"
+| extend 
+    Status = properties.status,
+    OSType = properties.osType,
+    AgentVersion = properties.agentVersion,
+    LastStatusChange = properties.lastStatusChange
+| project name, resourceGroup, location, Status, OSType, AgentVersion
+
+// Check MDE extension status
+Resources
+| where type == "microsoft.hybridcompute/machines/extensions"
+| where name contains "MDE"
+| extend 
+    MachineName = split(id, '/')[8],
+    ProvisioningState = properties.provisioningState,
+    Status = properties.instanceView.status.message
+| project MachineName, name, ProvisioningState, Status</code></pre>
+
+                        <h3>Security Posture Query</h3>
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Compare Azure vs Arc server recommendations
+SecurityResources
+| where type == "microsoft.security/assessments"
+| extend 
+    ResourceType = tostring(properties.resourceDetails.ResourceType),
+    IsArc = properties.resourceDetails.Id contains "hybridCompute",
+    Status = tostring(properties.status.code),
+    Severity = tostring(properties.metadata.severity)
+| where Status == "Unhealthy"
+| summarize Count = count() by IsArc, Severity
+| order by IsArc, Severity</code></pre>
+                    </section>
+
+                    <!-- Connectivity -->
+                    <section>
+                        <h2 id="connectivity">Network Connectivity</h2>
+
+                        <h3>Required Endpoints</h3>
+                        <div class="table-wrapper">
+                            <table class="compact">
+                                <thead>
+                                    <tr>
+                                        <th>Service</th>
+                                        <th>Endpoint</th>
+                                        <th>Port</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Azure Arc</td>
+                                        <td>*.his.arc.azure.com</td>
+                                        <td>443</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Arc Agent</td>
+                                        <td>*.guestconfiguration.azure.com</td>
+                                        <td>443</td>
+                                    </tr>
+                                    <tr>
+                                        <td>MDE</td>
+                                        <td>*.blob.core.windows.net</td>
+                                        <td>443</td>
+                                    </tr>
+                                    <tr>
+                                        <td>MDE Telemetry</td>
+                                        <td>*.ods.opinsights.azure.com</td>
+                                        <td>443</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Azure AD</td>
+                                        <td>login.microsoftonline.com</td>
+                                        <td>443</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h3>Proxy Configuration</h3>
+                        <div class="code-header">
+                            <span class="code-lang">Bash</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-bash"># Configure proxy for Arc agent
+azcmagent config set proxy.url "http://proxy.company.com:8080"
+
+# Verify connectivity
+azcmagent check</code></pre>
+                    </section>
+
+                    <!-- Best Practices -->
+                    <section>
+                        <h2 id="best-practices">Best Practices</h2>
+
+                        <div class="checklist">
+                            <div class="checklist-title">Hybrid Security Checklist</div>
+                            <ul>
+                                <li>
+                                    <input type="checkbox" id="hy1">
+                                    <label for="hy1">Deploy Arc agent to all on-premises servers</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="hy2">
+                                    <label for="hy2">Enable Defender for Servers P2</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="hy3">
+                                    <label for="hy3">Deploy MDE extension via auto-provisioning</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="hy4">
+                                    <label for="hy4">Configure network connectivity for required endpoints</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="hy5">
+                                    <label for="hy5">Use service principal for at-scale onboarding</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="hy6">
+                                    <label for="hy6">Monitor Arc agent health in Azure Monitor</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="hy7">
+                                    <label for="hy7">Apply same policies as Azure VMs</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="hy8">
+                                    <label for="hy8">Include Arc servers in security dashboards</label>
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- Key Takeaways -->
+                    <div class="key-takeaways">
+                        <div class="key-takeaways-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 2a.75.75 0 01.75.75v.258a33.186 33.186 0 016.668.83.75.75 0 01-.336 1.461z" clip-rule="evenodd" />
+                            </svg>
+                            Key Takeaways
+                        </div>
+                        <ul>
+                            <li>Azure Arc extends MDC to on-premises and other clouds</li>
+                            <li>Same Defender plans work for Arc-enabled servers</li>
+                            <li>Use service principal for at-scale deployment</li>
+                            <li>MDE extension provides endpoint protection</li>
+                            <li>Unified visibility in single MDC dashboard</li>
+                            <li>Apply consistent policies across hybrid estate</li>
+                            <li>Monitor Arc agent connectivity health</li>
+                            <li>Configure network for required endpoints</li>
+                        </ul>
+                    </div>
+
+                    <div class="related-pages">
+                        <div class="related-title">Related Pages</div>
+                        <div class="related-list">
+                            <a href="4-4-azure-arc.html" class="related-link">Azure Arc</a>
+                            <a href="3-1-servers.html" class="related-link">Defender for Servers</a>
+                            <a href="3-2-mde-integration.html" class="related-link">MDE Integration</a>
+                            <a href="4-1-multicloud-overview.html" class="related-link">Multi-Cloud</a>
+                        </div>
+                    </div>
+
+                    <nav class="page-nav">
+                        <a href="4-4-azure-arc.html" class="page-nav-link prev">
+                            <span class="page-nav-label">← Previous</span>
+                            <span class="page-nav-title">Azure Arc</span>
+                        </a>
+                        <a href="5-1-integration-arch.html" class="page-nav-link next">
+                            <span class="page-nav-label">Next →</span>
+                            <span class="page-nav-title">Sentinel Integration</span>
+                        </a>
+                    </nav>
+                </article>
+
+                <aside class="toc-sidebar">
+                    <div class="toc-title">On This Page</div>
+                    <ul class="toc-list">
+                        <li class="toc-item"><a href="#architecture" class="toc-link">Architecture</a></li>
+                        <li class="toc-item"><a href="#scenarios" class="toc-link">Scenarios</a></li>
+                        <li class="toc-item"><a href="#onboarding" class="toc-link">Onboarding</a></li>
+                        <li class="toc-item"><a href="#defender" class="toc-link">Enable Defender</a></li>
+                        <li class="toc-item"><a href="#monitoring" class="toc-link">Monitoring</a></li>
+                        <li class="toc-item"><a href="#connectivity" class="toc-link">Connectivity</a></li>
+                        <li class="toc-item"><a href="#best-practices" class="toc-link">Best Practices</a></li>
+                    </ul>
+                </aside>
+            </div>
+        </main>
+        <div class="mobile-overlay"></div>
+    </div>
+
+    <div class="search-modal">
+        <div class="search-modal-content">
+            <input type="text" class="search-modal-input" placeholder="Search documentation..." autofocus>
+            <div class="search-results"></div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

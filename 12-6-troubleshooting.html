@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Microsoft Defender for Cloud Troubleshooting Guide - Common issues, diagnostic commands, and solutions.">
+    <title>Troubleshooting Guide - Microsoft Defender for Cloud</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="../index.html" class="sidebar-logo">
+                    <div class="logo-icon">MDC</div>
+                    <span class="logo-text">Defender for Cloud</span>
+                </a>
+                <button class="sidebar-toggle" aria-label="Toggle sidebar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Reference</div>
+                    <div class="nav-group expanded" data-group="reference">
+                        <div class="nav-group-header">
+                            <span class="nav-group-title">Reference & Appendix</span>
+                            <svg class="nav-group-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="nav-group-items">
+                            <a href="12-1-kql-library.html" class="nav-subitem">KQL Query Library</a>
+                            <a href="12-2-powershell.html" class="nav-subitem">PowerShell Scripts</a>
+                            <a href="12-3-rest-api.html" class="nav-subitem">REST API Reference</a>
+                            <a href="12-4-quick-reference.html" class="nav-subitem">Alert Quick Reference</a>
+                            <a href="12-5-compliance-mapping.html" class="nav-subitem">Compliance Mapping</a>
+                            <a href="12-6-troubleshooting.html" class="nav-subitem active">Troubleshooting Guide</a>
+                            <a href="12-7-glossary.html" class="nav-subitem">Glossary</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" aria-label="Open menu">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10zm0 5.25a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75a.75.75 0 01-.75-.75z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div class="search-box">
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                        </svg>
+                        <input type="text" class="search-input" placeholder="Search documentation..." readonly>
+                        <span class="search-shortcut">⌘K</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <article class="page-content">
+                    <nav class="breadcrumbs">
+                        <a href="../index.html" class="breadcrumb-item">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <a href="12-1-kql-library.html" class="breadcrumb-item">Reference</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span class="breadcrumb-item current">Troubleshooting</span>
+                    </nav>
+
+                    <header class="page-header">
+                        <h1>Troubleshooting Guide</h1>
+                        <div class="page-meta">
+                            <span class="badge badge-l2">L2 Technical</span>
+                            <span class="badge badge-l3">L3 Advanced</span>
+                            <span class="page-meta-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clip-rule="evenodd" />
+                                </svg>
+                                Reference Guide
+                            </span>
+                        </div>
+                    </header>
+
+                    <section>
+                        <p>
+                            This guide covers common issues with Microsoft Defender for Cloud and provides diagnostic 
+                            commands and solutions. Use the quick navigation below to jump to specific problem areas.
+                        </p>
+                    </section>
+
+                    <!-- Quick Navigation -->
+                    <section>
+                        <h2 id="quick-nav">Quick Navigation</h2>
+
+                        <div class="card-grid">
+                            <a href="#agent-issues" class="card" style="text-decoration: none;">
+                                <div class="card-header">
+                                    <div class="card-icon" style="background: var(--accent-orange-glow); color: var(--accent-orange);">⚙️</div>
+                                    <h4 class="card-title" style="margin: 0;">Agent Issues</h4>
+                                </div>
+                                <div class="card-content">MDE agent, AMA, extensions not deploying or reporting</div>
+                            </a>
+
+                            <a href="#data-issues" class="card" style="text-decoration: none;">
+                                <div class="card-header">
+                                    <div class="card-icon" style="background: var(--accent-blue-glow); color: var(--accent-blue);">📊</div>
+                                    <h4 class="card-title" style="margin: 0;">Data Issues</h4>
+                                </div>
+                                <div class="card-content">Missing alerts, recommendations not appearing, stale data</div>
+                            </a>
+
+                            <a href="#score-issues" class="card" style="text-decoration: none;">
+                                <div class="card-header">
+                                    <div class="card-icon" style="background: var(--accent-green-glow); color: var(--accent-green);">📈</div>
+                                    <h4 class="card-title" style="margin: 0;">Secure Score</h4>
+                                </div>
+                                <div class="card-content">Score not updating, incorrect calculations</div>
+                            </a>
+
+                            <a href="#connector-issues" class="card" style="text-decoration: none;">
+                                <div class="card-header">
+                                    <div class="card-icon" style="background: var(--accent-purple-glow); color: var(--accent-purple);">🔌</div>
+                                    <h4 class="card-title" style="margin: 0;">Connectors</h4>
+                                </div>
+                                <div class="card-content">AWS/GCP connectors, Sentinel integration issues</div>
+                            </a>
+                        </div>
+                    </section>
+
+                    <!-- Agent Issues -->
+                    <section>
+                        <h2 id="agent-issues">Agent & Extension Issues</h2>
+
+                        <div class="accordion">
+                            <div class="accordion-item expanded">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">MDE Agent Not Deploying</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <p><strong>Symptoms:</strong> VM shows "Not protected" in Defender for Cloud, no MDE telemetry.</p>
+                                    
+                                    <p><strong>Diagnostic Steps:</strong></p>
+                                    <div class="code-header">
+                                        <span class="code-lang">PowerShell (on VM)</span>
+                                        <button class="code-copy-btn">Copy</button>
+                                    </div>
+                                    <pre><code class="language-powershell"># Check if MDE service is running (Windows)
+Get-Service -Name "Sense" | Select-Object Status, StartType
+
+# Check MDE extension status
+Get-AzVMExtension -ResourceGroupName "your-rg" -VMName "your-vm" | 
+    Where-Object { $_.Publisher -like "*Microsoft.Azure.AzureDefenderForServers*" }
+
+# Check onboarding status
+Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows Advanced Threat Protection\Status"
+
+# Linux: Check MDE service
+sudo systemctl status mdatp</code></pre>
+
+                                    <p><strong>Solutions:</strong></p>
+                                    <ul>
+                                        <li>Verify Defender for Servers P1/P2 is enabled on the subscription</li>
+                                        <li>Check auto-provisioning is enabled for MDE</li>
+                                        <li>Ensure VM meets minimum OS requirements</li>
+                                        <li>For Linux: Verify kernel is supported (check <code>uname -r</code>)</li>
+                                        <li>Manually trigger extension deployment via CLI</li>
+                                    </ul>
+
+                                    <div class="code-header">
+                                        <span class="code-lang">Azure CLI</span>
+                                        <button class="code-copy-btn">Copy</button>
+                                    </div>
+                                    <pre><code class="language-bash"># Force MDE extension deployment
+az vm extension set \
+    --resource-group "your-rg" \
+    --vm-name "your-vm" \
+    --name "MDE.Windows" \
+    --publisher "Microsoft.Azure.AzureDefenderForServers" \
+    --settings '{"autoUpdate": true}'</code></pre>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">Extension Stuck in "Transitioning" State</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <p><strong>Symptoms:</strong> Extension shows "Transitioning" for more than 30 minutes.</p>
+                                    
+                                    <p><strong>Solutions:</strong></p>
+                                    <div class="code-header">
+                                        <span class="code-lang">Azure CLI</span>
+                                        <button class="code-copy-btn">Copy</button>
+                                    </div>
+                                    <pre><code class="language-bash"># Delete and reinstall extension
+az vm extension delete \
+    --resource-group "your-rg" \
+    --vm-name "your-vm" \
+    --name "MDE.Windows"
+
+# Wait 5 minutes, then reinstall
+az vm extension set \
+    --resource-group "your-rg" \
+    --vm-name "your-vm" \
+    --name "MDE.Windows" \
+    --publisher "Microsoft.Azure.AzureDefenderForServers"</code></pre>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">Azure Monitor Agent (AMA) Not Collecting Data</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <p><strong>Diagnostic:</strong></p>
+                                    <div class="code-header">
+                                        <span class="code-lang">PowerShell</span>
+                                        <button class="code-copy-btn">Copy</button>
+                                    </div>
+                                    <pre><code class="language-powershell"># Check AMA service
+Get-Service -Name "AzureMonitorAgent"
+
+# Check Data Collection Rules association
+az monitor data-collection rule association list \
+    --resource "/subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Compute/virtualMachines/{vm}"
+
+# View AMA logs (Windows)
+Get-WinEvent -LogName "Microsoft-AzureMonitorAgent/Operational" -MaxEvents 50</code></pre>
+
+                                    <p><strong>Solutions:</strong></p>
+                                    <ul>
+                                        <li>Verify Data Collection Rule (DCR) is associated with VM</li>
+                                        <li>Check DCR has correct data sources configured</li>
+                                        <li>Ensure workspace has correct permissions</li>
+                                        <li>Restart AMA service on the VM</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Data Issues -->
+                    <section>
+                        <h2 id="data-issues">Data & Alert Issues</h2>
+
+                        <div class="accordion">
+                            <div class="accordion-item expanded">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">No Alerts Appearing in Portal</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <p><strong>Diagnostic:</strong></p>
+                                    <div class="code-header">
+                                        <span class="code-lang">KQL</span>
+                                        <button class="code-copy-btn">Copy</button>
+                                    </div>
+                                    <pre><code class="language-kql">// Check if alerts are in Log Analytics but not showing
+SecurityAlert
+| where TimeGenerated > ago(24h)
+| where ProductName == "Azure Security Center"
+| summarize count() by bin(TimeGenerated, 1h)
+| render timechart
+
+// Check data ingestion health
+Usage
+| where TimeGenerated > ago(24h)
+| where DataType == "SecurityAlert"
+| summarize TotalMB = sum(Quantity) by bin(TimeGenerated, 1h)
+| render timechart</code></pre>
+
+                                    <p><strong>Common Causes:</strong></p>
+                                    <ul>
+                                        <li><strong>No threats detected:</strong> This is actually good - means no issues</li>
+                                        <li><strong>Defender plan not enabled:</strong> Check plan status</li>
+                                        <li><strong>Suppression rules:</strong> Check if alerts are being suppressed</li>
+                                        <li><strong>Data delay:</strong> Alerts can take up to 30 minutes to appear</li>
+                                    </ul>
+
+                                    <div class="code-header">
+                                        <span class="code-lang">PowerShell</span>
+                                        <button class="code-copy-btn">Copy</button>
+                                    </div>
+                                    <pre><code class="language-powershell"># Check suppression rules
+Get-AzSecurityAlertSetting
+
+# Check Defender plans status
+Get-AzSecurityPricing | Format-Table Name, PricingTier</code></pre>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">Recommendations Not Updating</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <p><strong>Expected Refresh Times:</strong></p>
+                                    <div class="table-wrapper">
+                                        <table class="table-compact">
+                                            <tr>
+                                                <td><strong>Recommendation Type</strong></td>
+                                                <td><strong>Refresh Interval</strong></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Azure Policy-based</td>
+                                                <td>24 hours (or manual scan)</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Vulnerability Assessment</td>
+                                                <td>12-24 hours</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Endpoint Protection</td>
+                                                <td>4-8 hours</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Network recommendations</td>
+                                                <td>4 hours</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+
+                                    <p><strong>Force Refresh:</strong></p>
+                                    <div class="code-header">
+                                        <span class="code-lang">Azure CLI</span>
+                                        <button class="code-copy-btn">Copy</button>
+                                    </div>
+                                    <pre><code class="language-bash"># Trigger policy compliance scan
+az policy state trigger-scan --resource-group "your-rg"
+
+# For subscription-level scan
+az policy state trigger-scan --subscription "your-sub-id"</code></pre>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">VMs Not Appearing in Inventory</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <p><strong>Causes:</strong></p>
+                                    <ul>
+                                        <li>VM is deallocated (stopped) - MDC only shows running VMs</li>
+                                        <li>Subscription not onboarded to MDC</li>
+                                        <li>Resource Group excluded via policy</li>
+                                        <li>Data sync delay (wait up to 4 hours for new VMs)</li>
+                                    </ul>
+
+                                    <div class="code-header">
+                                        <span class="code-lang">KQL (Resource Graph)</span>
+                                        <button class="code-copy-btn">Copy</button>
+                                    </div>
+                                    <pre><code class="language-kql">// Check VM status via Resource Graph
+resources
+| where type == "microsoft.compute/virtualmachines"
+| project name, resourceGroup, location, 
+    powerState = properties.extended.instanceView.powerState.displayStatus
+| where powerState == "VM running"</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Secure Score Issues -->
+                    <section>
+                        <h2 id="score-issues">Secure Score Issues</h2>
+
+                        <div class="accordion">
+                            <div class="accordion-item expanded">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">Score Not Reflecting Recent Fixes</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <p><strong>Expected Delays:</strong></p>
+                                    <ul>
+                                        <li>Secure Score updates every <strong>24 hours</strong></li>
+                                        <li>Some controls may take up to <strong>48 hours</strong></li>
+                                        <li>Azure Policy compliance: 24-hour scan cycle</li>
+                                    </ul>
+
+                                    <div class="callout callout-tip">
+                                        <div class="callout-title">Pro Tip</div>
+                                        <div class="callout-content">
+                                            Use the "Refresh" button in the Secure Score blade to request an expedited update 
+                                            (may still take several hours).
+                                        </div>
+                                    </div>
+
+                                    <div class="code-header">
+                                        <span class="code-lang">KQL</span>
+                                        <button class="code-copy-btn">Copy</button>
+                                    </div>
+                                    <pre><code class="language-kql">// Check historical score changes
+SecureScores
+| where TimeGenerated > ago(7d)
+| project TimeGenerated, 
+    Score = Properties.score.current,
+    Max = Properties.score.max,
+    Percentage = Properties.score.percentage
+| order by TimeGenerated desc</code></pre>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">Score Calculation Seems Wrong</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <p><strong>Common Misconceptions:</strong></p>
+                                    <ul>
+                                        <li><strong>Not Applicable resources:</strong> These don't count toward the score</li>
+                                        <li><strong>Exemptions:</strong> Exempted resources are excluded from calculation</li>
+                                        <li><strong>Preview recommendations:</strong> Don't affect score until GA</li>
+                                    </ul>
+
+                                    <div class="code-header">
+                                        <span class="code-lang">KQL</span>
+                                        <button class="code-copy-btn">Copy</button>
+                                    </div>
+                                    <pre><code class="language-kql">// Verify score calculation details
+SecureScoreControls
+| where TimeGenerated > ago(1d)
+| summarize arg_max(TimeGenerated, *) by ControlName
+| project 
+    ControlName,
+    CurrentScore = Properties.score.current,
+    MaxScore = Properties.score.max,
+    HealthyResources = Properties.healthyResourceCount,
+    UnhealthyResources = Properties.unhealthyResourceCount,
+    NotApplicable = Properties.notApplicableResourceCount
+| order by MaxScore desc</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Connector Issues -->
+                    <section>
+                        <h2 id="connector-issues">Connector Issues</h2>
+
+                        <div class="accordion">
+                            <div class="accordion-item expanded">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">AWS Connector Not Syncing</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <p><strong>Diagnostic Steps:</strong></p>
+                                    <ol>
+                                        <li>Check connector status in MDC → Environment settings → AWS</li>
+                                        <li>Verify CloudFormation stack is deployed correctly in AWS</li>
+                                        <li>Check IAM role trust relationship</li>
+                                        <li>Verify cross-account role permissions</li>
+                                    </ol>
+
+                                    <div class="code-header">
+                                        <span class="code-lang">AWS CLI</span>
+                                        <button class="code-copy-btn">Copy</button>
+                                    </div>
+                                    <pre><code class="language-bash"># Check CloudFormation stack status
+aws cloudformation describe-stacks \
+    --stack-name "Microsoft-Defender-for-Cloud" \
+    --query "Stacks[0].StackStatus"
+
+# Verify IAM role exists
+aws iam get-role --role-name "AzureDefenderForCloud"
+
+# Test role assumption (from Azure)
+aws sts assume-role \
+    --role-arn "arn:aws:iam::ACCOUNT:role/AzureDefenderForCloud" \
+    --role-session-name "test-session"</code></pre>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">Sentinel Connector Not Receiving Alerts</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <p><strong>Diagnostic:</strong></p>
+                                    <div class="code-header">
+                                        <span class="code-lang">KQL</span>
+                                        <button class="code-copy-btn">Copy</button>
+                                    </div>
+                                    <pre><code class="language-kql">// Check if data is reaching Sentinel workspace
+SecurityAlert
+| where TimeGenerated > ago(24h)
+| where ProductName == "Azure Security Center"
+| summarize count() by bin(TimeGenerated, 1h)
+
+// Check connector status table
+SentinelHealth
+| where TimeGenerated > ago(1d)
+| where SentinelResourceType == "Data connector"
+| where SentinelResourceName contains "SecurityCenter"
+| project TimeGenerated, Status, Description</code></pre>
+
+                                    <p><strong>Solutions:</strong></p>
+                                    <ul>
+                                        <li>Verify connector is enabled in Sentinel → Data connectors</li>
+                                        <li>Check subscription is selected for the connector</li>
+                                        <li>Ensure bi-directional sync is configured if needed</li>
+                                        <li>Verify workspace has correct permissions</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Diagnostic Commands -->
+                    <section>
+                        <h2 id="diagnostic-commands">Quick Diagnostic Commands</h2>
+
+                        <div class="code-header">
+                            <span class="code-lang">PowerShell</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-powershell"># === COMPREHENSIVE MDC HEALTH CHECK ===
+
+# 1. Check Defender Plans Status
+Write-Host "=== Defender Plans ===" -ForegroundColor Cyan
+Get-AzSecurityPricing | Format-Table Name, PricingTier, SubPlan
+
+# 2. Check Auto-Provisioning
+Write-Host "`n=== Auto-Provisioning ===" -ForegroundColor Cyan
+Get-AzSecurityAutoProvisioningSetting
+
+# 3. Check Recent Alerts
+Write-Host "`n=== Recent Alerts (Last 24h) ===" -ForegroundColor Cyan
+Get-AzSecurityAlert | Where-Object { 
+    $_.TimeGeneratedUtc -gt (Get-Date).AddDays(-1) 
+} | Group-Object AlertSeverity | Select-Object Name, Count
+
+# 4. Check Secure Score
+Write-Host "`n=== Current Secure Score ===" -ForegroundColor Cyan
+$score = Get-AzSecuritySecureScore -Name "ascScore"
+Write-Host "Score: $([math]::Round($score.Percentage, 1))% ($($score.Current)/$($score.Max))"
+
+# 5. Check Workspace Configuration
+Write-Host "`n=== Workspace Settings ===" -ForegroundColor Cyan
+Get-AzSecurityWorkspaceSetting
+
+# 6. Check Contacts
+Write-Host "`n=== Security Contacts ===" -ForegroundColor Cyan
+Get-AzSecurityContact</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">Azure CLI</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-bash"># Quick health check via CLI
+echo "=== Defender Plans ==="
+az security pricing list -o table
+
+echo -e "\n=== Auto-Provisioning ==="
+az security auto-provisioning-setting list -o table
+
+echo -e "\n=== Recent High Severity Alerts ==="
+az security alert list --query "[?alertSeverity=='High'].{Name:alertDisplayName, Time:timeGeneratedUtc}" -o table
+
+echo -e "\n=== Secure Score ==="
+az security secure-score show --name ascScore --query "{Score:percentage, Current:current, Max:max}"</code></pre>
+                    </section>
+
+                    <!-- Key Takeaways -->
+                    <div class="key-takeaways">
+                        <div class="key-takeaways-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 2a.75.75 0 01.75.75v.258a33.186 33.186 0 016.668.83.75.75 0 01-.336 1.461z" clip-rule="evenodd" />
+                            </svg>
+                            Troubleshooting Tips
+                        </div>
+                        <ul>
+                            <li>Most data sync issues resolve within 24 hours - wait before escalating</li>
+                            <li>Always check Defender plan status first - many issues stem from plans being disabled</li>
+                            <li>Use Resource Graph for real-time resource queries vs. Log Analytics for historical</li>
+                            <li>For agent issues, check extension logs on the VM itself</li>
+                            <li>AWS/GCP connector issues usually trace back to IAM role trust relationships</li>
+                            <li>When in doubt, check Azure Service Health for platform issues</li>
+                        </ul>
+                    </div>
+
+                    <div class="related-pages">
+                        <div class="related-title">Related Pages</div>
+                        <div class="related-list">
+                            <a href="12-1-kql-library.html" class="related-link">KQL Query Library</a>
+                            <a href="12-2-powershell.html" class="related-link">PowerShell Scripts</a>
+                            <a href="1-4-enablement.html" class="related-link">Enablement Guide</a>
+                            <a href="5-2-connector-setup.html" class="related-link">Connector Setup</a>
+                        </div>
+                    </div>
+
+                    <nav class="page-nav">
+                        <a href="12-5-compliance-mapping.html" class="page-nav-link prev">
+                            <span class="page-nav-label">← Previous</span>
+                            <span class="page-nav-title">Compliance Mapping</span>
+                        </a>
+                        <a href="12-7-glossary.html" class="page-nav-link next">
+                            <span class="page-nav-label">Next →</span>
+                            <span class="page-nav-title">Glossary</span>
+                        </a>
+                    </nav>
+                </article>
+
+                <aside class="toc-sidebar">
+                    <div class="toc-title">On This Page</div>
+                    <ul class="toc-list">
+                        <li class="toc-item"><a href="#quick-nav" class="toc-link">Quick Navigation</a></li>
+                        <li class="toc-item"><a href="#agent-issues" class="toc-link">Agent Issues</a></li>
+                        <li class="toc-item"><a href="#data-issues" class="toc-link">Data Issues</a></li>
+                        <li class="toc-item"><a href="#score-issues" class="toc-link">Secure Score</a></li>
+                        <li class="toc-item"><a href="#connector-issues" class="toc-link">Connectors</a></li>
+                        <li class="toc-item"><a href="#diagnostic-commands" class="toc-link">Diagnostic Commands</a></li>
+                    </ul>
+                </aside>
+            </div>
+        </main>
+        <div class="mobile-overlay"></div>
+    </div>
+
+    <div class="search-modal">
+        <div class="search-modal-content">
+            <input type="text" class="search-modal-input" placeholder="Search documentation..." autofocus>
+            <div class="search-results"></div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

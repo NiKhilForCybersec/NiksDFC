@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Microsoft Defender for Cloud and Sentinel Integration Architecture - Data flow, connector setup, and unified security operations.">
+    <title>Sentinel Integration Architecture - Microsoft Defender for Cloud</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="../index.html" class="sidebar-logo">
+                    <div class="logo-icon">MDC</div>
+                    <span class="logo-text">Defender for Cloud</span>
+                </a>
+                <button class="sidebar-toggle" aria-label="Toggle sidebar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Sentinel</div>
+                    <div class="nav-group expanded" data-group="sentinel">
+                        <div class="nav-group-header">
+                            <span class="nav-group-title">Sentinel Integration</span>
+                            <svg class="nav-group-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="nav-group-items">
+                            <a href="5-1-integration-arch.html" class="nav-subitem active">Integration Architecture</a>
+                            <a href="5-2-connector-setup.html" class="nav-subitem">Connector Setup</a>
+                            <a href="5-3-data-tables.html" class="nav-subitem">Data Tables</a>
+                            <a href="5-4-alert-schema.html" class="nav-subitem">Alert Schema</a>
+                            <a href="5-5-alerts-analysis.html" class="nav-subitem">Alerts Analysis</a>
+                            <a href="5-8-workbooks.html" class="nav-subitem">Workbooks</a>
+                            <a href="5-9-analytics-rules.html" class="nav-subitem">Analytics Rules</a>
+                            <a href="5-10-hunting.html" class="nav-subitem">Hunting Queries</a>
+                            <a href="5-12-playbooks.html" class="nav-subitem">Automation Playbooks</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" aria-label="Open menu">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10zm0 5.25a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75a.75.75 0 01-.75-.75z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div class="search-box">
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                        </svg>
+                        <input type="text" class="search-input" placeholder="Search documentation..." readonly>
+                        <span class="search-shortcut">⌘K</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <article class="page-content">
+                    <nav class="breadcrumbs">
+                        <a href="../index.html" class="breadcrumb-item">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <a href="5-1-integration-arch.html" class="breadcrumb-item">Sentinel</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span class="breadcrumb-item current">Integration Architecture</span>
+                    </nav>
+
+                    <header class="page-header">
+                        <h1>Sentinel Integration Architecture</h1>
+                        <div class="page-meta">
+                            <span class="badge badge-l2">L2 Technical</span>
+                            <span class="badge badge-architect">Architect</span>
+                            <span class="page-meta-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clip-rule="evenodd" />
+                                </svg>
+                                20 min read
+                            </span>
+                        </div>
+                    </header>
+
+                    <section>
+                        <p>
+                            Integrating Microsoft Defender for Cloud with Microsoft Sentinel creates a unified cloud-native 
+                            SIEM+XDR solution. This integration enables centralized alert management, advanced correlation, 
+                            automated response, and comprehensive threat hunting across your cloud estate.
+                        </p>
+
+                        <div class="callout callout-success">
+                            <svg class="callout-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd" />
+                            </svg>
+                            <div class="callout-title">Why Integrate?</div>
+                            <div class="callout-content">
+                                <ul style="margin: 0;">
+                                    <li>Correlate MDC alerts with other security signals (identity, endpoint, network)</li>
+                                    <li>Leverage Sentinel's SOAR capabilities for automated response</li>
+                                    <li>Use KQL for advanced hunting and custom detections</li>
+                                    <li>Create unified dashboards across all security telemetry</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Architecture Overview -->
+                    <section>
+                        <h2 id="architecture">Integration Architecture</h2>
+
+                        <div class="ascii-diagram">
+<span class="highlight-cyan">╔══════════════════════════════════════════════════════════════════════════════════════════════╗</span>
+<span class="highlight-cyan">║</span>               <span class="highlight-blue">MICROSOFT DEFENDER FOR CLOUD + SENTINEL INTEGRATION</span>                          <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">╠══════════════════════════════════════════════════════════════════════════════════════════════╣</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-green">┌─────────────────────────────────────────────────────────────────────────────────────┐</span>    <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-green">│                           MICROSOFT DEFENDER FOR CLOUD                              │</span>    <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-green">│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐                 │</span>    <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-green">│  │   CSPM      │  │   CWPP      │  │ Multi-Cloud │  │  Defender   │                 │</span>    <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-green">│  │  ─────────  │  │  ─────────  │  │  ─────────  │  │   Plans     │                 │</span>    <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-green">│  │ Secure Score│  │   Alerts    │  │ AWS/GCP     │  │  ─────────  │                 │</span>    <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-green">│  │ Recommend.  │  │  Threats    │  │  Alerts     │  │ Servers/SQL │                 │</span>    <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-green">│  └──────┬──────┘  └──────┬──────┘  └──────┬──────┘  └──────┬──────┘                 │</span>    <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-green">│         └─────────────────┴─────────────────┴─────────────────┘                     │</span>    <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-green">└───────────────────────────────────────┬─────────────────────────────────────────────┘</span>    <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                          │                                                  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                          │ <span class="highlight-orange">Data Connector</span>                                  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                          │ <span class="highlight-orange">(Bi-directional)</span>                                 <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                          ▼                                                  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-purple">┌─────────────────────────────────────────────────────────────────────────────────────┐</span>    <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-purple">│                              MICROSOFT SENTINEL                                      │</span>    <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-purple">│                                                                                       │</span>    <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-purple">│  ┌─────────────────────────────────────────────────────────────────────────────┐     │</span>    <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-purple">│  │                        LOG ANALYTICS WORKSPACE                              │     │</span>    <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-purple">│  │  ┌──────────────┐ ┌──────────────┐ ┌──────────────┐ ┌──────────────┐        │     │</span>    <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-purple">│  │  │SecurityAlert │ │SecurityRecom.│ │ SecureScores │ │SecureScore   │        │     │</span>    <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-purple">│  │  │   Table      │ │    Table     │ │    Table     │ │Controls Table│        │     │</span>    <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-purple">│  │  └──────────────┘ └──────────────┘ └──────────────┘ └──────────────┘        │     │</span>    <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-purple">│  └─────────────────────────────────────────────────────────────────────────────┘     │</span>    <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-purple">│                                                                                       │</span>    <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-purple">│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐                  │</span>    <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-purple">│  │  Analytics  │  │  Workbooks  │  │  Playbooks  │  │   Hunting   │                  │</span>    <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-purple">│  │   Rules     │  │ Dashboards  │  │    SOAR     │  │   Queries   │                  │</span>    <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-purple">│  └─────────────┘  └─────────────┘  └─────────────┘  └─────────────┘                  │</span>    <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-purple">│                                                                                       │</span>    <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-purple">│  ┌─────────────────────────────────────────────────────────────────────────────┐     │</span>    <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-purple">│  │                            INCIDENT MANAGEMENT                               │     │</span>    <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-purple">│  │     Incidents ◄─── Correlation ◄─── Alerts ◄─── Evidence & Entities          │     │</span>    <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-purple">│  └─────────────────────────────────────────────────────────────────────────────┘     │</span>    <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-purple">└─────────────────────────────────────────────────────────────────────────────────────┘</span>    <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">╚══════════════════════════════════════════════════════════════════════════════════════════════╝</span>
+                        </div>
+                    </section>
+
+                    <!-- Data Flow -->
+                    <section>
+                        <h2 id="data-flow">Data Flow Details</h2>
+
+                        <h3 id="what-flows">What Data Flows to Sentinel?</h3>
+
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Data Type</th>
+                                        <th>Table Name</th>
+                                        <th>Sync Type</th>
+                                        <th>Notes</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Security Alerts</strong></td>
+                                        <td><code>SecurityAlert</code></td>
+                                        <td>Bi-directional</td>
+                                        <td>Status sync (dismiss in Sentinel dismisses in MDC)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Recommendations</strong></td>
+                                        <td><code>SecurityRecommendation</code></td>
+                                        <td>One-way (MDC→Sentinel)</td>
+                                        <td>Optional - high volume, consider filtering</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Secure Scores</strong></td>
+                                        <td><code>SecureScores</code></td>
+                                        <td>One-way</td>
+                                        <td>Daily aggregated scores</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Score Controls</strong></td>
+                                        <td><code>SecureScoreControls</code></td>
+                                        <td>One-way</td>
+                                        <td>Control-level breakdown</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Sub-Assessments</strong></td>
+                                        <td><code>SecurityResources</code></td>
+                                        <td>One-way</td>
+                                        <td>Via Azure Resource Graph connector</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h3 id="bi-directional">Bi-Directional Sync Explained</h3>
+
+                        <div class="ascii-diagram">
+<span class="highlight-blue">┌─────────────────────────────────────────────────────────────────────────────┐</span>
+<span class="highlight-blue">│</span>                     <span class="highlight-cyan">BI-DIRECTIONAL ALERT SYNC</span>                              <span class="highlight-blue">│</span>
+<span class="highlight-blue">├─────────────────────────────────────────────────────────────────────────────┤</span>
+<span class="highlight-blue">│</span>                                                                             <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>    <span class="highlight-green">DEFENDER FOR CLOUD</span>                      <span class="highlight-purple">MICROSOFT SENTINEL</span>              <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>    ─────────────────────                  ──────────────────               <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>                                                                             <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>    <span class="highlight-green">┌─────────────────┐</span>    Alerts    <span class="highlight-purple">┌─────────────────┐</span>                  <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>    <span class="highlight-green">│  Alert Created  │</span> ──────────► <span class="highlight-purple">│ SecurityAlert   │</span>                  <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>    <span class="highlight-green">│  (Active)       │</span>             <span class="highlight-purple">│ Table           │</span>                  <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>    <span class="highlight-green">└─────────────────┘</span>             <span class="highlight-purple">└────────┬────────┘</span>                  <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>                                            │                                <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>                                            ▼                                <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>    <span class="highlight-green">┌─────────────────┐</span>    Status    <span class="highlight-purple">┌─────────────────┐</span>                  <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>    <span class="highlight-green">│ Status Updated  │</span> ◄────────── <span class="highlight-purple">│ SOC Dismisses   │</span>                  <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>    <span class="highlight-green">│ (Dismissed)     │</span>             <span class="highlight-purple">│ Alert           │</span>                  <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>    <span class="highlight-green">└─────────────────┘</span>             <span class="highlight-purple">└─────────────────┘</span>                  <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>                                                                             <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>    <span class="highlight-orange">NOTE: Sync applies to: Active ↔ Resolved/Dismissed status changes</span>       <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>                                                                             <span class="highlight-blue">│</span>
+<span class="highlight-blue">└─────────────────────────────────────────────────────────────────────────────┘</span>
+                        </div>
+
+                        <div class="callout callout-info">
+                            <svg class="callout-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0z" clip-rule="evenodd" />
+                            </svg>
+                            <div class="callout-title">Sync Behavior</div>
+                            <div class="callout-content">
+                                <p>When bi-directional sync is enabled:</p>
+                                <ul style="margin: 0;">
+                                    <li>Dismissing an alert in Sentinel marks it as dismissed in MDC</li>
+                                    <li>Resolving an alert in MDC updates the status in Sentinel</li>
+                                    <li>Sync happens in near real-time (usually within minutes)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Connector Types -->
+                    <section>
+                        <h2 id="connectors">Connector Options</h2>
+
+                        <div class="tabs">
+                            <div class="tab-list">
+                                <button class="tab-btn active" data-tab="native">Native Connector</button>
+                                <button class="tab-btn" data-tab="tenant">Tenant-Based</button>
+                                <button class="tab-btn" data-tab="subscription">Subscription-Based</button>
+                            </div>
+
+                            <div class="tab-panel active" data-panel="native">
+                                <h4>Microsoft Defender for Cloud (Native)</h4>
+                                <p><strong>Recommended for most scenarios</strong></p>
+                                <ul>
+                                    <li>One-click enablement in Sentinel</li>
+                                    <li>Automatic subscription discovery</li>
+                                    <li>Bi-directional sync supported</li>
+                                    <li>Includes built-in analytics rules</li>
+                                </ul>
+                                
+                                <div class="code-header" style="margin-top: var(--space-md);">
+                                    <span class="code-lang">Azure CLI</span>
+                                    <button class="code-copy-btn">Copy</button>
+                                </div>
+                                <pre><code class="language-bash"># Enable via CLI (alternative to portal)
+az sentinel data-connector create \
+    --resource-group "rg-sentinel" \
+    --workspace-name "law-sentinel" \
+    --data-connector-id "MicrosoftDefenderForCloud" \
+    --kind "AzureSecurityCenter" \
+    --properties '{
+        "subscriptionId": "your-subscription-id",
+        "dataTypes": {
+            "alerts": { "state": "Enabled" }
+        }
+    }'</code></pre>
+                            </div>
+
+                            <div class="tab-panel" data-panel="tenant">
+                                <h4>Tenant-Based Licensing (Preview)</h4>
+                                <p>For organizations with multiple subscriptions:</p>
+                                <ul>
+                                    <li>Single connection covers all subscriptions in tenant</li>
+                                    <li>Automatic onboarding of new subscriptions</li>
+                                    <li>Simplified management</li>
+                                    <li>Requires specific licensing</li>
+                                </ul>
+                            </div>
+
+                            <div class="tab-panel" data-panel="subscription">
+                                <h4>Subscription-Based</h4>
+                                <p>For granular control:</p>
+                                <ul>
+                                    <li>Select specific subscriptions to connect</li>
+                                    <li>Different configurations per subscription</li>
+                                    <li>Useful for staged rollouts</li>
+                                    <li>More management overhead</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- XDR Integration -->
+                    <section>
+                        <h2 id="xdr">Unified XDR + SIEM Operations</h2>
+
+                        <p>
+                            When MDC is integrated with Sentinel alongside other Microsoft 365 Defender products, 
+                            you achieve unified security operations across endpoints, identities, cloud workloads, and data.
+                        </p>
+
+                        <div class="ascii-diagram">
+<span class="highlight-cyan">╔══════════════════════════════════════════════════════════════════════════════════════╗</span>
+<span class="highlight-cyan">║</span>                      <span class="highlight-blue">UNIFIED XDR + SIEM ARCHITECTURE</span>                               <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">╠══════════════════════════════════════════════════════════════════════════════════════╣</span>
+<span class="highlight-cyan">║</span>                                                                                      <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">┌──────────────┐ ┌──────────────┐ ┌──────────────┐ ┌──────────────┐</span>             <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">│  DEFENDER    │ │  DEFENDER    │ │  DEFENDER    │ │  DEFENDER    │</span>             <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">│ FOR ENDPOINT │ │ FOR IDENTITY │ │  FOR CLOUD   │ │  FOR O365    │</span>             <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">│    (MDE)     │ │    (MDI)     │ │    (MDC)     │ │    (MDO)     │</span>             <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">└──────┬───────┘ └──────┬───────┘ └──────┬───────┘ └──────┬───────┘</span>             <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>          │               │               │               │                         <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>          └───────────────┴───────────────┴───────────────┘                         <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                  │                                                  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                  ▼                                                  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>          <span class="highlight-green">┌──────────────────────────────────────────────────────┐</span>                 <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>          <span class="highlight-green">│              MICROSOFT 365 DEFENDER                   │</span>                 <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>          <span class="highlight-green">│         (Unified XDR Portal & Incidents)              │</span>                 <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>          <span class="highlight-green">│    • Cross-product correlation                        │</span>                 <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>          <span class="highlight-green">│    • Automated investigation & response               │</span>                 <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>          <span class="highlight-green">│    • Advanced hunting (KQL)                           │</span>                 <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>          <span class="highlight-green">└────────────────────────┬─────────────────────────────┘</span>                 <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                   │                                                 <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                   │ <span class="highlight-purple">M365 Defender Connector</span>                        <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                   ▼                                                 <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>          <span class="highlight-purple">┌──────────────────────────────────────────────────────┐</span>                 <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>          <span class="highlight-purple">│                MICROSOFT SENTINEL                     │</span>                 <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>          <span class="highlight-purple">│              (Cloud-Native SIEM)                      │</span>                 <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>          <span class="highlight-purple">│    • Third-party data integration                     │</span>                 <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>          <span class="highlight-purple">│    • Long-term retention & compliance                 │</span>                 <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>          <span class="highlight-purple">│    • Custom analytics & automation                    │</span>                 <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>          <span class="highlight-purple">│    • SOAR playbooks                                   │</span>                 <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>          <span class="highlight-purple">└──────────────────────────────────────────────────────┘</span>                 <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                                                      <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">╚══════════════════════════════════════════════════════════════════════════════════════╝</span>
+                        </div>
+                    </section>
+
+                    <!-- Best Practices -->
+                    <section>
+                        <h2 id="best-practices">Integration Best Practices</h2>
+
+                        <div class="accordion">
+                            <div class="accordion-item expanded">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">1. Enable Bi-Directional Sync</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <p>Always enable bi-directional sync to prevent duplicate work. When SOC analysts 
+                                    dismiss alerts in Sentinel, those changes propagate back to MDC automatically.</p>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">2. Consider Recommendation Volume</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <p>Security recommendations can generate high data volume. Consider:</p>
+                                    <ul>
+                                        <li>Only enabling for compliance reporting use cases</li>
+                                        <li>Using Azure Resource Graph for real-time recommendation queries</li>
+                                        <li>Setting appropriate retention to manage costs</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">3. Create Custom Analytics Rules</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <p>Leverage Sentinel's analytics capabilities to correlate MDC alerts with other signals:</p>
+                                    <ul>
+                                        <li>Correlate cloud alerts with identity events from Azure AD</li>
+                                        <li>Link server threats with endpoint telemetry from MDE</li>
+                                        <li>Create custom severity rules based on asset criticality</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">4. Build Automated Response Playbooks</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <p>Use Logic Apps playbooks to automate responses:</p>
+                                    <ul>
+                                        <li>Auto-isolate VMs on critical malware alerts</li>
+                                        <li>Create ServiceNow tickets for compliance findings</li>
+                                        <li>Enrich alerts with threat intelligence lookups</li>
+                                        <li>Notify teams via Teams/Slack on high severity alerts</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Key Takeaways -->
+                    <div class="key-takeaways">
+                        <div class="key-takeaways-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 2a.75.75 0 01.75.75v.258a33.186 33.186 0 016.668.83.75.75 0 01-.336 1.461z" clip-rule="evenodd" />
+                            </svg>
+                            Key Takeaways
+                        </div>
+                        <ul>
+                            <li>MDC + Sentinel integration creates unified CNAPP + SIEM operations</li>
+                            <li>Bi-directional sync keeps alert status synchronized across platforms</li>
+                            <li>SecurityAlert, SecureScores, and SecureScoreControls are core tables</li>
+                            <li>Consider data volume when enabling SecurityRecommendation sync</li>
+                            <li>Use Sentinel's analytics and SOAR capabilities for advanced correlation and response</li>
+                            <li>Combine with M365 Defender for complete XDR coverage</li>
+                        </ul>
+                    </div>
+
+                    <div class="related-pages">
+                        <div class="related-title">Related Pages</div>
+                        <div class="related-list">
+                            <a href="5-2-connector-setup.html" class="related-link">Connector Setup</a>
+                            <a href="5-3-data-tables.html" class="related-link">Data Tables</a>
+                            <a href="5-9-analytics-rules.html" class="related-link">Analytics Rules</a>
+                            <a href="5-12-playbooks.html" class="related-link">Playbooks</a>
+                            <a href="12-1-kql-library.html" class="related-link">KQL Library</a>
+                        </div>
+                    </div>
+
+                    <nav class="page-nav">
+                        <a href="4-10-best-practices.html" class="page-nav-link prev">
+                            <span class="page-nav-label">← Previous</span>
+                            <span class="page-nav-title">Multi-Cloud Best Practices</span>
+                        </a>
+                        <a href="5-2-connector-setup.html" class="page-nav-link next">
+                            <span class="page-nav-label">Next →</span>
+                            <span class="page-nav-title">Connector Setup</span>
+                        </a>
+                    </nav>
+                </article>
+
+                <aside class="toc-sidebar">
+                    <div class="toc-title">On This Page</div>
+                    <ul class="toc-list">
+                        <li class="toc-item"><a href="#architecture" class="toc-link">Integration Architecture</a></li>
+                        <li class="toc-item"><a href="#data-flow" class="toc-link">Data Flow Details</a></li>
+                        <li class="toc-item"><a href="#what-flows" class="toc-link toc-h3">What Data Flows</a></li>
+                        <li class="toc-item"><a href="#bi-directional" class="toc-link toc-h3">Bi-Directional Sync</a></li>
+                        <li class="toc-item"><a href="#connectors" class="toc-link">Connector Options</a></li>
+                        <li class="toc-item"><a href="#xdr" class="toc-link">XDR Integration</a></li>
+                        <li class="toc-item"><a href="#best-practices" class="toc-link">Best Practices</a></li>
+                    </ul>
+                </aside>
+            </div>
+        </main>
+        <div class="mobile-overlay"></div>
+    </div>
+
+    <div class="search-modal">
+        <div class="search-modal-content">
+            <input type="text" class="search-modal-input" placeholder="Search documentation..." autofocus>
+            <div class="search-results"></div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

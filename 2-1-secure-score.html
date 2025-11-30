@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Microsoft Defender for Cloud Secure Score - Calculation methodology, improvement strategies, and tracking.">
+    <title>Secure Score Deep Dive - Microsoft Defender for Cloud</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="../index.html" class="sidebar-logo">
+                    <div class="logo-icon">MDC</div>
+                    <span class="logo-text">Defender for Cloud</span>
+                </a>
+                <button class="sidebar-toggle" aria-label="Toggle sidebar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">CSPM</div>
+                    <div class="nav-group expanded" data-group="cspm">
+                        <div class="nav-group-header">
+                            <span class="nav-group-title">
+                                <svg class="nav-item-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1z" clip-rule="evenodd" />
+                                </svg>
+                                Security Posture
+                            </span>
+                            <svg class="nav-group-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="nav-group-items">
+                            <a href="2-1-secure-score.html" class="nav-subitem active">Secure Score Deep Dive</a>
+                            <a href="2-2-recommendations.html" class="nav-subitem">Security Recommendations</a>
+                            <a href="2-3-attack-path.html" class="nav-subitem">Attack Path Analysis</a>
+                            <a href="2-4-security-graph.html" class="nav-subitem">Cloud Security Graph</a>
+                            <a href="2-5-inventory.html" class="nav-subitem">Asset Inventory</a>
+                            <a href="2-6-policies.html" class="nav-subitem">Security Policies</a>
+                            <a href="2-7-governance.html" class="nav-subitem">Governance Rules</a>
+                            <a href="2-8-compliance.html" class="nav-subitem">Regulatory Compliance</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" aria-label="Open menu">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10zm0 5.25a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75a.75.75 0 01-.75-.75z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div class="search-box">
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                        </svg>
+                        <input type="text" class="search-input" placeholder="Search documentation..." readonly>
+                        <span class="search-shortcut">⌘K</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <article class="page-content">
+                    <nav class="breadcrumbs">
+                        <a href="../index.html" class="breadcrumb-item">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <a href="2-1-secure-score.html" class="breadcrumb-item">CSPM</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span class="breadcrumb-item current">Secure Score</span>
+                    </nav>
+
+                    <header class="page-header">
+                        <h1>Secure Score Deep Dive</h1>
+                        <div class="page-meta">
+                            <span class="badge badge-l1">L1 Fundamentals</span>
+                            <span class="badge badge-l2">L2 Technical</span>
+                            <span class="page-meta-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clip-rule="evenodd" />
+                                </svg>
+                                20 min read
+                            </span>
+                        </div>
+                    </header>
+
+                    <section>
+                        <p>
+                            Secure Score is the primary metric for measuring your cloud security posture in Microsoft Defender 
+                            for Cloud. It provides a numerical representation (0-100%) of how well your resources are configured 
+                            according to security best practices.
+                        </p>
+
+                        <div class="callout callout-info">
+                            <svg class="callout-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0z" clip-rule="evenodd" />
+                            </svg>
+                            <div class="callout-title">Score vs Percentage</div>
+                            <div class="callout-content">
+                                <p>Secure Score is displayed as both a percentage and points (e.g., "72% - 45/62 points"). 
+                                The points represent actual vs maximum possible points based on your enabled controls.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section>
+                        <h2 id="calculation">Score Calculation Methodology</h2>
+
+                        <p>
+                            Understanding how Secure Score is calculated helps you prioritize remediation efforts effectively.
+                        </p>
+
+                        <div class="ascii-diagram">
+<span class="highlight-cyan">╔════════════════════════════════════════════════════════════════════════════════╗</span>
+<span class="highlight-cyan">║</span>                    <span class="highlight-blue">SECURE SCORE CALCULATION FLOW</span>                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">╠════════════════════════════════════════════════════════════════════════════════╣</span>
+<span class="highlight-cyan">║</span>                                                                                <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-green">┌──────────────────┐</span>                                                        <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-green">│   CONTROL 1      │</span>  Max Points: 10                                        <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-green">│   "Enable MFA"   │</span>  Healthy Resources: 8/10 (80%)                         <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-green">│                  │</span>  <span class="highlight-orange">Points Earned: 8</span>                                       <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-green">└────────┬─────────┘</span>                                                        <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>           │                                                                    <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-blue">┌──────────────────┐</span>                                                        <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-blue">│   CONTROL 2      │</span>  Max Points: 6                                         <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-blue">│ "Encrypt Storage"│</span>  Healthy Resources: 15/15 (100%)                       <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-blue">│                  │</span>  <span class="highlight-orange">Points Earned: 6</span>                                       <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-blue">└────────┬─────────┘</span>                                                        <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>           │                                                                    <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-purple">┌──────────────────┐</span>                                                        <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-purple">│   CONTROL 3      │</span>  Max Points: 4                                         <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-purple">│ "Secure Ports"   │</span>  Healthy Resources: 5/20 (25%)                         <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-purple">│                  │</span>  <span class="highlight-orange">Points Earned: 1</span>                                       <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-purple">└────────┬─────────┘</span>                                                        <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>           │                                                                    <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>           └─────────────────────┬──────────────────────────────────────────   <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                 ▼                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>             <span class="highlight-orange">╔═══════════════════════════════════════════╗</span>                    <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>             <span class="highlight-orange">║   SECURE SCORE = (8+6+1) / (10+6+4)      ║</span>                    <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>             <span class="highlight-orange">║                = 15/20 = 75%             ║</span>                    <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>             <span class="highlight-orange">╚═══════════════════════════════════════════╝</span>                    <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                                                <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">╚════════════════════════════════════════════════════════════════════════════════╝</span>
+                        </div>
+
+                        <h3 id="formula">The Formula</h3>
+
+                        <div class="terminal">
+                            <div class="terminal-header">
+                                <span class="terminal-dot red"></span>
+                                <span class="terminal-dot yellow"></span>
+                                <span class="terminal-dot green"></span>
+                                <span class="terminal-title">Secure Score Formula</span>
+                            </div>
+                            <div class="terminal-body">
+<span class="terminal-output">Secure Score = (Sum of Earned Points) / (Sum of Maximum Points) × 100%</span>
+<span class="terminal-output"></span>
+<span class="terminal-output">Where for each control:</span>
+<span class="terminal-output">  Earned Points = Max Points × (Healthy Resources / Total Resources)</span>
+<span class="terminal-output"></span>
+<span class="terminal-output">Example:</span>
+<span class="terminal-output">  Control "Enable MFA" has max 10 points</span>
+<span class="terminal-output">  8 of 10 users have MFA enabled</span>
+<span class="terminal-output">  Earned Points = 10 × (8/10) = 8 points</span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section>
+                        <h2 id="controls">Security Controls</h2>
+
+                        <p>
+                            Secure Score is organized into security controls, each representing a group of related 
+                            security recommendations.
+                        </p>
+
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Control</th>
+                                        <th>Max Points</th>
+                                        <th>Focus Area</th>
+                                        <th>Example Recommendations</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Enable MFA</strong></td>
+                                        <td class="text-orange">10</td>
+                                        <td>Identity</td>
+                                        <td>MFA for admins, MFA for all users</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Secure management ports</strong></td>
+                                        <td class="text-orange">8</td>
+                                        <td>Network</td>
+                                        <td>Close SSH/RDP, use JIT access</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Apply system updates</strong></td>
+                                        <td class="text-orange">6</td>
+                                        <td>Compute</td>
+                                        <td>Install OS patches, update agents</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Encrypt data in transit</strong></td>
+                                        <td class="text-blue">6</td>
+                                        <td>Data</td>
+                                        <td>HTTPS only, TLS 1.2+</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Restrict unauthorized access</strong></td>
+                                        <td class="text-blue">4</td>
+                                        <td>Access</td>
+                                        <td>Remove external access, limit permissions</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Enable endpoint protection</strong></td>
+                                        <td class="text-green">4</td>
+                                        <td>Compute</td>
+                                        <td>Install antimalware, enable MDE</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Enable auditing and logging</strong></td>
+                                        <td class="text-green">4</td>
+                                        <td>Monitoring</td>
+                                        <td>Diagnostic settings, audit logs</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="callout callout-tip">
+                            <svg class="callout-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0z" clip-rule="evenodd" />
+                            </svg>
+                            <div class="callout-title">Pro Tip: Quick Wins</div>
+                            <div class="callout-content">
+                                <p>Focus on controls with the highest max points first. "Enable MFA" alone is worth 10 points - 
+                                more than some entire control categories combined!</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section>
+                        <h2 id="improvement">Improvement Strategies</h2>
+
+                        <h3 id="quick-wins">Quick Wins (1-2 weeks)</h3>
+                        <ul>
+                            <li><strong>Enable MFA for all privileged accounts</strong> - Highest impact, relatively easy</li>
+                            <li><strong>Enable Microsoft Defender plans</strong> - Immediate coverage</li>
+                            <li><strong>Restrict management ports</strong> - Use NSG rules or JIT access</li>
+                            <li><strong>Enable encryption at rest</strong> - Most Azure services support this natively</li>
+                        </ul>
+
+                        <h3 id="medium-term">Medium-Term Goals (1-3 months)</h3>
+                        <ul>
+                            <li><strong>Remediate vulnerability findings</strong> - Patch critical/high CVEs</li>
+                            <li><strong>Implement least-privilege access</strong> - Review RBAC assignments</li>
+                            <li><strong>Enable advanced threat protection</strong> - Defender for Servers P2, Containers</li>
+                            <li><strong>Configure diagnostic settings</strong> - Send logs to Log Analytics</li>
+                        </ul>
+
+                        <h3 id="long-term">Long-Term Excellence (3-6 months)</h3>
+                        <ul>
+                            <li><strong>Implement governance rules</strong> - Auto-assign owners to recommendations</li>
+                            <li><strong>Create exemption management process</strong> - Document risk acceptance</li>
+                            <li><strong>Automate remediation</strong> - Logic Apps for common fixes</li>
+                            <li><strong>Integrate with CI/CD</strong> - Shift-left security validation</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2 id="tracking">Tracking Score Over Time</h2>
+
+                        <p>
+                            Use KQL queries in Log Analytics or Microsoft Sentinel to track Secure Score trends.
+                        </p>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M7 3.5A1.5 1.5 0 018.5 2h3.879a1.5 1.5 0 011.06.44l3.122 3.12A1.5 1.5 0 0117 6.622V12.5a1.5 1.5 0 01-1.5 1.5h-1v-3.379a3 3 0 00-.879-2.121L10.5 5.379A3 3 0 008.379 4.5H7v-1z" />
+                                </svg>
+                                Copy
+                            </button>
+                        </div>
+                        <pre><code class="language-kql">// Secure Score trend over last 30 days
+SecureScores
+| where TimeGenerated > ago(30d)
+| summarize 
+    AvgScore = avg(PercentageScore),
+    MaxScore = max(PercentageScore),
+    MinScore = min(PercentageScore)
+    by bin(TimeGenerated, 1d)
+| order by TimeGenerated asc
+| render timechart</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M7 3.5A1.5 1.5 0 018.5 2h3.879a1.5 1.5 0 011.06.44l3.122 3.12A1.5 1.5 0 0117 6.622V12.5a1.5 1.5 0 01-1.5 1.5h-1v-3.379a3 3 0 00-.879-2.121L10.5 5.379A3 3 0 008.379 4.5H7v-1z" />
+                                </svg>
+                                Copy
+                            </button>
+                        </div>
+                        <pre><code class="language-kql">// Control-level breakdown
+SecureScoreControls
+| where TimeGenerated > ago(1d)
+| summarize arg_max(TimeGenerated, *) by ControlName
+| project 
+    ControlName,
+    CurrentScore = PercentageScore,
+    MaxScore,
+    HealthyResources,
+    UnhealthyResources
+| order by MaxScore desc</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M7 3.5A1.5 1.5 0 018.5 2h3.879a1.5 1.5 0 011.06.44l3.122 3.12A1.5 1.5 0 0117 6.622V12.5a1.5 1.5 0 01-1.5 1.5h-1v-3.379a3 3 0 00-.879-2.121L10.5 5.379A3 3 0 008.379 4.5H7v-1z" />
+                                </svg>
+                                Copy
+                            </button>
+                        </div>
+                        <pre><code class="language-kql">// Compare subscriptions
+SecureScores
+| where TimeGenerated > ago(1d)
+| summarize arg_max(TimeGenerated, *) by SubscriptionId
+| project 
+    SubscriptionId,
+    DisplayName,
+    Score = PercentageScore,
+    CurrentScore,
+    MaxScore
+| order by Score asc  // Show lowest scores first</code></pre>
+                    </section>
+
+                    <!-- Key Takeaways -->
+                    <div class="key-takeaways">
+                        <div class="key-takeaways-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 2a.75.75 0 01.75.75v.258a33.186 33.186 0 016.668.83.75.75 0 01-.336 1.461z" clip-rule="evenodd" />
+                            </svg>
+                            Key Takeaways
+                        </div>
+                        <ul>
+                            <li>Secure Score = (Earned Points / Max Points) × 100%</li>
+                            <li>Points are earned per control based on healthy vs unhealthy resources</li>
+                            <li>Focus on high-point controls first (MFA = 10 points)</li>
+                            <li>Use exemptions sparingly and document risk acceptance</li>
+                            <li>Track trends over time using KQL in Log Analytics/Sentinel</li>
+                            <li>A "good" score depends on your environment, but aim for 70%+ as a baseline</li>
+                        </ul>
+                    </div>
+
+                    <div class="related-pages">
+                        <div class="related-title">Related Pages</div>
+                        <div class="related-list">
+                            <a href="2-2-recommendations.html" class="related-link">Security Recommendations</a>
+                            <a href="2-7-governance.html" class="related-link">Governance Rules</a>
+                            <a href="2-10-exemptions.html" class="related-link">Exemptions Management</a>
+                            <a href="12-1-kql-library.html" class="related-link">KQL Query Library</a>
+                        </div>
+                    </div>
+
+                    <nav class="page-nav">
+                        <a href="1-10-checklist.html" class="page-nav-link prev">
+                            <span class="page-nav-label">← Previous</span>
+                            <span class="page-nav-title">Getting Started Checklist</span>
+                        </a>
+                        <a href="2-2-recommendations.html" class="page-nav-link next">
+                            <span class="page-nav-label">Next →</span>
+                            <span class="page-nav-title">Security Recommendations</span>
+                        </a>
+                    </nav>
+                </article>
+
+                <aside class="toc-sidebar">
+                    <div class="toc-title">On This Page</div>
+                    <ul class="toc-list">
+                        <li class="toc-item"><a href="#calculation" class="toc-link">Score Calculation</a></li>
+                        <li class="toc-item"><a href="#formula" class="toc-link toc-h3">The Formula</a></li>
+                        <li class="toc-item"><a href="#controls" class="toc-link">Security Controls</a></li>
+                        <li class="toc-item"><a href="#improvement" class="toc-link">Improvement Strategies</a></li>
+                        <li class="toc-item"><a href="#quick-wins" class="toc-link toc-h3">Quick Wins</a></li>
+                        <li class="toc-item"><a href="#medium-term" class="toc-link toc-h3">Medium-Term</a></li>
+                        <li class="toc-item"><a href="#long-term" class="toc-link toc-h3">Long-Term</a></li>
+                        <li class="toc-item"><a href="#tracking" class="toc-link">Tracking Over Time</a></li>
+                    </ul>
+                </aside>
+            </div>
+        </main>
+        <div class="mobile-overlay"></div>
+    </div>
+
+    <div class="search-modal">
+        <div class="search-modal-content">
+            <input type="text" class="search-modal-input" placeholder="Search documentation..." autofocus>
+            <div class="search-results"></div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

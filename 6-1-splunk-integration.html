@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Splunk Integration - Integrate Microsoft Defender for Cloud alerts and data with Splunk Enterprise Security.">
+    <title>Splunk Integration - Microsoft Defender for Cloud</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="../index.html" class="sidebar-logo">
+                    <div class="logo-icon">MDC</div>
+                    <span class="logo-text">Defender for Cloud</span>
+                </a>
+                <button class="sidebar-toggle" aria-label="Toggle sidebar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">SIEM Integrations</div>
+                    <div class="nav-group expanded" data-group="splunk">
+                        <div class="nav-group-header">
+                            <span class="nav-group-title">Splunk</span>
+                            <svg class="nav-group-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="nav-group-items">
+                            <a href="6-1-splunk-integration.html" class="nav-subitem active">Splunk Overview</a>
+                            <a href="6-2-splunk-addon.html" class="nav-subitem">Splunk Add-on</a>
+                            <a href="6-3-splunk-dashboards.html" class="nav-subitem">Dashboards</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" aria-label="Open menu">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10zm0 5.25a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75a.75.75 0 01-.75-.75z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div class="search-box">
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                        </svg>
+                        <input type="text" class="search-input" placeholder="Search documentation..." readonly>
+                        <span class="search-shortcut">⌘K</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <article class="page-content">
+                    <nav class="breadcrumbs">
+                        <a href="../index.html" class="breadcrumb-item">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <a href="6-1-splunk-integration.html" class="breadcrumb-item">Splunk Integration</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span class="breadcrumb-item current">Overview</span>
+                    </nav>
+
+                    <header class="page-header">
+                        <h1>Splunk Integration</h1>
+                        <div class="page-meta">
+                            <span class="badge badge-l2">L2 Technical</span>
+                            <span class="badge badge-l3">L3 Advanced</span>
+                            <span class="page-meta-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clip-rule="evenodd" />
+                                </svg>
+                                18 min read
+                            </span>
+                        </div>
+                    </header>
+
+                    <section>
+                        <p>
+                            Organizations using Splunk as their primary SIEM can integrate Microsoft Defender 
+                            for Cloud alerts and security data. This enables centralized security operations 
+                            across Azure, multi-cloud, and on-premises environments within Splunk Enterprise Security.
+                        </p>
+                    </section>
+
+                    <!-- Architecture -->
+                    <section>
+                        <h2 id="architecture">Integration Architecture</h2>
+
+                        <div class="ascii-diagram">
+<span class="highlight-cyan">╔══════════════════════════════════════════════════════════════════════════════════════════════╗</span>
+<span class="highlight-cyan">║</span>                      <span class="highlight-blue">MDC TO SPLUNK INTEGRATION ARCHITECTURE</span>                                <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">╠══════════════════════════════════════════════════════════════════════════════════════════════╣</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">┌─────────────────────────────────────────────────────────────────────────────────────┐</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">│                        MICROSOFT DEFENDER FOR CLOUD                                │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">│                                                                                     │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">│   ┌─────────────┐   ┌─────────────┐   ┌─────────────┐   ┌─────────────┐           │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">│   │   Alerts    │   │Recommendations│  │ Secure Score│   │  Inventory  │           │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">│   └──────┬──────┘   └──────┬──────┘   └──────┬──────┘   └──────┬──────┘           │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">└──────────┼─────────────────┼─────────────────┼─────────────────┼───────────────────┘</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>              └─────────────────┴─────────────────┴─────────────────┘                       <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                         │                                                   <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                    ┌────────────────────┼────────────────────┐                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                    ▼                    ▼                    ▼                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">┌─────────────────────┐</span>  <span class="highlight-green">┌─────────────────────┐</span>  <span class="highlight-purple">┌─────────────────────┐</span>             <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">│    Event Hub        │</span>  <span class="highlight-green">│   Azure Monitor     │</span>  <span class="highlight-purple">│   Graph API         │</span>             <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">│   (Streaming)       │</span>  <span class="highlight-green">│   (Log Analytics)   │</span>  <span class="highlight-purple">│   (REST)            │</span>             <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">└──────────┬──────────┘</span>  <span class="highlight-green">└──────────┬──────────┘</span>  <span class="highlight-purple">└──────────┬──────────┘</span>             <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>              │                       │                       │                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>              └───────────────────────┼───────────────────────┘                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                      ▼                                                      <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">┌─────────────────────────────────────────────────────────────────────────────────────┐</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│                           SPLUNK ENTERPRISE                                        │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│                                                                                     │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│   ┌─────────────────────┐   ┌─────────────────────┐   ┌─────────────────────┐     │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│   │  Splunk Add-on for  │   │  Microsoft Azure    │   │  HTTP Event         │     │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│   │  Microsoft Cloud    │   │  Add-on             │   │  Collector (HEC)    │     │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│   └─────────────────────┘   └─────────────────────┘   └─────────────────────┘     │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│                                      │                                             │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│                                      ▼                                             │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│                          ┌─────────────────────┐                                  │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│                          │  Splunk Enterprise  │                                  │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│                          │     Security        │                                  │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│                          └─────────────────────┘                                  │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">└─────────────────────────────────────────────────────────────────────────────────────┘</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">╚══════════════════════════════════════════════════════════════════════════════════════════════╝</span>
+                        </div>
+                    </section>
+
+                    <!-- Integration Methods -->
+                    <section>
+                        <h2 id="methods">Integration Methods</h2>
+
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Method</th>
+                                        <th>Data Types</th>
+                                        <th>Latency</th>
+                                        <th>Best For</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Event Hub + HEC</strong></td>
+                                        <td>Alerts, Activity Logs</td>
+                                        <td>Near real-time</td>
+                                        <td>High-volume streaming</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Splunk Add-on for Microsoft Cloud</strong></td>
+                                        <td>All MDC data</td>
+                                        <td>5-15 minutes</td>
+                                        <td>Comprehensive integration</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Azure Monitor Data Export</strong></td>
+                                        <td>Log Analytics data</td>
+                                        <td>Minutes</td>
+                                        <td>Log forwarding</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Microsoft Graph API</strong></td>
+                                        <td>Alerts, Secure Score</td>
+                                        <td>On-demand</td>
+                                        <td>Periodic polling</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Event Hub Setup -->
+                    <section>
+                        <h2 id="event-hub">Event Hub Streaming Setup</h2>
+
+                        <h3>Step 1: Create Event Hub</h3>
+                        <div class="code-header">
+                            <span class="code-lang">Azure CLI</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-bash"># Create Event Hub namespace
+az eventhubs namespace create \
+    --name "mdc-splunk-ns" \
+    --resource-group "security-rg" \
+    --location "eastus" \
+    --sku Standard
+
+# Create Event Hub
+az eventhubs eventhub create \
+    --name "mdc-alerts" \
+    --namespace-name "mdc-splunk-ns" \
+    --resource-group "security-rg" \
+    --partition-count 4 \
+    --message-retention 7
+
+# Create authorization rule for Splunk
+az eventhubs eventhub authorization-rule create \
+    --name "splunk-reader" \
+    --eventhub-name "mdc-alerts" \
+    --namespace-name "mdc-splunk-ns" \
+    --resource-group "security-rg" \
+    --rights Listen
+
+# Get connection string
+az eventhubs eventhub authorization-rule keys list \
+    --name "splunk-reader" \
+    --eventhub-name "mdc-alerts" \
+    --namespace-name "mdc-splunk-ns" \
+    --resource-group "security-rg" \
+    --query "primaryConnectionString" -o tsv</code></pre>
+
+                        <h3>Step 2: Configure MDC Export</h3>
+                        <div class="code-header">
+                            <span class="code-lang">Azure CLI</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-bash"># Export security alerts to Event Hub
+az security automation create \
+    --name "export-to-splunk" \
+    --resource-group "security-rg" \
+    --scopes "[{\"description\":\"Full subscription\",\"scopePath\":\"/subscriptions/YOUR-SUB-ID\"}]" \
+    --sources "[{\"eventSource\":\"Alerts\"}]" \
+    --actions "[{
+        \"actionType\":\"EventHub\",
+        \"eventHubResourceId\":\"/subscriptions/YOUR-SUB-ID/resourceGroups/security-rg/providers/Microsoft.EventHub/namespaces/mdc-splunk-ns/eventhubs/mdc-alerts\",
+        \"connectionString\":\"YOUR-CONNECTION-STRING\"
+    }]"</code></pre>
+
+                        <h3>Step 3: Configure Splunk HEC</h3>
+                        <ol>
+                            <li>Splunk → Settings → Data Inputs → HTTP Event Collector</li>
+                            <li>Create new token for Azure MDC data</li>
+                            <li>Set source type to <code>azure:security:alert</code></li>
+                            <li>Configure Azure Function or Logic App to forward from Event Hub to HEC</li>
+                        </ol>
+                    </section>
+
+                    <!-- Splunk Add-on -->
+                    <section>
+                        <h2 id="addon">Splunk Add-on for Microsoft Cloud</h2>
+
+                        <p>The official Splunk Add-on provides the most comprehensive integration:</p>
+
+                        <h3>Installation</h3>
+                        <ol>
+                            <li>Download from <a href="https://splunkbase.splunk.com" target="_blank">Splunkbase</a>: "Splunk Add-on for Microsoft Cloud Services"</li>
+                            <li>Install on Splunk Heavy Forwarder or Search Head</li>
+                            <li>Configure Azure AD App Registration for authentication</li>
+                        </ol>
+
+                        <h3>Azure AD App Setup</h3>
+                        <div class="code-header">
+                            <span class="code-lang">Azure CLI</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-bash"># Create App Registration for Splunk
+az ad app create \
+    --display-name "Splunk-MDC-Integration" \
+    --sign-in-audience "AzureADMyOrg"
+
+# Get App ID
+APP_ID=$(az ad app list --display-name "Splunk-MDC-Integration" --query "[0].appId" -o tsv)
+
+# Create client secret
+az ad app credential reset \
+    --id $APP_ID \
+    --append
+
+# Assign Security Reader role
+az role assignment create \
+    --assignee $APP_ID \
+    --role "Security Reader" \
+    --scope "/subscriptions/YOUR-SUB-ID"</code></pre>
+
+                        <h3>Data Inputs Configuration</h3>
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Input</th>
+                                        <th>Source Type</th>
+                                        <th>Data Collected</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Azure Security Center</td>
+                                        <td><code>azure:security:alert</code></td>
+                                        <td>MDC alerts</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Azure Security Assessments</td>
+                                        <td><code>azure:security:assessment</code></td>
+                                        <td>Recommendations</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Azure Secure Score</td>
+                                        <td><code>azure:security:score</code></td>
+                                        <td>Score history</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Azure Resource Graph</td>
+                                        <td><code>azure:resource:inventory</code></td>
+                                        <td>Resource inventory</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- SPL Queries -->
+                    <section>
+                        <h2 id="spl-queries">SPL Queries for MDC</h2>
+
+                        <div class="code-header">
+                            <span class="code-lang">SPL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-sql">| MDC Alerts by Severity
+index=azure sourcetype="azure:security:alert"
+| stats count by properties.severity
+| rename properties.severity as Severity
+| sort - count</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">SPL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-sql">| High/Critical Alerts - Last 24 Hours
+index=azure sourcetype="azure:security:alert"
+| where properties.severity IN ("High", "Critical")
+| eval alert_time=strftime(_time, "%Y-%m-%d %H:%M:%S")
+| table alert_time, properties.alertDisplayName, properties.severity, 
+        properties.compromisedEntity, properties.status
+| rename properties.alertDisplayName as Alert,
+         properties.severity as Severity,
+         properties.compromisedEntity as "Affected Resource",
+         properties.status as Status</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">SPL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-sql">| Secure Score Trend
+index=azure sourcetype="azure:security:score"
+| timechart avg(properties.score.current) as "Secure Score" span=1d
+| predict "Secure Score" future_timespan=7</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">SPL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-sql">| Unhealthy Recommendations by Category
+index=azure sourcetype="azure:security:assessment"
+| where properties.status.code="Unhealthy"
+| stats count by properties.metadata.category
+| rename properties.metadata.category as Category
+| sort - count</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">SPL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-sql">| MITRE ATT&CK Mapping
+index=azure sourcetype="azure:security:alert"
+| spath output=tactics path=properties.intent
+| mvexpand tactics
+| stats count by tactics
+| rename tactics as "MITRE Tactic"
+| sort - count</code></pre>
+                    </section>
+
+                    <!-- ES Integration -->
+                    <section>
+                        <h2 id="es-integration">Splunk Enterprise Security Integration</h2>
+
+                        <h3>Notable Event Creation</h3>
+                        <p>Create correlation searches to generate Notable Events from MDC alerts:</p>
+
+                        <div class="code-header">
+                            <span class="code-lang">SPL (Correlation Search)</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-sql">| Create Notable Event from MDC Critical Alerts
+index=azure sourcetype="azure:security:alert" properties.severity="Critical"
+| eval src=properties.compromisedEntity,
+       signature=properties.alertType,
+       description=properties.description,
+       severity="critical"
+| table _time, src, signature, description, severity</code></pre>
+
+                        <h3>CIM Mapping</h3>
+                        <p>Map MDC data to Splunk Common Information Model for ES compatibility:</p>
+
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>MDC Field</th>
+                                        <th>CIM Field</th>
+                                        <th>Data Model</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>properties.compromisedEntity</td>
+                                        <td>dest</td>
+                                        <td>Alerts</td>
+                                    </tr>
+                                    <tr>
+                                        <td>properties.alertDisplayName</td>
+                                        <td>signature</td>
+                                        <td>Alerts</td>
+                                    </tr>
+                                    <tr>
+                                        <td>properties.severity</td>
+                                        <td>severity</td>
+                                        <td>Alerts</td>
+                                    </tr>
+                                    <tr>
+                                        <td>properties.status</td>
+                                        <td>action</td>
+                                        <td>Alerts</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Best Practices -->
+                    <section>
+                        <h2 id="best-practices">Best Practices</h2>
+
+                        <div class="checklist">
+                            <div class="checklist-title">Splunk Integration Checklist</div>
+                            <ul>
+                                <li>
+                                    <input type="checkbox" id="sp1">
+                                    <label for="sp1">Use Event Hub for real-time alert streaming</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="sp2">
+                                    <label for="sp2">Install official Splunk Add-on for comprehensive data</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="sp3">
+                                    <label for="sp3">Map MDC data to CIM for ES compatibility</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="sp4">
+                                    <label for="sp4">Create correlation searches for Notable Events</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="sp5">
+                                    <label for="sp5">Set up index retention appropriate for compliance</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="sp6">
+                                    <label for="sp6">Use least-privilege Azure AD app permissions</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="sp7">
+                                    <label for="sp7">Monitor data ingestion for completeness</label>
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- Key Takeaways -->
+                    <div class="key-takeaways">
+                        <div class="key-takeaways-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 2a.75.75 0 01.75.75v.258a33.186 33.186 0 016.668.83.75.75 0 01-.336 1.461z" clip-rule="evenodd" />
+                            </svg>
+                            Key Takeaways
+                        </div>
+                        <ul>
+                            <li>Multiple integration options: Event Hub, Add-on, Graph API</li>
+                            <li>Event Hub provides near real-time alert streaming</li>
+                            <li>Official Splunk Add-on offers comprehensive data collection</li>
+                            <li>Map MDC fields to CIM for Splunk ES integration</li>
+                            <li>Create correlation searches for automated Notable Events</li>
+                            <li>Use Azure AD app with Security Reader role</li>
+                            <li>SPL queries enable MDC analysis in Splunk</li>
+                            <li>Combine MDC data with other sources for unified SOC view</li>
+                        </ul>
+                    </div>
+
+                    <div class="related-pages">
+                        <div class="related-title">Related Pages</div>
+                        <div class="related-list">
+                            <a href="5-1-integration-arch.html" class="related-link">Sentinel Integration</a>
+                            <a href="8-2-alert-triage.html" class="related-link">Alert Triage</a>
+                            <a href="5-12-playbooks.html" class="related-link">Automation Playbooks</a>
+                            <a href="12-1-kql-library.html" class="related-link">KQL Library</a>
+                        </div>
+                    </div>
+
+                    <nav class="page-nav">
+                        <a href="5-12-playbooks.html" class="page-nav-link prev">
+                            <span class="page-nav-label">← Previous</span>
+                            <span class="page-nav-title">Automation Playbooks</span>
+                        </a>
+                        <a href="6-2-splunk-addon.html" class="page-nav-link next">
+                            <span class="page-nav-label">Next →</span>
+                            <span class="page-nav-title">Splunk Add-on Details</span>
+                        </a>
+                    </nav>
+                </article>
+
+                <aside class="toc-sidebar">
+                    <div class="toc-title">On This Page</div>
+                    <ul class="toc-list">
+                        <li class="toc-item"><a href="#architecture" class="toc-link">Architecture</a></li>
+                        <li class="toc-item"><a href="#methods" class="toc-link">Integration Methods</a></li>
+                        <li class="toc-item"><a href="#event-hub" class="toc-link">Event Hub Setup</a></li>
+                        <li class="toc-item"><a href="#addon" class="toc-link">Splunk Add-on</a></li>
+                        <li class="toc-item"><a href="#spl-queries" class="toc-link">SPL Queries</a></li>
+                        <li class="toc-item"><a href="#es-integration" class="toc-link">ES Integration</a></li>
+                        <li class="toc-item"><a href="#best-practices" class="toc-link">Best Practices</a></li>
+                    </ul>
+                </aside>
+            </div>
+        </main>
+        <div class="mobile-overlay"></div>
+    </div>
+
+    <div class="search-modal">
+        <div class="search-modal-content">
+            <input type="text" class="search-modal-input" placeholder="Search documentation..." autofocus>
+            <div class="search-results"></div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

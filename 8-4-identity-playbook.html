@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Identity Threat Investigation Playbook - SOC procedures for investigating Entra ID and identity-related security alerts.">
+    <title>Identity Threat Playbook - Microsoft Defender for Cloud</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="../index.html" class="sidebar-logo">
+                    <div class="logo-icon">MDC</div>
+                    <span class="logo-text">Defender for Cloud</span>
+                </a>
+                <button class="sidebar-toggle" aria-label="Toggle sidebar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">SOC Operations</div>
+                    <div class="nav-group expanded" data-group="soc">
+                        <div class="nav-group-header">
+                            <span class="nav-group-title">Playbooks & Procedures</span>
+                            <svg class="nav-group-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="nav-group-items">
+                            <a href="8-1-soc-overview.html" class="nav-subitem">SOC Overview</a>
+                            <a href="8-2-alert-triage.html" class="nav-subitem">Alert Triage</a>
+                            <a href="8-3-vm-playbook.html" class="nav-subitem">VM Threat Playbook</a>
+                            <a href="8-4-identity-playbook.html" class="nav-subitem active">Identity Threat Playbook</a>
+                            <a href="8-5-container-playbook.html" class="nav-subitem">Container Playbook</a>
+                            <a href="8-6-storage-playbook.html" class="nav-subitem">Storage Playbook</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" aria-label="Open menu">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10zm0 5.25a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75a.75.75 0 01-.75-.75z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div class="search-box">
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                        </svg>
+                        <input type="text" class="search-input" placeholder="Search documentation..." readonly>
+                        <span class="search-shortcut">⌘K</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <article class="page-content">
+                    <nav class="breadcrumbs">
+                        <a href="../index.html" class="breadcrumb-item">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <a href="8-1-soc-overview.html" class="breadcrumb-item">SOC Operations</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span class="breadcrumb-item current">Identity Threat Playbook</span>
+                    </nav>
+
+                    <header class="page-header">
+                        <h1>Identity Threat Investigation Playbook</h1>
+                        <div class="page-meta">
+                            <span class="badge badge-l1">L1 SOC</span>
+                            <span class="badge badge-l2">L2 SOC</span>
+                            <span class="page-meta-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clip-rule="evenodd" />
+                                </svg>
+                                Operational Playbook
+                            </span>
+                        </div>
+                    </header>
+
+                    <section>
+                        <p>
+                            This playbook provides step-by-step procedures for investigating identity-related 
+                            security alerts from Microsoft Defender for Cloud, Entra ID Protection, and 
+                            related identity security products. Identity is the new perimeter - compromised 
+                            credentials are the #1 attack vector.
+                        </p>
+
+                        <div class="callout callout-warning">
+                            <div class="callout-title">Data Sources Required</div>
+                            <div class="callout-content">
+                                <ul>
+                                    <li><strong>Entra ID Sign-in logs</strong> - SigninLogs table</li>
+                                    <li><strong>Entra ID Audit logs</strong> - AuditLogs table</li>
+                                    <li><strong>Identity Protection</strong> - AADRiskyUsers, AADUserRiskEvents</li>
+                                    <li><strong>MDC Alerts</strong> - SecurityAlert table</li>
+                                    <li><strong>Azure Activity</strong> - AzureActivity table</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Investigation Flow -->
+                    <section>
+                        <h2 id="investigation-flow">Investigation Flow</h2>
+
+                        <div class="ascii-diagram">
+<span class="highlight-cyan">╔══════════════════════════════════════════════════════════════════════════════════════════════╗</span>
+<span class="highlight-cyan">║</span>                      <span class="highlight-blue">IDENTITY THREAT INVESTIGATION WORKFLOW</span>                                <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">╠══════════════════════════════════════════════════════════════════════════════════════════════╣</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-orange">┌─────────────┐</span>    <span class="highlight-blue">┌─────────────┐</span>    <span class="highlight-purple">┌─────────────┐</span>    <span class="highlight-green">┌─────────────┐</span>    <span class="highlight-red">┌─────────────┐</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-orange">│   ALERT     │</span>───►<span class="highlight-blue">│   VERIFY    │</span>───►<span class="highlight-purple">│   CHECK     │</span>───►<span class="highlight-green">│   SCOPE     │</span>───►<span class="highlight-red">│  CONTAIN    │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-orange">│  RECEIVED   │</span>    <span class="highlight-blue">│   ACCOUNT   │</span>    <span class="highlight-purple">│   ACTIVITY  │</span>    <span class="highlight-green">│   IMPACT    │</span>    <span class="highlight-red">│  & RECOVER  │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-orange">└─────────────┘</span>    <span class="highlight-blue">└─────────────┘</span>    <span class="highlight-purple">└─────────────┘</span>    <span class="highlight-green">└─────────────┘</span>    <span class="highlight-red">└─────────────┘</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>        │                  │                  │                  │                  │        <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>        ▼                  ▼                  ▼                  ▼                  ▼        <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-orange">• User or SP?</span>      <span class="highlight-blue">• Contact user</span>    <span class="highlight-purple">• Sign-in logs</span>    <span class="highlight-green">• Azure access?</span>   <span class="highlight-red">• Disable account</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-orange">• Risk level</span>       <span class="highlight-blue">• Check MFA</span>       <span class="highlight-purple">• Audit logs</span>      <span class="highlight-green">• M365 access?</span>    <span class="highlight-red">• Revoke sessions</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-orange">• Alert source</span>     <span class="highlight-blue">• Travel check</span>    <span class="highlight-purple">• OAuth grants</span>    <span class="highlight-green">• Data access?</span>    <span class="highlight-red">• Reset password</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-orange">• MITRE tactic</span>     <span class="highlight-blue">• VPN/device?</span>     <span class="highlight-purple">• Role changes</span>    <span class="highlight-green">• Persistence?</span>    <span class="highlight-red">• Remove grants</span>   <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">╚══════════════════════════════════════════════════════════════════════════════════════════════╝</span>
+                        </div>
+                    </section>
+
+                    <!-- User vs Service Principal -->
+                    <section>
+                        <h2 id="identity-type">Step 1: Identify the Identity Type</h2>
+
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Identity Type</th>
+                                        <th>Investigation Approach</th>
+                                        <th>Containment</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>User Account</strong></td>
+                                        <td>Contact user, check sign-in patterns, verify MFA</td>
+                                        <td>Disable account, revoke sessions, reset password</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Service Principal</strong></td>
+                                        <td>Check app owner, audit API calls, review permissions</td>
+                                        <td>Disable SP, rotate credentials, revoke tokens</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Managed Identity</strong></td>
+                                        <td>Check associated resource, audit Azure activity</td>
+                                        <td>Disable on resource, investigate host compromise</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Guest User</strong></td>
+                                        <td>Check inviter, audit cross-tenant access</td>
+                                        <td>Remove guest, block domain if malicious</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h3>Quick Identity Lookup</h3>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Get identity details from alert
+let identityId = "user-or-sp-id-from-alert";
+union 
+    (SigninLogs | where UserId == identityId | take 1 | project Type="User", Identity=UserPrincipalName, DisplayName=UserDisplayName),
+    (AADServicePrincipalSignInLogs | where ServicePrincipalId == identityId | take 1 | project Type="ServicePrincipal", Identity=ServicePrincipalName, DisplayName=ServicePrincipalName)
+| take 1</code></pre>
+                    </section>
+
+                    <!-- User Investigation -->
+                    <section>
+                        <h2 id="user-investigation">User Account Investigation</h2>
+
+                        <div class="checklist">
+                            <div class="checklist-title">User Investigation Checklist</div>
+                            <ul>
+                                <li>
+                                    <input type="checkbox" id="u1">
+                                    <label for="u1">Contact user to verify activity</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="u2">
+                                    <label for="u2">Check recent sign-in locations and devices</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="u3">
+                                    <label for="u3">Verify MFA was enforced</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="u4">
+                                    <label for="u4">Review OAuth app consents</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="u5">
+                                    <label for="u5">Check for mailbox rule changes</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="u6">
+                                    <label for="u6">Review Azure role assignments</label>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <h3>Sign-In Analysis</h3>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// User sign-in history - last 7 days
+let userUPN = "user@company.com";
+SigninLogs
+| where TimeGenerated > ago(7d)
+| where UserPrincipalName =~ userUPN
+| project 
+    TimeGenerated,
+    IPAddress,
+    Location,
+    DeviceDetail,
+    AppDisplayName,
+    ResultType,
+    ResultDescription,
+    ConditionalAccessStatus,
+    MfaDetail,
+    RiskLevelDuringSignIn,
+    RiskState
+| order by TimeGenerated desc</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Detect impossible travel
+let userUPN = "user@company.com";
+SigninLogs
+| where TimeGenerated > ago(24h)
+| where UserPrincipalName =~ userUPN
+| where ResultType == 0  // Successful sign-ins
+| project TimeGenerated, IPAddress, Location, City=tostring(LocationDetails.city), Country=tostring(LocationDetails.countryOrRegion)
+| order by TimeGenerated asc
+| extend PreviousTime = prev(TimeGenerated), PreviousCity = prev(City), PreviousCountry = prev(Country)
+| where City != PreviousCity and Country != PreviousCountry
+| extend TimeDiff = datetime_diff('minute', TimeGenerated, PreviousTime)
+| where TimeDiff < 120  // Less than 2 hours between different countries</code></pre>
+
+                        <h3>Check OAuth Consents</h3>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Recent OAuth app consents by user
+let userUPN = "user@company.com";
+AuditLogs
+| where TimeGenerated > ago(30d)
+| where OperationName == "Consent to application"
+| where InitiatedBy.user.userPrincipalName =~ userUPN
+| project 
+    TimeGenerated,
+    AppName = TargetResources[0].displayName,
+    Permissions = TargetResources[0].modifiedProperties,
+    InitiatedBy = InitiatedBy.user.userPrincipalName
+| order by TimeGenerated desc</code></pre>
+
+                        <h3>Azure Activity by User</h3>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Azure management plane activity
+let userUPN = "user@company.com";
+AzureActivity
+| where TimeGenerated > ago(7d)
+| where Caller =~ userUPN
+| summarize 
+    Operations = count(),
+    UniqueResources = dcount(Resource),
+    OperationTypes = make_set(OperationNameValue)
+    by bin(TimeGenerated, 1h)
+| order by TimeGenerated desc</code></pre>
+                    </section>
+
+                    <!-- Service Principal Investigation -->
+                    <section>
+                        <h2 id="sp-investigation">Service Principal Investigation</h2>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Service Principal sign-in activity
+let spId = "service-principal-id";
+AADServicePrincipalSignInLogs
+| where TimeGenerated > ago(7d)
+| where ServicePrincipalId == spId
+| project 
+    TimeGenerated,
+    ServicePrincipalName,
+    IPAddress,
+    Location,
+    ResourceDisplayName,
+    ResultType,
+    ResultDescription
+| order by TimeGenerated desc</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Check SP permission changes
+let spName = "your-service-principal";
+AuditLogs
+| where TimeGenerated > ago(30d)
+| where TargetResources[0].displayName =~ spName
+| where OperationName has_any ("credential", "permission", "role", "owner")
+| project 
+    TimeGenerated,
+    OperationName,
+    InitiatedBy = coalesce(InitiatedBy.user.userPrincipalName, InitiatedBy.app.displayName),
+    ModifiedProperties = TargetResources[0].modifiedProperties
+| order by TimeGenerated desc</code></pre>
+
+                        <h3>SP Containment Actions</h3>
+
+                        <div class="code-header">
+                            <span class="code-lang">PowerShell</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-powershell"># Disable Service Principal
+$spId = "service-principal-object-id"
+
+# Disable SP
+Update-MgServicePrincipal -ServicePrincipalId $spId -AccountEnabled:$false
+
+# Remove all credentials (secrets and certificates)
+$credentials = Get-MgServicePrincipalPasswordCredential -ServicePrincipalId $spId
+foreach ($cred in $credentials) {
+    Remove-MgServicePrincipalPassword -ServicePrincipalId $spId -KeyId $cred.KeyId
+}
+
+# List and optionally remove role assignments
+Get-AzRoleAssignment -ObjectId $spId | Format-Table RoleDefinitionName, Scope</code></pre>
+                    </section>
+
+                    <!-- Common Alert Types -->
+                    <section>
+                        <h2 id="common-alerts">Common Identity Alert Types</h2>
+
+                        <div class="accordion">
+                            <div class="accordion-item expanded">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">Suspicious Sign-in Activity</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <p><strong>Indicators:</strong></p>
+                                    <ul>
+                                        <li>Sign-in from unusual location</li>
+                                        <li>Sign-in from anonymous IP (VPN/Tor)</li>
+                                        <li>Impossible travel</li>
+                                        <li>Sign-in from unfamiliar device</li>
+                                    </ul>
+                                    
+                                    <p><strong>Investigation:</strong></p>
+                                    <ol>
+                                        <li>Contact user - did they travel or use VPN?</li>
+                                        <li>Check if sign-in was successful</li>
+                                        <li>Review what was accessed after sign-in</li>
+                                        <li>Check for MFA bypass</li>
+                                    </ol>
+                                    
+                                    <p><strong>Response:</strong></p>
+                                    <ul>
+                                        <li><strong>If legitimate:</strong> Document, consider named location</li>
+                                        <li><strong>If suspicious:</strong> Reset password, revoke sessions, review activity</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">Leaked Credentials / Password Spray</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <p><strong>IMMEDIATE ACTIONS:</strong></p>
+                                    <ol>
+                                        <li>Force password reset immediately</li>
+                                        <li>Revoke all refresh tokens</li>
+                                        <li>Enable MFA if not already</li>
+                                        <li>Review sign-in history for successful compromises</li>
+                                    </ol>
+
+                                    <div class="code-header">
+                                        <span class="code-lang">PowerShell</span>
+                                        <button class="code-copy-btn">Copy</button>
+                                    </div>
+                                    <pre><code class="language-powershell"># Force password reset and revoke sessions
+$userId = "user@company.com"
+
+# Revoke all sessions
+Revoke-MgUserSignInSession -UserId $userId
+
+# Force password change
+Update-MgUser -UserId $userId -PasswordProfile @{
+    ForceChangePasswordNextSignIn = $true
+}
+
+# Block sign-in temporarily (if needed)
+Update-MgUser -UserId $userId -AccountEnabled:$false</code></pre>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">Malicious OAuth App Consent</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <p><strong>Signs of Malicious App:</strong></p>
+                                    <ul>
+                                        <li>Unknown publisher</li>
+                                        <li>Excessive permissions (Mail.Read, Files.ReadWrite.All)</li>
+                                        <li>Recent consent (within hours of alert)</li>
+                                        <li>Typosquatting app name</li>
+                                    </ul>
+
+                                    <p><strong>Containment:</strong></p>
+                                    <div class="code-header">
+                                        <span class="code-lang">PowerShell</span>
+                                        <button class="code-copy-btn">Copy</button>
+                                    </div>
+                                    <pre><code class="language-powershell"># Remove OAuth grant from user
+$userId = "user@company.com"
+$appId = "malicious-app-client-id"
+
+# Get the OAuth2PermissionGrant
+$grants = Get-MgUserOAuth2PermissionGrant -UserId $userId | 
+    Where-Object { $_.ClientId -eq $appId }
+
+# Remove the grant
+foreach ($grant in $grants) {
+    Remove-MgOAuth2PermissionGrant -OAuth2PermissionGrantId $grant.Id
+}
+
+# Block the app tenant-wide (admin)
+New-MgPolicypermissionGrantPolicy... # Or use portal</code></pre>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">Privileged Role Assignment</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <p><strong>High-Risk Roles to Monitor:</strong></p>
+                                    <ul>
+                                        <li>Global Administrator</li>
+                                        <li>Privileged Role Administrator</li>
+                                        <li>Security Administrator</li>
+                                        <li>Exchange Administrator</li>
+                                        <li>Application Administrator</li>
+                                    </ul>
+
+                                    <div class="code-header">
+                                        <span class="code-lang">KQL</span>
+                                        <button class="code-copy-btn">Copy</button>
+                                    </div>
+                                    <pre><code class="language-kql">// Track privileged role assignments
+AuditLogs
+| where TimeGenerated > ago(24h)
+| where OperationName has_any ("Add member to role", "Add eligible member to role")
+| where TargetResources[0].displayName has_any ("Global Administrator", "Privileged Role", "Security Admin")
+| project 
+    TimeGenerated,
+    Operation = OperationName,
+    Role = TargetResources[0].displayName,
+    User = TargetResources[0].userPrincipalName,
+    InitiatedBy = InitiatedBy.user.userPrincipalName,
+    IPAddress = InitiatedBy.user.ipAddress</code></pre>
+
+                                    <p><strong>Response:</strong></p>
+                                    <ul>
+                                        <li>Verify with requester and approver</li>
+                                        <li>If unauthorized: Remove role, investigate initiator</li>
+                                        <li>Enable PIM for privileged roles</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Containment Actions -->
+                    <section>
+                        <h2 id="containment">Containment Actions</h2>
+
+                        <div class="tabs">
+                            <div class="tab-list">
+                                <button class="tab-btn active" data-tab="disable">Disable Account</button>
+                                <button class="tab-btn" data-tab="revoke">Revoke Sessions</button>
+                                <button class="tab-btn" data-tab="reset">Reset Credentials</button>
+                            </div>
+
+                            <div class="tab-panel active" data-panel="disable">
+                                <h4>Disable User Account</h4>
+                                
+                                <div class="code-header">
+                                    <span class="code-lang">PowerShell</span>
+                                    <button class="code-copy-btn">Copy</button>
+                                </div>
+                                <pre><code class="language-powershell"># Disable user account
+$userId = "user@company.com"
+Update-MgUser -UserId $userId -AccountEnabled:$false
+
+# Verify
+Get-MgUser -UserId $userId | Select-Object DisplayName, AccountEnabled</code></pre>
+
+                                <div class="code-header">
+                                    <span class="code-lang">Azure CLI</span>
+                                    <button class="code-copy-btn">Copy</button>
+                                </div>
+                                <pre><code class="language-bash"># Disable via CLI
+az ad user update --id "user@company.com" --account-enabled false</code></pre>
+                            </div>
+
+                            <div class="tab-panel" data-panel="revoke">
+                                <h4>Revoke All Sessions</h4>
+                                
+                                <div class="code-header">
+                                    <span class="code-lang">PowerShell</span>
+                                    <button class="code-copy-btn">Copy</button>
+                                </div>
+                                <pre><code class="language-powershell"># Revoke all refresh tokens (forces re-authentication)
+$userId = "user@company.com"
+Revoke-MgUserSignInSession -UserId $userId
+
+# This invalidates:
+# - All refresh tokens
+# - All session tokens
+# - Forces re-authentication on all devices</code></pre>
+
+                                <div class="callout callout-info" style="margin-top: var(--space-md);">
+                                    <div class="callout-title">Token Lifetime</div>
+                                    <div class="callout-content">
+                                        <p>Access tokens live for ~1 hour. Revoking sessions invalidates refresh tokens 
+                                        immediately, but active access tokens may work until expiry. For immediate 
+                                        lockout, disable the account.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-panel" data-panel="reset">
+                                <h4>Reset Password</h4>
+                                
+                                <div class="code-header">
+                                    <span class="code-lang">PowerShell</span>
+                                    <button class="code-copy-btn">Copy</button>
+                                </div>
+                                <pre><code class="language-powershell"># Force password change on next sign-in
+$userId = "user@company.com"
+Update-MgUser -UserId $userId -PasswordProfile @{
+    ForceChangePasswordNextSignIn = $true
+    ForceChangePasswordNextSignInWithMfa = $true
+}
+
+# Or set a temporary password
+$tempPassword = [System.Web.Security.Membership]::GeneratePassword(16, 4)
+Update-MgUser -UserId $userId -PasswordProfile @{
+    Password = $tempPassword
+    ForceChangePasswordNextSignIn = $true
+}
+Write-Host "Temporary password: $tempPassword"</code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Key Takeaways -->
+                    <div class="key-takeaways">
+                        <div class="key-takeaways-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 2a.75.75 0 01.75.75v.258a33.186 33.186 0 016.668.83.75.75 0 01-.336 1.461z" clip-rule="evenodd" />
+                            </svg>
+                            Identity Investigation Best Practices
+                        </div>
+                        <ul>
+                            <li>Always try to contact the user first - most alerts are legitimate activity</li>
+                            <li>Check MFA status - compromised password with MFA is less critical</li>
+                            <li>Review OAuth consents - attackers often persist via malicious apps</li>
+                            <li>Service principal compromises can be worse than user compromises</li>
+                            <li>Revoking sessions doesn't immediately block active access tokens</li>
+                            <li>Document timeline and actions for incident report</li>
+                            <li>Enable PIM for all privileged roles to reduce standing access</li>
+                        </ul>
+                    </div>
+
+                    <div class="related-pages">
+                        <div class="related-title">Related Pages</div>
+                        <div class="related-list">
+                            <a href="8-3-vm-playbook.html" class="related-link">VM Threat Playbook</a>
+                            <a href="3-10-key-vault.html" class="related-link">Defender for Key Vault</a>
+                            <a href="5-12-playbooks.html" class="related-link">Automation Playbooks</a>
+                            <a href="12-1-kql-library.html" class="related-link">KQL Library</a>
+                        </div>
+                    </div>
+
+                    <nav class="page-nav">
+                        <a href="8-3-vm-playbook.html" class="page-nav-link prev">
+                            <span class="page-nav-label">← Previous</span>
+                            <span class="page-nav-title">VM Threat Playbook</span>
+                        </a>
+                        <a href="8-5-container-playbook.html" class="page-nav-link next">
+                            <span class="page-nav-label">Next →</span>
+                            <span class="page-nav-title">Container Playbook</span>
+                        </a>
+                    </nav>
+                </article>
+
+                <aside class="toc-sidebar">
+                    <div class="toc-title">On This Page</div>
+                    <ul class="toc-list">
+                        <li class="toc-item"><a href="#investigation-flow" class="toc-link">Investigation Flow</a></li>
+                        <li class="toc-item"><a href="#identity-type" class="toc-link">Identity Type</a></li>
+                        <li class="toc-item"><a href="#user-investigation" class="toc-link">User Investigation</a></li>
+                        <li class="toc-item"><a href="#sp-investigation" class="toc-link">Service Principal</a></li>
+                        <li class="toc-item"><a href="#common-alerts" class="toc-link">Common Alerts</a></li>
+                        <li class="toc-item"><a href="#containment" class="toc-link">Containment</a></li>
+                    </ul>
+                </aside>
+            </div>
+        </main>
+        <div class="mobile-overlay"></div>
+    </div>
+
+    <div class="search-modal">
+        <div class="search-modal-content">
+            <input type="text" class="search-modal-input" placeholder="Search documentation..." autofocus>
+            <div class="search-results"></div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

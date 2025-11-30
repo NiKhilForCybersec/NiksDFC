@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="GCP Connector Setup - Connect Google Cloud Platform projects to Microsoft Defender for Cloud for multi-cloud security.">
+    <title>GCP Connector Setup - Microsoft Defender for Cloud</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="../index.html" class="sidebar-logo">
+                    <div class="logo-icon">MDC</div>
+                    <span class="logo-text">Defender for Cloud</span>
+                </a>
+                <button class="sidebar-toggle" aria-label="Toggle sidebar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Multi-Cloud</div>
+                    <div class="nav-group expanded" data-group="multicloud">
+                        <div class="nav-group-header">
+                            <span class="nav-group-title">Multi-Cloud & Hybrid</span>
+                            <svg class="nav-group-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="nav-group-items">
+                            <a href="4-1-multicloud-overview.html" class="nav-subitem">Multi-Cloud Overview</a>
+                            <a href="4-2-aws-connector.html" class="nav-subitem">AWS Connector</a>
+                            <a href="4-3-aws-cspm.html" class="nav-subitem">AWS CSPM</a>
+                            <a href="4-4-gcp-connector.html" class="nav-subitem active">GCP Connector</a>
+                            <a href="4-5-gcp-cspm.html" class="nav-subitem">GCP CSPM</a>
+                            <a href="4-6-arc-servers.html" class="nav-subitem">Azure Arc Servers</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" aria-label="Open menu">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10zm0 5.25a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75a.75.75 0 01-.75-.75z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div class="search-box">
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                        </svg>
+                        <input type="text" class="search-input" placeholder="Search documentation..." readonly>
+                        <span class="search-shortcut">⌘K</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <article class="page-content">
+                    <nav class="breadcrumbs">
+                        <a href="../index.html" class="breadcrumb-item">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <a href="4-1-multicloud-overview.html" class="breadcrumb-item">Multi-Cloud</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span class="breadcrumb-item current">GCP Connector</span>
+                    </nav>
+
+                    <header class="page-header">
+                        <h1>GCP Connector Setup</h1>
+                        <div class="page-meta">
+                            <span class="badge badge-l2">L2 Technical</span>
+                            <span class="badge badge-l3">L3 Advanced</span>
+                            <span class="page-meta-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clip-rule="evenodd" />
+                                </svg>
+                                30 min setup
+                            </span>
+                        </div>
+                    </header>
+
+                    <section>
+                        <p>
+                            Connect your Google Cloud Platform projects to Microsoft Defender for Cloud for unified 
+                            security posture management. This guide covers single-project and organization-level deployments 
+                            using Workload Identity Federation for secure, keyless authentication.
+                        </p>
+
+                        <div class="callout callout-info">
+                            <div class="callout-title">Prerequisites</div>
+                            <div class="callout-content">
+                                <ul>
+                                    <li><strong>Azure:</strong> Security Admin or Owner on the subscription</li>
+                                    <li><strong>GCP:</strong> Owner or Security Admin role on project/organization</li>
+                                    <li><strong>For Organization:</strong> Organization Administrator access</li>
+                                    <li><strong>APIs:</strong> Cloud Resource Manager, IAM, Security Command Center</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Architecture -->
+                    <section>
+                        <h2 id="architecture">Connector Architecture</h2>
+
+                        <div class="ascii-diagram">
+<span class="highlight-cyan">╔══════════════════════════════════════════════════════════════════════════════════════════════╗</span>
+<span class="highlight-cyan">║</span>                         <span class="highlight-blue">GCP TO MDC CONNECTOR ARCHITECTURE</span>                                  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">╠══════════════════════════════════════════════════════════════════════════════════════════════╣</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">┌─────────────────────────────────────────┐</span>          <span class="highlight-blue">┌─────────────────────────────────┐</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│           GCP PROJECT/ORG              │</span>          <span class="highlight-blue">│          MICROSOFT AZURE         │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│                                         │</span>          <span class="highlight-blue">│                                  │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│  ┌─────────────────────────────────┐   │</span>          <span class="highlight-blue">│  ┌────────────────────────────┐  │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│  │   Workload Identity Federation  │   │</span>          <span class="highlight-blue">│  │   Defender for Cloud        │  │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│  │  ┌───────────────────────────┐  │   │</span>          <span class="highlight-blue">│  │                              │  │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│  │  │   Workload Identity Pool  │  │───┼──────────┼──►  GCP Connector            │  │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│  │  │   (Azure AD Provider)     │  │   │</span>          <span class="highlight-blue">│  │  (Security Connector)        │  │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│  │  └───────────────────────────┘  │   │</span>          <span class="highlight-blue">│  │                              │  │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│  │  ┌───────────────────────────┐  │   │</span>          <span class="highlight-blue">│  │  Capabilities:               │  │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│  │  │   Service Account         │  │   │</span>          <span class="highlight-blue">│  │  • CSPM (Free)               │  │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│  │  │   (Security Viewer role)  │  │   │</span>          <span class="highlight-blue">│  │  • Defender CSPM (Paid)      │  │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│  │  └───────────────────────────┘  │   │</span>          <span class="highlight-blue">│  │  • Defender for Servers      │  │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│  └─────────────────────────────────┘   │</span>          <span class="highlight-blue">│  │  • Defender for Containers   │  │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│                                         │</span>          <span class="highlight-blue">│  │  • Defender for Databases    │  │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│  ┌─────────────────────────────────┐   │</span>          <span class="highlight-blue">│  └────────────────────────────┘  │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│  │         GCP Resources           │   │</span>          <span class="highlight-blue">│                                  │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│  │  GCE, GCS, GKE, Cloud SQL...    │───┼──────────┼─►  Data Flow:                  │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│  └─────────────────────────────────┘   │</span>          <span class="highlight-blue">│      Recommendations            │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│                                         │</span>          <span class="highlight-blue">│      Secure Score               │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">└─────────────────────────────────────────┘</span>          <span class="highlight-blue">│      Attack Paths               │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                       <span class="highlight-blue">│      Alerts                     │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                       <span class="highlight-blue">└─────────────────────────────────┘</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">╚══════════════════════════════════════════════════════════════════════════════════════════════╝</span>
+                        </div>
+
+                        <div class="callout callout-success">
+                            <div class="callout-title">Keyless Authentication</div>
+                            <div class="callout-content">
+                                <p>MDC uses <strong>Workload Identity Federation</strong> instead of service account keys. 
+                                This is more secure as there are no long-lived credentials to manage or rotate.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Setup Options -->
+                    <section>
+                        <h2 id="setup-options">Setup Options</h2>
+
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Option</th>
+                                        <th>Use Case</th>
+                                        <th>Complexity</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Single Project</strong></td>
+                                        <td>Small environments, PoC, testing</td>
+                                        <td>Low - 20 min</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>GCP Organization</strong></td>
+                                        <td>Enterprise, multiple projects</td>
+                                        <td>Medium - 45 min</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Single Project Setup -->
+                    <section>
+                        <h2 id="single-project">Single Project Setup</h2>
+
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="timeline-marker">1</div>
+                                <div class="timeline-content">
+                                    <h4>Navigate to Environment Settings</h4>
+                                    <p>Azure Portal → Defender for Cloud → Environment settings → Add environment → Google Cloud Platform</p>
+                                </div>
+                            </div>
+
+                            <div class="timeline-item">
+                                <div class="timeline-marker">2</div>
+                                <div class="timeline-content">
+                                    <h4>Configure Connector Details</h4>
+                                    <ul>
+                                        <li>Connector name (e.g., "GCP-Production")</li>
+                                        <li>Onboarding type: Single project</li>
+                                        <li>GCP Project ID (not project number)</li>
+                                        <li>Select Azure subscription</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="timeline-item">
+                                <div class="timeline-marker">3</div>
+                                <div class="timeline-content">
+                                    <h4>Select Plans</h4>
+                                    <div class="table-wrapper">
+                                        <table class="table-compact">
+                                            <tr>
+                                                <td><strong>Foundational CSPM</strong></td>
+                                                <td>Free</td>
+                                                <td>Basic posture, CIS benchmarks</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Defender CSPM</strong></td>
+                                                <td>~$5/server/month</td>
+                                                <td>Attack paths, agentless scanning</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Defender for Servers</strong></td>
+                                                <td>P1: $5, P2: $15</td>
+                                                <td>GCE VM protection via Arc</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Defender for Containers</strong></td>
+                                                <td>~$7/vCPU/month</td>
+                                                <td>GKE cluster protection</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Defender for Databases</strong></td>
+                                                <td>~$15/instance</td>
+                                                <td>Cloud SQL protection</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="timeline-item">
+                                <div class="timeline-marker">4</div>
+                                <div class="timeline-content">
+                                    <h4>Download GCP Script</h4>
+                                    <p>Download the onboarding script - this creates the required GCP resources.</p>
+                                </div>
+                            </div>
+
+                            <div class="timeline-item">
+                                <div class="timeline-marker">5</div>
+                                <div class="timeline-content">
+                                    <h4>Run Script in Cloud Shell</h4>
+                                    <p>Open GCP Cloud Shell and execute the downloaded script.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3>Manual gcloud Setup</h3>
+
+                        <div class="code-header">
+                            <span class="code-lang">Bash (gcloud)</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-bash"># Set variables
+export PROJECT_ID="your-gcp-project-id"
+export AZURE_TENANT_ID="your-azure-tenant-id"
+export CONNECTOR_GUID="connector-guid-from-azure"
+export POOL_ID="azure-defender-pool"
+export PROVIDER_ID="azure-defender-provider"
+export SERVICE_ACCOUNT="azure-defender-sa"
+
+# Enable required APIs
+gcloud services enable \
+    cloudresourcemanager.googleapis.com \
+    iam.googleapis.com \
+    iamcredentials.googleapis.com \
+    securitycenter.googleapis.com \
+    --project=$PROJECT_ID
+
+# Create service account
+gcloud iam service-accounts create $SERVICE_ACCOUNT \
+    --display-name="Azure Defender for Cloud" \
+    --project=$PROJECT_ID
+
+# Grant Security Viewer role
+gcloud projects add-iam-policy-binding $PROJECT_ID \
+    --member="serviceAccount:${SERVICE_ACCOUNT}@${PROJECT_ID}.iam.gserviceaccount.com" \
+    --role="roles/iam.securityReviewer"
+
+# Grant additional roles for full CSPM
+gcloud projects add-iam-policy-binding $PROJECT_ID \
+    --member="serviceAccount:${SERVICE_ACCOUNT}@${PROJECT_ID}.iam.gserviceaccount.com" \
+    --role="roles/viewer"</code></pre>
+
+                        <h3>Create Workload Identity Pool</h3>
+
+                        <div class="code-header">
+                            <span class="code-lang">Bash (gcloud)</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-bash"># Create Workload Identity Pool
+gcloud iam workload-identity-pools create $POOL_ID \
+    --location="global" \
+    --display-name="Azure Defender Pool" \
+    --project=$PROJECT_ID
+
+# Create OIDC Provider for Azure AD
+gcloud iam workload-identity-pools providers create-oidc $PROVIDER_ID \
+    --location="global" \
+    --workload-identity-pool=$POOL_ID \
+    --issuer-uri="https://sts.windows.net/${AZURE_TENANT_ID}/" \
+    --allowed-audiences="api://AzureSecurityCenter.MultiCloud.DefenderForCloud" \
+    --attribute-mapping="google.subject=assertion.sub" \
+    --project=$PROJECT_ID
+
+# Allow Azure to impersonate service account
+gcloud iam service-accounts add-iam-policy-binding \
+    ${SERVICE_ACCOUNT}@${PROJECT_ID}.iam.gserviceaccount.com \
+    --role="roles/iam.workloadIdentityUser" \
+    --member="principalSet://iam.googleapis.com/projects/${PROJECT_NUMBER}/locations/global/workloadIdentityPools/${POOL_ID}/*" \
+    --project=$PROJECT_ID</code></pre>
+                    </section>
+
+                    <!-- Organization Setup -->
+                    <section>
+                        <h2 id="organization">GCP Organization Setup</h2>
+
+                        <div class="callout callout-tip">
+                            <div class="callout-title">Recommended for Enterprise</div>
+                            <div class="callout-content">
+                                <p>Organization-level connection automatically discovers all projects and applies 
+                                security policies consistently across your GCP organization.</p>
+                            </div>
+                        </div>
+
+                        <h3>Organization-Level Deployment</h3>
+
+                        <div class="code-header">
+                            <span class="code-lang">Bash (gcloud)</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-bash"># Set organization variables
+export ORG_ID="your-org-id"  # Numeric organization ID
+export BILLING_PROJECT="your-billing-project"
+
+# Create service account at organization level
+gcloud iam service-accounts create azure-defender-org-sa \
+    --display-name="Azure Defender Org Service Account" \
+    --project=$BILLING_PROJECT
+
+# Grant organization-level roles
+gcloud organizations add-iam-policy-binding $ORG_ID \
+    --member="serviceAccount:azure-defender-org-sa@${BILLING_PROJECT}.iam.gserviceaccount.com" \
+    --role="roles/iam.securityReviewer"
+
+gcloud organizations add-iam-policy-binding $ORG_ID \
+    --member="serviceAccount:azure-defender-org-sa@${BILLING_PROJECT}.iam.gserviceaccount.com" \
+    --role="roles/resourcemanager.organizationViewer"
+
+# For Defender for Servers (GCE VMs)
+gcloud organizations add-iam-policy-binding $ORG_ID \
+    --member="serviceAccount:azure-defender-org-sa@${BILLING_PROJECT}.iam.gserviceaccount.com" \
+    --role="roles/compute.viewer"
+
+# For Defender for Containers (GKE)
+gcloud organizations add-iam-policy-binding $ORG_ID \
+    --member="serviceAccount:azure-defender-org-sa@${BILLING_PROJECT}.iam.gserviceaccount.com" \
+    --role="roles/container.viewer"</code></pre>
+
+                        <h3>Required IAM Roles by Feature</h3>
+
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Feature</th>
+                                        <th>GCP Role</th>
+                                        <th>Purpose</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>CSPM (All)</td>
+                                        <td><code>roles/iam.securityReviewer</code></td>
+                                        <td>Read security configurations</td>
+                                    </tr>
+                                    <tr>
+                                        <td>CSPM (All)</td>
+                                        <td><code>roles/viewer</code></td>
+                                        <td>Read resource metadata</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Defender CSPM</td>
+                                        <td><code>roles/cloudasset.viewer</code></td>
+                                        <td>Asset inventory access</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Servers</td>
+                                        <td><code>roles/compute.viewer</code></td>
+                                        <td>GCE VM information</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Containers</td>
+                                        <td><code>roles/container.viewer</code></td>
+                                        <td>GKE cluster access</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Databases</td>
+                                        <td><code>roles/cloudsql.viewer</code></td>
+                                        <td>Cloud SQL information</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Verification -->
+                    <section>
+                        <h2 id="verification">Verification & Troubleshooting</h2>
+
+                        <h3>Check Connection Status</h3>
+
+                        <div class="code-header">
+                            <span class="code-lang">Azure CLI</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-bash"># List GCP connectors
+az security security-connector list \
+    --query "[?environmentName=='GCP'].{Name:name,Status:hierarchyIdentifier}"
+
+# Get detailed status
+az security security-connector show \
+    --name "your-gcp-connector" \
+    --resource-group "your-rg"</code></pre>
+
+                        <h3>Verify GCP Side</h3>
+
+                        <div class="code-header">
+                            <span class="code-lang">Bash (gcloud)</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-bash"># Check service account exists
+gcloud iam service-accounts describe \
+    azure-defender-sa@${PROJECT_ID}.iam.gserviceaccount.com
+
+# Verify Workload Identity Pool
+gcloud iam workload-identity-pools describe $POOL_ID \
+    --location="global" \
+    --project=$PROJECT_ID
+
+# Check provider configuration
+gcloud iam workload-identity-pools providers describe $PROVIDER_ID \
+    --location="global" \
+    --workload-identity-pool=$POOL_ID \
+    --project=$PROJECT_ID
+
+# List IAM bindings for service account
+gcloud iam service-accounts get-iam-policy \
+    azure-defender-sa@${PROJECT_ID}.iam.gserviceaccount.com</code></pre>
+
+                        <h3>Common Issues</h3>
+
+                        <div class="accordion">
+                            <div class="accordion-item expanded">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">Connector shows "Unhealthy"</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <p><strong>Common causes:</strong></p>
+                                    <ul>
+                                        <li>Workload Identity Pool not configured correctly</li>
+                                        <li>Azure tenant ID mismatch in OIDC provider</li>
+                                        <li>Service account missing required roles</li>
+                                        <li>APIs not enabled on the project</li>
+                                    </ul>
+                                    
+                                    <p><strong>Diagnostic:</strong></p>
+                                    <div class="code-header">
+                                        <span class="code-lang">Bash</span>
+                                        <button class="code-copy-btn">Copy</button>
+                                    </div>
+                                    <pre><code class="language-bash"># Check all required APIs are enabled
+gcloud services list --enabled --project=$PROJECT_ID | grep -E "(cloudresourcemanager|iam|securitycenter)"
+
+# Verify OIDC issuer URI matches Azure tenant
+gcloud iam workload-identity-pools providers describe $PROVIDER_ID \
+    --location="global" \
+    --workload-identity-pool=$POOL_ID \
+    --format="value(oidc.issuerUri)"</code></pre>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">No recommendations appearing</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <ul>
+                                        <li>Initial scan takes 4-24 hours</li>
+                                        <li>Verify CSPM plan is enabled</li>
+                                        <li>Check service account has <code>roles/viewer</code></li>
+                                        <li>Ensure project has resources to assess</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">Permission denied errors</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <div class="code-header">
+                                        <span class="code-lang">Bash</span>
+                                        <button class="code-copy-btn">Copy</button>
+                                    </div>
+                                    <pre><code class="language-bash"># Test service account permissions
+gcloud asset search-all-resources \
+    --scope="projects/${PROJECT_ID}" \
+    --impersonate-service-account="azure-defender-sa@${PROJECT_ID}.iam.gserviceaccount.com" \
+    --limit=1</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- GCE Protection -->
+                    <section>
+                        <h2 id="gce-protection">GCE VM Protection</h2>
+
+                        <p>For full server protection on GCE VMs, deploy the Azure Arc agent:</p>
+
+                        <div class="code-header">
+                            <span class="code-lang">Bash (On GCE VM)</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-bash"># Download and install Arc agent (Linux)
+wget https://aka.ms/azcmagent -O /tmp/install_linux_azcmagent.sh
+chmod +x /tmp/install_linux_azcmagent.sh
+sudo /tmp/install_linux_azcmagent.sh
+
+# Connect to Azure
+sudo azcmagent connect \
+    --resource-group "your-arc-rg" \
+    --tenant-id "your-azure-tenant-id" \
+    --location "eastus" \
+    --subscription-id "your-subscription-id" \
+    --cloud "AzureCloud" \
+    --tags "Environment=Production,Source=GCP,Project=${PROJECT_ID}"
+
+# Verify connection
+azcmagent show</code></pre>
+
+                        <h3>Bulk Deployment via Startup Script</h3>
+
+                        <div class="code-header">
+                            <span class="code-lang">Bash (Startup Script)</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-bash">#!/bin/bash
+# GCE Startup script for Azure Arc deployment
+
+# Variables (replace with your values)
+TENANT_ID="your-azure-tenant-id"
+SUBSCRIPTION_ID="your-azure-subscription-id"
+RESOURCE_GROUP="your-arc-rg"
+LOCATION="eastus"
+
+# Check if already connected
+if azcmagent show &>/dev/null; then
+    echo "Already connected to Azure Arc"
+    exit 0
+fi
+
+# Install Arc agent
+wget -q https://aka.ms/azcmagent -O /tmp/install_linux_azcmagent.sh
+chmod +x /tmp/install_linux_azcmagent.sh
+/tmp/install_linux_azcmagent.sh
+
+# Connect (requires service principal or managed identity)
+azcmagent connect \
+    --resource-group "$RESOURCE_GROUP" \
+    --tenant-id "$TENANT_ID" \
+    --location "$LOCATION" \
+    --subscription-id "$SUBSCRIPTION_ID" \
+    --service-principal-id "$SP_APP_ID" \
+    --service-principal-secret "$SP_SECRET"</code></pre>
+                    </section>
+
+                    <!-- Key Takeaways -->
+                    <div class="key-takeaways">
+                        <div class="key-takeaways-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 2a.75.75 0 01.75.75v.258a33.186 33.186 0 016.668.83.75.75 0 01-.336 1.461z" clip-rule="evenodd" />
+                            </svg>
+                            Key Takeaways
+                        </div>
+                        <ul>
+                            <li>GCP connector uses Workload Identity Federation - no service account keys needed</li>
+                            <li>Use organization-level connection for enterprise environments</li>
+                            <li>Enable required APIs before running onboarding script</li>
+                            <li>Initial scan takes 4-24 hours after connection</li>
+                            <li>GCE VM protection requires Azure Arc agent deployment</li>
+                            <li>GKE protection is native via Defender for Containers plan</li>
+                        </ul>
+                    </div>
+
+                    <div class="related-pages">
+                        <div class="related-title">Related Pages</div>
+                        <div class="related-list">
+                            <a href="4-2-aws-connector.html" class="related-link">AWS Connector</a>
+                            <a href="4-5-gcp-cspm.html" class="related-link">GCP CSPM</a>
+                            <a href="4-6-arc-servers.html" class="related-link">Azure Arc Servers</a>
+                            <a href="12-6-troubleshooting.html" class="related-link">Troubleshooting</a>
+                        </div>
+                    </div>
+
+                    <nav class="page-nav">
+                        <a href="4-3-aws-cspm.html" class="page-nav-link prev">
+                            <span class="page-nav-label">← Previous</span>
+                            <span class="page-nav-title">AWS CSPM</span>
+                        </a>
+                        <a href="4-5-gcp-cspm.html" class="page-nav-link next">
+                            <span class="page-nav-label">Next →</span>
+                            <span class="page-nav-title">GCP CSPM</span>
+                        </a>
+                    </nav>
+                </article>
+
+                <aside class="toc-sidebar">
+                    <div class="toc-title">On This Page</div>
+                    <ul class="toc-list">
+                        <li class="toc-item"><a href="#architecture" class="toc-link">Architecture</a></li>
+                        <li class="toc-item"><a href="#setup-options" class="toc-link">Setup Options</a></li>
+                        <li class="toc-item"><a href="#single-project" class="toc-link">Single Project</a></li>
+                        <li class="toc-item"><a href="#organization" class="toc-link">Organization Setup</a></li>
+                        <li class="toc-item"><a href="#verification" class="toc-link">Verification</a></li>
+                        <li class="toc-item"><a href="#gce-protection" class="toc-link">GCE Protection</a></li>
+                    </ul>
+                </aside>
+            </div>
+        </main>
+        <div class="mobile-overlay"></div>
+    </div>
+
+    <div class="search-modal">
+        <div class="search-modal-content">
+            <input type="text" class="search-modal-input" placeholder="Search documentation..." autofocus>
+            <div class="search-results"></div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

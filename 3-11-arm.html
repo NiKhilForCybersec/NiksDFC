@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Microsoft Defender for Resource Manager - Detect threats to Azure management operations and control plane security.">
+    <title>Defender for Resource Manager - Microsoft Defender for Cloud</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="../index.html" class="sidebar-logo">
+                    <div class="logo-icon">MDC</div>
+                    <span class="logo-text">Defender for Cloud</span>
+                </a>
+                <button class="sidebar-toggle" aria-label="Toggle sidebar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">CWPP</div>
+                    <div class="nav-group expanded" data-group="cwpp">
+                        <div class="nav-group-header">
+                            <span class="nav-group-title">Workload Protection</span>
+                            <svg class="nav-group-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="nav-group-items">
+                            <a href="3-1-servers-overview.html" class="nav-subitem">Defender for Servers</a>
+                            <a href="3-4-containers.html" class="nav-subitem">Defender for Containers</a>
+                            <a href="3-7-storage.html" class="nav-subitem">Defender for Storage</a>
+                            <a href="3-8-sql.html" class="nav-subitem">Defender for SQL</a>
+                            <a href="3-10-key-vault.html" class="nav-subitem">Defender for Key Vault</a>
+                            <a href="3-11-arm.html" class="nav-subitem active">Defender for ARM</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" aria-label="Open menu">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10zm0 5.25a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75a.75.75 0 01-.75-.75z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div class="search-box">
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                        </svg>
+                        <input type="text" class="search-input" placeholder="Search documentation..." readonly>
+                        <span class="search-shortcut">⌘K</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <article class="page-content">
+                    <nav class="breadcrumbs">
+                        <a href="../index.html" class="breadcrumb-item">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <a href="3-1-servers-overview.html" class="breadcrumb-item">CWPP</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span class="breadcrumb-item current">Defender for ARM</span>
+                    </nav>
+
+                    <header class="page-header">
+                        <h1>Defender for Resource Manager</h1>
+                        <div class="page-meta">
+                            <span class="badge badge-l1">L1 Fundamentals</span>
+                            <span class="badge badge-l2">L2 Technical</span>
+                            <span class="page-meta-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clip-rule="evenodd" />
+                                </svg>
+                                12 min read
+                            </span>
+                        </div>
+                    </header>
+
+                    <section>
+                        <p>
+                            Microsoft Defender for Resource Manager provides threat protection for Azure's control 
+                            plane - the management layer that handles all Azure resource operations. It detects 
+                            suspicious management activities, resource manipulation attacks, and malicious 
+                            operations from compromised accounts or automation.
+                        </p>
+
+                        <div class="callout callout-info">
+                            <div class="callout-title">What is the Control Plane?</div>
+                            <div class="callout-content">
+                                <p>The <strong>control plane</strong> (Azure Resource Manager) handles operations like creating VMs, 
+                                modifying NSGs, and assigning RBAC roles. The <strong>data plane</strong> handles actual data operations 
+                                like reading blobs or querying databases. Defender for ARM protects the control plane.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- What It Detects -->
+                    <section>
+                        <h2 id="detections">What It Detects</h2>
+
+                        <div class="ascii-diagram">
+<span class="highlight-cyan">╔══════════════════════════════════════════════════════════════════════════════════════════════╗</span>
+<span class="highlight-cyan">║</span>                    <span class="highlight-blue">DEFENDER FOR RESOURCE MANAGER - THREAT COVERAGE</span>                        <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">╠══════════════════════════════════════════════════════════════════════════════════════════════╣</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">┌────────────────────────────┐</span>  <span class="highlight-orange">┌────────────────────────────┐</span>  <span class="highlight-purple">┌────────────────────────────┐</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">│    SUSPICIOUS ACCESS       │</span>  <span class="highlight-orange">│   RESOURCE MANIPULATION    │</span>  <span class="highlight-purple">│    LATERAL MOVEMENT        │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">│                            │</span>  <span class="highlight-orange">│                            │</span>  <span class="highlight-purple">│                            │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">│  • Tor exit nodes          │</span>  <span class="highlight-orange">│  • Crypto mining deploy    │</span>  <span class="highlight-purple">│  • Extension abuse         │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">│  • Anonymous proxies       │</span>  <span class="highlight-orange">│  • Mass resource deletion  │</span>  <span class="highlight-purple">│  • Serial console access   │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">│  • Unusual locations       │</span>  <span class="highlight-orange">│  • Unusual deployments     │</span>  <span class="highlight-purple">│  • Custom script exec      │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">│  • Known malicious IPs     │</span>  <span class="highlight-orange">│  • NSG rule weakening      │</span>  <span class="highlight-purple">│  • Password reset attack   │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">│  • Suspicious user agents  │</span>  <span class="highlight-orange">│  • RBAC elevation          │</span>  <span class="highlight-purple">│  • Run command abuse       │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">└────────────────────────────┘</span>  <span class="highlight-orange">└────────────────────────────┘</span>  <span class="highlight-purple">└────────────────────────────┘</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">┌────────────────────────────┐</span>  <span class="highlight-blue">┌────────────────────────────┐</span>                             <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│   RECONNAISSANCE           │</span>  <span class="highlight-blue">│     PERSISTENCE            │</span>                             <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│                            │</span>  <span class="highlight-blue">│                            │</span>                             <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│  • Suspicious enumeration  │</span>  <span class="highlight-blue">│  • Automation account abuse│</span>                             <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│  • Toolkit detection       │</span>  <span class="highlight-blue">│  • Webhook manipulation    │</span>                             <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│  • Resource discovery      │</span>  <span class="highlight-blue">│  • Service principal abuse │</span>                             <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│  • Permission mapping      │</span>  <span class="highlight-blue">│  • Malicious extension     │</span>                             <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">└────────────────────────────┘</span>  <span class="highlight-blue">└────────────────────────────┘</span>                             <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">Pricing: ~$4 per subscription per month</span>                                                   <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">╚══════════════════════════════════════════════════════════════════════════════════════════════╝</span>
+                        </div>
+                    </section>
+
+                    <!-- Enablement -->
+                    <section>
+                        <h2 id="enablement">Enablement</h2>
+
+                        <div class="tabs">
+                            <div class="tab-list">
+                                <button class="tab-btn active" data-tab="cli-arm">Azure CLI</button>
+                                <button class="tab-btn" data-tab="ps-arm">PowerShell</button>
+                                <button class="tab-btn" data-tab="tf-arm">Terraform</button>
+                            </div>
+
+                            <div class="tab-panel active" data-panel="cli-arm">
+                                <div class="code-header">
+                                    <span class="code-lang">Azure CLI</span>
+                                    <button class="code-copy-btn">Copy</button>
+                                </div>
+                                <pre><code class="language-bash"># Enable Defender for Resource Manager
+az security pricing create \
+    --name Arm \
+    --tier Standard
+
+# Verify
+az security pricing show --name Arm</code></pre>
+                            </div>
+
+                            <div class="tab-panel" data-panel="ps-arm">
+                                <div class="code-header">
+                                    <span class="code-lang">PowerShell</span>
+                                    <button class="code-copy-btn">Copy</button>
+                                </div>
+                                <pre><code class="language-powershell"># Enable Defender for Resource Manager
+Set-AzSecurityPricing -Name "Arm" -PricingTier "Standard"
+
+# Verify
+Get-AzSecurityPricing | Where-Object { $_.Name -eq "Arm" }</code></pre>
+                            </div>
+
+                            <div class="tab-panel" data-panel="tf-arm">
+                                <div class="code-header">
+                                    <span class="code-lang">HCL (Terraform)</span>
+                                    <button class="code-copy-btn">Copy</button>
+                                </div>
+                                <pre><code class="language-hcl">resource "azurerm_security_center_subscription_pricing" "arm" {
+  tier          = "Standard"
+  resource_type = "Arm"
+}</code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Alert Types -->
+                    <section>
+                        <h2 id="alerts">Alert Types</h2>
+
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Alert</th>
+                                        <th>Severity</th>
+                                        <th>MITRE Tactic</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Operation from suspicious IP</strong></td>
+                                        <td><span class="badge badge-medium">Medium</span></td>
+                                        <td>Initial Access</td>
+                                        <td>ARM operation from Tor/anonymous proxy</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>MicroBurst exploitation toolkit</strong></td>
+                                        <td><span class="badge badge-high">High</span></td>
+                                        <td>Discovery</td>
+                                        <td>Known Azure attack toolkit detected</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Suspicious resource deployment</strong></td>
+                                        <td><span class="badge badge-high">High</span></td>
+                                        <td>Execution</td>
+                                        <td>Crypto miner or malicious resource deployed</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Mass resource operations</strong></td>
+                                        <td><span class="badge badge-medium">Medium</span></td>
+                                        <td>Impact</td>
+                                        <td>Unusual volume of delete operations</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Suspicious RBAC assignment</strong></td>
+                                        <td><span class="badge badge-high">High</span></td>
+                                        <td>Privilege Escalation</td>
+                                        <td>Owner/Contributor assigned suspiciously</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Azurite toolkit detected</strong></td>
+                                        <td><span class="badge badge-high">High</span></td>
+                                        <td>Discovery</td>
+                                        <td>Azure enumeration toolkit activity</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Suspicious VM extension</strong></td>
+                                        <td><span class="badge badge-high">High</span></td>
+                                        <td>Execution</td>
+                                        <td>Malicious extension deployed to VMs</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Run command abuse</strong></td>
+                                        <td><span class="badge badge-high">High</span></td>
+                                        <td>Execution</td>
+                                        <td>Run command used for suspicious scripts</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h3>KQL Queries for ARM Alerts</h3>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// All Resource Manager alerts
+SecurityAlert
+| where TimeGenerated > ago(7d)
+| where ProductName == "Azure Security Center"
+| where AlertName has_any ("Resource Manager", "ARM", "Azure operation", "toolkit", "suspicious operation")
+| summarize 
+    Count = count(),
+    Callers = make_set(CompromisedEntity)
+    by AlertName, AlertSeverity
+| order by Count desc</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Detect toolkit usage patterns
+AzureActivity
+| where TimeGenerated > ago(1h)
+| where Caller != ""
+| summarize 
+    OperationCount = count(),
+    UniqueOperations = dcount(OperationNameValue),
+    Operations = make_set(OperationNameValue, 20)
+    by Caller, CallerIpAddress, bin(TimeGenerated, 5m)
+| where OperationCount > 50 and UniqueOperations > 10
+// High volume + diverse operations = potential enumeration</code></pre>
+                    </section>
+
+                    <!-- Investigation -->
+                    <section>
+                        <h2 id="investigation">Investigation Procedures</h2>
+
+                        <div class="accordion">
+                            <div class="accordion-item expanded">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">Operation from Suspicious IP</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <ol>
+                                        <li><strong>Identify the caller:</strong> User, service principal, or managed identity?</li>
+                                        <li><strong>Verify legitimacy:</strong> Contact user, check if VPN usage explains location</li>
+                                        <li><strong>Review operations:</strong> What was done during the suspicious session?</li>
+                                    </ol>
+
+                                    <div class="code-header">
+                                        <span class="code-lang">KQL</span>
+                                        <button class="code-copy-btn">Copy</button>
+                                    </div>
+                                    <pre><code class="language-kql">// All operations from suspicious IP
+let suspiciousIP = "suspicious-ip-from-alert";
+AzureActivity
+| where CallerIpAddress == suspiciousIP
+| where TimeGenerated > ago(24h)
+| project 
+    TimeGenerated,
+    Caller,
+    OperationNameValue,
+    ResourceGroup,
+    Resource,
+    ActivityStatusValue
+| order by TimeGenerated asc</code></pre>
+
+                                    <p><strong>Response:</strong></p>
+                                    <ul>
+                                        <li>If compromised: Disable account, revoke sessions, investigate all operations</li>
+                                        <li>If legitimate: Document, consider Conditional Access policy for ARM</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">Crypto Mining Deployment</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <p><strong>IMMEDIATE ACTIONS:</strong></p>
+                                    <ol>
+                                        <li>Delete the mining resources</li>
+                                        <li>Identify how attacker gained access</li>
+                                        <li>Check for other malicious deployments</li>
+                                        <li>Review cost impact</li>
+                                    </ol>
+
+                                    <div class="code-header">
+                                        <span class="code-lang">KQL</span>
+                                        <button class="code-copy-btn">Copy</button>
+                                    </div>
+                                    <pre><code class="language-kql">// Find all resources created by the attacker
+let attackerCaller = "attacker-principal-id";
+AzureActivity
+| where TimeGenerated > ago(7d)
+| where Caller == attackerCaller
+| where OperationNameValue endswith "/write"
+| project 
+    TimeGenerated,
+    Resource,
+    ResourceGroup,
+    OperationNameValue
+| distinct Resource, ResourceGroup</code></pre>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">Toolkit Detection (MicroBurst, Azurite)</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <p><strong>What these toolkits do:</strong></p>
+                                    <ul>
+                                        <li>Enumerate all accessible resources</li>
+                                        <li>Find exposed storage accounts</li>
+                                        <li>Discover service principals and permissions</li>
+                                        <li>Extract credentials from various sources</li>
+                                    </ul>
+
+                                    <p><strong>Investigation:</strong></p>
+                                    <ol>
+                                        <li>This indicates active reconnaissance</li>
+                                        <li>Assume attacker knows your environment</li>
+                                        <li>Review what data they could have accessed</li>
+                                        <li>Look for follow-up exploitation</li>
+                                    </ol>
+
+                                    <div class="code-header">
+                                        <span class="code-lang">KQL</span>
+                                        <button class="code-copy-btn">Copy</button>
+                                    </div>
+                                    <pre><code class="language-kql">// Find enumeration activity patterns
+let suspiciousCaller = "attacker-caller";
+AzureActivity
+| where TimeGenerated > ago(24h)
+| where Caller == suspiciousCaller
+| where OperationNameValue has_any ("list", "get", "read")
+| summarize 
+    Operations = count(),
+    ResourceTypes = make_set(strcat(ResourceProviderValue, "/", OperationNameValue))
+    by bin(TimeGenerated, 1m)
+| where Operations > 20</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Best Practices -->
+                    <section>
+                        <h2 id="best-practices">Hardening Recommendations</h2>
+
+                        <div class="checklist">
+                            <div class="checklist-title">Control Plane Security Checklist</div>
+                            <ul>
+                                <li>
+                                    <input type="checkbox" id="arm1">
+                                    <label for="arm1">Enable Defender for Resource Manager</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="arm2">
+                                    <label for="arm2">Require MFA for all Azure management access</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="arm3">
+                                    <label for="arm3">Use Conditional Access to restrict ARM access by location/device</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="arm4">
+                                    <label for="arm4">Implement PIM for privileged roles</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="arm5">
+                                    <label for="arm5">Use resource locks for critical resources</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="arm6">
+                                    <label for="arm6">Enable Activity Log alerts for sensitive operations</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="arm7">
+                                    <label for="arm7">Restrict service principal permissions (least privilege)</label>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <h3>Conditional Access for Azure Management</h3>
+
+                        <div class="code-header">
+                            <span class="code-lang">PowerShell</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-powershell"># Create Conditional Access policy for Azure Management
+$policy = @{
+    displayName = "Require MFA for Azure Management"
+    state = "enabled"
+    conditions = @{
+        applications = @{
+            includeApplications = @("797f4846-ba00-4fd7-ba43-dac1f8f63013") # Azure Management
+        }
+        users = @{
+            includeUsers = @("All")
+            excludeUsers = @("emergency-access-account-id")
+        }
+    }
+    grantControls = @{
+        operator = "AND"
+        builtInControls = @("mfa")
+    }
+}
+
+New-MgIdentityConditionalAccessPolicy -BodyParameter $policy</code></pre>
+                    </section>
+
+                    <!-- Key Takeaways -->
+                    <div class="key-takeaways">
+                        <div class="key-takeaways-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 2a.75.75 0 01.75.75v.258a33.186 33.186 0 016.668.83.75.75 0 01-.336 1.461z" clip-rule="evenodd" />
+                            </svg>
+                            Key Takeaways
+                        </div>
+                        <ul>
+                            <li>Defender for ARM protects Azure's control plane (management operations)</li>
+                            <li>Very cost-effective at ~$4/subscription/month</li>
+                            <li>Detects known attack toolkits like MicroBurst and Azurite</li>
+                            <li>Toolkit detection indicates active reconnaissance - treat as high priority</li>
+                            <li>Combine with Conditional Access to require MFA for Azure management</li>
+                            <li>Use Activity Log queries to investigate caller behavior</li>
+                        </ul>
+                    </div>
+
+                    <div class="related-pages">
+                        <div class="related-title">Related Pages</div>
+                        <div class="related-list">
+                            <a href="3-10-key-vault.html" class="related-link">Defender for Key Vault</a>
+                            <a href="8-4-identity-playbook.html" class="related-link">Identity Playbook</a>
+                            <a href="12-1-kql-library.html" class="related-link">KQL Library</a>
+                            <a href="1-4-enablement.html" class="related-link">Enablement Guide</a>
+                        </div>
+                    </div>
+
+                    <nav class="page-nav">
+                        <a href="3-10-key-vault.html" class="page-nav-link prev">
+                            <span class="page-nav-label">← Previous</span>
+                            <span class="page-nav-title">Defender for Key Vault</span>
+                        </a>
+                        <a href="3-12-dns.html" class="page-nav-link next">
+                            <span class="page-nav-label">Next →</span>
+                            <span class="page-nav-title">Defender for DNS</span>
+                        </a>
+                    </nav>
+                </article>
+
+                <aside class="toc-sidebar">
+                    <div class="toc-title">On This Page</div>
+                    <ul class="toc-list">
+                        <li class="toc-item"><a href="#detections" class="toc-link">What It Detects</a></li>
+                        <li class="toc-item"><a href="#enablement" class="toc-link">Enablement</a></li>
+                        <li class="toc-item"><a href="#alerts" class="toc-link">Alert Types</a></li>
+                        <li class="toc-item"><a href="#investigation" class="toc-link">Investigation</a></li>
+                        <li class="toc-item"><a href="#best-practices" class="toc-link">Best Practices</a></li>
+                    </ul>
+                </aside>
+            </div>
+        </main>
+        <div class="mobile-overlay"></div>
+    </div>
+
+    <div class="search-modal">
+        <div class="search-modal-content">
+            <input type="text" class="search-modal-input" placeholder="Search documentation..." autofocus>
+            <div class="search-results"></div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

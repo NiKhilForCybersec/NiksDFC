@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="GitHub Actions Integration - Implement security scanning in GitHub CI/CD pipelines with MDC.">
+    <title>GitHub Actions Integration - Microsoft Defender for Cloud</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="../index.html" class="sidebar-logo">
+                    <div class="logo-icon">MDC</div>
+                    <span class="logo-text">Defender for Cloud</span>
+                </a>
+                <button class="sidebar-toggle" aria-label="Toggle sidebar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">DevSecOps</div>
+                    <div class="nav-group expanded" data-group="devsecops">
+                        <div class="nav-group-header">
+                            <span class="nav-group-title">CI/CD Integration</span>
+                            <svg class="nav-group-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="nav-group-items">
+                            <a href="9-1-devsecops.html" class="nav-subitem">DevSecOps Overview</a>
+                            <a href="9-2-github-actions.html" class="nav-subitem active">GitHub Actions</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" aria-label="Open menu">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10zm0 5.25a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75a.75.75 0 01-.75-.75z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div class="search-box">
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                        </svg>
+                        <input type="text" class="search-input" placeholder="Search documentation..." readonly>
+                        <span class="search-shortcut">⌘K</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <article class="page-content">
+                    <nav class="breadcrumbs">
+                        <a href="../index.html" class="breadcrumb-item">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <a href="9-1-devsecops.html" class="breadcrumb-item">DevSecOps</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span class="breadcrumb-item current">GitHub Actions</span>
+                    </nav>
+
+                    <header class="page-header">
+                        <h1>GitHub Actions Integration</h1>
+                        <div class="page-meta">
+                            <span class="badge badge-l2">L2 Technical</span>
+                            <span class="page-meta-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clip-rule="evenodd" />
+                                </svg>
+                                12 min read
+                            </span>
+                        </div>
+                    </header>
+
+                    <section>
+                        <p>
+                            Integrate Microsoft Defender for Cloud security scanning into your GitHub Actions 
+                            CI/CD pipelines. This enables shift-left security with IaC scanning, container 
+                            image analysis, and code security checks.
+                        </p>
+                    </section>
+
+                    <!-- Available Actions -->
+                    <section>
+                        <h2 id="actions">Available Security Actions</h2>
+
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Action</th>
+                                        <th>Purpose</th>
+                                        <th>Output</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>microsoft/security-devops-action</strong></td>
+                                        <td>Comprehensive security scanning (IaC, code, secrets)</td>
+                                        <td>SARIF results</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>azure/container-scan</strong></td>
+                                        <td>Container image vulnerability scanning</td>
+                                        <td>SARIF results</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>github/codeql-action</strong></td>
+                                        <td>Code analysis for vulnerabilities</td>
+                                        <td>SARIF results</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>aquasecurity/trivy-action</strong></td>
+                                        <td>Container and IaC scanning</td>
+                                        <td>SARIF/JSON</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Microsoft Security DevOps -->
+                    <section>
+                        <h2 id="msdo">Microsoft Security DevOps Action</h2>
+
+                        <p>The official Microsoft action includes multiple security tools:</p>
+                        <ul>
+                            <li><strong>Checkov:</strong> IaC security scanning (Terraform, ARM, CloudFormation)</li>
+                            <li><strong>Terrascan:</strong> Additional IaC policy checks</li>
+                            <li><strong>Trivy:</strong> Container image vulnerabilities</li>
+                            <li><strong>ESLint:</strong> JavaScript security linting</li>
+                            <li><strong>Template Analyzer:</strong> ARM template analysis</li>
+                        </ul>
+
+                        <h3>Basic Setup</h3>
+                        <div class="code-header">
+                            <span class="code-lang">YAML</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-yaml"># .github/workflows/security-scan.yml
+name: Security Scan
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  security-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run Microsoft Security DevOps
+        uses: microsoft/security-devops-action@v1
+        id: msdo
+        with:
+          categories: 'IaC,secrets'
+
+      - name: Upload SARIF results
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: ${{ steps.msdo.outputs.sarifFile }}</code></pre>
+
+                        <h3>Full Configuration</h3>
+                        <div class="code-header">
+                            <span class="code-lang">YAML</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-yaml"># .github/workflows/security-scan-full.yml
+name: Comprehensive Security Scan
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: '0 6 * * 1'  # Weekly Monday 6am
+
+permissions:
+  contents: read
+  security-events: write
+  actions: read
+
+env:
+  AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+jobs:
+  iac-scan:
+    name: Infrastructure as Code Scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Microsoft Security DevOps - IaC
+        uses: microsoft/security-devops-action@v1
+        id: msdo-iac
+        with:
+          categories: 'IaC'
+          tools: 'checkov,terrascan,templateanalyzer'
+
+      - name: Upload IaC SARIF
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: ${{ steps.msdo-iac.outputs.sarifFile }}
+          category: iac-scan
+
+  secrets-scan:
+    name: Secrets Detection
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full history for secrets scanning
+
+      - name: Microsoft Security DevOps - Secrets
+        uses: microsoft/security-devops-action@v1
+        id: msdo-secrets
+        with:
+          categories: 'secrets'
+
+      - name: Upload Secrets SARIF
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: ${{ steps.msdo-secrets.outputs.sarifFile }}
+          category: secrets-scan
+
+  container-scan:
+    name: Container Image Scan
+    runs-on: ubuntu-latest
+    if: contains(github.event.head_commit.modified, 'Dockerfile')
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build container image
+        run: docker build -t myapp:${{ github.sha }} .
+
+      - name: Scan container image
+        uses: azure/container-scan@v0
+        with:
+          image-name: myapp:${{ github.sha }}
+          severity-threshold: HIGH
+
+  code-scan:
+    name: Code Security Analysis
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: javascript, python
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3</code></pre>
+                    </section>
+
+                    <!-- Container Scanning -->
+                    <section>
+                        <h2 id="container">Container Image Scanning</h2>
+
+                        <h3>Azure Container Scan</h3>
+                        <div class="code-header">
+                            <span class="code-lang">YAML</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-yaml"># Container scan with ACR push
+name: Container Build and Scan
+
+on:
+  push:
+    paths:
+      - 'Dockerfile'
+      - 'src/**'
+
+jobs:
+  build-scan-push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Login to ACR
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ secrets.ACR_LOGIN_SERVER }}
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+
+      - name: Build image
+        run: |
+          docker build -t ${{ secrets.ACR_LOGIN_SERVER }}/myapp:${{ github.sha }} .
+
+      - name: Scan image for vulnerabilities
+        uses: azure/container-scan@v0
+        id: scan
+        with:
+          image-name: ${{ secrets.ACR_LOGIN_SERVER }}/myapp:${{ github.sha }}
+          severity-threshold: HIGH
+          run-quality-checks: true
+
+      - name: Push if scan passed
+        if: success()
+        run: |
+          docker push ${{ secrets.ACR_LOGIN_SERVER }}/myapp:${{ github.sha }}
+
+      - name: Upload scan results
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: ${{ steps.scan.outputs.sarif-file-path }}</code></pre>
+
+                        <h3>Trivy Scan Alternative</h3>
+                        <div class="code-header">
+                            <span class="code-lang">YAML</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-yaml"># Trivy comprehensive scan
+- name: Run Trivy vulnerability scanner
+  uses: aquasecurity/trivy-action@master
+  with:
+    image-ref: 'myapp:${{ github.sha }}'
+    format: 'sarif'
+    output: 'trivy-results.sarif'
+    severity: 'CRITICAL,HIGH'
+    vuln-type: 'os,library'
+
+- name: Upload Trivy results
+  uses: github/codeql-action/upload-sarif@v3
+  with:
+    sarif_file: 'trivy-results.sarif'</code></pre>
+                    </section>
+
+                    <!-- IaC Scanning -->
+                    <section>
+                        <h2 id="iac">Infrastructure as Code Scanning</h2>
+
+                        <h3>Terraform Scanning</h3>
+                        <div class="code-header">
+                            <span class="code-lang">YAML</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-yaml"># Terraform security scan
+name: Terraform Security
+
+on:
+  pull_request:
+    paths:
+      - '**.tf'
+      - '**.tfvars'
+
+jobs:
+  terraform-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Init
+        run: terraform init -backend=false
+
+      - name: Terraform Validate
+        run: terraform validate
+
+      - name: Run Checkov
+        uses: bridgecrewio/checkov-action@v12
+        with:
+          directory: .
+          framework: terraform
+          output_format: sarif
+          output_file_path: checkov-results.sarif
+
+      - name: Upload Checkov results
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: checkov-results.sarif</code></pre>
+
+                        <h3>ARM Template Scanning</h3>
+                        <div class="code-header">
+                            <span class="code-lang">YAML</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-yaml"># ARM template analysis
+- name: Run Template Analyzer
+  uses: microsoft/security-devops-action@v1
+  with:
+    categories: 'IaC'
+    tools: 'templateanalyzer'
+    
+# Alternative: PSRule for Azure
+- name: Run PSRule for Azure
+  uses: microsoft/ps-rule@v2
+  with:
+    modules: PSRule.Rules.Azure
+    inputPath: ./templates/</code></pre>
+                    </section>
+
+                    <!-- PR Integration -->
+                    <section>
+                        <h2 id="pr">Pull Request Integration</h2>
+
+                        <h3>PR Comment with Results</h3>
+                        <div class="code-header">
+                            <span class="code-lang">YAML</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-yaml"># Add security summary to PR
+name: PR Security Check
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  security-check:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      security-events: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run security scan
+        uses: microsoft/security-devops-action@v1
+        id: scan
+        continue-on-error: true
+
+      - name: Parse results
+        id: results
+        run: |
+          CRITICAL=$(jq '[.runs[].results[] | select(.level=="error")] | length' ${{ steps.scan.outputs.sarifFile }})
+          HIGH=$(jq '[.runs[].results[] | select(.level=="warning")] | length' ${{ steps.scan.outputs.sarifFile }})
+          echo "critical=$CRITICAL" >> $GITHUB_OUTPUT
+          echo "high=$HIGH" >> $GITHUB_OUTPUT
+
+      - name: Comment on PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const critical = '${{ steps.results.outputs.critical }}';
+            const high = '${{ steps.results.outputs.high }}';
+            const body = `## 🔒 Security Scan Results
+            
+            | Severity | Count |
+            |----------|-------|
+            | 🔴 Critical | ${critical} |
+            | 🟠 High | ${high} |
+            
+            ${critical > 0 ? '⚠️ **Critical issues must be resolved before merge**' : '✅ No critical issues found'}
+            
+            See the Security tab for details.`;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: body
+            })
+
+      - name: Fail on critical
+        if: steps.results.outputs.critical > 0
+        run: exit 1</code></pre>
+                    </section>
+
+                    <!-- Branch Protection -->
+                    <section>
+                        <h2 id="protection">Branch Protection</h2>
+
+                        <p>Configure branch protection to require security scans:</p>
+
+                        <ol>
+                            <li>Go to <strong>Settings</strong> → <strong>Branches</strong></li>
+                            <li>Edit protection rule for <strong>main</strong></li>
+                            <li>Enable <strong>Require status checks to pass</strong></li>
+                            <li>Add security scan jobs as required checks:
+                                <ul>
+                                    <li>iac-scan</li>
+                                    <li>secrets-scan</li>
+                                    <li>container-scan</li>
+                                </ul>
+                            </li>
+                            <li>Enable <strong>Require branches to be up to date</strong></li>
+                        </ol>
+
+                        <div class="callout callout-tip">
+                            <div class="callout-title">GitHub Advanced Security</div>
+                            <div class="callout-content">
+                                <p>Enable GitHub Advanced Security for:</p>
+                                <ul>
+                                    <li>Code scanning alerts in Security tab</li>
+                                    <li>Secret scanning with push protection</li>
+                                    <li>Dependency review in PRs</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Secrets Management -->
+                    <section>
+                        <h2 id="secrets">Required Secrets</h2>
+
+                        <div class="table-wrapper">
+                            <table class="compact">
+                                <thead>
+                                    <tr>
+                                        <th>Secret Name</th>
+                                        <th>Purpose</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>AZURE_SUBSCRIPTION_ID</code></td>
+                                        <td>Azure subscription for MDC integration</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>AZURE_CLIENT_ID</code></td>
+                                        <td>Service principal client ID</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>AZURE_CLIENT_SECRET</code></td>
+                                        <td>Service principal secret</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>AZURE_TENANT_ID</code></td>
+                                        <td>Azure AD tenant ID</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>ACR_LOGIN_SERVER</code></td>
+                                        <td>Azure Container Registry URL</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Best Practices -->
+                    <section>
+                        <h2 id="best-practices">Best Practices</h2>
+
+                        <div class="checklist">
+                            <div class="checklist-title">GitHub Actions Security Checklist</div>
+                            <ul>
+                                <li>
+                                    <input type="checkbox" id="gh1">
+                                    <label for="gh1">Run security scans on every PR</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="gh2">
+                                    <label for="gh2">Upload SARIF to GitHub Security tab</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="gh3">
+                                    <label for="gh3">Block merges on critical findings</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="gh4">
+                                    <label for="gh4">Scan container images before push to registry</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="gh5">
+                                    <label for="gh5">Include IaC scanning for Terraform/ARM</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="gh6">
+                                    <label for="gh6">Enable secret scanning with push protection</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="gh7">
+                                    <label for="gh7">Schedule weekly full scans</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="gh8">
+                                    <label for="gh8">Use OIDC for Azure authentication (no secrets)</label>
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- Key Takeaways -->
+                    <div class="key-takeaways">
+                        <div class="key-takeaways-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 2a.75.75 0 01.75.75v.258a33.186 33.186 0 016.668.83.75.75 0 01-.336 1.461z" clip-rule="evenodd" />
+                            </svg>
+                            Key Takeaways
+                        </div>
+                        <ul>
+                            <li>microsoft/security-devops-action provides comprehensive scanning</li>
+                            <li>Upload SARIF results to GitHub Security tab</li>
+                            <li>Scan containers before pushing to registry</li>
+                            <li>Use branch protection to enforce security checks</li>
+                            <li>Include IaC scanning for Terraform and ARM templates</li>
+                            <li>Add PR comments for visibility</li>
+                            <li>Enable GitHub Advanced Security for full capabilities</li>
+                            <li>Use OIDC instead of secrets for Azure auth</li>
+                        </ul>
+                    </div>
+
+                    <div class="related-pages">
+                        <div class="related-title">Related Pages</div>
+                        <div class="related-list">
+                            <a href="9-1-devsecops.html" class="related-link">DevSecOps Overview</a>
+                            <a href="3-4-containers.html" class="related-link">Defender for Containers</a>
+                            <a href="3-3-vulnerability-mgmt.html" class="related-link">Vulnerability Management</a>
+                            <a href="2-2-recommendations.html" class="related-link">Recommendations</a>
+                        </div>
+                    </div>
+
+                    <nav class="page-nav">
+                        <a href="9-1-devsecops.html" class="page-nav-link prev">
+                            <span class="page-nav-label">← Previous</span>
+                            <span class="page-nav-title">DevSecOps Overview</span>
+                        </a>
+                        <a href="10-1-alert-reference.html" class="page-nav-link next">
+                            <span class="page-nav-label">Next →</span>
+                            <span class="page-nav-title">Alert Reference</span>
+                        </a>
+                    </nav>
+                </article>
+
+                <aside class="toc-sidebar">
+                    <div class="toc-title">On This Page</div>
+                    <ul class="toc-list">
+                        <li class="toc-item"><a href="#actions" class="toc-link">Available Actions</a></li>
+                        <li class="toc-item"><a href="#msdo" class="toc-link">MS Security DevOps</a></li>
+                        <li class="toc-item"><a href="#container" class="toc-link">Container Scanning</a></li>
+                        <li class="toc-item"><a href="#iac" class="toc-link">IaC Scanning</a></li>
+                        <li class="toc-item"><a href="#pr" class="toc-link">PR Integration</a></li>
+                        <li class="toc-item"><a href="#protection" class="toc-link">Branch Protection</a></li>
+                        <li class="toc-item"><a href="#secrets" class="toc-link">Secrets</a></li>
+                        <li class="toc-item"><a href="#best-practices" class="toc-link">Best Practices</a></li>
+                    </ul>
+                </aside>
+            </div>
+        </main>
+        <div class="mobile-overlay"></div>
+    </div>
+
+    <div class="search-modal">
+        <div class="search-modal-content">
+            <input type="text" class="search-modal-input" placeholder="Search documentation..." autofocus>
+            <div class="search-results"></div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

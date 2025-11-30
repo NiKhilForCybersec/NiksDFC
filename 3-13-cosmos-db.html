@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Microsoft Defender for Cosmos DB - Protect Azure Cosmos DB accounts from SQL injection, suspicious access, and data exfiltration.">
+    <title>Defender for Cosmos DB - Microsoft Defender for Cloud</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="../index.html" class="sidebar-logo">
+                    <div class="logo-icon">MDC</div>
+                    <span class="logo-text">Defender for Cloud</span>
+                </a>
+                <button class="sidebar-toggle" aria-label="Toggle sidebar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">CWPP</div>
+                    <div class="nav-group expanded" data-group="cwpp">
+                        <div class="nav-group-header">
+                            <span class="nav-group-title">Database Protection</span>
+                            <svg class="nav-group-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="nav-group-items">
+                            <a href="3-8-sql.html" class="nav-subitem">Defender for SQL</a>
+                            <a href="3-13-cosmos-db.html" class="nav-subitem active">Defender for Cosmos DB</a>
+                            <a href="3-16-open-source-db.html" class="nav-subitem">Open-Source Databases</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" aria-label="Open menu">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10zm0 5.25a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75a.75.75 0 01-.75-.75z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div class="search-box">
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                        </svg>
+                        <input type="text" class="search-input" placeholder="Search documentation..." readonly>
+                        <span class="search-shortcut">⌘K</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <article class="page-content">
+                    <nav class="breadcrumbs">
+                        <a href="../index.html" class="breadcrumb-item">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <a href="3-1-servers-overview.html" class="breadcrumb-item">CWPP</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span class="breadcrumb-item current">Defender for Cosmos DB</span>
+                    </nav>
+
+                    <header class="page-header">
+                        <h1>Defender for Azure Cosmos DB</h1>
+                        <div class="page-meta">
+                            <span class="badge badge-l1">L1 Fundamentals</span>
+                            <span class="badge badge-l2">L2 Technical</span>
+                            <span class="page-meta-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clip-rule="evenodd" />
+                                </svg>
+                                12 min read
+                            </span>
+                        </div>
+                    </header>
+
+                    <section>
+                        <p>
+                            Microsoft Defender for Azure Cosmos DB provides threat protection for Cosmos DB accounts 
+                            using the NoSQL API. It detects potential SQL injection attacks, suspicious access patterns, 
+                            and known malicious actors attempting to access your databases.
+                        </p>
+
+                        <div class="callout callout-info">
+                            <div class="callout-title">Supported APIs</div>
+                            <div class="callout-content">
+                                <p>Defender for Cosmos DB currently protects accounts using the <strong>NoSQL (Core) API</strong>. 
+                                MongoDB, Cassandra, Gremlin, and Table APIs have limited coverage.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Threat Detection -->
+                    <section>
+                        <h2 id="capabilities">Threat Detection Capabilities</h2>
+
+                        <div class="ascii-diagram">
+<span class="highlight-cyan">╔══════════════════════════════════════════════════════════════════════════════════════════════╗</span>
+<span class="highlight-cyan">║</span>                     <span class="highlight-blue">DEFENDER FOR COSMOS DB - THREAT DETECTION</span>                             <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">╠══════════════════════════════════════════════════════════════════════════════════════════════╣</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">┌─────────────────────────┐</span>   <span class="highlight-orange">┌─────────────────────────┐</span>   <span class="highlight-purple">┌─────────────────────────┐</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">│    SQL INJECTION        │</span>   <span class="highlight-orange">│   SUSPICIOUS ACCESS     │</span>   <span class="highlight-purple">│   DATA EXFILTRATION     │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">│                         │</span>   <span class="highlight-orange">│                         │</span>   <span class="highlight-purple">│                         │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">│  • Query manipulation   │</span>   <span class="highlight-orange">│  • Tor exit nodes       │</span>   <span class="highlight-purple">│  • Unusual volume       │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">│  • Parameter injection  │</span>   <span class="highlight-orange">│  • Known malicious IPs  │</span>   <span class="highlight-purple">│  • Bulk extraction      │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">│  • Escape sequences     │</span>   <span class="highlight-orange">│  • Unusual locations    │</span>   <span class="highlight-purple">│  • Key enumeration      │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">│  • Comment injection    │</span>   <span class="highlight-orange">│  • Anonymous proxies    │</span>   <span class="highlight-purple">│  • Cross-partition scan │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">└─────────────────────────┘</span>   <span class="highlight-orange">└─────────────────────────┘</span>   <span class="highlight-purple">└─────────────────────────┘</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">┌─────────────────────────┐</span>   <span class="highlight-blue">┌─────────────────────────┐</span>                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│    KEY EXTRACTION       │</span>   <span class="highlight-blue">│   ACCESS ANOMALIES      │</span>                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│                         │</span>   <span class="highlight-blue">│                         │</span>                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│  • Key listing attempts │</span>   <span class="highlight-blue">│  • Unusual client app   │</span>                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│  • Credential access    │</span>   <span class="highlight-blue">│  • First-time access    │</span>                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│  • Connection strings   │</span>   <span class="highlight-blue">│  • Unusual operations   │</span>                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">└─────────────────────────┘</span>   <span class="highlight-blue">└─────────────────────────┘</span>                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">Pricing: ~$0.0012 per 100 RU/s per hour</span>                                                   <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">╚══════════════════════════════════════════════════════════════════════════════════════════════╝</span>
+                        </div>
+                    </section>
+
+                    <!-- Enablement -->
+                    <section>
+                        <h2 id="enablement">Enablement</h2>
+
+                        <div class="tabs">
+                            <div class="tab-list">
+                                <button class="tab-btn active" data-tab="cli-cosmos">Azure CLI</button>
+                                <button class="tab-btn" data-tab="ps-cosmos">PowerShell</button>
+                                <button class="tab-btn" data-tab="tf-cosmos">Terraform</button>
+                            </div>
+
+                            <div class="tab-panel active" data-panel="cli-cosmos">
+                                <div class="code-header">
+                                    <span class="code-lang">Azure CLI</span>
+                                    <button class="code-copy-btn">Copy</button>
+                                </div>
+                                <pre><code class="language-bash"># Enable Defender for Cosmos DB at subscription level
+az security pricing create \
+    --name CosmosDbs \
+    --tier Standard
+
+# Verify enablement
+az security pricing show --name CosmosDbs
+
+# List all Cosmos DB accounts for cost estimation
+az cosmosdb list \
+    --query "[].{Name:name,ResourceGroup:resourceGroup,Location:location}" \
+    -o table</code></pre>
+                            </div>
+
+                            <div class="tab-panel" data-panel="ps-cosmos">
+                                <div class="code-header">
+                                    <span class="code-lang">PowerShell</span>
+                                    <button class="code-copy-btn">Copy</button>
+                                </div>
+                                <pre><code class="language-powershell"># Enable Defender for Cosmos DB
+Set-AzSecurityPricing -Name "CosmosDbs" -PricingTier "Standard"
+
+# Verify
+Get-AzSecurityPricing | Where-Object { $_.Name -eq "CosmosDbs" }
+
+# List Cosmos DB accounts
+Get-AzCosmosDBAccount | Select-Object Name, ResourceGroupName, Location</code></pre>
+                            </div>
+
+                            <div class="tab-panel" data-panel="tf-cosmos">
+                                <div class="code-header">
+                                    <span class="code-lang">HCL (Terraform)</span>
+                                    <button class="code-copy-btn">Copy</button>
+                                </div>
+                                <pre><code class="language-hcl">resource "azurerm_security_center_subscription_pricing" "cosmos" {
+  tier          = "Standard"
+  resource_type = "CosmosDbs"
+}</code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Alert Types -->
+                    <section>
+                        <h2 id="alerts">Alert Types</h2>
+
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Alert</th>
+                                        <th>Severity</th>
+                                        <th>MITRE Tactic</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>SQL injection attempt</strong></td>
+                                        <td><span class="badge badge-high">High</span></td>
+                                        <td>Initial Access</td>
+                                        <td>Potential SQL injection in query</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Access from Tor exit node</strong></td>
+                                        <td><span class="badge badge-high">High</span></td>
+                                        <td>Initial Access</td>
+                                        <td>Connection from anonymizing network</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Access from suspicious IP</strong></td>
+                                        <td><span class="badge badge-medium">Medium</span></td>
+                                        <td>Initial Access</td>
+                                        <td>Known malicious or unusual IP</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Unusual data extraction</strong></td>
+                                        <td><span class="badge badge-high">High</span></td>
+                                        <td>Exfiltration</td>
+                                        <td>Abnormally large data volume read</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Key extraction attempt</strong></td>
+                                        <td><span class="badge badge-high">High</span></td>
+                                        <td>Credential Access</td>
+                                        <td>Attempt to list or access keys</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Unusual application access</strong></td>
+                                        <td><span class="badge badge-low">Low</span></td>
+                                        <td>Discovery</td>
+                                        <td>First-time or unusual client application</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h3>KQL Queries</h3>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// All Cosmos DB security alerts
+SecurityAlert
+| where TimeGenerated > ago(7d)
+| where ProductName == "Azure Security Center"
+| where AlertName has_any ("Cosmos", "NoSQL", "document database")
+| project 
+    TimeGenerated,
+    AlertName,
+    AlertSeverity,
+    Description,
+    CompromisedEntity,
+    ExtendedProperties
+| order by TimeGenerated desc</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Cosmos DB diagnostic logs - suspicious queries
+CDBDataPlaneRequests
+| where TimeGenerated > ago(24h)
+| where StatusCode >= 400
+| summarize 
+    FailedRequests = count(),
+    Operations = make_set(OperationName),
+    ClientIPs = make_set(ClientIpAddress)
+    by AccountName, DatabaseName, CollectionName
+| where FailedRequests > 100
+| order by FailedRequests desc</code></pre>
+                    </section>
+
+                    <!-- Investigation -->
+                    <section>
+                        <h2 id="investigation">Investigation Procedures</h2>
+
+                        <div class="accordion">
+                            <div class="accordion-item expanded">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">SQL Injection Attempt</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <p><strong>Investigation Steps:</strong></p>
+                                    <ol>
+                                        <li>Identify the source IP and client application</li>
+                                        <li>Review the query that triggered the alert</li>
+                                        <li>Determine if the query succeeded</li>
+                                        <li>Check what data may have been accessed</li>
+                                    </ol>
+
+                                    <div class="code-header">
+                                        <span class="code-lang">KQL</span>
+                                        <button class="code-copy-btn">Copy</button>
+                                    </div>
+                                    <pre><code class="language-kql">// Find queries from suspicious IP
+CDBDataPlaneRequests
+| where TimeGenerated > ago(24h)
+| where ClientIpAddress == "suspicious-ip"
+| project 
+    TimeGenerated,
+    OperationName,
+    DatabaseName,
+    CollectionName,
+    RequestCharge,
+    StatusCode,
+    ActivityId
+| order by TimeGenerated asc</code></pre>
+
+                                    <p><strong>Response:</strong></p>
+                                    <ul>
+                                        <li>Block the source IP in Cosmos DB firewall</li>
+                                        <li>Review application code for injection vulnerabilities</li>
+                                        <li>Implement parameterized queries</li>
+                                        <li>Enable IP firewall restrictions</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">Access from Tor / Suspicious IP</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <p><strong>HIGH PRIORITY - Potential Unauthorized Access</strong></p>
+                                    
+                                    <ol>
+                                        <li>Immediately block the IP in firewall</li>
+                                        <li>Determine how they authenticated (key, Entra ID)</li>
+                                        <li>Review what data was accessed</li>
+                                        <li>Rotate keys if key-based access</li>
+                                    </ol>
+
+                                    <div class="code-header">
+                                        <span class="code-lang">Azure CLI</span>
+                                        <button class="code-copy-btn">Copy</button>
+                                    </div>
+                                    <pre><code class="language-bash"># Add IP to deny list (enable firewall first)
+az cosmosdb update \
+    --name "cosmos-account" \
+    --resource-group "your-rg" \
+    --ip-range-filter "allowed-ip1,allowed-ip2"
+
+# Regenerate primary key
+az cosmosdb keys regenerate \
+    --name "cosmos-account" \
+    --resource-group "your-rg" \
+    --key-kind primary</code></pre>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">Unusual Data Extraction</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <p><strong>Potential Data Exfiltration</strong></p>
+                                    
+                                    <div class="code-header">
+                                        <span class="code-lang">KQL</span>
+                                        <button class="code-copy-btn">Copy</button>
+                                    </div>
+                                    <pre><code class="language-kql">// Analyze data extraction patterns
+CDBDataPlaneRequests
+| where TimeGenerated > ago(24h)
+| where OperationName in ("Query", "ReadFeed")
+| summarize 
+    TotalRU = sum(RequestCharge),
+    RequestCount = count(),
+    AvgRUPerRequest = avg(RequestCharge)
+    by ClientIpAddress, bin(TimeGenerated, 1h)
+| where TotalRU > 100000  // Unusual RU consumption
+| order by TotalRU desc</code></pre>
+
+                                    <p><strong>Investigation:</strong></p>
+                                    <ul>
+                                        <li>Is this a legitimate backup or migration?</li>
+                                        <li>What databases/containers were queried?</li>
+                                        <li>What is the data sensitivity?</li>
+                                        <li>Was the accessor authorized?</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Security Best Practices -->
+                    <section>
+                        <h2 id="best-practices">Security Best Practices</h2>
+
+                        <div class="checklist">
+                            <div class="checklist-title">Cosmos DB Security Checklist</div>
+                            <ul>
+                                <li>
+                                    <input type="checkbox" id="cos1">
+                                    <label for="cos1">Enable Defender for Cosmos DB</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="cos2">
+                                    <label for="cos2">Enable IP firewall and restrict to known IPs</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="cos3">
+                                    <label for="cos3">Use Entra ID authentication instead of keys where possible</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="cos4">
+                                    <label for="cos4">Enable diagnostic logging to Log Analytics</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="cos5">
+                                    <label for="cos5">Use private endpoints for network isolation</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="cos6">
+                                    <label for="cos6">Implement least-privilege RBAC</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="cos7">
+                                    <label for="cos7">Rotate keys regularly</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="cos8">
+                                    <label for="cos8">Enable customer-managed keys for encryption</label>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <h3>Enable Diagnostic Logging</h3>
+
+                        <div class="code-header">
+                            <span class="code-lang">Azure CLI</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-bash"># Enable diagnostic logs to Log Analytics
+az monitor diagnostic-settings create \
+    --name "cosmos-diagnostics" \
+    --resource "/subscriptions/.../providers/Microsoft.DocumentDB/databaseAccounts/your-cosmos" \
+    --workspace "/subscriptions/.../providers/Microsoft.OperationalInsights/workspaces/your-workspace" \
+    --logs '[
+        {"category": "DataPlaneRequests", "enabled": true},
+        {"category": "QueryRuntimeStatistics", "enabled": true},
+        {"category": "ControlPlaneRequests", "enabled": true}
+    ]'</code></pre>
+                    </section>
+
+                    <!-- Key Takeaways -->
+                    <div class="key-takeaways">
+                        <div class="key-takeaways-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 2a.75.75 0 01.75.75v.258a33.186 33.186 0 016.668.83.75.75 0 01-.336 1.461z" clip-rule="evenodd" />
+                            </svg>
+                            Key Takeaways
+                        </div>
+                        <ul>
+                            <li>Defender for Cosmos DB protects NoSQL (Core) API accounts</li>
+                            <li>Pricing is based on provisioned RU/s (~$0.0012 per 100 RU/s per hour)</li>
+                            <li>Detects SQL injection, suspicious access, and data exfiltration</li>
+                            <li>Enable IP firewall to restrict access to known IPs</li>
+                            <li>Use Entra ID authentication when possible over key-based auth</li>
+                            <li>Enable diagnostic logs for detailed query investigation</li>
+                            <li>Rotate keys immediately if unauthorized access suspected</li>
+                            <li>Use private endpoints for production workloads</li>
+                        </ul>
+                    </div>
+
+                    <div class="related-pages">
+                        <div class="related-title">Related Pages</div>
+                        <div class="related-list">
+                            <a href="3-8-sql.html" class="related-link">Defender for SQL</a>
+                            <a href="3-12-dns.html" class="related-link">Defender for DNS</a>
+                            <a href="8-6-storage-playbook.html" class="related-link">Storage Playbook</a>
+                            <a href="12-1-kql-library.html" class="related-link">KQL Library</a>
+                        </div>
+                    </div>
+
+                    <nav class="page-nav">
+                        <a href="3-12-dns.html" class="page-nav-link prev">
+                            <span class="page-nav-label">← Previous</span>
+                            <span class="page-nav-title">Defender for DNS</span>
+                        </a>
+                        <a href="3-14-agentless-scanning.html" class="page-nav-link next">
+                            <span class="page-nav-label">Next →</span>
+                            <span class="page-nav-title">Agentless Scanning</span>
+                        </a>
+                    </nav>
+                </article>
+
+                <aside class="toc-sidebar">
+                    <div class="toc-title">On This Page</div>
+                    <ul class="toc-list">
+                        <li class="toc-item"><a href="#capabilities" class="toc-link">Capabilities</a></li>
+                        <li class="toc-item"><a href="#enablement" class="toc-link">Enablement</a></li>
+                        <li class="toc-item"><a href="#alerts" class="toc-link">Alert Types</a></li>
+                        <li class="toc-item"><a href="#investigation" class="toc-link">Investigation</a></li>
+                        <li class="toc-item"><a href="#best-practices" class="toc-link">Best Practices</a></li>
+                    </ul>
+                </aside>
+            </div>
+        </main>
+        <div class="mobile-overlay"></div>
+    </div>
+
+    <div class="search-modal">
+        <div class="search-modal-content">
+            <input type="text" class="search-modal-input" placeholder="Search documentation..." autofocus>
+            <div class="search-results"></div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

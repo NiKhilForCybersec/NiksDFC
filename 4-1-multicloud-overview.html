@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Multi-Cloud Overview - Extend Microsoft Defender for Cloud protection to AWS and GCP environments.">
+    <title>Multi-Cloud Overview - Microsoft Defender for Cloud</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="../index.html" class="sidebar-logo">
+                    <div class="logo-icon">MDC</div>
+                    <span class="logo-text">Defender for Cloud</span>
+                </a>
+                <button class="sidebar-toggle" aria-label="Toggle sidebar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Multi-Cloud</div>
+                    <div class="nav-group expanded" data-group="multicloud">
+                        <div class="nav-group-header">
+                            <span class="nav-group-title">Cloud Connectors</span>
+                            <svg class="nav-group-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="nav-group-items">
+                            <a href="4-1-multicloud-overview.html" class="nav-subitem active">Overview</a>
+                            <a href="4-2-aws-connector.html" class="nav-subitem">AWS Connector</a>
+                            <a href="4-4-gcp-connector.html" class="nav-subitem">GCP Connector</a>
+                            <a href="4-5-arc-integration.html" class="nav-subitem">Azure Arc</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" aria-label="Open menu">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10zm0 5.25a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75a.75.75 0 01-.75-.75z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div class="search-box">
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                        </svg>
+                        <input type="text" class="search-input" placeholder="Search documentation..." readonly>
+                        <span class="search-shortcut">⌘K</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <article class="page-content">
+                    <nav class="breadcrumbs">
+                        <a href="../index.html" class="breadcrumb-item">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span class="breadcrumb-item current">Multi-Cloud Overview</span>
+                    </nav>
+
+                    <header class="page-header">
+                        <h1>Multi-Cloud Security Overview</h1>
+                        <div class="page-meta">
+                            <span class="badge badge-free">Free CSPM</span>
+                            <span class="badge badge-premium">Paid CWPP</span>
+                            <span class="page-meta-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clip-rule="evenodd" />
+                                </svg>
+                                10 min read
+                            </span>
+                        </div>
+                    </header>
+
+                    <section>
+                        <p>
+                            Microsoft Defender for Cloud extends beyond Azure to provide unified security 
+                            posture management across AWS, GCP, and on-premises environments. This enables 
+                            a single pane of glass for multi-cloud security operations.
+                        </p>
+                    </section>
+
+                    <!-- Architecture -->
+                    <section>
+                        <h2 id="architecture">Multi-Cloud Architecture</h2>
+
+                        <div class="ascii-diagram">
+<span class="highlight-cyan">╔══════════════════════════════════════════════════════════════════════════════════════════════╗</span>
+<span class="highlight-cyan">║</span>                          <span class="highlight-blue">MDC MULTI-CLOUD ARCHITECTURE</span>                                      <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">╠══════════════════════════════════════════════════════════════════════════════════════════════╣</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">┌──────────────┐</span>      <span class="highlight-orange">┌──────────────┐</span>      <span class="highlight-green">┌──────────────┐</span>      <span class="highlight-purple">┌──────────────┐</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">│              │</span>      <span class="highlight-orange">│              │</span>      <span class="highlight-green">│              │</span>      <span class="highlight-purple">│              │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">│    AZURE     │</span>      <span class="highlight-orange">│     AWS      │</span>      <span class="highlight-green">│     GCP      │</span>      <span class="highlight-purple">│  ON-PREMISES │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">│              │</span>      <span class="highlight-orange">│              │</span>      <span class="highlight-green">│              │</span>      <span class="highlight-purple">│              │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">│  VMs, AKS,   │</span>      <span class="highlight-orange">│  EC2, EKS,   │</span>      <span class="highlight-green">│  GCE, GKE,   │</span>      <span class="highlight-purple">│   Servers,   │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">│  Storage,    │</span>      <span class="highlight-orange">│  S3, RDS,    │</span>      <span class="highlight-green">│  GCS, SQL,   │</span>      <span class="highlight-purple">│   VMware,    │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">│  SQL, etc.   │</span>      <span class="highlight-orange">│  Lambda      │</span>      <span class="highlight-green">│  Functions   │</span>      <span class="highlight-purple">│   Hyper-V    │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">└──────┬───────┘</span>      <span class="highlight-orange">└──────┬───────┘</span>      <span class="highlight-green">└──────┬───────┘</span>      <span class="highlight-purple">└──────┬───────┘</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>          │                    │                    │                    │              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>          │               <span class="highlight-orange">Cloud</span>                <span class="highlight-green">Cloud</span>               <span class="highlight-purple">Azure Arc</span>           <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>          │              <span class="highlight-orange">Connector</span>           <span class="highlight-green">Connector</span>            <span class="highlight-purple">Agent</span>              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>          │                    │                    │                    │              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>          └────────────────────┴────────────────────┴────────────────────┘              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                          │                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                          ▼                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">┌─────────────────────────────────────────────────────────────────────────────────────┐</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">│                     MICROSOFT DEFENDER FOR CLOUD                                   │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">│                                                                                     │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">│   ┌─────────────┐   ┌─────────────┐   ┌─────────────┐   ┌─────────────┐           │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">│   │   Unified   │   │   Multi-    │   │   Attack    │   │   Single    │           │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">│   │   Secure    │   │   Cloud     │   │    Path     │   │   Pane of   │           │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">│   │   Score     │   │  Inventory  │   │  Analysis   │   │   Glass     │           │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">│   └─────────────┘   └─────────────┘   └─────────────┘   └─────────────┘           │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">└─────────────────────────────────────────────────────────────────────────────────────┘</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">╚══════════════════════════════════════════════════════════════════════════════════════════════╝</span>
+                        </div>
+                    </section>
+
+                    <!-- Supported Clouds -->
+                    <section>
+                        <h2 id="supported">Supported Environments</h2>
+
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Environment</th>
+                                        <th>Connection Method</th>
+                                        <th>CSPM</th>
+                                        <th>CWPP</th>
+                                        <th>Key Resources</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Azure</strong></td>
+                                        <td>Native</td>
+                                        <td>✅ Full</td>
+                                        <td>✅ Full</td>
+                                        <td>All Azure resources</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>AWS</strong></td>
+                                        <td>Cloud Connector</td>
+                                        <td>✅ Full</td>
+                                        <td>✅ Via Arc</td>
+                                        <td>EC2, S3, RDS, EKS, Lambda, IAM</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>GCP</strong></td>
+                                        <td>Cloud Connector</td>
+                                        <td>✅ Full</td>
+                                        <td>✅ Via Arc</td>
+                                        <td>GCE, GCS, Cloud SQL, GKE</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>On-Premises</strong></td>
+                                        <td>Azure Arc</td>
+                                        <td>⚠️ Limited</td>
+                                        <td>✅ Full</td>
+                                        <td>Windows/Linux servers, SQL</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Feature Comparison -->
+                    <section>
+                        <h2 id="features">Feature Availability</h2>
+
+                        <h3>CSPM Features</h3>
+                        <div class="table-wrapper">
+                            <table class="compact">
+                                <thead>
+                                    <tr>
+                                        <th>Feature</th>
+                                        <th>Azure</th>
+                                        <th>AWS</th>
+                                        <th>GCP</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Secure Score</td>
+                                        <td>✅</td>
+                                        <td>✅</td>
+                                        <td>✅</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Security Recommendations</td>
+                                        <td>✅</td>
+                                        <td>✅</td>
+                                        <td>✅</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Regulatory Compliance</td>
+                                        <td>✅</td>
+                                        <td>✅</td>
+                                        <td>✅</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Attack Path Analysis</td>
+                                        <td>✅</td>
+                                        <td>✅</td>
+                                        <td>✅</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cloud Security Explorer</td>
+                                        <td>✅</td>
+                                        <td>✅</td>
+                                        <td>✅</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Agentless Scanning</td>
+                                        <td>✅</td>
+                                        <td>✅</td>
+                                        <td>✅</td>
+                                    </tr>
+                                    <tr>
+                                        <td>DSPM</td>
+                                        <td>✅</td>
+                                        <td>✅</td>
+                                        <td>✅</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h3>CWPP Features</h3>
+                        <div class="table-wrapper">
+                            <table class="compact">
+                                <thead>
+                                    <tr>
+                                        <th>Feature</th>
+                                        <th>Azure</th>
+                                        <th>AWS</th>
+                                        <th>GCP</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Defender for Servers</td>
+                                        <td>✅</td>
+                                        <td>✅ (Arc)</td>
+                                        <td>✅ (Arc)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Defender for Containers</td>
+                                        <td>✅</td>
+                                        <td>✅</td>
+                                        <td>✅</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Defender for Databases</td>
+                                        <td>✅</td>
+                                        <td>⚠️ Limited</td>
+                                        <td>⚠️ Limited</td>
+                                    </tr>
+                                    <tr>
+                                        <td>JIT VM Access</td>
+                                        <td>✅</td>
+                                        <td>❌</td>
+                                        <td>❌</td>
+                                    </tr>
+                                    <tr>
+                                        <td>File Integrity Monitoring</td>
+                                        <td>✅</td>
+                                        <td>✅ (Arc)</td>
+                                        <td>✅ (Arc)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Quick Setup -->
+                    <section>
+                        <h2 id="setup">Quick Setup Guide</h2>
+
+                        <div class="tabs">
+                            <div class="tab-list">
+                                <button class="tab-btn active" data-tab="aws-quick">AWS</button>
+                                <button class="tab-btn" data-tab="gcp-quick">GCP</button>
+                                <button class="tab-btn" data-tab="onprem-quick">On-Premises</button>
+                            </div>
+
+                            <div class="tab-panel active" data-panel="aws-quick">
+                                <ol>
+                                    <li><strong>Prerequisites:</strong> AWS account with CloudFormation access</li>
+                                    <li><strong>Add Connector:</strong> MDC → Environment settings → Add environment → AWS</li>
+                                    <li><strong>Deploy Stack:</strong> Run provided CloudFormation template</li>
+                                    <li><strong>Enable Plans:</strong> Select CSPM and/or Defender plans</li>
+                                    <li><strong>Verify:</strong> Resources appear in inventory within 24 hours</li>
+                                </ol>
+                                <a href="4-2-aws-connector.html" class="btn-link">Detailed AWS Setup →</a>
+                            </div>
+
+                            <div class="tab-panel" data-panel="gcp-quick">
+                                <ol>
+                                    <li><strong>Prerequisites:</strong> GCP project with Owner access</li>
+                                    <li><strong>Add Connector:</strong> MDC → Environment settings → Add environment → GCP</li>
+                                    <li><strong>Run Script:</strong> Execute provided gcloud commands</li>
+                                    <li><strong>Enable Plans:</strong> Select CSPM and/or Defender plans</li>
+                                    <li><strong>Verify:</strong> Resources appear in inventory within 24 hours</li>
+                                </ol>
+                                <a href="4-4-gcp-connector.html" class="btn-link">Detailed GCP Setup →</a>
+                            </div>
+
+                            <div class="tab-panel" data-panel="onprem-quick">
+                                <ol>
+                                    <li><strong>Prerequisites:</strong> Network connectivity to Azure</li>
+                                    <li><strong>Install Arc Agent:</strong> Run installation script on each server</li>
+                                    <li><strong>Enable MDC:</strong> Assign Defender for Servers plan</li>
+                                    <li><strong>Deploy Extensions:</strong> MDE, vulnerability assessment</li>
+                                    <li><strong>Verify:</strong> Servers appear in MDC inventory</li>
+                                </ol>
+                                <a href="4-5-arc-integration.html" class="btn-link">Detailed Arc Setup →</a>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Unified View -->
+                    <section>
+                        <h2 id="unified">Unified Security View</h2>
+
+                        <h3>Query All Cloud Resources</h3>
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Inventory across all clouds
+SecurityResources
+| where type == "microsoft.security/assessments"
+| extend 
+    CloudProvider = case(
+        properties.resourceDetails.source == "Azure", "Azure",
+        properties.resourceDetails.source == "Aws", "AWS",
+        properties.resourceDetails.source == "Gcp", "GCP",
+        "Unknown"
+    ),
+    Status = properties.status.code
+| summarize 
+    Healthy = countif(Status == "Healthy"),
+    Unhealthy = countif(Status == "Unhealthy")
+    by CloudProvider</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Multi-cloud secure score
+SecurityResources
+| where type == "microsoft.security/securescores"
+| extend 
+    Score = properties.score.current,
+    Max = properties.score.max,
+    Percentage = properties.score.percentage
+| project subscriptionId, Score, Max, Percentage</code></pre>
+
+                        <h3>Cross-Cloud Attack Paths</h3>
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Attack paths involving AWS or GCP resources
+SecurityResources
+| where type == "microsoft.security/attackpaths"
+| extend 
+    PathName = properties.attackPathDisplayName,
+    RiskLevel = properties.riskLevel,
+    EntryPoint = properties.entryPointEntityType,
+    Target = properties.targetEntityType
+| where properties.attackPathId contains "aws" or properties.attackPathId contains "gcp"
+| project PathName, RiskLevel, EntryPoint, Target</code></pre>
+                    </section>
+
+                    <!-- Best Practices -->
+                    <section>
+                        <h2 id="best-practices">Best Practices</h2>
+
+                        <div class="checklist">
+                            <div class="checklist-title">Multi-Cloud Implementation Checklist</div>
+                            <ul>
+                                <li>
+                                    <input type="checkbox" id="mc1">
+                                    <label for="mc1">Start with CSPM before enabling CWPP</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="mc2">
+                                    <label for="mc2">Connect all AWS accounts via organization connector</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="mc3">
+                                    <label for="mc3">Connect all GCP projects via organization connector</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="mc4">
+                                    <label for="mc4">Use Azure Arc for CWPP on non-Azure VMs</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="mc5">
+                                    <label for="mc5">Enable agentless scanning for all clouds</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="mc6">
+                                    <label for="mc6">Create unified governance rules across clouds</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="mc7">
+                                    <label for="mc7">Configure continuous export to Sentinel</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="mc8">
+                                    <label for="mc8">Review cross-cloud attack paths weekly</label>
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- Key Takeaways -->
+                    <div class="key-takeaways">
+                        <div class="key-takeaways-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 2a.75.75 0 01.75.75v.258a33.186 33.186 0 016.668.83.75.75 0 01-.336 1.461z" clip-rule="evenodd" />
+                            </svg>
+                            Key Takeaways
+                        </div>
+                        <ul>
+                            <li>MDC provides unified security across Azure, AWS, GCP, and on-prem</li>
+                            <li>Cloud connectors enable agentless CSPM for AWS and GCP</li>
+                            <li>Azure Arc provides CWPP capabilities for non-Azure workloads</li>
+                            <li>Secure score aggregates across all connected environments</li>
+                            <li>Attack path analysis works cross-cloud</li>
+                            <li>Free tier CSPM available for all clouds</li>
+                            <li>Use organization-level connectors for multi-account setups</li>
+                            <li>Single pane of glass simplifies SOC operations</li>
+                        </ul>
+                    </div>
+
+                    <div class="related-pages">
+                        <div class="related-title">Related Pages</div>
+                        <div class="related-list">
+                            <a href="4-2-aws-connector.html" class="related-link">AWS Connector</a>
+                            <a href="4-4-gcp-connector.html" class="related-link">GCP Connector</a>
+                            <a href="4-5-arc-integration.html" class="related-link">Azure Arc</a>
+                            <a href="2-6-cloud-security-explorer.html" class="related-link">Security Explorer</a>
+                        </div>
+                    </div>
+
+                    <nav class="page-nav">
+                        <a href="3-16-open-source-db.html" class="page-nav-link prev">
+                            <span class="page-nav-label">← Previous</span>
+                            <span class="page-nav-title">Open-Source DBs</span>
+                        </a>
+                        <a href="4-2-aws-connector.html" class="page-nav-link next">
+                            <span class="page-nav-label">Next →</span>
+                            <span class="page-nav-title">AWS Connector</span>
+                        </a>
+                    </nav>
+                </article>
+
+                <aside class="toc-sidebar">
+                    <div class="toc-title">On This Page</div>
+                    <ul class="toc-list">
+                        <li class="toc-item"><a href="#architecture" class="toc-link">Architecture</a></li>
+                        <li class="toc-item"><a href="#supported" class="toc-link">Supported Environments</a></li>
+                        <li class="toc-item"><a href="#features" class="toc-link">Feature Availability</a></li>
+                        <li class="toc-item"><a href="#setup" class="toc-link">Quick Setup</a></li>
+                        <li class="toc-item"><a href="#unified" class="toc-link">Unified View</a></li>
+                        <li class="toc-item"><a href="#best-practices" class="toc-link">Best Practices</a></li>
+                    </ul>
+                </aside>
+            </div>
+        </main>
+        <div class="mobile-overlay"></div>
+    </div>
+
+    <div class="search-modal">
+        <div class="search-modal-content">
+            <input type="text" class="search-modal-input" placeholder="Search documentation..." autofocus>
+            <div class="search-results"></div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

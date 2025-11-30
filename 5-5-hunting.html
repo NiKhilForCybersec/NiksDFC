@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sentinel Hunting Queries - Proactive threat hunting queries for MDC data in Microsoft Sentinel.">
+    <title>Hunting Queries - Microsoft Defender for Cloud</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="../index.html" class="sidebar-logo">
+                    <div class="logo-icon">MDC</div>
+                    <span class="logo-text">Defender for Cloud</span>
+                </a>
+                <button class="sidebar-toggle" aria-label="Toggle sidebar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Sentinel Integration</div>
+                    <div class="nav-group expanded" data-group="sentinel">
+                        <div class="nav-group-header">
+                            <span class="nav-group-title">Microsoft Sentinel</span>
+                            <svg class="nav-group-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="nav-group-items">
+                            <a href="5-1-integration-arch.html" class="nav-subitem">Architecture</a>
+                            <a href="5-2-data-connectors.html" class="nav-subitem">Connectors</a>
+                            <a href="5-3-workbooks.html" class="nav-subitem">Workbooks</a>
+                            <a href="5-4-analytics-rules.html" class="nav-subitem">Analytics</a>
+                            <a href="5-5-hunting.html" class="nav-subitem active">Hunting</a>
+                            <a href="5-12-playbooks.html" class="nav-subitem">Playbooks</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" aria-label="Open menu">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10zm0 5.25a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75a.75.75 0 01-.75-.75z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div class="search-box">
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                        </svg>
+                        <input type="text" class="search-input" placeholder="Search documentation..." readonly>
+                        <span class="search-shortcut">⌘K</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <article class="page-content">
+                    <nav class="breadcrumbs">
+                        <a href="../index.html" class="breadcrumb-item">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <a href="5-1-integration-arch.html" class="breadcrumb-item">Sentinel</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span class="breadcrumb-item current">Hunting</span>
+                    </nav>
+
+                    <header class="page-header">
+                        <h1>Hunting Queries</h1>
+                        <div class="page-meta">
+                            <span class="badge badge-l3">L3 Advanced</span>
+                            <span class="page-meta-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clip-rule="evenodd" />
+                                </svg>
+                                14 min read
+                            </span>
+                        </div>
+                    </header>
+
+                    <section>
+                        <p>
+                            Proactively hunt for threats using MDC data in Microsoft Sentinel. These hunting 
+                            queries help identify suspicious patterns, misconfigurations, and potential 
+                            attack chains before they trigger alerts.
+                        </p>
+                    </section>
+
+                    <!-- Credential Access -->
+                    <section>
+                        <h2 id="credential">Credential Access Hunting</h2>
+
+                        <h3>Unusual Key Vault Access</h3>
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Hunt for unusual Key Vault secret access patterns
+AzureDiagnostics
+| where ResourceType == "VAULTS"
+| where OperationName == "SecretGet"
+| summarize 
+    AccessCount = count(),
+    UniqueSecrets = dcount(id_s),
+    Secrets = make_set(id_s, 10)
+    by CallerIPAddress, identity_claim_upn_s, bin(TimeGenerated, 1h)
+| where AccessCount > 20 or UniqueSecrets > 5
+| project TimeGenerated, User = identity_claim_upn_s, CallerIPAddress, 
+          AccessCount, UniqueSecrets, Secrets</code></pre>
+
+                        <h3>Service Principal Secret Enumeration</h3>
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Detect enumeration of service principal credentials
+AuditLogs
+| where OperationName has_any ("Add service principal credentials", 
+                                "Update application – Certificates and secrets management")
+| where TimeGenerated > ago(7d)
+| summarize 
+    Operations = count(),
+    AppIds = make_set(TargetResources[0].id)
+    by InitiatedBy.user.userPrincipalName, bin(TimeGenerated, 1h)
+| where Operations > 5
+| project TimeGenerated, User = InitiatedBy_user_userPrincipalName, Operations, AppIds</code></pre>
+                    </section>
+
+                    <!-- Lateral Movement -->
+                    <section>
+                        <h2 id="lateral">Lateral Movement Hunting</h2>
+
+                        <h3>Cross-Subscription Activity</h3>
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Hunt for users accessing many subscriptions rapidly
+AzureActivity
+| where TimeGenerated > ago(24h)
+| where ActivityStatusValue == "Success"
+| summarize 
+    SubscriptionCount = dcount(SubscriptionId),
+    Subscriptions = make_set(SubscriptionId, 20),
+    Operations = count()
+    by Caller, bin(TimeGenerated, 1h)
+| where SubscriptionCount > 5
+| project TimeGenerated, Caller, SubscriptionCount, Operations, Subscriptions</code></pre>
+
+                        <h3>VM to VM Network Connections</h3>
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Detect unusual VM-to-VM connections (requires NSG flow logs)
+AzureNetworkAnalytics_CL
+| where TimeGenerated > ago(24h)
+| where FlowType_s == "IntraVNet" or FlowType_s == "InterVNet"
+| where DestPort_d in (22, 3389, 5985, 5986, 445)  // SSH, RDP, WinRM, SMB
+| summarize 
+    ConnectionCount = count(),
+    DestPorts = make_set(DestPort_d),
+    DestIPs = make_set(DestIP_s)
+    by SrcIP_s, bin(TimeGenerated, 1h)
+| where ConnectionCount > 10 or array_length(DestIPs) > 3
+| project TimeGenerated, SourceVM = SrcIP_s, ConnectionCount, DestPorts, DestIPs</code></pre>
+                    </section>
+
+                    <!-- Persistence -->
+                    <section>
+                        <h2 id="persistence">Persistence Hunting</h2>
+
+                        <h3>New Role Assignments</h3>
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Hunt for suspicious role assignments
+AzureActivity
+| where OperationNameValue == "Microsoft.Authorization/roleAssignments/write"
+| where ActivityStatusValue == "Success"
+| extend RoleDefinitionId = tostring(parse_json(Properties).requestbody)
+| where RoleDefinitionId has_any ("Owner", "Contributor", "User Access Administrator")
+| project TimeGenerated, Caller, SubscriptionId, 
+          ResourceGroup, Resource, RoleDefinitionId</code></pre>
+
+                        <h3>Automation Account Modifications</h3>
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Detect changes to Automation runbooks (potential persistence)
+AzureActivity
+| where TimeGenerated > ago(7d)
+| where ResourceProviderValue == "MICROSOFT.AUTOMATION"
+| where OperationNameValue has_any ("runbooks/write", "webhooks/write", 
+                                     "schedules/write", "credentials/write")
+| project TimeGenerated, Caller, OperationNameValue, 
+          Resource, ActivityStatusValue</code></pre>
+                    </section>
+
+                    <!-- Defense Evasion -->
+                    <section>
+                        <h2 id="evasion">Defense Evasion Hunting</h2>
+
+                        <h3>Security Control Disabled</h3>
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Hunt for Defender plans being disabled
+AzureActivity
+| where TimeGenerated > ago(7d)
+| where ResourceProviderValue == "MICROSOFT.SECURITY"
+| where OperationNameValue has "pricings/write"
+| extend RequestBody = parse_json(Properties).requestbody
+| where RequestBody has "Free"  // Plan being disabled
+| project TimeGenerated, Caller, SubscriptionId, 
+          Resource, RequestBody</code></pre>
+
+                        <h3>Diagnostic Settings Removed</h3>
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Detect removal of diagnostic settings (log tampering)
+AzureActivity
+| where TimeGenerated > ago(7d)
+| where OperationNameValue has "diagnosticSettings/delete"
+| project TimeGenerated, Caller, Resource, SubscriptionId, 
+          ActivityStatusValue</code></pre>
+
+                        <h3>NSG Rules Modified</h3>
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Hunt for NSG rule changes that increase exposure
+AzureActivity
+| where TimeGenerated > ago(7d)
+| where ResourceProviderValue == "MICROSOFT.NETWORK"
+| where OperationNameValue has "networkSecurityGroups/securityRules/write"
+| extend RequestBody = parse_json(Properties).requestbody
+| where RequestBody has "0.0.0.0/0" or RequestBody has "*"
+| project TimeGenerated, Caller, Resource, RequestBody</code></pre>
+                    </section>
+
+                    <!-- Exfiltration -->
+                    <section>
+                        <h2 id="exfiltration">Exfiltration Hunting</h2>
+
+                        <h3>Unusual Storage Access</h3>
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Hunt for large data downloads from storage
+StorageBlobLogs
+| where TimeGenerated > ago(24h)
+| where OperationName == "GetBlob"
+| where ResponseBodySize > 100000000  // > 100MB
+| summarize 
+    TotalBytes = sum(ResponseBodySize),
+    BlobCount = count(),
+    Blobs = make_set(ObjectKey, 10)
+    by CallerIpAddress, AccountName, bin(TimeGenerated, 1h)
+| where TotalBytes > 1000000000  // > 1GB per hour
+| extend TotalGB = round(TotalBytes / 1073741824.0, 2)
+| project TimeGenerated, CallerIpAddress, AccountName, TotalGB, BlobCount</code></pre>
+
+                        <h3>Anonymous Storage Access</h3>
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Detect anonymous access to storage accounts
+StorageBlobLogs
+| where TimeGenerated > ago(7d)
+| where AuthenticationType == "Anonymous"
+| summarize 
+    AccessCount = count(),
+    TotalBytes = sum(ResponseBodySize),
+    Containers = make_set(ObjectKey)
+    by AccountName, CallerIpAddress
+| where AccessCount > 10
+| project AccountName, CallerIpAddress, AccessCount, TotalBytes, Containers</code></pre>
+                    </section>
+
+                    <!-- Posture Drift -->
+                    <section>
+                        <h2 id="posture">Posture Drift Hunting</h2>
+
+                        <h3>New Unhealthy Recommendations</h3>
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Hunt for newly unhealthy recommendations
+SecurityRecommendation
+| where TimeGenerated > ago(1d)
+| where RecommendationState == "Unhealthy"
+| where RecommendationSeverity in ("High", "Critical")
+| summarize 
+    NewFindings = count(),
+    Resources = make_set(AssessedResourceId, 10)
+    by RecommendationName, RecommendationSeverity
+| order by NewFindings desc</code></pre>
+
+                        <h3>Secure Score Drops</h3>
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Hunt for significant secure score decreases
+SecureScore_CL
+| where TimeGenerated > ago(7d)
+| summarize arg_max(TimeGenerated, *) by bin(TimeGenerated, 1d), SubscriptionId
+| order by SubscriptionId, TimeGenerated asc
+| serialize
+| extend PreviousScore = prev(Score_d, 1)
+| extend ScoreDrop = PreviousScore - Score_d
+| where ScoreDrop > 3
+| project TimeGenerated, SubscriptionId, CurrentScore = Score_d, 
+          PreviousScore, ScoreDrop</code></pre>
+                    </section>
+
+                    <!-- Create Hunting Query -->
+                    <section>
+                        <h2 id="create">Save as Hunting Query</h2>
+
+                        <ol>
+                            <li>Navigate to <strong>Sentinel</strong> → <strong>Hunting</strong></li>
+                            <li>Click <strong>+ New query</strong></li>
+                            <li>Configure:
+                                <ul>
+                                    <li><strong>Name:</strong> Descriptive query name</li>
+                                    <li><strong>Description:</strong> What the query hunts for</li>
+                                    <li><strong>Custom query:</strong> KQL query</li>
+                                    <li><strong>Entity mapping:</strong> Map to Account, Host, IP</li>
+                                    <li><strong>Tactics:</strong> MITRE ATT&CK tactics</li>
+                                </ul>
+                            </li>
+                            <li>Click <strong>Create</strong></li>
+                        </ol>
+
+                        <div class="callout callout-tip">
+                            <div class="callout-title">Livestream</div>
+                            <div class="callout-content">
+                                <p>Use <strong>Livestream</strong> to run hunting queries in real-time and 
+                                get notified when results are found.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Hunting Workflow -->
+                    <section>
+                        <h2 id="workflow">Hunting Workflow</h2>
+
+                        <div class="checklist">
+                            <div class="checklist-title">Daily Hunting Checklist</div>
+                            <ul>
+                                <li>
+                                    <input type="checkbox" id="h1">
+                                    <label for="h1">Run credential access queries</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="h2">
+                                    <label for="h2">Check for lateral movement patterns</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="h3">
+                                    <label for="h3">Review new role assignments</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="h4">
+                                    <label for="h4">Check for disabled security controls</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="h5">
+                                    <label for="h5">Hunt for data exfiltration patterns</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="h6">
+                                    <label for="h6">Review posture drift</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="h7">
+                                    <label for="h7">Document and escalate findings</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="h8">
+                                    <label for="h8">Update queries based on new intel</label>
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- Key Takeaways -->
+                    <div class="key-takeaways">
+                        <div class="key-takeaways-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 2a.75.75 0 01.75.75v.258a33.186 33.186 0 016.668.83.75.75 0 01-.336 1.461z" clip-rule="evenodd" />
+                            </svg>
+                            Key Takeaways
+                        </div>
+                        <ul>
+                            <li>Hunting finds threats before alerts trigger</li>
+                            <li>Focus on MITRE ATT&CK tactics for structure</li>
+                            <li>Hunt for credential access and lateral movement</li>
+                            <li>Monitor for defense evasion (disabled controls)</li>
+                            <li>Track posture drift via secure score</li>
+                            <li>Save useful queries for repeated use</li>
+                            <li>Use Livestream for real-time hunting</li>
+                            <li>Document and promote queries to analytics rules</li>
+                        </ul>
+                    </div>
+
+                    <div class="related-pages">
+                        <div class="related-title">Related Pages</div>
+                        <div class="related-list">
+                            <a href="5-4-analytics-rules.html" class="related-link">Analytics Rules</a>
+                            <a href="12-1-kql-library.html" class="related-link">KQL Library</a>
+                            <a href="8-2-alert-triage.html" class="related-link">Alert Triage</a>
+                            <a href="10-2-vm-alerts.html" class="related-link">VM Alerts</a>
+                        </div>
+                    </div>
+
+                    <nav class="page-nav">
+                        <a href="5-4-analytics-rules.html" class="page-nav-link prev">
+                            <span class="page-nav-label">← Previous</span>
+                            <span class="page-nav-title">Analytics Rules</span>
+                        </a>
+                        <a href="5-12-playbooks.html" class="page-nav-link next">
+                            <span class="page-nav-label">Next →</span>
+                            <span class="page-nav-title">Playbooks</span>
+                        </a>
+                    </nav>
+                </article>
+
+                <aside class="toc-sidebar">
+                    <div class="toc-title">On This Page</div>
+                    <ul class="toc-list">
+                        <li class="toc-item"><a href="#credential" class="toc-link">Credential Access</a></li>
+                        <li class="toc-item"><a href="#lateral" class="toc-link">Lateral Movement</a></li>
+                        <li class="toc-item"><a href="#persistence" class="toc-link">Persistence</a></li>
+                        <li class="toc-item"><a href="#evasion" class="toc-link">Defense Evasion</a></li>
+                        <li class="toc-item"><a href="#exfiltration" class="toc-link">Exfiltration</a></li>
+                        <li class="toc-item"><a href="#posture" class="toc-link">Posture Drift</a></li>
+                        <li class="toc-item"><a href="#create" class="toc-link">Save Query</a></li>
+                        <li class="toc-item"><a href="#workflow" class="toc-link">Workflow</a></li>
+                    </ul>
+                </aside>
+            </div>
+        </main>
+        <div class="mobile-overlay"></div>
+    </div>
+
+    <div class="search-modal">
+        <div class="search-modal-content">
+            <input type="text" class="search-modal-input" placeholder="Search documentation..." autofocus>
+            <div class="search-results"></div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

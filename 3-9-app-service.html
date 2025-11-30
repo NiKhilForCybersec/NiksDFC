@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Microsoft Defender for App Service - Threat detection for Azure App Service web applications and APIs.">
+    <title>Defender for App Service - Microsoft Defender for Cloud</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="../index.html" class="sidebar-logo">
+                    <div class="logo-icon">MDC</div>
+                    <span class="logo-text">Defender for Cloud</span>
+                </a>
+                <button class="sidebar-toggle" aria-label="Toggle sidebar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">CWPP</div>
+                    <div class="nav-group expanded" data-group="cwpp">
+                        <div class="nav-group-header">
+                            <span class="nav-group-title">Workload Protection</span>
+                            <svg class="nav-group-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="nav-group-items">
+                            <a href="3-1-servers-overview.html" class="nav-subitem">Defender for Servers</a>
+                            <a href="3-4-containers.html" class="nav-subitem">Defender for Containers</a>
+                            <a href="3-7-storage.html" class="nav-subitem">Defender for Storage</a>
+                            <a href="3-8-sql.html" class="nav-subitem">Defender for SQL</a>
+                            <a href="3-9-app-service.html" class="nav-subitem active">Defender for App Service</a>
+                            <a href="3-10-key-vault.html" class="nav-subitem">Defender for Key Vault</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" aria-label="Open menu">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10zm0 5.25a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75a.75.75 0 01-.75-.75z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div class="search-box">
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                        </svg>
+                        <input type="text" class="search-input" placeholder="Search documentation..." readonly>
+                        <span class="search-shortcut">⌘K</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <article class="page-content">
+                    <nav class="breadcrumbs">
+                        <a href="../index.html" class="breadcrumb-item">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <a href="3-1-servers-overview.html" class="breadcrumb-item">CWPP</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span class="breadcrumb-item current">Defender for App Service</span>
+                    </nav>
+
+                    <header class="page-header">
+                        <h1>Defender for App Service</h1>
+                        <div class="page-meta">
+                            <span class="badge badge-l1">L1 Fundamentals</span>
+                            <span class="badge badge-l2">L2 Technical</span>
+                            <span class="page-meta-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clip-rule="evenodd" />
+                                </svg>
+                                12 min read
+                            </span>
+                        </div>
+                    </header>
+
+                    <section>
+                        <p>
+                            Microsoft Defender for App Service provides threat protection for applications running 
+                            on Azure App Service. It detects attacks targeting web applications, suspicious behaviors, 
+                            and vulnerabilities without requiring code changes or agents.
+                        </p>
+
+                        <div class="callout callout-info">
+                            <div class="callout-title">Coverage</div>
+                            <div class="callout-content">
+                                <p>Defender for App Service protects:</p>
+                                <ul>
+                                    <li>Web Apps (Windows and Linux)</li>
+                                    <li>API Apps</li>
+                                    <li>Function Apps</li>
+                                    <li>App Service Environments (ASE)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Capabilities -->
+                    <section>
+                        <h2 id="capabilities">Detection Capabilities</h2>
+
+                        <div class="ascii-diagram">
+<span class="highlight-cyan">╔══════════════════════════════════════════════════════════════════════════════════════════════╗</span>
+<span class="highlight-cyan">║</span>                     <span class="highlight-blue">DEFENDER FOR APP SERVICE - THREAT DETECTION</span>                            <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">╠══════════════════════════════════════════════════════════════════════════════════════════════╣</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">┌────────────────────────────┐</span>  <span class="highlight-orange">┌────────────────────────────┐</span>  <span class="highlight-purple">┌────────────────────────────┐</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">│    WEB ATTACKS             │</span>  <span class="highlight-orange">│   SUSPICIOUS BEHAVIOR      │</span>  <span class="highlight-purple">│     VULNERABILITIES        │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">│                            │</span>  <span class="highlight-orange">│                            │</span>  <span class="highlight-purple">│                            │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">│  • SQL injection probing   │</span>  <span class="highlight-orange">│  • PHP code execution      │</span>  <span class="highlight-purple">│  • Dangling DNS            │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">│  • XSS attempts            │</span>  <span class="highlight-orange">│  • Suspicious process      │</span>  <span class="highlight-purple">│  • Outdated runtime        │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">│  • Command injection       │</span>  <span class="highlight-orange">│  • Known exploit patterns  │</span>  <span class="highlight-purple">│  • Exposed sensitive files │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">│  • Path traversal          │</span>  <span class="highlight-orange">│  • Web shell detection     │</span>  <span class="highlight-purple">│  • Missing HTTPS           │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">│  • Scanner detection       │</span>  <span class="highlight-orange">│  • Crypto mining           │</span>  <span class="highlight-purple">│  • Weak TLS config         │</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">└────────────────────────────┘</span>  <span class="highlight-orange">└────────────────────────────┘</span>  <span class="highlight-purple">└────────────────────────────┘</span> <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">Pricing: ~$15 per App Service Plan per month</span>                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">╚══════════════════════════════════════════════════════════════════════════════════════════════╝</span>
+                        </div>
+                    </section>
+
+                    <!-- Enablement -->
+                    <section>
+                        <h2 id="enablement">Enablement</h2>
+
+                        <div class="tabs">
+                            <div class="tab-list">
+                                <button class="tab-btn active" data-tab="cli-app">Azure CLI</button>
+                                <button class="tab-btn" data-tab="ps-app">PowerShell</button>
+                                <button class="tab-btn" data-tab="tf-app">Terraform</button>
+                            </div>
+
+                            <div class="tab-panel active" data-panel="cli-app">
+                                <div class="code-header">
+                                    <span class="code-lang">Azure CLI</span>
+                                    <button class="code-copy-btn">Copy</button>
+                                </div>
+                                <pre><code class="language-bash"># Enable Defender for App Service
+az security pricing create \
+    --name AppServices \
+    --tier Standard
+
+# Verify enablement
+az security pricing show --name AppServices
+
+# List App Service Plans (billed per plan)
+az appservice plan list \
+    --query "[].{Name:name,SKU:sku.name,Apps:numberOfSites}" \
+    -o table</code></pre>
+                            </div>
+
+                            <div class="tab-panel" data-panel="ps-app">
+                                <div class="code-header">
+                                    <span class="code-lang">PowerShell</span>
+                                    <button class="code-copy-btn">Copy</button>
+                                </div>
+                                <pre><code class="language-powershell"># Enable Defender for App Service
+Set-AzSecurityPricing -Name "AppServices" -PricingTier "Standard"
+
+# Verify
+Get-AzSecurityPricing | Where-Object { $_.Name -eq "AppServices" }
+
+# Get App Service Plans count for cost estimation
+Get-AzAppServicePlan | Measure-Object</code></pre>
+                            </div>
+
+                            <div class="tab-panel" data-panel="tf-app">
+                                <div class="code-header">
+                                    <span class="code-lang">HCL (Terraform)</span>
+                                    <button class="code-copy-btn">Copy</button>
+                                </div>
+                                <pre><code class="language-hcl">resource "azurerm_security_center_subscription_pricing" "app_services" {
+  tier          = "Standard"
+  resource_type = "AppServices"
+}</code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Alert Types -->
+                    <section>
+                        <h2 id="alerts">Alert Types</h2>
+
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Alert</th>
+                                        <th>Severity</th>
+                                        <th>MITRE Tactic</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Suspicious WordPress theme upload</strong></td>
+                                        <td><span class="badge badge-high">High</span></td>
+                                        <td>Initial Access</td>
+                                        <td>Potential webshell disguised as theme</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>PHP code execution detected</strong></td>
+                                        <td><span class="badge badge-high">High</span></td>
+                                        <td>Execution</td>
+                                        <td>Suspicious PHP code being executed</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>SQL injection attempt</strong></td>
+                                        <td><span class="badge badge-medium">Medium</span></td>
+                                        <td>Initial Access</td>
+                                        <td>SQL injection patterns in requests</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Known vulnerability scanner</strong></td>
+                                        <td><span class="badge badge-low">Low</span></td>
+                                        <td>Reconnaissance</td>
+                                        <td>Scanner tool detected (Nikto, etc.)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Dangling DNS record</strong></td>
+                                        <td><span class="badge badge-high">High</span></td>
+                                        <td>N/A (Vulnerability)</td>
+                                        <td>DNS points to deleted resource</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Phishing content detected</strong></td>
+                                        <td><span class="badge badge-high">High</span></td>
+                                        <td>Resource Hijacking</td>
+                                        <td>App hosting phishing pages</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Suspicious user agent</strong></td>
+                                        <td><span class="badge badge-low">Low</span></td>
+                                        <td>Reconnaissance</td>
+                                        <td>Bot or malicious tool detected</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Raw data in web logs</strong></td>
+                                        <td><span class="badge badge-medium">Medium</span></td>
+                                        <td>Exfiltration</td>
+                                        <td>Sensitive data in URL parameters</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h3>KQL Queries for App Service Alerts</h3>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// All App Service security alerts
+SecurityAlert
+| where TimeGenerated > ago(7d)
+| where ProductName == "Azure Security Center"
+| where AlertName has_any ("App Service", "web app", "WordPress", "PHP", "injection")
+| summarize 
+    Count = count(),
+    Apps = make_set(CompromisedEntity)
+    by AlertName, AlertSeverity
+| order by Count desc</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// App Service HTTP logs - suspicious requests
+AppServiceHTTPLogs
+| where TimeGenerated > ago(24h)
+| where ScStatus >= 400
+| where CsUriStem has_any (".php", "wp-admin", "eval", "base64", "shell", "../")
+| summarize 
+    Count = count(),
+    StatusCodes = make_set(ScStatus)
+    by CsUriStem, CIp
+| where Count > 10
+| order by Count desc</code></pre>
+                    </section>
+
+                    <!-- Investigation -->
+                    <section>
+                        <h2 id="investigation">Investigation Procedures</h2>
+
+                        <div class="accordion">
+                            <div class="accordion-item expanded">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">Web Shell Detection</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <p><strong>IMMEDIATE ACTIONS:</strong></p>
+                                    <ol>
+                                        <li>Stop the App Service (prevent further abuse)</li>
+                                        <li>Access Kudu (Advanced Tools) to inspect files</li>
+                                        <li>Identify the webshell file and upload method</li>
+                                        <li>Remove the malicious file</li>
+                                        <li>Review deployment credentials</li>
+                                    </ol>
+
+                                    <div class="code-header">
+                                        <span class="code-lang">Azure CLI</span>
+                                        <button class="code-copy-btn">Copy</button>
+                                    </div>
+                                    <pre><code class="language-bash"># Stop the app immediately
+az webapp stop --name "compromised-app" --resource-group "your-rg"
+
+# Access Kudu console
+# https://your-app.scm.azurewebsites.net/DebugConsole
+
+# Or use Kudu API to list files
+az webapp deployment list-publishing-profiles \
+    --name "compromised-app" \
+    --resource-group "your-rg"
+
+# Check deployment history
+az webapp deployment list \
+    --name "compromised-app" \
+    --resource-group "your-rg"</code></pre>
+
+                                    <p><strong>Reset credentials after incident:</strong></p>
+                                    <div class="code-header">
+                                        <span class="code-lang">Azure CLI</span>
+                                        <button class="code-copy-btn">Copy</button>
+                                    </div>
+                                    <pre><code class="language-bash"># Reset deployment credentials
+az webapp deployment user set \
+    --user-name "new-deployment-user" \
+    --password "NewSecurePassword123!"
+
+# Reset publishing profile
+az webapp deployment list-publishing-profiles \
+    --name "your-app" \
+    --resource-group "your-rg" \
+    --xml</code></pre>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">SQL Injection Attempts</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <p><strong>Investigation Steps:</strong></p>
+                                    <ol>
+                                        <li>Review HTTP logs for injection patterns</li>
+                                        <li>Check if any attempts were successful (200 responses)</li>
+                                        <li>Review backend database for data exfiltration</li>
+                                    </ol>
+
+                                    <div class="code-header">
+                                        <span class="code-lang">KQL</span>
+                                        <button class="code-copy-btn">Copy</button>
+                                    </div>
+                                    <pre><code class="language-kql">// Find SQL injection patterns
+AppServiceHTTPLogs
+| where TimeGenerated > ago(24h)
+| where CsUriQuery has_any ("SELECT", "UNION", "INSERT", "DELETE", "--", "' OR", "1=1")
+    or CsUriStem has_any ("SELECT", "UNION")
+| project 
+    TimeGenerated,
+    CIp,
+    CsUriStem,
+    CsUriQuery,
+    ScStatus,
+    UserAgent
+| order by TimeGenerated desc</code></pre>
+
+                                    <p><strong>Response:</strong></p>
+                                    <ul>
+                                        <li>Block source IP at App Service level or WAF</li>
+                                        <li>Review application code for vulnerabilities</li>
+                                        <li>Implement parameterized queries</li>
+                                        <li>Consider adding Azure WAF/Front Door</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">Dangling DNS / Subdomain Takeover</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <p><strong>What it means:</strong> A DNS CNAME record points to an Azure resource 
+                                    that no longer exists. An attacker could create a new resource with the same name 
+                                    and hijack your subdomain.</p>
+
+                                    <p><strong>IMMEDIATE ACTION:</strong></p>
+                                    <ul>
+                                        <li>Remove or update the dangling DNS record</li>
+                                        <li>Or recreate the Azure resource</li>
+                                    </ul>
+
+                                    <div class="code-header">
+                                        <span class="code-lang">Bash</span>
+                                        <button class="code-copy-btn">Copy</button>
+                                    </div>
+                                    <pre><code class="language-bash"># Check if subdomain is dangling
+nslookup suspicious-subdomain.yourdomain.com
+
+# If it returns NXDOMAIN or points to *.azurewebsites.net
+# that you don't own - it's vulnerable
+
+# Remove the DNS record
+az network dns record-set cname delete \
+    --resource-group "dns-rg" \
+    --zone-name "yourdomain.com" \
+    --name "suspicious-subdomain"</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Best Practices -->
+                    <section>
+                        <h2 id="best-practices">Security Best Practices</h2>
+
+                        <div class="checklist">
+                            <div class="checklist-title">App Service Hardening Checklist</div>
+                            <ul>
+                                <li>
+                                    <input type="checkbox" id="app1">
+                                    <label for="app1">Enable Defender for App Service</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="app2">
+                                    <label for="app2">Enforce HTTPS only</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="app3">
+                                    <label for="app3">Use TLS 1.2+ minimum</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="app4">
+                                    <label for="app4">Enable diagnostic logging</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="app5">
+                                    <label for="app5">Use managed identities instead of connection strings</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="app6">
+                                    <label for="app6">Store secrets in Key Vault</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="app7">
+                                    <label for="app7">Enable IP restrictions for admin endpoints</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="app8">
+                                    <label for="app8">Consider Azure WAF for public apps</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="app9">
+                                    <label for="app9">Use deployment slots for safe deployments</label>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <h3>Hardening Commands</h3>
+
+                        <div class="code-header">
+                            <span class="code-lang">Azure CLI</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-bash"># Enable HTTPS only
+az webapp update \
+    --name "your-app" \
+    --resource-group "your-rg" \
+    --https-only true
+
+# Set minimum TLS version
+az webapp config set \
+    --name "your-app" \
+    --resource-group "your-rg" \
+    --min-tls-version 1.2
+
+# Enable diagnostic logging
+az webapp log config \
+    --name "your-app" \
+    --resource-group "your-rg" \
+    --web-server-logging filesystem \
+    --detailed-error-messages true \
+    --failed-request-tracing true
+
+# Enable IP restrictions
+az webapp config access-restriction add \
+    --name "your-app" \
+    --resource-group "your-rg" \
+    --rule-name "AllowCorpVPN" \
+    --action Allow \
+    --ip-address "203.0.113.0/24" \
+    --priority 100</code></pre>
+                    </section>
+
+                    <!-- Key Takeaways -->
+                    <div class="key-takeaways">
+                        <div class="key-takeaways-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 2a.75.75 0 01.75.75v.258a33.186 33.186 0 016.668.83.75.75 0 01-.336 1.461z" clip-rule="evenodd" />
+                            </svg>
+                            Key Takeaways
+                        </div>
+                        <ul>
+                            <li>Defender for App Service is billed per App Service Plan (~$15/month)</li>
+                            <li>No agent required - uses platform telemetry</li>
+                            <li>Detects web attacks, webshells, and misconfigurations</li>
+                            <li>Dangling DNS alerts indicate subdomain takeover risk</li>
+                            <li>Use Kudu (SCM site) for file system investigation</li>
+                            <li>Reset deployment credentials after any compromise</li>
+                            <li>Consider Azure WAF for additional protection on public apps</li>
+                        </ul>
+                    </div>
+
+                    <div class="related-pages">
+                        <div class="related-title">Related Pages</div>
+                        <div class="related-list">
+                            <a href="3-8-sql.html" class="related-link">Defender for SQL</a>
+                            <a href="3-10-key-vault.html" class="related-link">Defender for Key Vault</a>
+                            <a href="8-2-alert-triage.html" class="related-link">Alert Triage</a>
+                            <a href="12-1-kql-library.html" class="related-link">KQL Library</a>
+                        </div>
+                    </div>
+
+                    <nav class="page-nav">
+                        <a href="3-8-sql.html" class="page-nav-link prev">
+                            <span class="page-nav-label">← Previous</span>
+                            <span class="page-nav-title">Defender for SQL</span>
+                        </a>
+                        <a href="3-10-key-vault.html" class="page-nav-link next">
+                            <span class="page-nav-label">Next →</span>
+                            <span class="page-nav-title">Defender for Key Vault</span>
+                        </a>
+                    </nav>
+                </article>
+
+                <aside class="toc-sidebar">
+                    <div class="toc-title">On This Page</div>
+                    <ul class="toc-list">
+                        <li class="toc-item"><a href="#capabilities" class="toc-link">Capabilities</a></li>
+                        <li class="toc-item"><a href="#enablement" class="toc-link">Enablement</a></li>
+                        <li class="toc-item"><a href="#alerts" class="toc-link">Alert Types</a></li>
+                        <li class="toc-item"><a href="#investigation" class="toc-link">Investigation</a></li>
+                        <li class="toc-item"><a href="#best-practices" class="toc-link">Best Practices</a></li>
+                    </ul>
+                </aside>
+            </div>
+        </main>
+        <div class="mobile-overlay"></div>
+    </div>
+
+    <div class="search-modal">
+        <div class="search-modal-content">
+            <input type="text" class="search-modal-input" placeholder="Search documentation..." autofocus>
+            <div class="search-results"></div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

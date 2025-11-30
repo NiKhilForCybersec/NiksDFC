@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SOC Operations Overview - Enterprise security operations with Microsoft Defender for Cloud.">
+    <title>SOC Operations Overview - Microsoft Defender for Cloud</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="../index.html" class="sidebar-logo">
+                    <div class="logo-icon">MDC</div>
+                    <span class="logo-text">Defender for Cloud</span>
+                </a>
+                <button class="sidebar-toggle" aria-label="Toggle sidebar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">SOC Operations</div>
+                    <div class="nav-group expanded" data-group="soc">
+                        <div class="nav-group-header">
+                            <span class="nav-group-title">Operations</span>
+                            <svg class="nav-group-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="nav-group-items">
+                            <a href="8-1-soc-overview.html" class="nav-subitem active">SOC Overview</a>
+                            <a href="8-2-alert-triage.html" class="nav-subitem">Alert Triage</a>
+                            <a href="8-3-vm-playbook.html" class="nav-subitem">VM Playbook</a>
+                            <a href="8-4-identity-playbook.html" class="nav-subitem">Identity Playbook</a>
+                            <a href="8-5-container-playbook.html" class="nav-subitem">Container Playbook</a>
+                            <a href="8-6-storage-playbook.html" class="nav-subitem">Storage Playbook</a>
+                            <a href="8-7-network-playbook.html" class="nav-subitem">Network Playbook</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" aria-label="Open menu">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10zm0 5.25a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75a.75.75 0 01-.75-.75z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div class="search-box">
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                        </svg>
+                        <input type="text" class="search-input" placeholder="Search documentation..." readonly>
+                        <span class="search-shortcut">⌘K</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <article class="page-content">
+                    <nav class="breadcrumbs">
+                        <a href="../index.html" class="breadcrumb-item">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span class="breadcrumb-item current">SOC Operations</span>
+                    </nav>
+
+                    <header class="page-header">
+                        <h1>SOC Operations Overview</h1>
+                        <div class="page-meta">
+                            <span class="badge badge-l2">L2 Technical</span>
+                            <span class="badge badge-l3">L3 Advanced</span>
+                            <span class="page-meta-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clip-rule="evenodd" />
+                                </svg>
+                                12 min read
+                            </span>
+                        </div>
+                    </header>
+
+                    <section>
+                        <p>
+                            This section provides comprehensive guidance for Security Operations Center (SOC) 
+                            teams working with Microsoft Defender for Cloud. It covers alert handling workflows, 
+                            investigation playbooks, and operational best practices for enterprise environments.
+                        </p>
+                    </section>
+
+                    <!-- SOC Tiers -->
+                    <section>
+                        <h2 id="tiers">SOC Tier Model</h2>
+
+                        <div class="ascii-diagram">
+<span class="highlight-cyan">╔══════════════════════════════════════════════════════════════════════════════════════════════╗</span>
+<span class="highlight-cyan">║</span>                              <span class="highlight-blue">SOC TIER STRUCTURE</span>                                            <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">╠══════════════════════════════════════════════════════════════════════════════════════════════╣</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">┌─────────────────────────────────────────────────────────────────────────────────────┐</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│                              TIER 1 - MONITORING                                    │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│                                                                                     │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│  • Monitor alert queue 24/7          • Initial triage and classification          │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│  • Handle low severity alerts         • Escalate to Tier 2 when needed             │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│  • Execute runbook procedures         • Document all actions                       │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│                                                                                     │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">│  Role: Security Reader    SLA: 15 min response    Tools: MDC Portal, Sentinel     │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-green">└─────────────────────────────────────────────────────────────────────────────────────┘</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                          │                                                    <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                          ▼ Escalation                                        <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">┌─────────────────────────────────────────────────────────────────────────────────────┐</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">│                              TIER 2 - INVESTIGATION                                 │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">│                                                                                     │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">│  • Deep-dive investigation            • Threat hunting queries                     │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">│  • Handle medium/high alerts          • Coordinate containment actions             │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">│  • Cross-reference threat intel       • Escalate critical incidents                │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">│                                                                                     │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">│  Role: Security Admin     SLA: 1 hour response    Tools: MDE, KQL, Graph API      │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">└─────────────────────────────────────────────────────────────────────────────────────┘</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                          │                                                    <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                          ▼ Escalation                                        <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">┌─────────────────────────────────────────────────────────────────────────────────────┐</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">│                              TIER 3 - INCIDENT RESPONSE                             │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">│                                                                                     │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">│  • Major incident management          • Forensic analysis                          │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">│  • Advanced threat hunting            • Malware reverse engineering                │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">│  • Executive communication            • Post-incident review                       │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">│                                                                                     │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">│  Role: IR Lead            SLA: Immediate          Tools: Live Response, Forensics │</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">└─────────────────────────────────────────────────────────────────────────────────────┘</span>  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">╚══════════════════════════════════════════════════════════════════════════════════════════════╝</span>
+                        </div>
+                    </section>
+
+                    <!-- Daily Operations -->
+                    <section>
+                        <h2 id="daily">Daily Operations Workflow</h2>
+
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Time</th>
+                                        <th>Activity</th>
+                                        <th>Owner</th>
+                                        <th>Tools</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Shift Start</strong></td>
+                                        <td>Review overnight alerts, handoff from previous shift</td>
+                                        <td>All Tiers</td>
+                                        <td>MDC, Sentinel</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Continuous</strong></td>
+                                        <td>Monitor alert queue, triage new alerts</td>
+                                        <td>Tier 1</td>
+                                        <td>MDC Portal</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Hourly</strong></td>
+                                        <td>Review high severity alerts</td>
+                                        <td>Tier 2</td>
+                                        <td>MDC, MDE</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Daily</strong></td>
+                                        <td>Secure score review, recommendation triage</td>
+                                        <td>Tier 2</td>
+                                        <td>MDC Portal</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Daily</strong></td>
+                                        <td>Threat hunting, proactive searches</td>
+                                        <td>Tier 2/3</td>
+                                        <td>MDE Hunting</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Shift End</strong></td>
+                                        <td>Document open items, handoff to next shift</td>
+                                        <td>All Tiers</td>
+                                        <td>ITSM</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Alert Categories -->
+                    <section>
+                        <h2 id="categories">Alert Categories & Playbooks</h2>
+
+                        <div class="card-grid">
+                            <div class="card">
+                                <div class="card-header">
+                                    <span class="card-icon">🖥️</span>
+                                    <h3 class="card-title">VM Threats</h3>
+                                </div>
+                                <div class="card-content">
+                                    <p>Malware, suspicious processes, credential theft, lateral movement</p>
+                                    <a href="8-3-vm-playbook.html" class="btn-link">VM Playbook →</a>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <span class="card-icon">👤</span>
+                                    <h3 class="card-title">Identity Threats</h3>
+                                </div>
+                                <div class="card-content">
+                                    <p>Impossible travel, risky sign-ins, compromised accounts</p>
+                                    <a href="8-4-identity-playbook.html" class="btn-link">Identity Playbook →</a>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <span class="card-icon">📦</span>
+                                    <h3 class="card-title">Container Threats</h3>
+                                </div>
+                                <div class="card-content">
+                                    <p>Privileged containers, crypto mining, image vulnerabilities</p>
+                                    <a href="8-5-container-playbook.html" class="btn-link">Container Playbook →</a>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <span class="card-icon">💾</span>
+                                    <h3 class="card-title">Storage Threats</h3>
+                                </div>
+                                <div class="card-content">
+                                    <p>Malware uploads, data exfiltration, anonymous access</p>
+                                    <a href="8-6-storage-playbook.html" class="btn-link">Storage Playbook →</a>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <span class="card-icon">🌐</span>
+                                    <h3 class="card-title">Network Threats</h3>
+                                </div>
+                                <div class="card-content">
+                                    <p>C2 communication, port scanning, brute force attacks</p>
+                                    <a href="8-7-network-playbook.html" class="btn-link">Network Playbook →</a>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <span class="card-icon">🔑</span>
+                                    <h3 class="card-title">Resource Threats</h3>
+                                </div>
+                                <div class="card-content">
+                                    <p>Key Vault access, ARM operations, DNS anomalies</p>
+                                    <a href="10-1-alert-reference.html" class="btn-link">Alert Reference →</a>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- KPIs -->
+                    <section>
+                        <h2 id="kpis">SOC Key Performance Indicators</h2>
+
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>KPI</th>
+                                        <th>Target</th>
+                                        <th>Measurement</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Mean Time to Detect (MTTD)</strong></td>
+                                        <td>&lt; 15 minutes</td>
+                                        <td>Time from attack start to alert generation</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Mean Time to Respond (MTTR)</strong></td>
+                                        <td>&lt; 1 hour (critical)</td>
+                                        <td>Time from alert to containment action</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Alert Closure Rate</strong></td>
+                                        <td>&gt; 95%</td>
+                                        <td>Alerts resolved within SLA</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>False Positive Rate</strong></td>
+                                        <td>&lt; 10%</td>
+                                        <td>Benign alerts / total alerts</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Secure Score</strong></td>
+                                        <td>&gt; 80%</td>
+                                        <td>MDC secure score percentage</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Coverage</strong></td>
+                                        <td>100%</td>
+                                        <td>Resources with Defender enabled</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h3>KPI Dashboard Query</h3>
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// SOC KPIs - Alert metrics last 30 days
+SecurityAlert
+| where TimeGenerated > ago(30d)
+| summarize 
+    TotalAlerts = count(),
+    HighSeverity = countif(AlertSeverity == "High"),
+    CriticalSeverity = countif(AlertSeverity == "Critical"),
+    Resolved = countif(Status == "Resolved"),
+    AvgTimeToResolve = avg(datetime_diff('minute', 
+        todatetime(ExtendedProperties.ResolvedTime), TimeGenerated))
+| extend 
+    ResolutionRate = round(100.0 * Resolved / TotalAlerts, 1),
+    CriticalRate = round(100.0 * CriticalSeverity / TotalAlerts, 1)</code></pre>
+                    </section>
+
+                    <!-- Automation -->
+                    <section>
+                        <h2 id="automation">Automation Opportunities</h2>
+
+                        <div class="accordion">
+                            <div class="accordion-item expanded">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">Alert Enrichment</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <ul>
+                                        <li>Add threat intelligence context (IP reputation, domain info)</li>
+                                        <li>Lookup asset ownership from CMDB</li>
+                                        <li>Attach recent user activity</li>
+                                        <li>Include vulnerability scan results</li>
+                                    </ul>
+                                    <a href="5-12-playbooks.html" class="btn-link">See Enrichment Playbooks →</a>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">Auto-Remediation</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <ul>
+                                        <li>Isolate VM on critical malware detection</li>
+                                        <li>Block storage account on malware upload</li>
+                                        <li>Revoke user sessions on credential theft</li>
+                                        <li>Apply NSG deny rules on C2 communication</li>
+                                    </ul>
+                                    <div class="callout callout-warning">
+                                        <div class="callout-title">Caution</div>
+                                        <div class="callout-content">
+                                            <p>Auto-remediation can cause service disruption. Start with 
+                                            notification-only, then enable for well-understood scenarios.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">Notification & Ticketing</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <ul>
+                                        <li>Create ServiceNow/Jira tickets for alerts</li>
+                                        <li>Send Teams/Slack notifications</li>
+                                        <li>Email alert summaries to management</li>
+                                        <li>PagerDuty integration for on-call</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Tools -->
+                    <section>
+                        <h2 id="tools">Essential SOC Tools</h2>
+
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Tool</th>
+                                        <th>Purpose</th>
+                                        <th>Access</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>MDC Portal</strong></td>
+                                        <td>Alert management, recommendations, secure score</td>
+                                        <td>portal.azure.com</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Microsoft Defender Portal</strong></td>
+                                        <td>MDE, advanced hunting, live response</td>
+                                        <td>security.microsoft.com</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Microsoft Sentinel</strong></td>
+                                        <td>SIEM, incident correlation, workbooks</td>
+                                        <td>portal.azure.com</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Log Analytics</strong></td>
+                                        <td>KQL queries, custom dashboards</td>
+                                        <td>portal.azure.com</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Azure Resource Graph</strong></td>
+                                        <td>Resource inventory, posture queries</td>
+                                        <td>portal.azure.com</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Best Practices -->
+                    <section>
+                        <h2 id="best-practices">Best Practices</h2>
+
+                        <div class="checklist">
+                            <div class="checklist-title">SOC Operations Checklist</div>
+                            <ul>
+                                <li>
+                                    <input type="checkbox" id="soc1">
+                                    <label for="soc1">Define clear escalation paths for each alert severity</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="soc2">
+                                    <label for="soc2">Create playbooks for common alert types</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="soc3">
+                                    <label for="soc3">Implement shift handoff procedures</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="soc4">
+                                    <label for="soc4">Tune alert thresholds to reduce false positives</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="soc5">
+                                    <label for="soc5">Automate repetitive triage tasks</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="soc6">
+                                    <label for="soc6">Track KPIs and review weekly</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="soc7">
+                                    <label for="soc7">Conduct regular tabletop exercises</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="soc8">
+                                    <label for="soc8">Document lessons learned from incidents</label>
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- Key Takeaways -->
+                    <div class="key-takeaways">
+                        <div class="key-takeaways-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 2a.75.75 0 01.75.75v.258a33.186 33.186 0 016.668.83.75.75 0 01-.336 1.461z" clip-rule="evenodd" />
+                            </svg>
+                            Key Takeaways
+                        </div>
+                        <ul>
+                            <li>Use tiered SOC model: Tier 1 monitoring, Tier 2 investigation, Tier 3 IR</li>
+                            <li>Assign appropriate RBAC roles per tier (Reader vs Admin)</li>
+                            <li>Create playbooks for each major alert category</li>
+                            <li>Automate enrichment, notification, and simple remediations</li>
+                            <li>Track KPIs: MTTD, MTTR, closure rate, false positive rate</li>
+                            <li>Integrate MDC with Sentinel for unified SOC operations</li>
+                            <li>Regular training and tabletop exercises improve response</li>
+                            <li>Document everything for compliance and improvement</li>
+                        </ul>
+                    </div>
+
+                    <div class="related-pages">
+                        <div class="related-title">Related Pages</div>
+                        <div class="related-list">
+                            <a href="8-2-alert-triage.html" class="related-link">Alert Triage</a>
+                            <a href="5-12-playbooks.html" class="related-link">Automation Playbooks</a>
+                            <a href="10-1-alert-reference.html" class="related-link">Alert Reference</a>
+                            <a href="1-3-permissions.html" class="related-link">Permissions & Roles</a>
+                        </div>
+                    </div>
+
+                    <nav class="page-nav">
+                        <a href="7-1-siem-overview.html" class="page-nav-link prev">
+                            <span class="page-nav-label">← Previous</span>
+                            <span class="page-nav-title">Third-Party SIEM</span>
+                        </a>
+                        <a href="8-2-alert-triage.html" class="page-nav-link next">
+                            <span class="page-nav-label">Next →</span>
+                            <span class="page-nav-title">Alert Triage</span>
+                        </a>
+                    </nav>
+                </article>
+
+                <aside class="toc-sidebar">
+                    <div class="toc-title">On This Page</div>
+                    <ul class="toc-list">
+                        <li class="toc-item"><a href="#tiers" class="toc-link">SOC Tiers</a></li>
+                        <li class="toc-item"><a href="#daily" class="toc-link">Daily Operations</a></li>
+                        <li class="toc-item"><a href="#categories" class="toc-link">Alert Categories</a></li>
+                        <li class="toc-item"><a href="#kpis" class="toc-link">KPIs</a></li>
+                        <li class="toc-item"><a href="#automation" class="toc-link">Automation</a></li>
+                        <li class="toc-item"><a href="#tools" class="toc-link">Tools</a></li>
+                        <li class="toc-item"><a href="#best-practices" class="toc-link">Best Practices</a></li>
+                    </ul>
+                </aside>
+            </div>
+        </main>
+        <div class="mobile-overlay"></div>
+    </div>
+
+    <div class="search-modal">
+        <div class="search-modal-content">
+            <input type="text" class="search-modal-input" placeholder="Search documentation..." autofocus>
+            <div class="search-results"></div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

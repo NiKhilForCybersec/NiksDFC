@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Defender for APIs - Protect your APIs with security insights and threat detection.">
+    <title>Defender for APIs - Microsoft Defender for Cloud</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="../index.html" class="sidebar-logo">
+                    <div class="logo-icon">MDC</div>
+                    <span class="logo-text">Defender for Cloud</span>
+                </a>
+                <button class="sidebar-toggle" aria-label="Toggle sidebar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">CWPP</div>
+                    <div class="nav-group expanded" data-group="cwpp">
+                        <div class="nav-group-header">
+                            <span class="nav-group-title">Defender Plans</span>
+                            <svg class="nav-group-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="nav-group-items">
+                            <a href="3-1-servers.html" class="nav-subitem">Servers</a>
+                            <a href="3-3-containers.html" class="nav-subitem">Containers</a>
+                            <a href="3-5-storage.html" class="nav-subitem">Storage</a>
+                            <a href="3-15-apis.html" class="nav-subitem active">APIs</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" aria-label="Open menu">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10zm0 5.25a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75a.75.75 0 01-.75-.75z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div class="search-box">
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                        </svg>
+                        <input type="text" class="search-input" placeholder="Search documentation..." readonly>
+                        <span class="search-shortcut">⌘K</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <article class="page-content">
+                    <nav class="breadcrumbs">
+                        <a href="../index.html" class="breadcrumb-item">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <a href="3-1-servers.html" class="breadcrumb-item">CWPP</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span class="breadcrumb-item current">APIs</span>
+                    </nav>
+
+                    <header class="page-header">
+                        <h1>Defender for APIs</h1>
+                        <div class="page-meta">
+                            <span class="badge badge-l2">L2 Technical</span>
+                            <span class="page-meta-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clip-rule="evenodd" />
+                                </svg>
+                                11 min read
+                            </span>
+                        </div>
+                    </header>
+
+                    <section>
+                        <p>
+                            Microsoft Defender for APIs provides full lifecycle protection for APIs 
+                            published through Azure API Management. Gain visibility into API traffic, 
+                            detect threats, and improve your API security posture.
+                        </p>
+
+                        <div class="callout callout-info">
+                            <div class="callout-title">Requires API Management</div>
+                            <div class="callout-content">
+                                <p>Defender for APIs works with Azure API Management service. APIs must be published through APIM.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Capabilities -->
+                    <section>
+                        <h2 id="capabilities">Key Capabilities</h2>
+
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Capability</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>API Discovery</strong></td>
+                                        <td>Automatic inventory of all APIs in API Management</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Security Insights</strong></td>
+                                        <td>Identify APIs exposing sensitive data</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Posture Assessment</strong></td>
+                                        <td>Recommendations for API configuration</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Threat Detection</strong></td>
+                                        <td>Runtime alerts for suspicious API activity</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>OWASP Coverage</strong></td>
+                                        <td>Detection for OWASP API Top 10 risks</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Enable -->
+                    <section>
+                        <h2 id="enable">Enable Defender for APIs</h2>
+
+                        <div class="tabs">
+                            <div class="tab-list">
+                                <button class="tab-btn active" data-tab="portal-api">Portal</button>
+                                <button class="tab-btn" data-tab="cli-api">Azure CLI</button>
+                                <button class="tab-btn" data-tab="tf-api">Terraform</button>
+                            </div>
+
+                            <div class="tab-panel active" data-panel="portal-api">
+                                <ol>
+                                    <li>Navigate to <strong>Microsoft Defender for Cloud</strong></li>
+                                    <li>Go to <strong>Environment settings</strong></li>
+                                    <li>Select your subscription</li>
+                                    <li>Find <strong>APIs</strong> in the Defender plans list</li>
+                                    <li>Toggle to <strong>On</strong></li>
+                                    <li>Click <strong>Save</strong></li>
+                                </ol>
+                            </div>
+
+                            <div class="tab-panel" data-panel="cli-api">
+                                <div class="code-header">
+                                    <span class="code-lang">Azure CLI</span>
+                                    <button class="code-copy-btn">Copy</button>
+                                </div>
+                                <pre><code class="language-bash"># Enable Defender for APIs
+az security pricing create \
+    --name "Api" \
+    --tier "Standard"
+
+# Verify status
+az security pricing show --name "Api"</code></pre>
+                            </div>
+
+                            <div class="tab-panel" data-panel="tf-api">
+                                <div class="code-header">
+                                    <span class="code-lang">HCL</span>
+                                    <button class="code-copy-btn">Copy</button>
+                                </div>
+                                <pre><code class="language-hcl">resource "azurerm_security_center_subscription_pricing" "apis" {
+  tier          = "Standard"
+  resource_type = "Api"
+}</code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Onboard APIs -->
+                    <section>
+                        <h2 id="onboard">Onboard APIs</h2>
+
+                        <h3>Automatic Discovery</h3>
+                        <p>Once enabled, Defender for APIs automatically discovers APIs in your API Management instances.</p>
+
+                        <h3>View API Inventory</h3>
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// List all discovered APIs
+SecurityResources
+| where type == "microsoft.security/apiCollections"
+| extend 
+    ApiName = properties.displayName,
+    ApimService = properties.apimServiceName,
+    SensitiveDataExposed = properties.sensitiveDataExposed,
+    AuthType = properties.authenticationTypes
+| project ApiName, ApimService, SensitiveDataExposed, AuthType</code></pre>
+
+                        <h3>Onboard Specific API Collection</h3>
+                        <div class="code-header">
+                            <span class="code-lang">Azure CLI</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-bash"># Onboard API collection for protection
+az security api-collection create \
+    --resource-group "rg-apim" \
+    --service-name "my-apim-instance" \
+    --collection-name "my-api"
+
+# List API collections
+az security api-collection list \
+    --resource-group "rg-apim" \
+    --service-name "my-apim-instance"</code></pre>
+                    </section>
+
+                    <!-- Security Insights -->
+                    <section>
+                        <h2 id="insights">Security Insights</h2>
+
+                        <h3>Sensitive Data Exposure</h3>
+                        <p>Defender for APIs identifies APIs that may expose sensitive data:</p>
+                        <ul>
+                            <li>Personal identifiable information (PII)</li>
+                            <li>Financial data (credit cards, bank accounts)</li>
+                            <li>Health information</li>
+                            <li>Authentication credentials</li>
+                        </ul>
+
+                        <h3>Query Sensitive APIs</h3>
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Find APIs exposing sensitive data
+SecurityResources
+| where type == "microsoft.security/apiCollections"
+| where properties.sensitiveDataExposed == true
+| extend 
+    ApiName = properties.displayName,
+    DataTypes = properties.sensitiveDataTypes,
+    Endpoints = properties.numberOfEndpoints
+| project ApiName, DataTypes, Endpoints
+
+// APIs without authentication
+SecurityResources
+| where type == "microsoft.security/apiCollections"
+| where properties.authenticationTypes has "None"
+| extend ApiName = properties.displayName
+| project ApiName, properties.authenticationTypes</code></pre>
+                    </section>
+
+                    <!-- Threat Detection -->
+                    <section>
+                        <h2 id="threats">Threat Detection</h2>
+
+                        <h3>OWASP API Top 10 Coverage</h3>
+                        <div class="table-wrapper">
+                            <table class="compact">
+                                <thead>
+                                    <tr>
+                                        <th>OWASP Risk</th>
+                                        <th>Detection</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>API1: Broken Object Level Auth</td>
+                                        <td>✅ Excessive data access patterns</td>
+                                    </tr>
+                                    <tr>
+                                        <td>API2: Broken Authentication</td>
+                                        <td>✅ Brute force, credential stuffing</td>
+                                    </tr>
+                                    <tr>
+                                        <td>API3: Broken Object Property Auth</td>
+                                        <td>✅ Mass assignment attempts</td>
+                                    </tr>
+                                    <tr>
+                                        <td>API4: Unrestricted Resource Consumption</td>
+                                        <td>✅ Rate limit bypass, DoS patterns</td>
+                                    </tr>
+                                    <tr>
+                                        <td>API5: Broken Function Level Auth</td>
+                                        <td>✅ Privilege escalation attempts</td>
+                                    </tr>
+                                    <tr>
+                                        <td>API8: Security Misconfiguration</td>
+                                        <td>✅ Posture recommendations</td>
+                                    </tr>
+                                    <tr>
+                                        <td>API9: Improper Inventory Management</td>
+                                        <td>✅ Shadow API detection</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h3>Common Alert Types</h3>
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Alert</th>
+                                        <th>Severity</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Suspicious API usage spike</td>
+                                        <td>Medium</td>
+                                        <td>Unusual increase in API calls</td>
+                                    </tr>
+                                    <tr>
+                                        <td>API access from suspicious IP</td>
+                                        <td>High</td>
+                                        <td>Calls from known malicious IPs</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Possible SQL injection attempt</td>
+                                        <td>High</td>
+                                        <td>SQL patterns in API parameters</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Unauthenticated API access</td>
+                                        <td>Medium</td>
+                                        <td>Access to API without auth token</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sensitive data in API response</td>
+                                        <td>Medium</td>
+                                        <td>PII detected in response payload</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h3>Query API Alerts</h3>
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Get API-related security alerts
+SecurityAlert
+| where TimeGenerated > ago(7d)
+| where ProviderName == "Azure Security Center"
+| where AlertType startswith "API_"
+| extend 
+    ApiName = tostring(ExtendedProperties.ApiName),
+    CallerIP = tostring(ExtendedProperties.CallerIpAddress)
+| project TimeGenerated, AlertName, Severity, ApiName, CallerIP
+| order by TimeGenerated desc</code></pre>
+                    </section>
+
+                    <!-- Recommendations -->
+                    <section>
+                        <h2 id="recommendations">Security Recommendations</h2>
+
+                        <div class="table-wrapper">
+                            <table class="compact">
+                                <thead>
+                                    <tr>
+                                        <th>Recommendation</th>
+                                        <th>Impact</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>APIs should require authentication</td>
+                                        <td>Prevent unauthorized access</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Enable subscription key requirement</td>
+                                        <td>Control API access</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Use OAuth 2.0 for API authentication</td>
+                                        <td>Modern auth standards</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Enable rate limiting</td>
+                                        <td>Prevent abuse and DoS</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Disable anonymous access</td>
+                                        <td>Require identity for all calls</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h3>Query API Recommendations</h3>
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Get unhealthy API recommendations
+SecurityResources
+| where type == "microsoft.security/assessments"
+| where properties.displayName has "API"
+| where properties.status.code == "Unhealthy"
+| extend 
+    Recommendation = properties.displayName,
+    Resource = properties.resourceDetails.Id,
+    Severity = properties.metadata.severity
+| project Recommendation, Resource, Severity</code></pre>
+                    </section>
+
+                    <!-- Integration -->
+                    <section>
+                        <h2 id="integration">Integration with API Management</h2>
+
+                        <h3>Configure APIM Policies</h3>
+                        <div class="code-header">
+                            <span class="code-lang">XML</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-xml">&lt;policies&gt;
+    &lt;inbound&gt;
+        &lt;!-- Require subscription key --&gt;
+        &lt;check-header name="Ocp-Apim-Subscription-Key" 
+                      failed-check-httpcode="401" 
+                      failed-check-error-message="Subscription key required"&gt;
+        &lt;/check-header&gt;
+        
+        &lt;!-- Rate limiting --&gt;
+        &lt;rate-limit-by-key calls="100" 
+                          renewal-period="60" 
+                          counter-key="@(context.Subscription.Key)" /&gt;
+        
+        &lt;!-- Validate JWT token --&gt;
+        &lt;validate-jwt header-name="Authorization" 
+                      failed-validation-httpcode="401" 
+                      failed-validation-error-message="Unauthorized"&gt;
+            &lt;openid-config url="https://login.microsoftonline.com/{tenant}/.well-known/openid-configuration" /&gt;
+            &lt;required-claims&gt;
+                &lt;claim name="aud" match="all"&gt;
+                    &lt;value&gt;api://my-api&lt;/value&gt;
+                &lt;/claim&gt;
+            &lt;/required-claims&gt;
+        &lt;/validate-jwt&gt;
+    &lt;/inbound&gt;
+&lt;/policies&gt;</code></pre>
+                    </section>
+
+                    <!-- Best Practices -->
+                    <section>
+                        <h2 id="best-practices">Best Practices</h2>
+
+                        <div class="checklist">
+                            <div class="checklist-title">API Security Checklist</div>
+                            <ul>
+                                <li>
+                                    <input type="checkbox" id="api1">
+                                    <label for="api1">Enable Defender for APIs on all subscriptions</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="api2">
+                                    <label for="api2">Onboard all API collections</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="api3">
+                                    <label for="api3">Require authentication on all APIs</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="api4">
+                                    <label for="api4">Implement rate limiting</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="api5">
+                                    <label for="api5">Review APIs exposing sensitive data</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="api6">
+                                    <label for="api6">Monitor for OWASP Top 10 threats</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="api7">
+                                    <label for="api7">Integrate alerts with Sentinel</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="api8">
+                                    <label for="api8">Review shadow/undocumented APIs</label>
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- Key Takeaways -->
+                    <div class="key-takeaways">
+                        <div class="key-takeaways-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 2a.75.75 0 01.75.75v.258a33.186 33.186 0 016.668.83.75.75 0 01-.336 1.461z" clip-rule="evenodd" />
+                            </svg>
+                            Key Takeaways
+                        </div>
+                        <ul>
+                            <li>Defender for APIs works with Azure API Management</li>
+                            <li>Automatic discovery of all published APIs</li>
+                            <li>Identifies APIs exposing sensitive data</li>
+                            <li>Detects OWASP API Top 10 threats</li>
+                            <li>Runtime threat detection and alerts</li>
+                            <li>Posture recommendations for API security</li>
+                            <li>Integrate with Sentinel for correlation</li>
+                            <li>Use APIM policies for defense in depth</li>
+                        </ul>
+                    </div>
+
+                    <div class="related-pages">
+                        <div class="related-title">Related Pages</div>
+                        <div class="related-list">
+                            <a href="3-10-app-service.html" class="related-link">App Service</a>
+                            <a href="2-2-recommendations.html" class="related-link">Recommendations</a>
+                            <a href="10-1-alert-reference.html" class="related-link">Alert Reference</a>
+                            <a href="5-4-analytics-rules.html" class="related-link">Analytics Rules</a>
+                        </div>
+                    </div>
+
+                    <nav class="page-nav">
+                        <a href="3-14-defender-cspm.html" class="page-nav-link prev">
+                            <span class="page-nav-label">← Previous</span>
+                            <span class="page-nav-title">Defender CSPM</span>
+                        </a>
+                        <a href="4-1-multicloud-overview.html" class="page-nav-link next">
+                            <span class="page-nav-label">Next →</span>
+                            <span class="page-nav-title">Multi-Cloud</span>
+                        </a>
+                    </nav>
+                </article>
+
+                <aside class="toc-sidebar">
+                    <div class="toc-title">On This Page</div>
+                    <ul class="toc-list">
+                        <li class="toc-item"><a href="#capabilities" class="toc-link">Capabilities</a></li>
+                        <li class="toc-item"><a href="#enable" class="toc-link">Enable</a></li>
+                        <li class="toc-item"><a href="#onboard" class="toc-link">Onboard APIs</a></li>
+                        <li class="toc-item"><a href="#insights" class="toc-link">Security Insights</a></li>
+                        <li class="toc-item"><a href="#threats" class="toc-link">Threat Detection</a></li>
+                        <li class="toc-item"><a href="#recommendations" class="toc-link">Recommendations</a></li>
+                        <li class="toc-item"><a href="#integration" class="toc-link">APIM Integration</a></li>
+                        <li class="toc-item"><a href="#best-practices" class="toc-link">Best Practices</a></li>
+                    </ul>
+                </aside>
+            </div>
+        </main>
+        <div class="mobile-overlay"></div>
+    </div>
+
+    <div class="search-modal">
+        <div class="search-modal-content">
+            <input type="text" class="search-modal-input" placeholder="Search documentation..." autofocus>
+            <div class="search-results"></div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

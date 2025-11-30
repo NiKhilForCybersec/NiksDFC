@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MDC vs Wiz Comparison - Feature comparison between Microsoft Defender for Cloud and Wiz CNAPP.">
+    <title>MDC vs Wiz - Microsoft Defender for Cloud</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="../index.html" class="sidebar-logo">
+                    <div class="logo-icon">MDC</div>
+                    <span class="logo-text">Defender for Cloud</span>
+                </a>
+                <button class="sidebar-toggle" aria-label="Toggle sidebar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Alternatives</div>
+                    <div class="nav-group expanded" data-group="alternatives">
+                        <div class="nav-group-header">
+                            <span class="nav-group-title">Comparisons</span>
+                            <svg class="nav-group-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="nav-group-items">
+                            <a href="11-1-alternatives.html" class="nav-subitem">Overview</a>
+                            <a href="11-2-wiz-comparison.html" class="nav-subitem active">vs Wiz</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" aria-label="Open menu">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10zm0 5.25a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75a.75.75 0 01-.75-.75z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div class="search-box">
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                        </svg>
+                        <input type="text" class="search-input" placeholder="Search documentation..." readonly>
+                        <span class="search-shortcut">⌘K</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <article class="page-content">
+                    <nav class="breadcrumbs">
+                        <a href="../index.html" class="breadcrumb-item">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <a href="11-1-alternatives.html" class="breadcrumb-item">Alternatives</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span class="breadcrumb-item current">vs Wiz</span>
+                    </nav>
+
+                    <header class="page-header">
+                        <h1>MDC vs Wiz Comparison</h1>
+                        <div class="page-meta">
+                            <span class="badge badge-l1">L1 Fundamentals</span>
+                            <span class="page-meta-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clip-rule="evenodd" />
+                                </svg>
+                                10 min read
+                            </span>
+                        </div>
+                    </header>
+
+                    <section>
+                        <p>
+                            Compare Microsoft Defender for Cloud (MDC) with Wiz, a leading cloud-native 
+                            application protection platform (CNAPP). This comparison helps organizations 
+                            evaluate which solution best fits their cloud security requirements.
+                        </p>
+
+                        <div class="callout callout-info">
+                            <div class="callout-title">Comparison Context</div>
+                            <div class="callout-content">
+                                <p>This comparison is based on publicly available information and may not 
+                                reflect the latest features. Always verify with vendor documentation.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Overview -->
+                    <section>
+                        <h2 id="overview">Platform Overview</h2>
+
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Aspect</th>
+                                        <th>Microsoft Defender for Cloud</th>
+                                        <th>Wiz</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Vendor</strong></td>
+                                        <td>Microsoft</td>
+                                        <td>Wiz (Independent)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Type</strong></td>
+                                        <td>CNAPP (CSPM + CWPP)</td>
+                                        <td>CNAPP (CSPM + CWPP)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Deployment</strong></td>
+                                        <td>Agent + Agentless</td>
+                                        <td>100% Agentless</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Primary Cloud</strong></td>
+                                        <td>Azure (native)</td>
+                                        <td>Cloud-agnostic</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Multi-Cloud</strong></td>
+                                        <td>AWS, GCP via connectors</td>
+                                        <td>AWS, Azure, GCP, OCI native</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Feature Comparison -->
+                    <section>
+                        <h2 id="features">Feature Comparison</h2>
+
+                        <h3>CSPM Capabilities</h3>
+                        <div class="table-wrapper">
+                            <table class="compact">
+                                <thead>
+                                    <tr>
+                                        <th>Feature</th>
+                                        <th>MDC</th>
+                                        <th>Wiz</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Misconfiguration Detection</td>
+                                        <td>✅ Comprehensive</td>
+                                        <td>✅ Comprehensive</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Secure Score / Risk Score</td>
+                                        <td>✅ Secure Score</td>
+                                        <td>✅ Security Score</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Compliance Frameworks</td>
+                                        <td>✅ 50+ standards</td>
+                                        <td>✅ 50+ standards</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Attack Path Analysis</td>
+                                        <td>✅ Native</td>
+                                        <td>✅ Security Graph</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cloud Security Graph</td>
+                                        <td>✅ Security Explorer</td>
+                                        <td>✅ Graph-based</td>
+                                    </tr>
+                                    <tr>
+                                        <td>IAM Analysis</td>
+                                        <td>✅ Entra Permissions Mgmt</td>
+                                        <td>✅ Native CIEM</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h3>CWPP Capabilities</h3>
+                        <div class="table-wrapper">
+                            <table class="compact">
+                                <thead>
+                                    <tr>
+                                        <th>Feature</th>
+                                        <th>MDC</th>
+                                        <th>Wiz</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>VM Protection</td>
+                                        <td>✅ MDE Integration</td>
+                                        <td>✅ Agentless scanning</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Container Security</td>
+                                        <td>✅ Defender for Containers</td>
+                                        <td>✅ Container scanning</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Kubernetes Security</td>
+                                        <td>✅ AKS, Arc-enabled</td>
+                                        <td>✅ All K8s distributions</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Serverless Security</td>
+                                        <td>⚠️ Limited (App Service)</td>
+                                        <td>✅ Lambda, Functions</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Runtime Protection</td>
+                                        <td>✅ Via MDE agent</td>
+                                        <td>⚠️ Limited (agentless)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Vulnerability Management</td>
+                                        <td>✅ MDVM (agent)</td>
+                                        <td>✅ Agentless scanning</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h3>Additional Capabilities</h3>
+                        <div class="table-wrapper">
+                            <table class="compact">
+                                <thead>
+                                    <tr>
+                                        <th>Feature</th>
+                                        <th>MDC</th>
+                                        <th>Wiz</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Data Security (DSPM)</td>
+                                        <td>✅ Sensitive data discovery</td>
+                                        <td>✅ Data scanning</td>
+                                    </tr>
+                                    <tr>
+                                        <td>IaC Scanning</td>
+                                        <td>✅ DevOps integration</td>
+                                        <td>✅ Code scanning</td>
+                                    </tr>
+                                    <tr>
+                                        <td>API Security</td>
+                                        <td>✅ Defender for APIs</td>
+                                        <td>✅ API discovery</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Malware Scanning</td>
+                                        <td>✅ Storage malware scan</td>
+                                        <td>✅ Agentless malware</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Secrets Detection</td>
+                                        <td>✅ In code scanning</td>
+                                        <td>✅ Secrets scanning</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Strengths -->
+                    <section>
+                        <h2 id="strengths">Platform Strengths</h2>
+
+                        <div class="card-grid">
+                            <div class="card">
+                                <div class="card-header">
+                                    <span class="card-icon">🔵</span>
+                                    <h3 class="card-title">MDC Strengths</h3>
+                                </div>
+                                <div class="card-content">
+                                    <ul>
+                                        <li><strong>Azure Native:</strong> Deepest Azure integration</li>
+                                        <li><strong>XDR Integration:</strong> Unified with Microsoft 365 Defender</li>
+                                        <li><strong>Runtime Protection:</strong> MDE provides real-time EDR</li>
+                                        <li><strong>Free Tier:</strong> Basic CSPM at no cost</li>
+                                        <li><strong>Sentinel Integration:</strong> Native SIEM connection</li>
+                                        <li><strong>Licensing:</strong> Often included in E5</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <span class="card-icon">🟣</span>
+                                    <h3 class="card-title">Wiz Strengths</h3>
+                                </div>
+                                <div class="card-content">
+                                    <ul>
+                                        <li><strong>100% Agentless:</strong> No deployment required</li>
+                                        <li><strong>Multi-Cloud Native:</strong> Equal support for all clouds</li>
+                                        <li><strong>Security Graph:</strong> Advanced correlation</li>
+                                        <li><strong>Fast Deployment:</strong> Minutes to value</li>
+                                        <li><strong>UX/UI:</strong> Highly intuitive interface</li>
+                                        <li><strong>Context:</strong> Risk-based prioritization</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Use Cases -->
+                    <section>
+                        <h2 id="use-cases">Best Fit Scenarios</h2>
+
+                        <h3>Choose MDC When</h3>
+                        <ul>
+                            <li>Azure is your primary or only cloud</li>
+                            <li>You need runtime EDR protection (MDE)</li>
+                            <li>Already invested in Microsoft security stack</li>
+                            <li>E5 licensing provides cost advantage</li>
+                            <li>Require JIT VM access management</li>
+                            <li>Need tight Sentinel SIEM integration</li>
+                        </ul>
+
+                        <h3>Choose Wiz When</h3>
+                        <ul>
+                            <li>Multi-cloud with equal AWS/GCP/Azure presence</li>
+                            <li>Cannot deploy agents (compliance, complexity)</li>
+                            <li>Need fastest time to value</li>
+                            <li>Prioritize vulnerability context over runtime</li>
+                            <li>Small security team needing intuitive UX</li>
+                            <li>Serverless-heavy environment</li>
+                        </ul>
+                    </section>
+
+                    <!-- Integration -->
+                    <section>
+                        <h2 id="integration">Integration Ecosystem</h2>
+
+                        <div class="table-wrapper">
+                            <table class="compact">
+                                <thead>
+                                    <tr>
+                                        <th>Integration</th>
+                                        <th>MDC</th>
+                                        <th>Wiz</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>SIEM</td>
+                                        <td>Sentinel (native), Splunk, others</td>
+                                        <td>Splunk, Sentinel, others</td>
+                                    </tr>
+                                    <tr>
+                                        <td>SOAR</td>
+                                        <td>Logic Apps, Sentinel</td>
+                                        <td>Various via webhooks</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ticketing</td>
+                                        <td>ServiceNow, Jira</td>
+                                        <td>ServiceNow, Jira</td>
+                                    </tr>
+                                    <tr>
+                                        <td>CI/CD</td>
+                                        <td>Azure DevOps, GitHub</td>
+                                        <td>GitHub, GitLab, others</td>
+                                    </tr>
+                                    <tr>
+                                        <td>EDR</td>
+                                        <td>MDE (native)</td>
+                                        <td>CrowdStrike, SentinelOne</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Pricing -->
+                    <section>
+                        <h2 id="pricing">Pricing Comparison</h2>
+
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Aspect</th>
+                                        <th>MDC</th>
+                                        <th>Wiz</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Model</strong></td>
+                                        <td>Per-resource/workload</td>
+                                        <td>Per-cloud resource</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Free Tier</strong></td>
+                                        <td>✅ Basic CSPM</td>
+                                        <td>❌ No free tier</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Enterprise Discount</strong></td>
+                                        <td>E5 bundle, EA agreements</td>
+                                        <td>Volume discounts</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Trial</strong></td>
+                                        <td>30-day trial</td>
+                                        <td>POC available</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="callout callout-tip">
+                            <div class="callout-title">Cost Optimization</div>
+                            <div class="callout-content">
+                                <p>For Azure-primary organizations with Microsoft 365 E5, MDC is often 
+                                significantly more cost-effective due to bundled licensing.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Migration -->
+                    <section>
+                        <h2 id="migration">Migration Considerations</h2>
+
+                        <h3>From Wiz to MDC</h3>
+                        <ol>
+                            <li>Enable MDC free tier for baseline CSPM</li>
+                            <li>Enable Defender plans per resource type</li>
+                            <li>Deploy MDE agent for runtime protection</li>
+                            <li>Configure Sentinel integration</li>
+                            <li>Migrate custom policies to Azure Policy</li>
+                            <li>Run parallel for 30-60 days</li>
+                        </ol>
+
+                        <h3>Using Both Together</h3>
+                        <p>Some organizations use both platforms:</p>
+                        <ul>
+                            <li><strong>MDC:</strong> Azure protection, runtime EDR, Sentinel integration</li>
+                            <li><strong>Wiz:</strong> Multi-cloud visibility, agentless scanning, risk correlation</li>
+                        </ul>
+                    </section>
+
+                    <!-- Key Takeaways -->
+                    <div class="key-takeaways">
+                        <div class="key-takeaways-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 2a.75.75 0 01.75.75v.258a33.186 33.186 0 016.668.83.75.75 0 01-.336 1.461z" clip-rule="evenodd" />
+                            </svg>
+                            Key Takeaways
+                        </div>
+                        <ul>
+                            <li>MDC: Best for Azure-centric, Microsoft stack organizations</li>
+                            <li>Wiz: Best for multi-cloud, agentless-preferred environments</li>
+                            <li>MDC provides deeper runtime protection via MDE</li>
+                            <li>Wiz offers faster deployment and intuitive UX</li>
+                            <li>MDC free tier provides cost advantage for basic CSPM</li>
+                            <li>Both offer comprehensive CNAPP capabilities</li>
+                            <li>Consider E5 licensing for MDC cost optimization</li>
+                            <li>Some organizations benefit from using both</li>
+                        </ul>
+                    </div>
+
+                    <div class="related-pages">
+                        <div class="related-title">Related Pages</div>
+                        <div class="related-list">
+                            <a href="11-1-alternatives.html" class="related-link">Alternatives Overview</a>
+                            <a href="1-1-overview.html" class="related-link">MDC Overview</a>
+                            <a href="1-5-cost-optimization.html" class="related-link">Cost Optimization</a>
+                            <a href="4-1-multicloud-overview.html" class="related-link">Multi-Cloud</a>
+                        </div>
+                    </div>
+
+                    <nav class="page-nav">
+                        <a href="11-1-alternatives.html" class="page-nav-link prev">
+                            <span class="page-nav-label">← Previous</span>
+                            <span class="page-nav-title">Alternatives Overview</span>
+                        </a>
+                        <a href="12-1-kql-library.html" class="page-nav-link next">
+                            <span class="page-nav-label">Next →</span>
+                            <span class="page-nav-title">KQL Library</span>
+                        </a>
+                    </nav>
+                </article>
+
+                <aside class="toc-sidebar">
+                    <div class="toc-title">On This Page</div>
+                    <ul class="toc-list">
+                        <li class="toc-item"><a href="#overview" class="toc-link">Overview</a></li>
+                        <li class="toc-item"><a href="#features" class="toc-link">Features</a></li>
+                        <li class="toc-item"><a href="#strengths" class="toc-link">Strengths</a></li>
+                        <li class="toc-item"><a href="#use-cases" class="toc-link">Use Cases</a></li>
+                        <li class="toc-item"><a href="#integration" class="toc-link">Integration</a></li>
+                        <li class="toc-item"><a href="#pricing" class="toc-link">Pricing</a></li>
+                        <li class="toc-item"><a href="#migration" class="toc-link">Migration</a></li>
+                    </ul>
+                </aside>
+            </div>
+        </main>
+        <div class="mobile-overlay"></div>
+    </div>
+
+    <div class="search-modal">
+        <div class="search-modal-content">
+            <input type="text" class="search-modal-input" placeholder="Search documentation..." autofocus>
+            <div class="search-results"></div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

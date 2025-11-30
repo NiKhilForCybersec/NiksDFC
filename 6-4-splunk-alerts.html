@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Splunk Alerts - Configure automated alerts for MDC security events in Splunk.">
+    <title>Splunk Alerts - Microsoft Defender for Cloud</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="../index.html" class="sidebar-logo">
+                    <div class="logo-icon">MDC</div>
+                    <span class="logo-text">Defender for Cloud</span>
+                </a>
+                <button class="sidebar-toggle" aria-label="Toggle sidebar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Splunk Integration</div>
+                    <div class="nav-group expanded" data-group="splunk">
+                        <div class="nav-group-header">
+                            <span class="nav-group-title">Splunk</span>
+                            <svg class="nav-group-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="nav-group-items">
+                            <a href="6-1-splunk-integration.html" class="nav-subitem">Overview</a>
+                            <a href="6-2-splunk-dashboards.html" class="nav-subitem">Dashboards</a>
+                            <a href="6-3-splunk-addon.html" class="nav-subitem">Add-on Config</a>
+                            <a href="6-4-splunk-alerts.html" class="nav-subitem active">Alerts</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" aria-label="Open menu">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10zm0 5.25a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75a.75.75 0 01-.75-.75z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div class="search-box">
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                        </svg>
+                        <input type="text" class="search-input" placeholder="Search documentation..." readonly>
+                        <span class="search-shortcut">⌘K</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <article class="page-content">
+                    <nav class="breadcrumbs">
+                        <a href="../index.html" class="breadcrumb-item">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <a href="6-1-splunk-integration.html" class="breadcrumb-item">Splunk</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span class="breadcrumb-item current">Alerts</span>
+                    </nav>
+
+                    <header class="page-header">
+                        <h1>Splunk Alerts</h1>
+                        <div class="page-meta">
+                            <span class="badge badge-l2">L2 Technical</span>
+                            <span class="page-meta-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clip-rule="evenodd" />
+                                </svg>
+                                10 min read
+                            </span>
+                        </div>
+                    </header>
+
+                    <section>
+                        <p>
+                            Configure Splunk alerts to automate response to MDC security events. Create 
+                            scheduled searches with actions to notify teams, create tickets, or trigger 
+                            automated remediation.
+                        </p>
+                    </section>
+
+                    <!-- Critical Alerts -->
+                    <section>
+                        <h2 id="critical">Critical Security Alerts</h2>
+
+                        <h3>High Severity MDC Alert</h3>
+                        <div class="code-header">
+                            <span class="code-lang">SPL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-spl">index=azure_security sourcetype="azure:security:alert"
+| where severity IN ("High", "Critical")
+| where status = "Active"
+| dedup alertDisplayName, compromisedEntity
+| table _time, alertDisplayName, severity, compromisedEntity, subscriptionId
+| sort - _time</code></pre>
+
+                        <div class="table-wrapper">
+                            <table class="compact">
+                                <thead>
+                                    <tr>
+                                        <th>Setting</th>
+                                        <th>Value</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Schedule</td>
+                                        <td>Every 5 minutes</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Time Range</td>
+                                        <td>Last 10 minutes</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Trigger</td>
+                                        <td>Number of results > 0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Throttle</td>
+                                        <td>1 hour per compromisedEntity</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h3>Ransomware Indicator</h3>
+                        <div class="code-header">
+                            <span class="code-lang">SPL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-spl">index=azure_security sourcetype="azure:security:alert"
+| where alertDisplayName IN ("Ransomware activity detected", 
+                              "Ransomware indicator detected",
+                              "Behavior similar to ransomware detected")
+| table _time, alertDisplayName, compromisedEntity, subscriptionId, description</code></pre>
+
+                        <h3>Credential Dumping Detected</h3>
+                        <div class="code-header">
+                            <span class="code-lang">SPL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-spl">index=azure_security sourcetype="azure:security:alert"
+| where alertType = "VM_CredentialDumping" OR 
+        alertDisplayName LIKE "%credential%dump%" OR
+        alertDisplayName LIKE "%Mimikatz%"
+| table _time, alertDisplayName, severity, compromisedEntity
+| sort - severity</code></pre>
+                    </section>
+
+                    <!-- Posture Alerts -->
+                    <section>
+                        <h2 id="posture">Security Posture Alerts</h2>
+
+                        <h3>Secure Score Drop</h3>
+                        <div class="code-header">
+                            <span class="code-lang">SPL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-spl">index=azure_security sourcetype="azure:security:score"
+| stats latest(currentScore) as CurrentScore, 
+        earliest(currentScore) as PreviousScore 
+        by subscriptionId
+| eval ScoreDrop = PreviousScore - CurrentScore
+| where ScoreDrop > 5
+| table subscriptionId, PreviousScore, CurrentScore, ScoreDrop</code></pre>
+
+                        <h3>New Critical Recommendation</h3>
+                        <div class="code-header">
+                            <span class="code-lang">SPL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-spl">index=azure_security sourcetype="azure:security:recommendation"
+| where "status.code" = "Unhealthy"
+| where "metadata.severity" = "High"
+| stats count as NewFindings, 
+        values(displayName) as Recommendations 
+        by "resourceDetails.id"
+| where NewFindings > 0
+| table "resourceDetails.id", NewFindings, Recommendations</code></pre>
+
+                        <h3>Defender Plan Disabled</h3>
+                        <div class="code-header">
+                            <span class="code-lang">SPL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-spl">index=azure_audit sourcetype="azure:activity"
+| where operationName = "Microsoft.Security/pricings/write"
+| spath input=properties output=requestBody path=requestbody
+| where requestBody LIKE "%Free%"
+| table _time, caller, subscriptionId, resource</code></pre>
+                    </section>
+
+                    <!-- Compliance Alerts -->
+                    <section>
+                        <h2 id="compliance">Compliance Alerts</h2>
+
+                        <h3>Compliance Score Below Threshold</h3>
+                        <div class="code-header">
+                            <span class="code-lang">SPL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-spl">index=azure_security sourcetype="azure:security:compliance"
+| stats latest(complianceScore) as CompliancePercent by standardName
+| where CompliancePercent < 80
+| table standardName, CompliancePercent</code></pre>
+
+                        <h3>Failed Compliance Control</h3>
+                        <div class="code-header">
+                            <span class="code-lang">SPL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-spl">index=azure_security sourcetype="azure:security:compliance"
+| where complianceState = "Failed"
+| stats count as FailedControls by standardName, controlName
+| sort - FailedControls
+| head 20</code></pre>
+                    </section>
+
+                    <!-- Correlation Alerts -->
+                    <section>
+                        <h2 id="correlation">Correlation Alerts</h2>
+
+                        <h3>Multiple Alert Types on Same Resource</h3>
+                        <div class="code-header">
+                            <span class="code-lang">SPL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-spl">index=azure_security sourcetype="azure:security:alert"
+| where status = "Active"
+| stats count as AlertCount,
+        dc(alertDisplayName) as UniqueAlertTypes,
+        values(alertDisplayName) as Alerts,
+        values(severity) as Severities
+        by compromisedEntity
+| where AlertCount >= 3 AND UniqueAlertTypes >= 2
+| table compromisedEntity, AlertCount, UniqueAlertTypes, Alerts, Severities</code></pre>
+
+                        <h3>Alert Spike Detection</h3>
+                        <div class="code-header">
+                            <span class="code-lang">SPL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-spl">index=azure_security sourcetype="azure:security:alert"
+| timechart span=1h count as CurrentCount
+| streamstats avg(CurrentCount) as AvgCount window=24
+| eval Threshold = AvgCount * 3
+| where CurrentCount > Threshold
+| table _time, CurrentCount, AvgCount, Threshold</code></pre>
+
+                        <h3>Lateral Movement Pattern</h3>
+                        <div class="code-header">
+                            <span class="code-lang">SPL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-spl">index=azure_security sourcetype="azure:security:alert"
+| where intent IN ("LateralMovement", "CredentialAccess", "Execution")
+| transaction compromisedEntity maxspan=1h
+| where eventcount >= 2
+| table _time, compromisedEntity, eventcount, intent, alertDisplayName</code></pre>
+                    </section>
+
+                    <!-- Alert Actions -->
+                    <section>
+                        <h2 id="actions">Alert Actions</h2>
+
+                        <h3>Email Notification</h3>
+                        <div class="code-header">
+                            <span class="code-lang">conf</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-properties"># savedsearches.conf
+[MDC High Severity Alert]
+search = index=azure_security sourcetype="azure:security:alert" severity IN ("High", "Critical") status="Active" | dedup alertDisplayName, compromisedEntity | table _time, alertDisplayName, severity, compromisedEntity
+cron_schedule = */5 * * * *
+dispatch.earliest_time = -10m
+dispatch.latest_time = now
+alert.track = 1
+alert.severity = 4
+alert.suppress = 1
+alert.suppress.period = 1h
+alert.suppress.fields = compromisedEntity
+action.email = 1
+action.email.to = soc@company.com
+action.email.subject = [CRITICAL] MDC Alert: $result.alertDisplayName$
+action.email.include.results_link = 1
+action.email.include.view_link = 1</code></pre>
+
+                        <h3>Webhook to SOAR</h3>
+                        <div class="code-header">
+                            <span class="code-lang">conf</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-properties"># savedsearches.conf
+[MDC Critical Alert - SOAR]
+search = index=azure_security sourcetype="azure:security:alert" severity="Critical" status="Active"
+cron_schedule = */5 * * * *
+dispatch.earliest_time = -10m
+dispatch.latest_time = now
+action.webhook = 1
+action.webhook.param.url = https://soar.company.com/api/incidents
+action.webhook.param.method = POST</code></pre>
+
+                        <h3>ServiceNow Ticket</h3>
+                        <div class="code-header">
+                            <span class="code-lang">conf</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-properties"># savedsearches.conf (requires ServiceNow Add-on)
+[MDC Alert - Create ServiceNow Incident]
+search = index=azure_security sourcetype="azure:security:alert" severity IN ("High", "Critical") status="Active"
+action.snow_event = 1
+action.snow_event.param.node = $result.compromisedEntity$
+action.snow_event.param.type = Security
+action.snow_event.param.severity = 2
+action.snow_event.param.description = MDC Alert: $result.alertDisplayName$</code></pre>
+                    </section>
+
+                    <!-- Create Alert Workflow -->
+                    <section>
+                        <h2 id="workflow">Create Alert Workflow</h2>
+
+                        <ol>
+                            <li>Navigate to <strong>Search & Reporting</strong></li>
+                            <li>Enter your SPL search</li>
+                            <li>Click <strong>Save As</strong> → <strong>Alert</strong></li>
+                            <li>Configure:
+                                <ul>
+                                    <li><strong>Title:</strong> Descriptive name</li>
+                                    <li><strong>Permissions:</strong> Shared in App</li>
+                                    <li><strong>Alert type:</strong> Scheduled</li>
+                                    <li><strong>Cron Schedule:</strong> e.g., */5 * * * *</li>
+                                </ul>
+                            </li>
+                            <li>Set Trigger Conditions:
+                                <ul>
+                                    <li><strong>Trigger alert when:</strong> Number of results > 0</li>
+                                    <li><strong>Throttle:</strong> Suppress for 1 hour</li>
+                                </ul>
+                            </li>
+                            <li>Add Actions (Email, Webhook, Script, etc.)</li>
+                            <li>Click <strong>Save</strong></li>
+                        </ol>
+                    </section>
+
+                    <!-- Alert Tuning -->
+                    <section>
+                        <h2 id="tuning">Alert Tuning</h2>
+
+                        <h3>Reduce False Positives</h3>
+                        <div class="code-header">
+                            <span class="code-lang">SPL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-spl">index=azure_security sourcetype="azure:security:alert"
+| where severity IN ("High", "Critical")
+| where status = "Active"
+| where NOT (compromisedEntity IN ("test-vm", "dev-*"))  | Remove test resources
+| where NOT alertDisplayName IN ("Known benign alert")   | Exclude known benign
+| dedup alertDisplayName, compromisedEntity              | Remove duplicates
+| table _time, alertDisplayName, severity, compromisedEntity</code></pre>
+
+                        <h3>Use Lookup for Exclusions</h3>
+                        <div class="code-header">
+                            <span class="code-lang">SPL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-spl">index=azure_security sourcetype="azure:security:alert"
+| lookup mdc_exclusions.csv compromisedEntity OUTPUT excluded
+| where isnull(excluded) OR excluded != "true"
+| where severity IN ("High", "Critical")
+| table _time, alertDisplayName, severity, compromisedEntity</code></pre>
+                    </section>
+
+                    <!-- Best Practices -->
+                    <section>
+                        <h2 id="best-practices">Best Practices</h2>
+
+                        <div class="checklist">
+                            <div class="checklist-title">Splunk Alert Checklist</div>
+                            <ul>
+                                <li>
+                                    <input type="checkbox" id="sa1">
+                                    <label for="sa1">Start with high-severity alerts only</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="sa2">
+                                    <label for="sa2">Use throttling to prevent alert fatigue</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="sa3">
+                                    <label for="sa3">Deduplicate alerts by resource and alert type</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="sa4">
+                                    <label for="sa4">Create exclusion lists for known benign activity</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="sa5">
+                                    <label for="sa5">Include actionable context in notifications</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="sa6">
+                                    <label for="sa6">Integrate with SOAR for automated response</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="sa7">
+                                    <label for="sa7">Review and tune alerts monthly</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="sa8">
+                                    <label for="sa8">Track alert metrics (volume, MTTR, false positive rate)</label>
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- Key Takeaways -->
+                    <div class="key-takeaways">
+                        <div class="key-takeaways-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 2a.75.75 0 01.75.75v.258a33.186 33.186 0 016.668.83.75.75 0 01-.336 1.461z" clip-rule="evenodd" />
+                            </svg>
+                            Key Takeaways
+                        </div>
+                        <ul>
+                            <li>Focus on high and critical severity alerts first</li>
+                            <li>Use throttling to reduce alert fatigue</li>
+                            <li>Create correlation alerts for attack chains</li>
+                            <li>Integrate with email, SOAR, and ticketing systems</li>
+                            <li>Use exclusion lookups for known benign activity</li>
+                            <li>Monitor secure score drops as posture alerts</li>
+                            <li>Tune alerts regularly based on feedback</li>
+                            <li>Track metrics to measure SOC efficiency</li>
+                        </ul>
+                    </div>
+
+                    <div class="related-pages">
+                        <div class="related-title">Related Pages</div>
+                        <div class="related-list">
+                            <a href="6-2-splunk-dashboards.html" class="related-link">Splunk Dashboards</a>
+                            <a href="6-3-splunk-addon.html" class="related-link">Add-on Config</a>
+                            <a href="8-2-alert-triage.html" class="related-link">Alert Triage</a>
+                            <a href="5-4-analytics-rules.html" class="related-link">Sentinel Analytics</a>
+                        </div>
+                    </div>
+
+                    <nav class="page-nav">
+                        <a href="6-3-splunk-addon.html" class="page-nav-link prev">
+                            <span class="page-nav-label">← Previous</span>
+                            <span class="page-nav-title">Add-on Config</span>
+                        </a>
+                        <a href="7-1-siem-overview.html" class="page-nav-link next">
+                            <span class="page-nav-label">Next →</span>
+                            <span class="page-nav-title">Third-Party SIEM</span>
+                        </a>
+                    </nav>
+                </article>
+
+                <aside class="toc-sidebar">
+                    <div class="toc-title">On This Page</div>
+                    <ul class="toc-list">
+                        <li class="toc-item"><a href="#critical" class="toc-link">Critical Alerts</a></li>
+                        <li class="toc-item"><a href="#posture" class="toc-link">Posture Alerts</a></li>
+                        <li class="toc-item"><a href="#compliance" class="toc-link">Compliance</a></li>
+                        <li class="toc-item"><a href="#correlation" class="toc-link">Correlation</a></li>
+                        <li class="toc-item"><a href="#actions" class="toc-link">Alert Actions</a></li>
+                        <li class="toc-item"><a href="#workflow" class="toc-link">Workflow</a></li>
+                        <li class="toc-item"><a href="#tuning" class="toc-link">Tuning</a></li>
+                        <li class="toc-item"><a href="#best-practices" class="toc-link">Best Practices</a></li>
+                    </ul>
+                </aside>
+            </div>
+        </main>
+        <div class="mobile-overlay"></div>
+    </div>
+
+    <div class="search-modal">
+        <div class="search-modal-content">
+            <input type="text" class="search-modal-input" placeholder="Search documentation..." autofocus>
+            <div class="search-results"></div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

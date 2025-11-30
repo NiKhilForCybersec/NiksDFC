@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Network Threat Investigation Playbook - Investigate and respond to network-based security alerts in Microsoft Defender for Cloud.">
+    <title>Network Threat Playbook - Microsoft Defender for Cloud</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="../index.html" class="sidebar-logo">
+                    <div class="logo-icon">MDC</div>
+                    <span class="logo-text">Defender for Cloud</span>
+                </a>
+                <button class="sidebar-toggle" aria-label="Toggle sidebar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">SOC Operations</div>
+                    <div class="nav-group expanded" data-group="soc">
+                        <div class="nav-group-header">
+                            <span class="nav-group-title">Investigation Playbooks</span>
+                            <svg class="nav-group-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="nav-group-items">
+                            <a href="8-2-alert-triage.html" class="nav-subitem">Alert Triage</a>
+                            <a href="8-3-vm-playbook.html" class="nav-subitem">VM Threats</a>
+                            <a href="8-4-identity-playbook.html" class="nav-subitem">Identity Threats</a>
+                            <a href="8-5-container-playbook.html" class="nav-subitem">Container Threats</a>
+                            <a href="8-6-storage-playbook.html" class="nav-subitem">Storage Threats</a>
+                            <a href="8-7-network-playbook.html" class="nav-subitem active">Network Threats</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" aria-label="Open menu">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10zm0 5.25a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75a.75.75 0 01-.75-.75z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div class="search-box">
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                        </svg>
+                        <input type="text" class="search-input" placeholder="Search documentation..." readonly>
+                        <span class="search-shortcut">⌘K</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <article class="page-content">
+                    <nav class="breadcrumbs">
+                        <a href="../index.html" class="breadcrumb-item">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <a href="8-2-alert-triage.html" class="breadcrumb-item">SOC Operations</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span class="breadcrumb-item current">Network Playbook</span>
+                    </nav>
+
+                    <header class="page-header">
+                        <h1>Network Threat Investigation Playbook</h1>
+                        <div class="page-meta">
+                            <span class="badge badge-l2">L2 Technical</span>
+                            <span class="badge badge-l3">L3 Advanced</span>
+                            <span class="page-meta-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clip-rule="evenodd" />
+                                </svg>
+                                15 min read
+                            </span>
+                        </div>
+                    </header>
+
+                    <section>
+                        <p>
+                            This playbook provides step-by-step procedures for investigating network-based 
+                            security alerts in Microsoft Defender for Cloud, including suspicious connections, 
+                            port scanning, and network anomalies.
+                        </p>
+
+                        <div class="callout callout-warning">
+                            <div class="callout-title">Required Permissions</div>
+                            <div class="callout-content">
+                                <ul>
+                                    <li>Network Contributor for NSG modifications</li>
+                                    <li>Log Analytics Reader for traffic analysis</li>
+                                    <li>Security Admin for alert management</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Investigation Workflow -->
+                    <section>
+                        <h2 id="workflow">Investigation Workflow</h2>
+
+                        <div class="ascii-diagram">
+<span class="highlight-cyan">╔══════════════════════════════════════════════════════════════════════════════════════════════╗</span>
+<span class="highlight-cyan">║</span>                        <span class="highlight-blue">NETWORK THREAT INVESTIGATION WORKFLOW</span>                               <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">╠══════════════════════════════════════════════════════════════════════════════════════════════╣</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">┌─────────────┐</span>     <span class="highlight-orange">┌─────────────┐</span>     <span class="highlight-blue">┌─────────────┐</span>     <span class="highlight-green">┌─────────────┐</span>          <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">│   ALERT     │</span>────►<span class="highlight-orange">│   IDENTIFY  │</span>────►<span class="highlight-blue">│   ANALYZE   │</span>────►<span class="highlight-green">│   CONTAIN   │</span>          <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">│  RECEIVED   │</span>     <span class="highlight-orange">│   SOURCE    │</span>     <span class="highlight-blue">│   TRAFFIC   │</span>     <span class="highlight-green">│   THREAT    │</span>          <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">└─────────────┘</span>     <span class="highlight-orange">└─────────────┘</span>     <span class="highlight-blue">└─────────────┘</span>     <span class="highlight-green">└─────────────┘</span>          <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">• Port scan?</span>        <span class="highlight-orange">• Source IP</span>         <span class="highlight-blue">• NSG flow logs</span>    <span class="highlight-green">• Block IP</span>               <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">• C2 communication?</span> <span class="highlight-orange">• Target resource</span>   <span class="highlight-blue">• Traffic pattern</span>  <span class="highlight-green">• Isolate VM</span>             <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">• Data exfil?</span>       <span class="highlight-orange">• Protocol/port</span>     <span class="highlight-blue">• Volume/duration</span>  <span class="highlight-green">• Revoke access</span>          <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">• Lateral movement?</span> <span class="highlight-orange">• Direction</span>         <span class="highlight-blue">• Reputation</span>       <span class="highlight-green">• Alert team</span>             <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">╚══════════════════════════════════════════════════════════════════════════════════════════════╝</span>
+                        </div>
+                    </section>
+
+                    <!-- Common Alerts -->
+                    <section>
+                        <h2 id="alerts">Common Network Alerts</h2>
+
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Alert</th>
+                                        <th>Severity</th>
+                                        <th>Investigation Priority</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Communication with suspicious IP</strong></td>
+                                        <td><span class="badge badge-high">High</span></td>
+                                        <td>Immediate - possible C2</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Port scanning detected</strong></td>
+                                        <td><span class="badge badge-medium">Medium</span></td>
+                                        <td>High - reconnaissance</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Outbound traffic to malicious domain</strong></td>
+                                        <td><span class="badge badge-high">High</span></td>
+                                        <td>Immediate - active threat</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>SSH brute force</strong></td>
+                                        <td><span class="badge badge-medium">Medium</span></td>
+                                        <td>High - credential attack</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>RDP brute force</strong></td>
+                                        <td><span class="badge badge-medium">Medium</span></td>
+                                        <td>High - credential attack</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Unusual outbound traffic volume</strong></td>
+                                        <td><span class="badge badge-medium">Medium</span></td>
+                                        <td>Medium - possible exfiltration</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Traffic Analysis -->
+                    <section>
+                        <h2 id="traffic-analysis">Traffic Analysis</h2>
+
+                        <h3>NSG Flow Log Analysis</h3>
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Analyze traffic from suspicious IP
+AzureNetworkAnalytics_CL
+| where TimeGenerated > ago(24h)
+| where SrcIP_s == "suspicious-ip" or DestIP_s == "suspicious-ip"
+| summarize 
+    TotalFlows = count(),
+    BytesSent = sum(BytesSent_d),
+    BytesReceived = sum(BytesReceived_d),
+    DestPorts = make_set(DestPort_d)
+    by SrcIP_s, DestIP_s, L4Protocol_s, FlowDirection_s, bin(TimeGenerated, 1h)
+| order by TotalFlows desc</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Detect port scanning activity
+AzureNetworkAnalytics_CL
+| where TimeGenerated > ago(1h)
+| where FlowStatus_s == "D"  // Denied flows
+| summarize 
+    TargetPorts = dcount(DestPort_d),
+    TargetIPs = dcount(DestIP_s),
+    TotalAttempts = count()
+    by SrcIP_s
+| where TargetPorts > 20 or TargetIPs > 10
+| order by TargetPorts desc</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// High-volume outbound traffic (potential exfiltration)
+AzureNetworkAnalytics_CL
+| where TimeGenerated > ago(24h)
+| where FlowDirection_s == "O"  // Outbound
+| summarize TotalBytes = sum(BytesSent_d) by SrcIP_s, DestIP_s, bin(TimeGenerated, 1h)
+| where TotalBytes > 1073741824  // > 1 GB
+| order by TotalBytes desc</code></pre>
+                    </section>
+
+                    <!-- Investigation Procedures -->
+                    <section>
+                        <h2 id="procedures">Investigation Procedures</h2>
+
+                        <div class="accordion">
+                            <div class="accordion-item expanded">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">C2 Communication Detected</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <div class="callout callout-error">
+                                        <div class="callout-title">HIGH PRIORITY - Active Compromise</div>
+                                        <div class="callout-content">
+                                            <p>C2 communication indicates an attacker has control of the resource. 
+                                            Immediate containment required.</p>
+                                        </div>
+                                    </div>
+
+                                    <p><strong>Immediate Actions:</strong></p>
+                                    <ol>
+                                        <li>Block C2 IP in NSG</li>
+                                        <li>Isolate affected VM</li>
+                                        <li>Capture memory/disk for forensics</li>
+                                        <li>Investigate malware on VM</li>
+                                    </ol>
+
+                                    <div class="code-header">
+                                        <span class="code-lang">Azure CLI</span>
+                                        <button class="code-copy-btn">Copy</button>
+                                    </div>
+                                    <pre><code class="language-bash"># Block C2 IP in NSG
+az network nsg rule create \
+    --nsg-name "vm-nsg" \
+    --resource-group "vm-rg" \
+    --name "Block-C2-IP" \
+    --priority 100 \
+    --direction Outbound \
+    --access Deny \
+    --source-address-prefixes "*" \
+    --destination-address-prefixes "c2-ip-address" \
+    --destination-port-ranges "*" \
+    --protocol "*"
+
+# Isolate VM by removing all NSG rules except management
+az network nsg rule create \
+    --nsg-name "vm-nsg" \
+    --resource-group "vm-rg" \
+    --name "Isolate-All-Outbound" \
+    --priority 200 \
+    --direction Outbound \
+    --access Deny \
+    --source-address-prefixes "*" \
+    --destination-address-prefixes "*" \
+    --destination-port-ranges "*" \
+    --protocol "*"</code></pre>
+
+                                    <div class="code-header">
+                                        <span class="code-lang">KQL</span>
+                                        <button class="code-copy-btn">Copy</button>
+                                    </div>
+                                    <pre><code class="language-kql">// Find all VMs communicating with C2 IP
+AzureNetworkAnalytics_CL
+| where TimeGenerated > ago(7d)
+| where DestIP_s == "c2-ip-address"
+| summarize 
+    FirstSeen = min(TimeGenerated),
+    LastSeen = max(TimeGenerated),
+    TotalConnections = count(),
+    BytesSent = sum(BytesSent_d)
+    by SrcIP_s, VM_s
+| order by TotalConnections desc</code></pre>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">SSH/RDP Brute Force Attack</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <p><strong>Investigation:</strong></p>
+                                    <ol>
+                                        <li>Identify attacking IP addresses</li>
+                                        <li>Check if any login succeeded</li>
+                                        <li>Review targeted accounts</li>
+                                        <li>Check for lateral movement if compromised</li>
+                                    </ol>
+
+                                    <div class="code-header">
+                                        <span class="code-lang">KQL</span>
+                                        <button class="code-copy-btn">Copy</button>
+                                    </div>
+                                    <pre><code class="language-kql">// SSH brute force analysis
+Syslog
+| where TimeGenerated > ago(24h)
+| where Facility == "auth" or Facility == "authpriv"
+| where SyslogMessage contains "Failed password" or SyslogMessage contains "Invalid user"
+| parse SyslogMessage with * "from " SourceIP " port" *
+| summarize FailedAttempts = count() by SourceIP, Computer
+| where FailedAttempts > 10
+| order by FailedAttempts desc</code></pre>
+
+                                    <div class="code-header">
+                                        <span class="code-lang">KQL</span>
+                                        <button class="code-copy-btn">Copy</button>
+                                    </div>
+                                    <pre><code class="language-kql">// Check for successful login after brute force
+Syslog
+| where TimeGenerated > ago(24h)
+| where Facility == "auth" or Facility == "authpriv"
+| where SyslogMessage contains "Accepted password" or SyslogMessage contains "Accepted publickey"
+| parse SyslogMessage with * "from " SourceIP " port" *
+| where SourceIP in (
+    // Insert brute force source IPs here
+    Syslog
+    | where SyslogMessage contains "Failed password"
+    | parse SyslogMessage with * "from " IP " port" *
+    | summarize count() by IP
+    | where count_ > 10
+    | project IP
+)</code></pre>
+
+                                    <p><strong>Response:</strong></p>
+                                    <div class="code-header">
+                                        <span class="code-lang">Azure CLI</span>
+                                        <button class="code-copy-btn">Copy</button>
+                                    </div>
+                                    <pre><code class="language-bash"># Block brute force source IP
+az network nsg rule create \
+    --nsg-name "vm-nsg" \
+    --resource-group "vm-rg" \
+    --name "Block-BruteForce-IP" \
+    --priority 100 \
+    --direction Inbound \
+    --access Deny \
+    --source-address-prefixes "attacker-ip" \
+    --destination-port-ranges "22" "3389" \
+    --protocol "Tcp"
+
+# Better: Enable JIT access instead of permanent SSH/RDP
+az security jit-policy create \
+    --resource-group "vm-rg" \
+    --location "eastus" \
+    --name "default"</code></pre>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">Port Scanning Activity</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <p><strong>Reconnaissance - Early Attack Stage</strong></p>
+
+                                    <div class="code-header">
+                                        <span class="code-lang">KQL</span>
+                                        <button class="code-copy-btn">Copy</button>
+                                    </div>
+                                    <pre><code class="language-kql">// Detailed port scan analysis
+AzureNetworkAnalytics_CL
+| where TimeGenerated > ago(1h)
+| where SrcIP_s == "scanner-ip"
+| summarize 
+    Ports = make_set(DestPort_d),
+    Targets = make_set(DestIP_s),
+    FirstScan = min(TimeGenerated),
+    LastScan = max(TimeGenerated)
+    by SrcIP_s
+| extend PortCount = array_length(Ports), TargetCount = array_length(Targets)</code></pre>
+
+                                    <p><strong>Actions:</strong></p>
+                                    <ul>
+                                        <li>Block scanner IP if external</li>
+                                        <li>If internal, investigate source VM for compromise</li>
+                                        <li>Review what ports are actually exposed</li>
+                                        <li>Monitor for follow-up exploitation attempts</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <div class="accordion-header">
+                                    <span class="accordion-title">Unusual Outbound Traffic (Exfiltration)</span>
+                                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="accordion-content">
+                                    <p><strong>Investigation:</strong></p>
+                                    <ol>
+                                        <li>Is this legitimate traffic (backup, sync)?</li>
+                                        <li>What is the destination?</li>
+                                        <li>What data might have been transferred?</li>
+                                        <li>What process initiated the transfer?</li>
+                                    </ol>
+
+                                    <div class="code-header">
+                                        <span class="code-lang">KQL</span>
+                                        <button class="code-copy-btn">Copy</button>
+                                    </div>
+                                    <pre><code class="language-kql">// Analyze outbound traffic pattern
+AzureNetworkAnalytics_CL
+| where TimeGenerated > ago(24h)
+| where FlowDirection_s == "O"
+| where SrcIP_s == "suspicious-vm-ip"
+| summarize 
+    TotalBytes = sum(BytesSent_d),
+    UniqueDestinations = dcount(DestIP_s),
+    Destinations = make_set(DestIP_s),
+    Ports = make_set(DestPort_d)
+    by bin(TimeGenerated, 1h)
+| order by TimeGenerated asc</code></pre>
+
+                                    <p><strong>If exfiltration confirmed:</strong></p>
+                                    <ul>
+                                        <li>Isolate the source immediately</li>
+                                        <li>Determine what data was accessed</li>
+                                        <li>Assess compliance/breach notification requirements</li>
+                                        <li>Preserve evidence for investigation</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Containment -->
+                    <section>
+                        <h2 id="containment">Containment Actions</h2>
+
+                        <div class="tabs">
+                            <div class="tab-list">
+                                <button class="tab-btn active" data-tab="block-ip">Block IP</button>
+                                <button class="tab-btn" data-tab="isolate-vm">Isolate VM</button>
+                                <button class="tab-btn" data-tab="nsg-lockdown">NSG Lockdown</button>
+                            </div>
+
+                            <div class="tab-panel active" data-panel="block-ip">
+                                <div class="code-header">
+                                    <span class="code-lang">Azure CLI</span>
+                                    <button class="code-copy-btn">Copy</button>
+                                </div>
+                                <pre><code class="language-bash"># Block specific IP in NSG (inbound)
+az network nsg rule create \
+    --nsg-name "nsg-name" \
+    --resource-group "rg-name" \
+    --name "Block-Malicious-IP-Inbound" \
+    --priority 100 \
+    --direction Inbound \
+    --access Deny \
+    --source-address-prefixes "malicious-ip" \
+    --destination-port-ranges "*" \
+    --protocol "*"
+
+# Block specific IP (outbound - for C2)
+az network nsg rule create \
+    --nsg-name "nsg-name" \
+    --resource-group "rg-name" \
+    --name "Block-C2-Outbound" \
+    --priority 100 \
+    --direction Outbound \
+    --access Deny \
+    --destination-address-prefixes "c2-ip" \
+    --destination-port-ranges "*" \
+    --protocol "*"</code></pre>
+                            </div>
+
+                            <div class="tab-panel" data-panel="isolate-vm">
+                                <div class="code-header">
+                                    <span class="code-lang">PowerShell</span>
+                                    <button class="code-copy-btn">Copy</button>
+                                </div>
+                                <pre><code class="language-powershell"># Create isolation NSG
+$isolationNsg = New-AzNetworkSecurityGroup `
+    -Name "Isolation-NSG" `
+    -ResourceGroupName "security-rg" `
+    -Location "eastus"
+
+# Add rule to deny all traffic except from security team
+$isolationNsg | Add-AzNetworkSecurityRuleConfig `
+    -Name "Allow-Security-Team" `
+    -Priority 100 `
+    -Direction Inbound `
+    -Access Allow `
+    -Protocol "*" `
+    -SourceAddressPrefix "10.0.0.5" `  # Security workstation
+    -SourcePortRange "*" `
+    -DestinationAddressPrefix "*" `
+    -DestinationPortRange "*"
+
+$isolationNsg | Add-AzNetworkSecurityRuleConfig `
+    -Name "Deny-All-Inbound" `
+    -Priority 4096 `
+    -Direction Inbound `
+    -Access Deny `
+    -Protocol "*" `
+    -SourceAddressPrefix "*" `
+    -SourcePortRange "*" `
+    -DestinationAddressPrefix "*" `
+    -DestinationPortRange "*"
+
+$isolationNsg | Add-AzNetworkSecurityRuleConfig `
+    -Name "Deny-All-Outbound" `
+    -Priority 4096 `
+    -Direction Outbound `
+    -Access Deny `
+    -Protocol "*" `
+    -SourceAddressPrefix "*" `
+    -SourcePortRange "*" `
+    -DestinationAddressPrefix "*" `
+    -DestinationPortRange "*"
+
+$isolationNsg | Set-AzNetworkSecurityGroup
+
+# Apply to compromised VM's NIC
+$nic = Get-AzNetworkInterface -Name "compromised-vm-nic" -ResourceGroupName "vm-rg"
+$nic.NetworkSecurityGroup = $isolationNsg
+$nic | Set-AzNetworkInterface</code></pre>
+                            </div>
+
+                            <div class="tab-panel" data-panel="nsg-lockdown">
+                                <div class="code-header">
+                                    <span class="code-lang">Azure CLI</span>
+                                    <button class="code-copy-btn">Copy</button>
+                                </div>
+                                <pre><code class="language-bash"># Emergency: Deny all traffic in existing NSG
+az network nsg rule create \
+    --nsg-name "vm-nsg" \
+    --resource-group "vm-rg" \
+    --name "Emergency-Deny-All-Inbound" \
+    --priority 100 \
+    --direction Inbound \
+    --access Deny \
+    --source-address-prefixes "*" \
+    --destination-port-ranges "*" \
+    --protocol "*"
+
+az network nsg rule create \
+    --nsg-name "vm-nsg" \
+    --resource-group "vm-rg" \
+    --name "Emergency-Deny-All-Outbound" \
+    --priority 100 \
+    --direction Outbound \
+    --access Deny \
+    --source-address-prefixes "*" \
+    --destination-address-prefixes "*" \
+    --destination-port-ranges "*" \
+    --protocol "*"</code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Best Practices -->
+                    <section>
+                        <h2 id="best-practices">Best Practices</h2>
+
+                        <div class="checklist">
+                            <div class="checklist-title">Network Security Checklist</div>
+                            <ul>
+                                <li>
+                                    <input type="checkbox" id="net1">
+                                    <label for="net1">Enable NSG flow logs to Log Analytics</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="net2">
+                                    <label for="net2">Use JIT access instead of permanent SSH/RDP</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="net3">
+                                    <label for="net3">Block direct internet access for non-web VMs</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="net4">
+                                    <label for="net4">Use Azure Firewall or NVA for egress filtering</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="net5">
+                                    <label for="net5">Enable DDoS Protection for public-facing resources</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="net6">
+                                    <label for="net6">Segment networks using subnets and NSGs</label>
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- Key Takeaways -->
+                    <div class="key-takeaways">
+                        <div class="key-takeaways-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 2a.75.75 0 01.75.75v.258a33.186 33.186 0 016.668.83.75.75 0 01-.336 1.461z" clip-rule="evenodd" />
+                            </svg>
+                            Key Takeaways
+                        </div>
+                        <ul>
+                            <li>C2 communication requires immediate isolation</li>
+                            <li>NSG flow logs are essential for traffic analysis</li>
+                            <li>Port scanning indicates reconnaissance - watch for follow-up</li>
+                            <li>Brute force attacks often precede compromise</li>
+                            <li>JIT access eliminates permanent SSH/RDP exposure</li>
+                            <li>Large outbound transfers may indicate data exfiltration</li>
+                            <li>Document all containment actions for incident report</li>
+                            <li>Preserve evidence before remediation</li>
+                        </ul>
+                    </div>
+
+                    <div class="related-pages">
+                        <div class="related-title">Related Pages</div>
+                        <div class="related-list">
+                            <a href="8-3-vm-playbook.html" class="related-link">VM Playbook</a>
+                            <a href="3-12-dns.html" class="related-link">Defender for DNS</a>
+                            <a href="3-15-jit-access.html" class="related-link">JIT VM Access</a>
+                            <a href="12-1-kql-library.html" class="related-link">KQL Library</a>
+                        </div>
+                    </div>
+
+                    <nav class="page-nav">
+                        <a href="8-6-storage-playbook.html" class="page-nav-link prev">
+                            <span class="page-nav-label">← Previous</span>
+                            <span class="page-nav-title">Storage Playbook</span>
+                        </a>
+                        <a href="9-1-devsecops.html" class="page-nav-link next">
+                            <span class="page-nav-label">Next →</span>
+                            <span class="page-nav-title">DevSecOps Integration</span>
+                        </a>
+                    </nav>
+                </article>
+
+                <aside class="toc-sidebar">
+                    <div class="toc-title">On This Page</div>
+                    <ul class="toc-list">
+                        <li class="toc-item"><a href="#workflow" class="toc-link">Workflow</a></li>
+                        <li class="toc-item"><a href="#alerts" class="toc-link">Common Alerts</a></li>
+                        <li class="toc-item"><a href="#traffic-analysis" class="toc-link">Traffic Analysis</a></li>
+                        <li class="toc-item"><a href="#procedures" class="toc-link">Procedures</a></li>
+                        <li class="toc-item"><a href="#containment" class="toc-link">Containment</a></li>
+                        <li class="toc-item"><a href="#best-practices" class="toc-link">Best Practices</a></li>
+                    </ul>
+                </aside>
+            </div>
+        </main>
+        <div class="mobile-overlay"></div>
+    </div>
+
+    <div class="search-modal">
+        <div class="search-modal-content">
+            <input type="text" class="search-modal-input" placeholder="Search documentation..." autofocus>
+            <div class="search-results"></div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

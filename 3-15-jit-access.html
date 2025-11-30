@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Just-In-Time VM Access - Reduce attack surface by limiting exposure of management ports on Azure VMs.">
+    <title>Just-In-Time VM Access - Microsoft Defender for Cloud</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="../index.html" class="sidebar-logo">
+                    <div class="logo-icon">MDC</div>
+                    <span class="logo-text">Defender for Cloud</span>
+                </a>
+                <button class="sidebar-toggle" aria-label="Toggle sidebar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">CWPP</div>
+                    <div class="nav-group expanded" data-group="cwpp">
+                        <div class="nav-group-header">
+                            <span class="nav-group-title">Defender for Servers</span>
+                            <svg class="nav-group-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="nav-group-items">
+                            <a href="3-1-servers-overview.html" class="nav-subitem">Servers Overview</a>
+                            <a href="3-2-servers-p1-p2.html" class="nav-subitem">P1 vs P2 Comparison</a>
+                            <a href="3-3-mde-integration.html" class="nav-subitem">MDE Integration</a>
+                            <a href="3-15-jit-access.html" class="nav-subitem active">JIT VM Access</a>
+                            <a href="3-16-adaptive-hardening.html" class="nav-subitem">Adaptive Hardening</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" aria-label="Open menu">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10zm0 5.25a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75a.75.75 0 01-.75-.75z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div class="search-box">
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                        </svg>
+                        <input type="text" class="search-input" placeholder="Search documentation..." readonly>
+                        <span class="search-shortcut">⌘K</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <article class="page-content">
+                    <nav class="breadcrumbs">
+                        <a href="../index.html" class="breadcrumb-item">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <a href="3-1-servers-overview.html" class="breadcrumb-item">CWPP</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span class="breadcrumb-item current">JIT VM Access</span>
+                    </nav>
+
+                    <header class="page-header">
+                        <h1>Just-In-Time VM Access</h1>
+                        <div class="page-meta">
+                            <span class="badge badge-l1">L1 Fundamentals</span>
+                            <span class="badge badge-l2">L2 Technical</span>
+                            <span class="page-meta-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clip-rule="evenodd" />
+                                </svg>
+                                15 min read
+                            </span>
+                            <span class="badge" style="background: var(--accent-green-glow); color: var(--accent-green);">P2 Feature</span>
+                        </div>
+                    </header>
+
+                    <section>
+                        <p>
+                            Just-In-Time (JIT) VM Access reduces your attack surface by blocking inbound traffic 
+                            to management ports (RDP, SSH, WinRM) by default, only opening them when needed and 
+                            for a limited time. This eliminates the risk of brute-force attacks on always-open ports.
+                        </p>
+
+                        <div class="callout callout-success">
+                            <div class="callout-title">Key Benefit</div>
+                            <div class="callout-content">
+                                <p>VMs with JIT enabled see a <strong>significant reduction</strong> in brute-force attack attempts. 
+                                Ports are only open during approved access windows, typically 1-3 hours.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- How It Works -->
+                    <section>
+                        <h2 id="how-it-works">How JIT Works</h2>
+
+                        <div class="ascii-diagram">
+<span class="highlight-cyan">╔══════════════════════════════════════════════════════════════════════════════════════════════╗</span>
+<span class="highlight-cyan">║</span>                           <span class="highlight-blue">JUST-IN-TIME ACCESS FLOW</span>                                         <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">╠══════════════════════════════════════════════════════════════════════════════════════════════╣</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">BEFORE JIT</span>                              <span class="highlight-green">WITH JIT</span>                                         <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   ───────────                              ────────                                         <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">┌─────────────┐</span>                          <span class="highlight-green">┌─────────────┐</span>                               <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">│  Internet   │</span>                          <span class="highlight-green">│  Internet   │</span>                               <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">└──────┬──────┘</span>                          <span class="highlight-green">└──────┬──────┘</span>                               <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">       │ Port 3389 OPEN 24/7</span>            <span class="highlight-green">       │ Port 3389 BLOCKED</span>                      <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">       │ (Attackers scanning)</span>           <span class="highlight-green">       │ (No attack surface)</span>                    <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">       ▼</span>                                  <span class="highlight-green">       ▼</span>                                       <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">┌─────────────┐</span>                          <span class="highlight-green">┌─────────────┐</span>                               <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">│     VM      │</span>                          <span class="highlight-green">│     NSG     │</span>◄── Deny rule (priority 100)   <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">│  (Exposed)  │</span>                          <span class="highlight-green">└──────┬──────┘</span>                               <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-red">└─────────────┘</span>                          <span class="highlight-green">       │ (Blocked by default)</span>                  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                            <span class="highlight-green">       ▼</span>                                       <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                            <span class="highlight-green">┌─────────────┐</span>                               <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                            <span class="highlight-green">│     VM      │</span>                               <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                            <span class="highlight-green">│ (Protected) │</span>                               <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                            <span class="highlight-green">└─────────────┘</span>                               <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-blue">WHEN ACCESS NEEDED:</span>                                                                       <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   ─────────────────────                                                                     <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">┌───────────┐</span>    <span class="highlight-blue">┌───────────┐</span>    <span class="highlight-green">┌───────────┐</span>    <span class="highlight-purple">┌───────────┐</span>    <span class="highlight-green">┌───────────┐</span>   <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">│   User    │</span>───►<span class="highlight-blue">│  Request  │</span>───►<span class="highlight-green">│  Approve  │</span>───►<span class="highlight-purple">│ NSG Rule  │</span>───►<span class="highlight-green">│  Access   │</span>   <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">│           │</span>    <span class="highlight-blue">│  Access   │</span>    <span class="highlight-green">│ (Auto/Man)│</span>    <span class="highlight-purple">│  Created  │</span>    <span class="highlight-green">│  Granted  │</span>   <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>   <span class="highlight-orange">└───────────┘</span>    <span class="highlight-blue">└───────────┘</span>    <span class="highlight-green">└───────────┘</span>    <span class="highlight-purple">└───────────┘</span>    <span class="highlight-green">└───────────┘</span>   <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                          │                                  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                          │ Time expires (1-24h)             <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                          ▼                                  <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                   <span class="highlight-red">┌───────────┐</span>                            <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                   <span class="highlight-red">│NSG Rule   │</span>                            <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                   <span class="highlight-red">│  Removed  │</span>                            <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                   <span class="highlight-red">└───────────┘</span>                            <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                                                              <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">╚══════════════════════════════════════════════════════════════════════════════════════════════╝</span>
+                        </div>
+                    </section>
+
+                    <!-- Prerequisites -->
+                    <section>
+                        <h2 id="prerequisites">Prerequisites</h2>
+
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Requirement</th>
+                                        <th>Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Defender Plan</strong></td>
+                                        <td>Defender for Servers P2 (or standalone JIT with Defender CSPM)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>VM Type</strong></td>
+                                        <td>Azure VMs, Arc-enabled servers, AWS EC2 (via Arc), GCP GCE (via Arc)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>NSG</strong></td>
+                                        <td>Network Security Group must be associated with VM NIC or subnet</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>RBAC</strong></td>
+                                        <td>Reader + <code>Microsoft.Security/locations/jitNetworkAccessPolicies/*</code></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Enable JIT -->
+                    <section>
+                        <h2 id="enable-jit">Enable JIT on VMs</h2>
+
+                        <div class="tabs">
+                            <div class="tab-list">
+                                <button class="tab-btn active" data-tab="portal">Portal</button>
+                                <button class="tab-btn" data-tab="cli">Azure CLI</button>
+                                <button class="tab-btn" data-tab="powershell">PowerShell</button>
+                                <button class="tab-btn" data-tab="terraform">Terraform</button>
+                            </div>
+
+                            <div class="tab-panel active" data-panel="portal">
+                                <h4>Enable via Azure Portal</h4>
+                                <ol>
+                                    <li>Azure Portal → Defender for Cloud → Workload protections</li>
+                                    <li>Select "Just-in-time VM access"</li>
+                                    <li>Go to "Not Configured" tab</li>
+                                    <li>Select VMs → Click "Enable JIT on X VMs"</li>
+                                    <li>Configure ports (default: 22, 3389, 5985, 5986)</li>
+                                    <li>Set max request time (default: 3 hours)</li>
+                                </ol>
+                            </div>
+
+                            <div class="tab-panel" data-panel="cli">
+                                <h4>Enable via Azure CLI</h4>
+                                
+                                <div class="code-header">
+                                    <span class="code-lang">Azure CLI</span>
+                                    <button class="code-copy-btn">Copy</button>
+                                </div>
+                                <pre><code class="language-bash"># Get VM details
+VM_ID="/subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Compute/virtualMachines/{vm}"
+LOCATION="eastus"
+
+# Create JIT policy
+az rest --method PUT \
+    --uri "https://management.azure.com/subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Security/locations/${LOCATION}/jitNetworkAccessPolicies/default?api-version=2020-01-01" \
+    --body '{
+        "kind": "Basic",
+        "properties": {
+            "virtualMachines": [{
+                "id": "'${VM_ID}'",
+                "ports": [
+                    {
+                        "number": 22,
+                        "protocol": "*",
+                        "allowedSourceAddressPrefix": "*",
+                        "maxRequestAccessDuration": "PT3H"
+                    },
+                    {
+                        "number": 3389,
+                        "protocol": "*",
+                        "allowedSourceAddressPrefix": "*",
+                        "maxRequestAccessDuration": "PT3H"
+                    }
+                ]
+            }]
+        }
+    }'</code></pre>
+                            </div>
+
+                            <div class="tab-panel" data-panel="powershell">
+                                <h4>Enable via PowerShell</h4>
+                                
+                                <div class="code-header">
+                                    <span class="code-lang">PowerShell</span>
+                                    <button class="code-copy-btn">Copy</button>
+                                </div>
+                                <pre><code class="language-powershell"># Define JIT policy
+$vmId = "/subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Compute/virtualMachines/{vm}"
+
+$jitPolicy = @{
+    kind = "Basic"
+    properties = @{
+        virtualMachines = @(
+            @{
+                id = $vmId
+                ports = @(
+                    @{
+                        number = 22
+                        protocol = "*"
+                        allowedSourceAddressPrefix = "*"
+                        maxRequestAccessDuration = "PT3H"
+                    },
+                    @{
+                        number = 3389
+                        protocol = "*"
+                        allowedSourceAddressPrefix = "*"
+                        maxRequestAccessDuration = "PT3H"
+                    },
+                    @{
+                        number = 5985
+                        protocol = "*"
+                        allowedSourceAddressPrefix = "*"
+                        maxRequestAccessDuration = "PT3H"
+                    }
+                )
+            }
+        )
+    }
+}
+
+# Create policy using REST API
+$subscriptionId = (Get-AzContext).Subscription.Id
+$location = "eastus"
+
+Invoke-AzRestMethod -Method PUT `
+    -Path "/subscriptions/$subscriptionId/resourceGroups/{rg}/providers/Microsoft.Security/locations/$location/jitNetworkAccessPolicies/default?api-version=2020-01-01" `
+    -Payload ($jitPolicy | ConvertTo-Json -Depth 10)</code></pre>
+                            </div>
+
+                            <div class="tab-panel" data-panel="terraform">
+                                <h4>Terraform Configuration</h4>
+                                
+                                <div class="code-header">
+                                    <span class="code-lang">HCL (Terraform)</span>
+                                    <button class="code-copy-btn">Copy</button>
+                                </div>
+                                <pre><code class="language-hcl"># Note: Native Terraform resource not available
+# Use azapi provider for JIT policies
+
+resource "azapi_resource" "jit_policy" {
+  type      = "Microsoft.Security/locations/jitNetworkAccessPolicies@2020-01-01"
+  name      = "default"
+  parent_id = "${azurerm_resource_group.example.id}/providers/Microsoft.Security/locations/${var.location}"
+
+  body = jsonencode({
+    kind = "Basic"
+    properties = {
+      virtualMachines = [
+        {
+          id = azurerm_linux_virtual_machine.example.id
+          ports = [
+            {
+              number                     = 22
+              protocol                   = "*"
+              allowedSourceAddressPrefix = "*"
+              maxRequestAccessDuration   = "PT3H"
+            }
+          ]
+        }
+      ]
+    }
+  })
+}</code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Request Access -->
+                    <section>
+                        <h2 id="request-access">Request JIT Access</h2>
+
+                        <h3>Via Portal</h3>
+                        <ol>
+                            <li>VM blade → Connect → Select RDP/SSH</li>
+                            <li>Click "Request access"</li>
+                            <li>Specify source IP (or "My IP")</li>
+                            <li>Set duration (1-24 hours)</li>
+                            <li>Add justification (optional)</li>
+                            <li>Click "Request access"</li>
+                        </ol>
+
+                        <h3>Via PowerShell</h3>
+
+                        <div class="code-header">
+                            <span class="code-lang">PowerShell</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-powershell"># Request JIT Access
+$vmName = "my-vm"
+$resourceGroup = "my-rg"
+$port = 3389
+$duration = 3  # hours
+
+# Get your current public IP
+$myIP = (Invoke-RestMethod -Uri "https://api.ipify.org?format=json").ip
+
+# Get VM ID
+$vm = Get-AzVM -ResourceGroupName $resourceGroup -Name $vmName
+$vmId = $vm.Id
+
+# Create access request
+$request = @{
+    virtualMachines = @(
+        @{
+            id = $vmId
+            ports = @(
+                @{
+                    number = $port
+                    allowedSourceAddressPrefix = $myIP
+                    endTimeUtc = (Get-Date).AddHours($duration).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ")
+                }
+            )
+        }
+    )
+    justification = "Administrative access for maintenance"
+}
+
+# Submit request
+$location = $vm.Location
+$subscriptionId = (Get-AzContext).Subscription.Id
+
+Invoke-AzRestMethod -Method POST `
+    -Path "/subscriptions/$subscriptionId/resourceGroups/$resourceGroup/providers/Microsoft.Security/locations/$location/jitNetworkAccessPolicies/default/initiate?api-version=2020-01-01" `
+    -Payload ($request | ConvertTo-Json -Depth 10)
+
+Write-Host "Access granted until $((Get-Date).AddHours($duration))"
+Write-Host "Connect from IP: $myIP"</code></pre>
+
+                        <h3>Via Azure CLI</h3>
+
+                        <div class="code-header">
+                            <span class="code-lang">Bash</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-bash"># Get current IP
+MY_IP=$(curl -s https://api.ipify.org)
+
+# Request JIT access
+az rest --method POST \
+    --uri "https://management.azure.com/subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Security/locations/{location}/jitNetworkAccessPolicies/default/initiate?api-version=2020-01-01" \
+    --body '{
+        "virtualMachines": [{
+            "id": "/subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Compute/virtualMachines/{vm}",
+            "ports": [{
+                "number": 3389,
+                "allowedSourceAddressPrefix": "'${MY_IP}'",
+                "endTimeUtc": "'$(date -u -d "+3 hours" +%Y-%m-%dT%H:%M:%SZ)'"
+            }]
+        }],
+        "justification": "Admin access"
+    }'
+
+echo "Access granted for 3 hours from IP: ${MY_IP}"</code></pre>
+                    </section>
+
+                    <!-- Monitoring -->
+                    <section>
+                        <h2 id="monitoring">Monitoring & Auditing</h2>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// JIT access requests - last 7 days
+AzureActivity
+| where TimeGenerated > ago(7d)
+| where OperationNameValue has "jitNetworkAccessPolicies"
+| project 
+    TimeGenerated,
+    Caller,
+    CallerIpAddress,
+    OperationNameValue,
+    ResourceGroup,
+    ActivityStatusValue,
+    Properties
+| order by TimeGenerated desc</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Successful JIT requests with details
+AzureActivity
+| where TimeGenerated > ago(7d)
+| where OperationNameValue == "Microsoft.Security/locations/jitNetworkAccessPolicies/initiate/action"
+| where ActivityStatusValue == "Success"
+| extend Props = parse_json(Properties)
+| project 
+    TimeGenerated,
+    Requestor = Caller,
+    SourceIP = CallerIpAddress,
+    VM = tostring(Props.requestedVM),
+    Port = tostring(Props.requestedPort),
+    Duration = tostring(Props.requestedDuration)
+| order by TimeGenerated desc</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Failed JIT requests (potential issues)
+AzureActivity
+| where TimeGenerated > ago(7d)
+| where OperationNameValue has "jitNetworkAccessPolicies"
+| where ActivityStatusValue == "Failed"
+| project 
+    TimeGenerated,
+    Caller,
+    OperationNameValue,
+    ActivityStatusValue,
+    Properties
+| order by TimeGenerated desc</code></pre>
+                    </section>
+
+                    <!-- Best Practices -->
+                    <section>
+                        <h2 id="best-practices">Best Practices</h2>
+
+                        <div class="checklist">
+                            <div class="checklist-title">JIT Configuration Checklist</div>
+                            <ul>
+                                <li>
+                                    <input type="checkbox" id="jit1">
+                                    <label for="jit1">Enable JIT on all internet-facing VMs</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="jit2">
+                                    <label for="jit2">Set maximum duration to 3 hours (not 24)</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="jit3">
+                                    <label for="jit3">Require source IP specification (not "Any")</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="jit4">
+                                    <label for="jit4">Enable audit logging for JIT requests</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="jit5">
+                                    <label for="jit5">Create alerts for unusual JIT patterns</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="jit6">
+                                    <label for="jit6">Consider Azure Bastion as alternative for sensitive VMs</label>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="callout callout-tip">
+                            <div class="callout-title">JIT vs Azure Bastion</div>
+                            <div class="callout-content">
+                                <p><strong>JIT:</strong> Opens port temporarily, user connects directly. Good for automation, scripting.</p>
+                                <p><strong>Bastion:</strong> Browser-based, no public IP needed, no port opening. Better for high-security environments.</p>
+                                <p>Consider using both: JIT for automation/scripts, Bastion for interactive admin access.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Key Takeaways -->
+                    <div class="key-takeaways">
+                        <div class="key-takeaways-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 2a.75.75 0 01.75.75v.258a33.186 33.186 0 016.668.83.75.75 0 01-.336 1.461z" clip-rule="evenodd" />
+                            </svg>
+                            Key Takeaways
+                        </div>
+                        <ul>
+                            <li>JIT requires Defender for Servers P2 (included) or standalone enablement</li>
+                            <li>Works by creating temporary NSG allow rules that auto-expire</li>
+                            <li>Significantly reduces brute-force attack exposure</li>
+                            <li>Always specify source IP - avoid "Any" in production</li>
+                            <li>Maximum duration is 24 hours, but 3 hours is recommended</li>
+                            <li>All requests are logged in Activity Log for auditing</li>
+                            <li>Consider Azure Bastion for highest-security scenarios</li>
+                        </ul>
+                    </div>
+
+                    <div class="related-pages">
+                        <div class="related-title">Related Pages</div>
+                        <div class="related-list">
+                            <a href="3-1-servers-overview.html" class="related-link">Defender for Servers</a>
+                            <a href="3-16-adaptive-hardening.html" class="related-link">Adaptive Hardening</a>
+                            <a href="8-3-vm-playbook.html" class="related-link">VM Threat Playbook</a>
+                            <a href="12-2-powershell.html" class="related-link">PowerShell Scripts</a>
+                        </div>
+                    </div>
+
+                    <nav class="page-nav">
+                        <a href="3-3-mde-integration.html" class="page-nav-link prev">
+                            <span class="page-nav-label">← Previous</span>
+                            <span class="page-nav-title">MDE Integration</span>
+                        </a>
+                        <a href="3-16-adaptive-hardening.html" class="page-nav-link next">
+                            <span class="page-nav-label">Next →</span>
+                            <span class="page-nav-title">Adaptive Hardening</span>
+                        </a>
+                    </nav>
+                </article>
+
+                <aside class="toc-sidebar">
+                    <div class="toc-title">On This Page</div>
+                    <ul class="toc-list">
+                        <li class="toc-item"><a href="#how-it-works" class="toc-link">How It Works</a></li>
+                        <li class="toc-item"><a href="#prerequisites" class="toc-link">Prerequisites</a></li>
+                        <li class="toc-item"><a href="#enable-jit" class="toc-link">Enable JIT</a></li>
+                        <li class="toc-item"><a href="#request-access" class="toc-link">Request Access</a></li>
+                        <li class="toc-item"><a href="#monitoring" class="toc-link">Monitoring</a></li>
+                        <li class="toc-item"><a href="#best-practices" class="toc-link">Best Practices</a></li>
+                    </ul>
+                </aside>
+            </div>
+        </main>
+        <div class="mobile-overlay"></div>
+    </div>
+
+    <div class="search-modal">
+        <div class="search-modal-content">
+            <input type="text" class="search-modal-input" placeholder="Search documentation..." autofocus>
+            <div class="search-results"></div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Microsoft Defender for Cloud Alert Triage Process - SOC playbook for investigating and responding to security alerts.">
+    <title>Alert Triage Process - Microsoft Defender for Cloud</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="../index.html" class="sidebar-logo">
+                    <div class="logo-icon">MDC</div>
+                    <span class="logo-text">Defender for Cloud</span>
+                </a>
+                <button class="sidebar-toggle" aria-label="Toggle sidebar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">SOC Operations</div>
+                    <div class="nav-group expanded" data-group="soc">
+                        <div class="nav-group-header">
+                            <span class="nav-group-title">Enterprise SOC</span>
+                            <svg class="nav-group-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="nav-group-items">
+                            <a href="8-1-soc-model.html" class="nav-subitem">SOC Operating Model</a>
+                            <a href="8-2-alert-triage.html" class="nav-subitem active">Alert Triage Process</a>
+                            <a href="8-3-vm-playbook.html" class="nav-subitem">VM Threat Playbook</a>
+                            <a href="8-4-identity-playbook.html" class="nav-subitem">Identity Threat Playbook</a>
+                            <a href="8-5-data-playbook.html" class="nav-subitem">Data Threat Playbook</a>
+                            <a href="8-6-escalation.html" class="nav-subitem">Escalation Procedures</a>
+                            <a href="8-7-remediation.html" class="nav-subitem">Remediation Workflows</a>
+                            <a href="8-8-metrics.html" class="nav-subitem">Metrics & KPIs</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" aria-label="Open menu">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10zm0 5.25a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75a.75.75 0 01-.75-.75z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div class="search-box">
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                        </svg>
+                        <input type="text" class="search-input" placeholder="Search documentation..." readonly>
+                        <span class="search-shortcut">⌘K</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <article class="page-content">
+                    <nav class="breadcrumbs">
+                        <a href="../index.html" class="breadcrumb-item">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <a href="8-1-soc-model.html" class="breadcrumb-item">SOC Operations</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span class="breadcrumb-item current">Alert Triage</span>
+                    </nav>
+
+                    <header class="page-header">
+                        <h1>Alert Triage Process</h1>
+                        <div class="page-meta">
+                            <span class="badge badge-l1">L1 Fundamentals</span>
+                            <span class="badge badge-l2">L2 Technical</span>
+                            <span class="page-meta-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clip-rule="evenodd" />
+                                </svg>
+                                20 min read
+                            </span>
+                        </div>
+                    </header>
+
+                    <section>
+                        <p>
+                            This guide provides a structured approach for SOC analysts to triage Microsoft Defender for Cloud 
+                            security alerts efficiently and effectively. Following this process ensures consistent handling, 
+                            proper documentation, and appropriate escalation.
+                        </p>
+
+                        <div class="callout callout-info">
+                            <svg class="callout-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0z" clip-rule="evenodd" />
+                            </svg>
+                            <div class="callout-title">Target Audience</div>
+                            <div class="callout-content">
+                                <p>This playbook is designed for L1/L2 SOC Analysts handling MDC alerts. L3 analysts and 
+                                incident responders should reference the specific threat playbooks for detailed investigation procedures.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Triage Overview -->
+                    <section>
+                        <h2 id="overview">Triage Overview</h2>
+
+                        <div class="ascii-diagram">
+<span class="highlight-cyan">╔═══════════════════════════════════════════════════════════════════════════════════════════╗</span>
+<span class="highlight-cyan">║</span>                        <span class="highlight-blue">ALERT TRIAGE WORKFLOW</span>                                            <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">╠═══════════════════════════════════════════════════════════════════════════════════════════╣</span>
+<span class="highlight-cyan">║</span>                                                                                           <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-orange">┌─────────────┐</span>    <span class="highlight-blue">┌─────────────┐</span>    <span class="highlight-green">┌─────────────┐</span>    <span class="highlight-purple">┌─────────────┐</span>         <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-orange">│   STEP 1    │</span>───►<span class="highlight-blue">│   STEP 2    │</span>───►<span class="highlight-green">│   STEP 3    │</span>───►<span class="highlight-purple">│   STEP 4    │</span>         <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-orange">│   INITIAL   │</span>    <span class="highlight-blue">│   CONTEXT   │</span>    <span class="highlight-green">│   VERDICT   │</span>    <span class="highlight-purple">│   ACTION    │</span>         <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-orange">│  ASSESSMENT │</span>    <span class="highlight-blue">│  GATHERING  │</span>    <span class="highlight-green">│  DECISION   │</span>    <span class="highlight-purple">│  EXECUTION  │</span>         <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-orange">└─────────────┘</span>    <span class="highlight-blue">└─────────────┘</span>    <span class="highlight-green">└─────────────┘</span>    <span class="highlight-purple">└─────────────┘</span>         <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>        │                  │                  │                  │                       <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>        ▼                  ▼                  ▼                  ▼                       <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-orange">• Read alert</span>        <span class="highlight-blue">• Asset lookup</span>     <span class="highlight-green">• True Positive</span>  <span class="highlight-purple">• Escalate</span>                <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-orange">• Check severity</span>    <span class="highlight-blue">• User context</span>     <span class="highlight-green">• False Positive</span> <span class="highlight-purple">• Remediate</span>               <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-orange">• Identify type</span>     <span class="highlight-blue">• Related alerts</span>   <span class="highlight-green">• Benign TP</span>      <span class="highlight-purple">• Close/Dismiss</span>           <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-orange">• SLA clock starts</span>  <span class="highlight-blue">• Threat intel</span>     <span class="highlight-green">• Needs more</span>    <span class="highlight-purple">• Document</span>                <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                                                           <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-red">────────────────────────────────────────────────────────────────────────────────────</span>   <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-red">│ TARGET SLAs: High=15min │ Medium=1hr │ Low=4hr │ Informational=24hr │</span>               <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>  <span class="highlight-red">────────────────────────────────────────────────────────────────────────────────────</span>   <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">║</span>                                                                                           <span class="highlight-cyan">║</span>
+<span class="highlight-cyan">╚═══════════════════════════════════════════════════════════════════════════════════════════╝</span>
+                        </div>
+                    </section>
+
+                    <!-- Step 1 -->
+                    <section>
+                        <h2 id="step1">Step 1: Initial Assessment</h2>
+
+                        <p>When an alert arrives, quickly assess its priority and category.</p>
+
+                        <h3 id="severity-matrix">Severity Response Matrix</h3>
+
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Severity</th>
+                                        <th>Response SLA</th>
+                                        <th>Owner</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span class="badge badge-critical">High</span></td>
+                                        <td class="text-red">15 minutes</td>
+                                        <td>L2/L3 Analyst</td>
+                                        <td>Immediate triage, consider containment, escalate if needed</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge badge-high">Medium</span></td>
+                                        <td class="text-orange">1 hour</td>
+                                        <td>L1/L2 Analyst</td>
+                                        <td>Standard triage, investigate, document findings</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge badge-medium">Low</span></td>
+                                        <td class="text-blue">4 hours</td>
+                                        <td>L1 Analyst</td>
+                                        <td>Queue-based handling, batch similar alerts</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge badge-low">Informational</span></td>
+                                        <td class="text-green">24 hours</td>
+                                        <td>L1 Analyst</td>
+                                        <td>Review for patterns, close if expected behavior</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h3 id="alert-categories">MDC Alert Categories</h3>
+
+                        <div class="table-wrapper">
+                            <table class="table-compact">
+                                <thead>
+                                    <tr>
+                                        <th>Category</th>
+                                        <th>Common Alert Types</th>
+                                        <th>Playbook</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Virtual Machine</strong></td>
+                                        <td>Malware, suspicious process, brute force, crypto mining</td>
+                                        <td><a href="8-3-vm-playbook.html">VM Playbook</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Identity/Access</strong></td>
+                                        <td>Impossible travel, suspicious login, privilege escalation</td>
+                                        <td><a href="8-4-identity-playbook.html">Identity Playbook</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Storage/Data</strong></td>
+                                        <td>Anomalous access, data exfiltration, public exposure</td>
+                                        <td><a href="8-5-data-playbook.html">Data Playbook</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Network</strong></td>
+                                        <td>C2 communication, port scanning, DNS tunneling</td>
+                                        <td><a href="8-6-network-playbook.html">Network Playbook</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Container/K8s</strong></td>
+                                        <td>Privileged container, exposed dashboard, image vuln</td>
+                                        <td><a href="3-4-containers.html">Container Guide</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Step 2 -->
+                    <section>
+                        <h2 id="step2">Step 2: Context Gathering</h2>
+
+                        <p>Gather essential context before making a verdict.</p>
+
+                        <h3 id="checklist">Information Gathering Checklist</h3>
+
+                        <div class="checklist">
+                            <div class="checklist-item">
+                                <input type="checkbox" id="check1">
+                                <label for="check1"><strong>Asset Identification</strong> - What resource is affected? (VM, storage, database)</label>
+                            </div>
+                            <div class="checklist-item">
+                                <input type="checkbox" id="check2">
+                                <label for="check2"><strong>Asset Criticality</strong> - Is this a production system? Critical data?</label>
+                            </div>
+                            <div class="checklist-item">
+                                <input type="checkbox" id="check3">
+                                <label for="check3"><strong>User/Service Context</strong> - Who owns this? Expected activity?</label>
+                            </div>
+                            <div class="checklist-item">
+                                <input type="checkbox" id="check4">
+                                <label for="check4"><strong>Related Alerts</strong> - Other alerts from same source in last 24h?</label>
+                            </div>
+                            <div class="checklist-item">
+                                <input type="checkbox" id="check5">
+                                <label for="check5"><strong>Change Context</strong> - Any recent deployments or changes?</label>
+                            </div>
+                            <div class="checklist-item">
+                                <input type="checkbox" id="check6">
+                                <label for="check6"><strong>Threat Intelligence</strong> - Known IOC? MITRE tactic?</label>
+                            </div>
+                        </div>
+
+                        <h3 id="kql-context">Context Gathering KQL Queries</h3>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Find related alerts from the same resource (last 7 days)
+let targetResource = "your-resource-id-here";
+SecurityAlert
+| where TimeGenerated > ago(7d)
+| where CompromisedEntity contains targetResource 
+    or ExtendedProperties contains targetResource
+| project 
+    TimeGenerated, 
+    AlertName, 
+    AlertSeverity, 
+    Status,
+    Tactics
+| order by TimeGenerated desc</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Check for alerts from same source IP
+let suspiciousIP = "x.x.x.x";
+SecurityAlert
+| where TimeGenerated > ago(24h)
+| extend ExtProps = parse_json(ExtendedProperties)
+| where ExtProps contains suspiciousIP
+| project 
+    TimeGenerated,
+    AlertName,
+    CompromisedEntity,
+    Tactics
+| order by TimeGenerated desc</code></pre>
+
+                        <div class="code-header">
+                            <span class="code-lang">KQL</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-kql">// Get full alert details with parsed properties
+SecurityAlert
+| where SystemAlertId == "your-alert-id"
+| extend ExtProps = parse_json(ExtendedProperties)
+| extend Entities = parse_json(Entities)
+| project 
+    TimeGenerated,
+    AlertName,
+    Description,
+    AlertSeverity,
+    Status,
+    Tactics,
+    Techniques,
+    ExtProps,
+    Entities</code></pre>
+                    </section>
+
+                    <!-- Step 3 -->
+                    <section>
+                        <h2 id="step3">Step 3: Verdict Decision</h2>
+
+                        <p>Based on your investigation, classify the alert.</p>
+
+                        <h3 id="verdict-types">Verdict Types</h3>
+
+                        <div class="card-grid">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-icon" style="background: var(--accent-red-glow); color: var(--accent-red);">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495z" clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                    <h4 class="card-title" style="margin: 0;">True Positive (TP)</h4>
+                                </div>
+                                <div class="card-content">
+                                    <p style="margin-bottom: var(--space-sm);"><strong>Definition:</strong> Confirmed malicious activity requiring response.</p>
+                                    <p style="margin: 0;"><strong>Action:</strong> Escalate to incident response, begin containment.</p>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-icon" style="background: var(--accent-orange-glow); color: var(--accent-orange);">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0z" clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                    <h4 class="card-title" style="margin: 0;">Benign True Positive (BTP)</h4>
+                                </div>
+                                <div class="card-content">
+                                    <p style="margin-bottom: var(--space-sm);"><strong>Definition:</strong> Detected correctly but is expected/authorized activity.</p>
+                                    <p style="margin: 0;"><strong>Action:</strong> Document, consider exclusion rule, close as resolved.</p>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-icon" style="background: var(--accent-blue-glow); color: var(--accent-blue);">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                    <h4 class="card-title" style="margin: 0;">False Positive (FP)</h4>
+                                </div>
+                                <div class="card-content">
+                                    <p style="margin-bottom: var(--space-sm);"><strong>Definition:</strong> Detection was incorrect; no actual threat.</p>
+                                    <p style="margin: 0;"><strong>Action:</strong> Dismiss alert, report to detection engineering, tune rules.</p>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-icon" style="background: var(--accent-purple-glow); color: var(--accent-purple);">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-5a.75.75 0 01.75.75v4.5a.75.75 0 01-1.5 0v-4.5A.75.75 0 0110 5zm0 10a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                    <h4 class="card-title" style="margin: 0;">Undetermined</h4>
+                                </div>
+                                <div class="card-content">
+                                    <p style="margin-bottom: var(--space-sm);"><strong>Definition:</strong> Cannot determine with available information.</p>
+                                    <p style="margin: 0;"><strong>Action:</strong> Escalate to L2/L3, request additional data sources.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3 id="decision-tree">Decision Tree</h3>
+
+                        <div class="ascii-diagram">
+<span class="highlight-blue">┌─────────────────────────────────────────────────────────────────────────────────┐</span>
+<span class="highlight-blue">│</span>                        <span class="highlight-cyan">VERDICT DECISION TREE</span>                                   <span class="highlight-blue">│</span>
+<span class="highlight-blue">├─────────────────────────────────────────────────────────────────────────────────┤</span>
+<span class="highlight-blue">│</span>                                                                                 <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>                    ┌─────────────────────────────┐                              <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>                    │  Is the detected activity   │                              <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>                    │     actually occurring?     │                              <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>                    └──────────────┬──────────────┘                              <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>                                   │                                              <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>                    ┌──────────────┴──────────────┐                              <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>                    │                             │                              <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>                   <span class="highlight-red">NO</span>                           <span class="highlight-green">YES</span>                             <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>                    │                             │                              <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>                    ▼                             ▼                              <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>          <span class="highlight-red">┌─────────────────┐</span>        ┌─────────────────────────┐               <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>          <span class="highlight-red">│ FALSE POSITIVE  │</span>        │  Is activity authorized │               <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>          <span class="highlight-red">│ • Dismiss alert │</span>        │     or expected?        │               <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>          <span class="highlight-red">│ • Report to eng │</span>        └────────────┬────────────┘               <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>          <span class="highlight-red">└─────────────────┘</span>                     │                              <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>                                    ┌─────────────┴─────────────┐                <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>                                    │                           │                <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>                                   <span class="highlight-green">YES</span>                         <span class="highlight-red">NO</span>                <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>                                    │                           │                <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>                                    ▼                           ▼                <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>                      <span class="highlight-orange">┌─────────────────────┐</span>   <span class="highlight-red">┌─────────────────────┐</span>     <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>                      <span class="highlight-orange">│  BENIGN TRUE POS    │</span>   <span class="highlight-red">│   TRUE POSITIVE     │</span>     <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>                      <span class="highlight-orange">│ • Close as resolved │</span>   <span class="highlight-red">│ • ESCALATE NOW      │</span>     <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>                      <span class="highlight-orange">│ • Consider exclude  │</span>   <span class="highlight-red">│ • Begin containment │</span>     <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>                      <span class="highlight-orange">│ • Document approval │</span>   <span class="highlight-red">│ • Preserve evidence │</span>     <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>                      <span class="highlight-orange">└─────────────────────┘</span>   <span class="highlight-red">└─────────────────────┘</span>     <span class="highlight-blue">│</span>
+<span class="highlight-blue">│</span>                                                                                 <span class="highlight-blue">│</span>
+<span class="highlight-blue">└─────────────────────────────────────────────────────────────────────────────────┘</span>
+                        </div>
+                    </section>
+
+                    <!-- Step 4 -->
+                    <section>
+                        <h2 id="step4">Step 4: Action Execution</h2>
+
+                        <h3 id="actions-tp">True Positive Actions</h3>
+
+                        <div class="timeline">
+                            <div class="timeline-item completed">
+                                <div class="timeline-marker"></div>
+                                <div class="timeline-title">1. Immediate Containment</div>
+                                <div class="timeline-content">
+                                    <p>Isolate affected resource if active threat (network isolation, disable account)</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item completed">
+                                <div class="timeline-marker"></div>
+                                <div class="timeline-title">2. Escalate to L3/IR</div>
+                                <div class="timeline-content">
+                                    <p>Create incident ticket, assign to incident response team</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item completed">
+                                <div class="timeline-marker"></div>
+                                <div class="timeline-title">3. Preserve Evidence</div>
+                                <div class="timeline-content">
+                                    <p>Capture VM disk snapshot, export logs, screenshot alerts</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-marker"></div>
+                                <div class="timeline-title">4. Notify Stakeholders</div>
+                                <div class="timeline-content">
+                                    <p>Alert system owners, management as per communication plan</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-marker"></div>
+                                <div class="timeline-title">5. Document in Ticket</div>
+                                <div class="timeline-content">
+                                    <p>Record timeline, actions taken, evidence locations</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3 id="actions-fp">False Positive Actions</h3>
+
+                        <div class="code-header">
+                            <span class="code-lang">PowerShell</span>
+                            <button class="code-copy-btn">Copy</button>
+                        </div>
+                        <pre><code class="language-powershell"># Dismiss alert in MDC via API
+$alertId = "your-alert-id"
+$subscriptionId = "your-subscription-id"
+
+# Dismiss with reason
+$dismissBody = @{
+    properties = @{
+        status = "Dismissed"
+        dismissalReason = "FalsePositive"
+        comments = "Verified as legitimate admin activity. User: admin@contoso.com, Ticket: INC001234"
+    }
+} | ConvertTo-Json
+
+Invoke-AzRestMethod `
+    -Method PUT `
+    -Path "/subscriptions/$subscriptionId/providers/Microsoft.Security/alerts/$alertId/dismiss?api-version=2022-01-01" `
+    -Payload $dismissBody</code></pre>
+
+                        <div class="callout callout-warning">
+                            <svg class="callout-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495z" clip-rule="evenodd" />
+                            </svg>
+                            <div class="callout-title">Important</div>
+                            <div class="callout-content">
+                                <p>Always document WHY an alert is being dismissed. Include ticket numbers, user verification, 
+                                and change request references for audit purposes.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Documentation Template -->
+                    <section>
+                        <h2 id="documentation">Documentation Template</h2>
+
+                        <div class="terminal">
+                            <div class="terminal-header">
+                                <span class="terminal-dot red"></span>
+                                <span class="terminal-dot yellow"></span>
+                                <span class="terminal-dot green"></span>
+                                <span class="terminal-title">Alert Triage Notes Template</span>
+                            </div>
+                            <div class="terminal-body">
+<span class="terminal-output">═══════════════════════════════════════════════════════════════</span>
+<span class="terminal-output">ALERT TRIAGE DOCUMENTATION</span>
+<span class="terminal-output">═══════════════════════════════════════════════════════════════</span>
+<span class="terminal-output"></span>
+<span class="terminal-output"><span class="terminal-command">Alert ID:</span> [System Alert ID]</span>
+<span class="terminal-output"><span class="terminal-command">Alert Name:</span> [Alert Title]</span>
+<span class="terminal-output"><span class="terminal-command">Severity:</span> [High/Medium/Low/Informational]</span>
+<span class="terminal-output"><span class="terminal-command">Time Detected:</span> [UTC Timestamp]</span>
+<span class="terminal-output"><span class="terminal-command">Analyst:</span> [Your Name]</span>
+<span class="terminal-output"><span class="terminal-command">Triage Started:</span> [Time]</span>
+<span class="terminal-output"></span>
+<span class="terminal-output">───────────────────────────────────────────────────────────────</span>
+<span class="terminal-output">AFFECTED RESOURCE</span>
+<span class="terminal-output">───────────────────────────────────────────────────────────────</span>
+<span class="terminal-output"><span class="terminal-command">Resource Type:</span> [VM/Storage/SQL/etc.]</span>
+<span class="terminal-output"><span class="terminal-command">Resource Name:</span> [Name]</span>
+<span class="terminal-output"><span class="terminal-command">Resource ID:</span> [Full Azure Resource ID]</span>
+<span class="terminal-output"><span class="terminal-command">Subscription:</span> [Subscription Name/ID]</span>
+<span class="terminal-output"><span class="terminal-command">Owner:</span> [Team/Individual]</span>
+<span class="terminal-output"><span class="terminal-command">Criticality:</span> [Critical/High/Medium/Low]</span>
+<span class="terminal-output"></span>
+<span class="terminal-output">───────────────────────────────────────────────────────────────</span>
+<span class="terminal-output">INVESTIGATION SUMMARY</span>
+<span class="terminal-output">───────────────────────────────────────────────────────────────</span>
+<span class="terminal-output"><span class="terminal-command">Activity Observed:</span></span>
+<span class="terminal-output">[Describe what the alert detected]</span>
+<span class="terminal-output"></span>
+<span class="terminal-output"><span class="terminal-command">Context Gathered:</span></span>
+<span class="terminal-output">• Related alerts: [Y/N - details]</span>
+<span class="terminal-output">• Recent changes: [Y/N - details]</span>
+<span class="terminal-output">• User verified: [Y/N - contact method]</span>
+<span class="terminal-output">• IOC matches: [Y/N - which IOCs]</span>
+<span class="terminal-output"></span>
+<span class="terminal-output">───────────────────────────────────────────────────────────────</span>
+<span class="terminal-output">VERDICT & ACTIONS</span>
+<span class="terminal-output">───────────────────────────────────────────────────────────────</span>
+<span class="terminal-output"><span class="terminal-command">Verdict:</span> [TP/BTP/FP/Undetermined]</span>
+<span class="terminal-output"><span class="terminal-command">Justification:</span></span>
+<span class="terminal-output">[Why you reached this verdict]</span>
+<span class="terminal-output"></span>
+<span class="terminal-output"><span class="terminal-command">Actions Taken:</span></span>
+<span class="terminal-output">1. [Action 1]</span>
+<span class="terminal-output">2. [Action 2]</span>
+<span class="terminal-output">3. [Action 3]</span>
+<span class="terminal-output"></span>
+<span class="terminal-output"><span class="terminal-command">Escalated To:</span> [Name/Team or N/A]</span>
+<span class="terminal-output"><span class="terminal-command">Incident Ticket:</span> [Ticket # or N/A]</span>
+<span class="terminal-output"><span class="terminal-command">Triage Completed:</span> [Time]</span>
+<span class="terminal-output"></span>
+<span class="terminal-output">═══════════════════════════════════════════════════════════════</span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Key Takeaways -->
+                    <div class="key-takeaways">
+                        <div class="key-takeaways-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 2a.75.75 0 01.75.75v.258a33.186 33.186 0 016.668.83.75.75 0 01-.336 1.461z" clip-rule="evenodd" />
+                            </svg>
+                            Key Takeaways
+                        </div>
+                        <ul>
+                            <li>Follow SLAs: High=15min, Medium=1hr, Low=4hr, Info=24hr</li>
+                            <li>Always gather context before making verdict decisions</li>
+                            <li>Use specific playbooks for different alert categories</li>
+                            <li>Document everything - verdicts, reasoning, actions taken</li>
+                            <li>When in doubt, escalate to L2/L3 rather than closing prematurely</li>
+                            <li>Report false positives to detection engineering for rule tuning</li>
+                        </ul>
+                    </div>
+
+                    <div class="related-pages">
+                        <div class="related-title">Related Pages</div>
+                        <div class="related-list">
+                            <a href="8-3-vm-playbook.html" class="related-link">VM Threat Playbook</a>
+                            <a href="8-4-identity-playbook.html" class="related-link">Identity Playbook</a>
+                            <a href="8-6-escalation.html" class="related-link">Escalation Procedures</a>
+                            <a href="12-1-kql-library.html" class="related-link">KQL Query Library</a>
+                        </div>
+                    </div>
+
+                    <nav class="page-nav">
+                        <a href="8-1-soc-model.html" class="page-nav-link prev">
+                            <span class="page-nav-label">← Previous</span>
+                            <span class="page-nav-title">SOC Operating Model</span>
+                        </a>
+                        <a href="8-3-vm-playbook.html" class="page-nav-link next">
+                            <span class="page-nav-label">Next →</span>
+                            <span class="page-nav-title">VM Threat Playbook</span>
+                        </a>
+                    </nav>
+                </article>
+
+                <aside class="toc-sidebar">
+                    <div class="toc-title">On This Page</div>
+                    <ul class="toc-list">
+                        <li class="toc-item"><a href="#overview" class="toc-link">Triage Overview</a></li>
+                        <li class="toc-item"><a href="#step1" class="toc-link">Step 1: Assessment</a></li>
+                        <li class="toc-item"><a href="#severity-matrix" class="toc-link toc-h3">Severity Matrix</a></li>
+                        <li class="toc-item"><a href="#step2" class="toc-link">Step 2: Context</a></li>
+                        <li class="toc-item"><a href="#kql-context" class="toc-link toc-h3">Context Queries</a></li>
+                        <li class="toc-item"><a href="#step3" class="toc-link">Step 3: Verdict</a></li>
+                        <li class="toc-item"><a href="#decision-tree" class="toc-link toc-h3">Decision Tree</a></li>
+                        <li class="toc-item"><a href="#step4" class="toc-link">Step 4: Action</a></li>
+                        <li class="toc-item"><a href="#documentation" class="toc-link">Documentation</a></li>
+                    </ul>
+                </aside>
+            </div>
+        </main>
+        <div class="mobile-overlay"></div>
+    </div>
+
+    <div class="search-modal">
+        <div class="search-modal-content">
+            <input type="text" class="search-modal-input" placeholder="Search documentation..." autofocus>
+            <div class="search-results"></div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>
