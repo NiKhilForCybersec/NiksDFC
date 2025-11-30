@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Microsoft Defender for Cloud PowerShell Scripts - Production-ready scripts for automation, reporting, and management.">
     <title>PowerShell Script Library - Microsoft Defender for Cloud</title>
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="../css/main.css">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
 </head>
 <body>
     <div class="app-container">
         <aside class="sidebar">
             <div class="sidebar-header">
-                <a href="index.html" class="sidebar-logo">
+                <a href="../index.html" class="sidebar-logo">
                     <div class="logo-icon">MDC</div>
                     <span class="logo-text">Defender for Cloud</span>
                 </a>
@@ -298,7 +298,7 @@
             <div class="content-wrapper">
                 <article class="page-content">
                     <nav class="breadcrumbs">
-                        <a href="index.html" class="breadcrumb-item">Home</a>
+                        <a href="../index.html" class="breadcrumb-item">Home</a>
                         <span class="breadcrumb-separator">/</span>
                         <a href="12-1-kql-library.html" class="breadcrumb-item">Reference</a>
                         <span class="breadcrumb-separator">/</span>
@@ -970,73 +970,56 @@ $html = @"
         <tr><td>Low</td><td>$($alerts.Low)</td></tr>
     </table>
 </body>
-</html>
+</html></html>
 "@
 
-$html | Out-File -FilePath $OutputPath -Encoding UTF8
-Write-Host "✓ Report generated: $OutputPath" -ForegroundColor Green</code></pre>
+$report | Out-File $OutputPath -Encoding UTF8
+Write-Host "✓ Report saved to: $OutputPath" -ForegroundColor Green
+</code></pre>
                     </section>
 
-                    <!-- Key Takeaways -->
-                    <div class="key-takeaways">
-                        <div class="key-takeaways-title">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M10 2a.75.75 0 01.75.75v.258a33.186 33.186 0 016.668.83.75.75 0 01-.336 1.461z" clip-rule="evenodd" />
-                            </svg>
-                            Script Best Practices
-                        </div>
-                        <ul>
-                            <li>Always use <code>#Requires</code> statements for module dependencies</li>
-                            <li>Include <code>-WhatIf</code> parameter for destructive operations</li>
-                            <li>Use Azure Resource Graph for large-scale queries (better performance)</li>
-                            <li>Export results to CSV for further analysis in Excel/Power BI</li>
-                            <li>Schedule scripts via Azure Automation or Task Scheduler</li>
-                            <li>Use Service Principals for unattended automation</li>
-                        </ul>
-                    </div>
-
-                    <div class="related-pages">
-                        <div class="related-title">Related Pages</div>
+                    <!-- Related Topics -->
+                    <div class="related-topics">
+                        <h3>Related Topics</h3>
                         <div class="related-list">
                             <a href="12-1-kql-library.html" class="related-link">KQL Query Library</a>
-                            <a href="12-4-api-reference.html" class="related-link">REST API Reference</a>
                             <a href="12-3-azure-cli.html" class="related-link">Azure CLI Reference</a>
-                            <a href="1-4-enablement.html" class="related-link">Enablement Guide</a>
+                            <a href="12-4-api-reference.html" class="related-link">REST API Reference</a>
                         </div>
                     </div>
 
+                    <!-- Page Navigation -->
                     <nav class="page-nav">
                         <a href="12-1-kql-library.html" class="page-nav-link prev">
                             <span class="page-nav-label">← Previous</span>
                             <span class="page-nav-title">KQL Query Library</span>
                         </a>
-                        <a href="12-4-api-reference.html" class="page-nav-link next">
+                        <a href="12-3-azure-cli.html" class="page-nav-link next">
                             <span class="page-nav-label">Next →</span>
-                            <span class="page-nav-title">REST API Reference</span>
+                            <span class="page-nav-title">Azure CLI Reference</span>
                         </a>
                     </nav>
                 </article>
 
+                <!-- Table of Contents -->
                 <aside class="toc-sidebar">
                     <div class="toc-title">On This Page</div>
                     <ul class="toc-list">
-                        <li class="toc-item"><a href="#enablement" class="toc-link">Enablement</a></li>
-                        <li class="toc-item"><a href="#enable-all-plans" class="toc-link toc-h3">Enable All Plans</a></li>
-                        <li class="toc-item"><a href="#get-status" class="toc-link toc-h3">Get Status</a></li>
+                        <li class="toc-item"><a href="#installation" class="toc-link">Installation</a></li>
+                        <li class="toc-item"><a href="#secure-score" class="toc-link">Secure Score</a></li>
                         <li class="toc-item"><a href="#alerts" class="toc-link">Alert Management</a></li>
-                        <li class="toc-item"><a href="#get-alerts" class="toc-link toc-h3">Get Alerts</a></li>
-                        <li class="toc-item"><a href="#dismiss-alerts" class="toc-link toc-h3">Dismiss Alerts</a></li>
                         <li class="toc-item"><a href="#recommendations" class="toc-link">Recommendations</a></li>
-                        <li class="toc-item"><a href="#secure-score" class="toc-link toc-h3">Secure Score</a></li>
-                        <li class="toc-item"><a href="#jit" class="toc-link">JIT Access</a></li>
                         <li class="toc-item"><a href="#reporting" class="toc-link">Reporting</a></li>
                     </ul>
                 </aside>
             </div>
         </main>
+
+        <!-- Mobile Overlay -->
         <div class="mobile-overlay"></div>
     </div>
 
+    <!-- Search Modal -->
     <div class="search-modal">
         <div class="search-modal-content">
             <input type="text" class="search-modal-input" placeholder="Search documentation..." autofocus>
@@ -1044,6 +1027,6 @@ Write-Host "✓ Report generated: $OutputPath" -ForegroundColor Green</code></pr
         </div>
     </div>
 
-    <script src="main.js"></script>
+    <script src="../js/main.js"></script>
 </body>
 </html>
