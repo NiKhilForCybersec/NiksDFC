@@ -441,6 +441,18 @@ code {
 .sidebar-collapsed .logo-text {
     opacity: 0;
     pointer-events: none;
+    width: 0;
+    overflow: hidden;
+}
+
+/* Keep sidebar header functional when collapsed */
+.sidebar-collapsed .sidebar-header {
+    justify-content: center;
+    padding: var(--space-md) var(--space-sm);
+}
+
+.sidebar-collapsed .sidebar-logo {
+    display: none;
 }
 
 .sidebar-toggle {
@@ -472,6 +484,21 @@ code {
 
 .sidebar-collapsed .sidebar-toggle svg {
     transform: rotate(180deg);
+}
+
+/* Make toggle button more prominent when collapsed */
+.sidebar-collapsed .sidebar-toggle {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--accent-blue-dim) 0%, var(--accent-purple-dim) 100%);
+    border-color: var(--accent-blue);
+    color: white;
+    box-shadow: var(--shadow-glow-blue);
+}
+
+.sidebar-collapsed .sidebar-toggle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 30px var(--accent-blue-glow);
 }
 
 /* Sidebar Navigation */
